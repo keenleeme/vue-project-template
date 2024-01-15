@@ -7,25 +7,25 @@ export async function getMenus(): Promise<MenuType[]> {
     {
       id: 'home',
       title: I18N.common.home,
-      icon: 'WechatOutlined',
+      icon: 'AppstoreOutlined',
       path: '/home'
     },
     {
       id: 'theme',
       title: I18N.api.common.zhuTiYanShi,
-      icon: 'WechatOutlined',
+      icon: 'AppstoreOutlined',
       path: '/theme'
     },
     {
       id: 'sum-one',
       title: I18N.api.common.yiCengCaiDan,
-      icon: 'WechatOutlined',
+      icon: 'AppstoreOutlined',
       path: '/sum-one'
     },
     {
       id: 'sum-more',
       title: I18N.api.common.duoCengCaiDan,
-      icon: 'WechatOutlined',
+      icon: 'BarsOutlined',
       children: [
         {
           id: 'sum-more-0',
@@ -35,6 +35,7 @@ export async function getMenus(): Promise<MenuType[]> {
         {
           id: 'sum-more-1',
           title: I18N.api.common.erJiCaiDanFen2,
+          icon: 'BarsOutlined',
           children: [
             {
               id: 'sum-more-1-0',
@@ -56,6 +57,7 @@ export async function getMenus(): Promise<MenuType[]> {
         {
           id: 'sum-more-2',
           title: I18N.api.common.erJiCaiDanFen,
+          icon: 'BarsOutlined',
           children: [
             {
               id: 'sum-more-2-1',

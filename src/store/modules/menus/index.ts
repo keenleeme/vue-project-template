@@ -1,14 +1,14 @@
 import { computed, h, PropType, ref, type VNode } from 'vue';
-import * as Icons from '@ahcloud/icon-vue-next';
+import * as Icons from '@ant-design/icons-vue';
 import type { MenuProps } from 'ant-design-vue';
 import { defineStore } from 'pinia';
 import type { MenuType, RouteItemType } from './types';
 
 function renderIcon(name?: string): VNode {
   // @ts-ignore
-  if (!Icons[name]) return () => h(Icons.ViewModule, { size: 16, fill: 'currentColor' });
+  if (!Icons[name]) return () => h(Icons.AppstoreOutlined, { style: { 'font-size': '16px' } });
   // @ts-ignore
-  return () => h(Icons[name], { size: 16, fill: 'currentColor' });
+  return () => h(Icons[name], { style: { 'font-size': '16px' } });
 }
 
 function dataToMenuIems(data: MenuType[], type: 'header' | 'all' = 'all'): MenuProps['items'] {
