@@ -30,7 +30,7 @@
             <a-space>
               <a-avatar>
                 <template #icon>
-                  <LogoGithubFilled :size="28" fill="#fff" />
+                  <GithubOutlined style="font-size: 30px" />
                 </template>
               </a-avatar>
               <span class="text-white"> Admin </span>
@@ -55,7 +55,7 @@
 <script setup lang="ts">
   import { ref, watchEffect, computed } from 'vue';
   import { useRouter } from 'vue-router';
-  import { LogoGithubFilled } from '@ahcloud/icon-vue-next';
+  import { GithubOutlined } from '@ant-design/icons-vue';
   import { storeToRefs } from 'pinia';
   import { useAppStore, useMenusStore } from '@/store';
   import { ThemeTypes } from '@/theme';

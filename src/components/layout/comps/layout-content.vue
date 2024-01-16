@@ -6,7 +6,7 @@
     >
       <a-breadcrumb>
         <template #separator>
-          <ChevronRight style="vertical-align: sub" :size="16" fill="currentColor" />
+          <RightOutlined style="vertical-align: revert-layer; font-size: 14px" />
         </template>
         <a-breadcrumb-item v-for="item in activeBreadcrumb" :key="item.title">
           <template v-if="!item.path">
@@ -28,7 +28,7 @@
 
 <script setup lang="ts">
   import { RouterView, useRouter } from 'vue-router';
-  import { ChevronRight, ChevronLeftCircle } from '@ahcloud/icon-vue-next';
+  import { RightOutlined } from '@ant-design/icons-vue';
   import { theme } from 'ant-design-vue';
   import { storeToRefs } from 'pinia';
   import { useMenusStore } from '@/store';

@@ -7,8 +7,8 @@
     collapsible
   >
     <div class="h-40 flex justify-center items-center">
-      <MenuUnfold v-if="!collapsed" :size="20" :fill="token.colorPrimary" @click="collapsed = true" />
-      <MenuFold v-if="collapsed" :size="20" :fill="token.colorPrimary" @click="collapsed = false" />
+      <MenuFoldOutlined v-if="!collapsed" style="font-size: 20px" @click="collapsed = true" />
+      <MenuUnfoldOutlined v-if="collapsed" style="font-size: 20px" @click="collapsed = false" />
     </div>
     <a-menu
       v-model:selectedKeys="selectMenuId"
@@ -24,7 +24,7 @@
 <script setup lang="ts">
   import { ref, watchEffect } from 'vue';
   import { useRouter } from 'vue-router';
-  import { MenuUnfold, MenuFold } from '@ahcloud/icon-vue-next';
+  import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons-vue';
   import { theme } from 'ant-design-vue';
   import { storeToRefs } from 'pinia';
   import { useMenusStore } from '@/store';

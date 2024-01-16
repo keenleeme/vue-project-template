@@ -7,11 +7,6 @@
   resolved "https://ci.das-security.cn/repository/ah_npm/@aashutoshrathi/word-wrap/-/word-wrap-1.2.6.tgz#bd9154aec9983f77b3a034ecaa015c2e4201f6cf"
   integrity sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==
 
-"@ahcloud/icon-vue-next@^1.3.6":
-  version "1.3.6"
-  resolved "https://ci.das-security.cn/repository/ah_npm/@ahcloud/icon-vue-next/-/icon-vue-next-1.3.6.tgz#38c75b7cd995a946b2c12cb21c3d195093ba7559"
-  integrity sha512-V78T0cPNRRP0VkDcCTzQBQotBHXvbonp8QOeYyx9snLcTKPPTMlQwlN2MjtTl7TRC4OhQudPONBvAXJgMRrX7Q==
-
 "@ampproject/remapping@^2.2.1":
   version "2.2.1"
   resolved "https://ci.das-security.cn/repository/ah_npm/@ampproject/remapping/-/remapping-2.2.1.tgz#99e8e11851128b8702cd57c33684f1d0f260b630"
