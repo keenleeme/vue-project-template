@@ -29,6 +29,31 @@
 
 ## 使用文档
 
+### 主题使用方式
+- 引入组件样式
+```jsx
+import { createApp } from 'vue';
+import Antd from 'ant-design-vue';
+import App from './App';
+import 'ant-design-vue/dist/reset.css';
+import '@/assets/styles/theme.css'
+
+const app = createApp(App);
+
+app.use(Antd).mount('#app');
+
+```
+- 引入组件变量
+```html
+<template>
+  <a-config-provider :theme="theme">
+  </a-config-provider>
+</template>
+
+<script setup lang="ts">
+  import theme from '@/theme/theme';
+</script>
+```
 ### 请求使用方式
 
 ```ts
