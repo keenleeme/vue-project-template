@@ -17,9 +17,9 @@
   import { storeToRefs } from 'pinia';
   import { useAppStore, useMenusStore } from '@/store';
   import type { RouteItemType } from '@/store/modules/menus/types';
-  import HeaderMenus from './comps/header-menus.vue';
-  import LayoutContent from './comps/layout-content.vue';
-  import SiderMenus from './comps/sider-menus.vue';
+  import HeaderMenus from './comps/HeaderMenus.vue';
+  import LayoutContent from './comps/LayoutContent.vue';
+  import SiderMenus from './comps/SiderMenus.vue';
 
   const appStore = useAppStore();
   const { watermark } = storeToRefs(appStore);

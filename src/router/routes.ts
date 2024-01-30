@@ -22,7 +22,7 @@ const routes: RouteRecordRaw[] = [
   {
     name: 'sum-one',
     path: '/sum-one',
-    component: () => import('@/views/routers-menus/index.vue'),
+    component: () => import('@/views/RoutersMenus/index.vue'),
     meta: {
       title: 'sum-one',
       permissionId: 'sum-one'
@@ -38,7 +38,7 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         name: 'sum-more-0',
-        component: () => import('@/views/routers-menus/index.vue'),
+        component: () => import('@/views/RoutersMenus/index.vue'),
         path: '/sum-more-0',
         meta: {
           permissionId: 'sum-more'
@@ -46,7 +46,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         name: 'sum-more-1-0',
-        component: () => import('@/views/routers-menus/index.vue'),
+        component: () => import('@/views/RoutersMenus/index.vue'),
         path: '/sum-more-1-0',
         meta: {
           permissionId: 'sum-more'
@@ -54,7 +54,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         name: 'sum-more-1-1',
-        component: () => import('@/views/routers-menus/index.vue'),
+        component: () => import('@/views/RoutersMenus/index.vue'),
         path: 'sum-more-1-1',
         meta: {
           permissionId: 'sum-more'
@@ -62,7 +62,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         name: 'sum-more-1-2',
-        component: () => import('@/views/routers-menus/index.vue'),
+        component: () => import('@/views/RoutersMenus/index.vue'),
         path: '/sum-more/sum-more-1-2',
         meta: {
           permissionId: 'sum-more'
@@ -74,7 +74,7 @@ const routes: RouteRecordRaw[] = [
         children: [
           {
             name: 'sum-more-2-1',
-            component: () => import('@/views/routers-menus/index.vue'),
+            component: () => import('@/views/RoutersMenus/index.vue'),
             path: 'sum-more-2-1',
             meta: {
               permissionId: 'sum-more'
@@ -99,7 +99,7 @@ const wihitetRoutes: RouteRecordRaw[] = [
   {
     name: '404',
     path: '/404',
-    component: () => import('@/views/not-found/index.vue'),
+    component: () => import('@/views/NotFound/index.vue'),
     meta: {
       title: '404',
       fullScreen: true
