@@ -9,7 +9,8 @@
 <script setup lang="ts">
   import { RouterView } from 'vue-router';
   import zhCN from 'ant-design-vue/es/locale/zh_CN';
-  import { storeToRefs } from 'pinia';
+  import theme from '@/theme/theme';
+  // import { storeToRefs } from 'pinia';
   import { getWebsiteConfig } from './api/common';
   import Layout from './components/layout/index.vue';
   import { useAppStore } from './store';
@@ -17,7 +18,7 @@
 
   const appStore = useAppStore();
   // 主题
-  const { theme } = storeToRefs(appStore);
+  // const { theme } = storeToRefs(appStore);
 
   getWebsiteConfig()
     .then((data) => {
