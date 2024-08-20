@@ -32,14 +32,18 @@
     ]
   },
   "dependencies": {
+    "@ailpha/soul-ui": "^1.1.2-beta.10",
     "@ant-design/icons-vue": "^7.0.1",
     "@international/vue3-i18n": "^1.2.0",
     "@micro-zoe/micro-app": "^1.0.0-rc.2",
+    "@ued-material/menu": "^2.1.11",
     "ant-design-vue": "^4.0.7",
     "axios": "^1.5.1",
+    "color": "^4.2.3",
     "lodash": "^4.17.21",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.0",
+    "ued-login": "^1.1.11",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5"
   },
@@ -76,6 +80,7 @@
     "eslint-plugin-vue": "^9.17.0",
     "html-webpack-plugin": "^5.5.3",
     "husky": "^8.0.3",
+    "less": "^4.2.0",
     "lint-staged": "^14",
     "mini-svg-data-uri": "^1.4.4",
     "postcss-loader": "^7.3.3",
