@@ -20,6 +20,15 @@ const routes: RouteRecordRaw[] = [
     }
   },
   {
+    name: 'base::dasUpgrade',
+    path: '/dasUpgrade',
+    component: () => import('@/views/dasUpgrade/index.vue'),
+    meta: {
+      title: '在线升级',
+      permissionId: 'base::theme:index'
+    }
+  },
+  {
     name: 'sum-one',
     path: '/sum-one',
     component: () => import('@/views/RoutersMenus/index.vue'),
