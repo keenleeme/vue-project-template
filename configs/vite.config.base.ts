@@ -3,6 +3,7 @@ import { resolve } from 'path';
 import UnoCSS from 'unocss/vite';
 import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
 import Components from 'unplugin-vue-components/vite';
+import AutoImport from 'unplugin-auto-import/vite'
 import { defineConfig } from 'vite';
 import { loadEnv } from './utils';
 
@@ -22,6 +23,19 @@ export default defineConfig({
       }
     ),
     UnoCSS(),
+    AutoImport({
+      imports: [
+        'vue',
+        'vue-router',
+      ],
+      dts: './auto-imports.d.ts',
+      eslintrc: {
+        enabled: false,
+        filepath: './.eslintrc-auto-import.json',
+        globalsPropValue: true,
+      },
+      vueTemplate: false,
+     }),
     Components({
       resolvers: [
         AntDesignVueResolver({
