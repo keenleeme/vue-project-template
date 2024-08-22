@@ -49,6 +49,7 @@
       :pop-dark="config.mode === 'dark' || (config.mode === 'light' && config.topStyle === 'dark')"
       :mix="config.mode === 'mix'"
       popover-class="top-menu-popover"
+      @menu-click="handleMenuClick"
     >
     </UedTopMenu>
     <div class="header-operates">
@@ -168,20 +169,22 @@
   const data = ref([
     {
       id: 2,
-      name: '一级导航1',
+      name: '模版导航',
       submenu: [
         {
           id: 21,
-          name: '一级选项1',
+          name: '模版导航一级选项1',
           // hideChildren: true,
           submenu: [
             {
               id: 2131,
-              name: '二级选项1'
+              name: '主题配置',
+              url: '/theme'
             },
             {
               id: 2132,
-              name: '二级选项2'
+              name: '首页',
+              url: '/home'
             },
             {
               id: 2133,
@@ -696,6 +699,10 @@
       name: '退出登录'
     }
   ]);
+
+  const handleMenuClick = (item: any) => {
+    router.push(item.url);
+  };
 
   const originMenuData = JSON.parse(JSON.stringify(data.value));
   const tempMenu = ref();
