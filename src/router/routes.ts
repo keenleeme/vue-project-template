@@ -22,9 +22,18 @@ const routes: RouteRecordRaw[] = [
   {
     name: 'base::dasUpgrade',
     path: '/dasUpgrade',
-    component: () => import('@/views/dasUpgrade/index.vue'),
+    component: () => import('@/views/iframe/index.vue'),
     meta: {
       title: '在线升级',
+      permissionId: 'base::theme:index'
+    }
+  },
+  {
+    name: 'base::dasvScreen',
+    path: '/dasvScreen',
+    component: () => import('@/views/iframe/index.vue'),
+    meta: {
+      title: '大屏自定义',
       permissionId: 'base::theme:index'
     }
   },
