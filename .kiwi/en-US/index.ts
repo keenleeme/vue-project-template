@@ -5,6 +5,7 @@ import layout from './layout';
 import login from './login';
 import not_found from './not_found';
 import theme from './theme';
+import base_form from './base_form';
 
 export default Object.assign(
   {},
@@ -15,6 +16,7 @@ export default Object.assign(
     example,
     login,
     theme,
-    not_found
+    not_found,
+    base_form
   }
 );

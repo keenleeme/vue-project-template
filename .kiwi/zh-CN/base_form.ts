@@ -1,0 +1,17 @@
+export default {
+    baseInfo: '基本信息',
+    name: '名称',
+    desc: '描述',
+    level: '等级',
+    scene: '适用场景',
+    action: '动作',
+    address: '源地',
+    attachment: '附件',
+    uplaodFile: '上传文件',
+    uploadLimit: '仅支持 EXCEL 格式文件',
+    save: '保存',
+    resetDefault: '恢复默认',
+    pleaseEnter: '请输入',
+    pleaseChoose: '请选择',
+    pleaseEnterContent: '请输入内容',
+};

@@ -20,6 +20,15 @@ const routes: RouteRecordRaw[] = [
     }
   },
   {
+    name: 'base-form',
+    path: '/base-form',
+    component: () => import('@/views/baseForm/index.vue'),
+    meta: {
+      title: '基础表单',
+      permissionId: 'base::theme:index'
+    }
+  },
+  {
     name: 'base::dasUpgrade',
     path: '/dasUpgrade',
     component: () => import('@/views/iframe/index.vue'),
