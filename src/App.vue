@@ -29,7 +29,7 @@
     });
 </script>
 
-<style lang="less" scoped>
+<style>
   :root {
     --primary-color: #3498db; /* 默认主题色 */
     --primary-bg: #ffffff; /* 默认背景色 */
@@ -42,7 +42,6 @@
 
   /* 应用变量 */
   body {
-    color: var(--primary-color);
     background-color: var(--primary-bg);
   }
 </style>

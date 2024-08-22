@@ -1854,7 +1854,7 @@
   dependencies:
     "@vue/shared" "3.4.13"
 
-"@vue/runtime-core@3.4.13":
+"@vue/runtime-core@^3.0.0", "@vue/runtime-core@3.4.13":
   "integrity" "sha512-Ov4d4At7z3goxqzSqQxdfVYEcN5HY4dM1uDYL6Hu/Es9Za9BEN602zyjWhhi2+BEki5F9NizRSvn02k/tqNWlg=="
   "resolved" "https://ci.das-security.cn/repository/ah_npm/@vue/runtime-core/-/runtime-core-3.4.13.tgz"
   "version" "3.4.13"
@@ -4158,7 +4158,7 @@
     "jsbn" "~0.1.0"
     "safer-buffer" "^2.1.0"
 
-"echarts@^5.1.2":
+"echarts@^5.1.2", "echarts@^5.5.1":
   "integrity" "sha512-Fce8upazaAXUVUVsjgV6mBnGuqgO+JNDlcgF79Dksy4+wgGpQB2lmYoO4TSweFg/mZITdpGHomw/cNBJZj1icA=="
   "resolved" "https://ci.das-security.cn/repository/ah_npm/echarts/-/echarts-5.5.1.tgz"
   "version" "5.5.1"
@@ -10058,6 +10058,11 @@
   "resolved" "https://ci.das-security.cn/repository/ah_npm/vue-cropper/-/vue-cropper-0.5.11.tgz"
   "version" "0.5.11"
 
+"vue-demi@^0.13.11":
+  "integrity" "sha512-IR8HoEEGM65YY3ZJYAjMlKygDQn25D5ajNFNoKh9RSDMQtlzCxtfQjdQgv9jjK+m3377SsJXY8ysq8kLCZL25A=="
+  "resolved" "https://ci.das-security.cn/repository/ah_npm/vue-demi/-/vue-demi-0.13.11.tgz"
+  "version" "0.13.11"
+
 "vue-demi@>=0.14.5", "vue-demi@latest":
   "integrity" "sha512-8QA7wrYSHKaYgUxDA5ZC24w+eHm3sYCbp0EzcDwKqN3p6HqtTCGR/GVsPyZW92unff4UlcSh++lmqDWN3ZIq4w=="
   "resolved" "https://ci.das-security.cn/repository/ah_npm/vue-demi/-/vue-demi-0.14.6.tgz"
@@ -10069,6 +10074,13 @@
   "version" "2.4.8"
   dependencies:
     "core-js" "^2.6.11"
+
+"vue-echarts@^7.0.3":
+  "integrity" "sha512-/jSxNwOsw5+dYAUcwSfkLwKPuzTQ0Cepz1LxCOpj2QcHrrmUa/Ql0eQqMmc1rTPQVrh2JQ29n2dhq75ZcHvRDw=="
+  "resolved" "https://ci.das-security.cn/repository/ah_npm/vue-echarts/-/vue-echarts-7.0.3.tgz"
+  "version" "7.0.3"
+  dependencies:
+    "vue-demi" "^0.13.11"
 
 "vue-eslint-parser@^9.3.2", "vue-eslint-parser@^9.4.0":
   "integrity" "sha512-7KsNBb6gHFA75BtneJsoK/dbZ281whUIwFYdQxA68QrCrGMXYzUMbPDHGcOQ0OocIVKrWSKWXZ4mL7tonCXoUw=="
@@ -10148,7 +10160,7 @@
     "@vue/compiler-sfc" "2.7.16"
     "csstype" "^3.1.0"
 
-"vue@^2.6.14 || ^3.3.0", "vue@^3.0.0", "vue@^3.0.0-0 || ^2.6.0", "vue@^3.2.0", "vue@^3.2.25", "vue@^3.3.4", "vue@^3.3.9", "vue@>=3.0.3", "vue@>=3.2.0", "vue@2 || 3", "vue@3.4.13":
+"vue@^2.6.14 || ^3.3.0", "vue@^2.7.0 || ^3.1.1", "vue@^3.0.0", "vue@^3.0.0-0 || ^2.6.0", "vue@^3.2.0", "vue@^3.2.25", "vue@^3.3.4", "vue@^3.3.9", "vue@>=3.0.3", "vue@>=3.2.0", "vue@2 || 3", "vue@3.4.13":
   "integrity" "sha512-FE3UZ0p+oUZTwz+SzlH/hDFg+XsVRFvwmx0LXjdD1pRK/cO4fu5v6ltAZji4za4IBih3dV78elUK3di8v3pWIg=="
   "resolved" "https://ci.das-security.cn/repository/ah_npm/vue/-/vue-3.4.13.tgz"
   "version" "3.4.13"

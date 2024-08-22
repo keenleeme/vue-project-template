@@ -20,6 +20,15 @@ const routes: RouteRecordRaw[] = [
     }
   },
   {
+    name: 'base::workBench',
+    path: '/workBench',
+    component: () => import('@/views/workBench/index.vue'),
+    meta: {
+      title: '工作台',
+      permissionId: 'base::workBench:index'
+    }
+  },
+  {
     name: 'sum-one',
     path: '/sum-one',
     component: () => import('@/views/RoutersMenus/index.vue'),

@@ -1,10 +1,10 @@
 <template>
   <a-layout>
     <div
-      class="p2 pl-16 h-28 flex"
+      class="p2 pl-16 h-80"
       :style="{ 'background-color': token.colorBgBase, borderLeft: `1px solid ${token.colorBorder}` }"
     >
-      <a-breadcrumb>
+      <a-breadcrumb class="breadcrumb">
         <template #separator>
           <RightOutlined style="vertical-align: revert-layer; font-size: 14px" />
         </template>
@@ -17,9 +17,13 @@
           </template>
         </a-breadcrumb-item>
       </a-breadcrumb>
+      <div class="page-title">
+        <LeftSquareOutlined size="14" style="color: #7e8494" />
+        <div class="page-title-text">{{ $route.meta.title }}</div>
+      </div>
     </div>
     <a-layout-content>
-      <div class="h-full w-full p16px">
+      <div class="h-full w-full">
         <RouterView />
       </div>
     </a-layout-content>
@@ -28,7 +32,7 @@
 
 <script setup lang="ts">
   import { RouterView, useRouter } from 'vue-router';
-  import { RightOutlined } from '@ant-design/icons-vue';
+  import { RightOutlined, LeftSquareOutlined } from '@ant-design/icons-vue';
   import { theme } from 'ant-design-vue';
   import { storeToRefs } from 'pinia';
   import { useMenusStore } from '@/store';
@@ -40,3 +44,20 @@
   const menusStore = useMenusStore();
   const { activeBreadcrumb } = storeToRefs(menusStore);
 </script>
+
+<style lang="less" scoped>
+  .breadcrumb {
+    height: 40px;
+  }
+  .page-title {
+    display: flex;
+    height: 40px;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 16px;
+    background-color: var(--primary-bg);
+    .page-title-text {
+      margin-left: 8px;
+    }
+  }
+</style>

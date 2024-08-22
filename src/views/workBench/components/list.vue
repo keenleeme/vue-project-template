@@ -1,0 +1,151 @@
+<template>
+  <div class="table-wrap">
+    <div class="operation-wrap">
+      <div class="left">
+        <a-button type="primary" class="mr-8">
+          <template #icon>
+            <PlusOutlined />
+          </template>
+          新建
+        </a-button>
+        <a-button class="mr-8"> 导出 </a-button>
+        <a-button class="mr-8"> 重点关注 </a-button>
+        <a-button> 取消关注 </a-button>
+      </div>
+      <div class="right">
+        <a-button class="mr-8">
+          <template #icon><SettingOutlined /></template>
+        </a-button>
+        <a-button>
+          <template #icon><FullscreenOutlined /></template>
+        </a-button>
+      </div>
+    </div>
+    <a-table :columns="columns" :data-source="data" bordered @change="onChange">
+      <template #bodyCell="{ column, record }">
+        <template v-if="column.key === 'name'">
+          <a>
+            {{ record.name }}
+          </a>
+        </template>
+        <template v-else-if="column.key === 'tags'">
+          <span>
+            <a-tag
+              v-for="tag in record.tags"
+              :key="tag"
+              :color="tag === 'loser' ? 'volcano' : tag.length > 5 ? 'geekblue' : 'cyan'"
+            >
+              {{ tag.toUpperCase() }}
+            </a-tag>
+          </span>
+        </template>
+        <template v-else-if="column.key === 'operation'">
+          <a-button class="link" type="link">详情</a-button>
+          <a-button class="link" type="link">删除</a-button>
+        </template>
+      </template>
+    </a-table>
+  </div>
+</template>
+
+<script setup lang="ts">
+  import { ref } from 'vue';
+  import { PlusOutlined, SettingOutlined, FullscreenOutlined } from '@ant-design/icons-vue';
+  import type { TableColumnType, TableProps } from 'ant-design-vue';
+
+  type TableDataType = {
+    key: string;
+    name: string;
+    age: string;
+    tags: string[];
+  };
+
+  const columns: TableColumnType<TableDataType>[] = [
+    {
+      title: '项目名称',
+      dataIndex: 'name',
+      sorter: (a: TableDataType, b: TableDataType) => a.name.length - b.name.length,
+      sortDirections: ['descend']
+    },
+    {
+      title: '所属组织',
+      dataIndex: 'age'
+    },
+    {
+      title: '所属类别',
+      dataIndex: 'tags',
+      key: 'tags',
+      filters: [
+        {
+          text: 'London',
+          value: 'London'
+        },
+        {
+          text: 'New York',
+          value: 'New York'
+        }
+      ],
+      filterMultiple: false,
+      onFilter: (value: string, record: TableDataType) => record.tags.length === 0,
+      sorter: (a: TableDataType, b: TableDataType) => a.tags.length - b.tags.length,
+      sortDirections: ['descend', 'ascend']
+    },
+    {
+      title: '操作',
+      dataIndex: 'address',
+      key: 'operation'
+    }
+  ];
+
+  const data: TableDataType[] = [
+    {
+      key: '1',
+      name: 'Opc网关系统',
+      age: '根组织',
+      tags: ['重要资产', '核心资产']
+    },
+    {
+      key: '2',
+      name: '综合管理系统',
+      age: '科信部门',
+      tags: ['重要资产', '核心资产']
+    },
+    {
+      key: '3',
+      name: '服务系统',
+      age: '监管部门',
+      tags: ['重要资产', '核心资产']
+    },
+    {
+      key: '4',
+      name: '其他系统',
+      age: '其他组织',
+      tags: ['重要资产', '核心资产']
+    }
+  ];
+  const onChange: TableProps<TableDataType>['onChange'] = (pagination, filters, sorter) => {
+    console.log('params', pagination, filters, sorter);
+  };
+</script>
+
+<style lang="less" scoped>
+  .table-wrap {
+    height: 64px;
+    background: var(--primary-bg);
+    padding: 16px;
+    margin: 16px;
+    .link {
+      padding: 0;
+      margin-right: 28px;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+  .operation-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+</style>
