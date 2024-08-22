@@ -5,23 +5,21 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, computed } from 'vue';
+  import { ref, watchEffect } from 'vue';
   import { useRoute } from 'vue-router';
 
   const inline = ref('http://10.50.28.10:8599/das-upgrade/#/upgrade?activeName=offline');
 
   const route = useRoute();
-  const currentUrl = computed(() => route.fullPath);
 
-  const updateInline = (url: string) => {
-    inline.value = url;
-  };
-
-  if (currentUrl.value === '/dasUpgrade') {
-    updateInline('http://10.50.28.10:8599/das-upgrade/#/upgrade?activeName=offline');
-  } else if (currentUrl.value === '/dasvScreen') {
-    updateInline('https://10.20.178.18/login');
-  }
+  watchEffect(() => {
+    const currentUrl = route.fullPath;
+    if (currentUrl === '/dasUpgrade') {
+      inline.value = 'http://10.50.28.10:8599/das-upgrade/#/upgrade?activeName=offline';
+    } else if (currentUrl === '/dasvScreen') {
+      inline.value = 'https://10.20.178.18/login';
+    }
+  });
 </script>
 
 <style scoped lang="less">

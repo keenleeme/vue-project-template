@@ -350,8 +350,9 @@
     },
     {
       id: 1,
-      name: '一级导航2',
-      // hideChildren: true,
+      name: '大屏自定义',
+      url: '/dasvScreen',
+      hideChildren: true,
       submenu: [
         {
           id: 11,
@@ -679,33 +680,16 @@
     },
     {
       id: 111,
-      name: '一级导航',
+      name: '系统设置',
       submenu: [
         {
           id: 111,
-          name: '一级选项'
+          name: '主题配置页'
         },
         {
           id: 112,
-          name: '一级选项'
-        },
-        {
-          id: 113,
-          name: '一级选项',
-          submenu: [
-            {
-              id: 1131,
-              name: '二级选项'
-            },
-            {
-              id: 1132,
-              name: '二级选项'
-            },
-            {
-              id: 1133,
-              name: '二级选项'
-            }
-          ]
+          name: '在线升级',
+          url: '/dasUpgrade'
         }
       ]
     }
