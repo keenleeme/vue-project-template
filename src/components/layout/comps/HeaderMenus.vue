@@ -242,7 +242,8 @@
             },
             {
               id: 2134,
-              name: '二级选项'
+              name: '基础详情',
+              url: '/base-detail'
             },
             {
               id: 2135,
