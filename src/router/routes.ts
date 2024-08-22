@@ -29,6 +29,42 @@ const routes: RouteRecordRaw[] = [
     }
   },
   {
+    name: 'base-form',
+    path: '/base-form',
+    component: () => import('@/views/baseForm/index.vue'),
+    meta: {
+      title: '基础表单',
+      permissionId: 'base::theme:index'
+    }
+  },
+  {
+    name: 'base-detail',
+    path: '/base-detail',
+    component: () => import('@/views/baseDetail/index.vue'),
+    meta: {
+      title: '基础详情',
+      permissionId: 'base::theme:index'
+    }
+  },
+  {
+    name: 'base::dasUpgrade',
+    path: '/dasUpgrade',
+    component: () => import('@/views/iframe/index.vue'),
+    meta: {
+      title: '在线升级',
+      permissionId: 'base::theme:index'
+    }
+  },
+  {
+    name: 'base::dasvScreen',
+    path: '/dasvScreen',
+    component: () => import('@/views/iframe/index.vue'),
+    meta: {
+      title: '大屏自定义',
+      permissionId: 'base::theme:index'
+    }
+  },
+  {
     name: 'sum-one',
     path: '/sum-one',
     component: () => import('@/views/RoutersMenus/index.vue'),
