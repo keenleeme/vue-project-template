@@ -53,7 +53,7 @@
     >
     </UedTopMenu>
     <div class="header-operates">
-      <i v-if="config.helpCenter" class="icon-button menuicon menu-icon-help" />
+      <i v-if="config.helpCenter" class="icon-button menuicon menu-icon-help" @click="showDrawer" />
       <i class="icon-button menuicon menu-icon-bell" />
       <i class="icon-button menuicon menu-icon-cog" @click="themePanelVisible = true" />
       <i
@@ -127,6 +127,55 @@
       <a-button type="primary" @click="dialogConfirm">确 定</a-button>
     </template>
   </a-modal>
+  <a-drawer
+    v-model:open="open"
+    class="custom-class"
+    root-class-name="root-class-name"
+    title="帮助文档"
+    width="520"
+    :closable="false"
+    placement="right"
+    @after-open-change="afterOpenChange"
+  >
+    <template #extra>
+      <a-button style="margin-right: 8px" @click="onClose">帮助文档</a-button>
+    </template>
+    <header>
+      <h1>未来科技探索</h1>
+    </header>
+    <main>
+      <section>
+        <p>
+          在不远的将来，人类社会将经历一场前所未有的科技革命。随着量子计算技术的进步，我们已经能够解决许多过去无法处理的复杂问题。
+        </p>
+        <p>
+          在智能家居领域，智能助手已经成为每个家庭的必备成员，它们不仅能够管理日常事务，还能通过情感识别技术与家庭成员进行更加人性化的互动。
+        </p>
+        <p>
+          医疗健康方面，基因编辑技术取得了重大突破，使得许多遗传性疾病得以根治。同时，纳米机器人被用于人体内部进行精准治疗，大大提高了治疗效果。
+        </p>
+      </section>
+      <section>
+        <p>
+          教育领域也迎来了翻天覆地的变化。虚拟现实技术让远程学习变得更加生动有趣，学生们可以身临其境地参与到各种历史事件之中，或者在模拟环境中进行科学实验。
+        </p>
+        <p>
+          交通出行方面，自动驾驶汽车已经普及，而超高速磁悬浮列车则让人们能够在几小时内跨越大陆。此外，私人飞行器成为了城市间的快速交通工具，极大地缩短了人们的出行时间。
+        </p>
+      </section>
+      <section>
+        <p>
+          随着人工智能的发展，人们的工作方式也在发生变化。许多重复性劳动已经被机器人取代，人们有更多的时间专注于创造性工作和个人发展。
+        </p>
+        <p>
+          尽管未来充满了无限可能，但我们也面临着新的挑战，比如如何确保这些技术的安全性和道德性，以及如何让所有人都能平等地享受到科技进步带来的好处。
+        </p>
+      </section>
+    </main>
+    <footer>
+      <p>&copy; 2024 未来科技探索</p>
+    </footer>
+  </a-drawer>
   <ThemePanel
     v-model:visible="themePanelVisible"
     v-model:config="config"
@@ -853,6 +902,20 @@
   const resetTheme = (newConfig?: any) => {
     config.value = { ...defaultConfig, ...newConfig };
   };
+
+  // 帮助手册
+  const open = ref<boolean>(false);
+
+  const afterOpenChange = (bool: boolean) => {
+    console.log('open', bool);
+  };
+  const showDrawer = () => {
+    open.value = true;
+  };
+  const onClose = () => {
+    window.open('https://rd.das-security.cn/home');
+    open.value = false;
+  };
 </script>
 
 <style lang="less" scoped>
@@ -867,6 +930,12 @@
     color: #fff;
     .logo-wrap {
       min-width: 200px;
+    }
+    h1 {
+      text-align: center;
+    }
+    p {
+      text-indent: 2em;
     }
   }
 </style>
