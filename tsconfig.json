@@ -15,7 +15,7 @@
     "lib": ["es2020", "dom"],
     "skipLibCheck": true
   },
-  "include": ["src/**/*", "src/**/*.vue", "types/*.d.ts", "components.d.ts"],
+  "include": ["src/**/*", "src/**/*.vue", "types/*.d.ts", "components.d.ts", "./auto-imports.d.ts", "global.d.ts"],
   "exclude": ["node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

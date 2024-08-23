@@ -146,6 +146,15 @@ const routes: RouteRecordRaw[] = [
         ]
       }
     ]
+  },
+  {
+    name: 'example',
+    path: '/example',
+    meta: {
+      title: 'example',
+      permissionId: 'base::theme:index'
+    },
+    component: () => import('@/views/example/index.vue')
   }
 ];
 
