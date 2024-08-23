@@ -3,14 +3,14 @@
 </template>
 
 <script setup lang="ts">
-  import { defineProps, ref } from 'vue';
+  import { ref } from 'vue';
   import ECharts from 'vue-echarts';
   import { LineChart } from 'echarts/charts';
-  import { TitleComponent, TooltipComponent, LegendComponent } from 'echarts/components';
+  import { TitleComponent, TooltipComponent, LegendComponent, GridComponent } from 'echarts/components';
   import { use } from 'echarts/core';
   import { CanvasRenderer } from 'echarts/renderers';
 
-  use([CanvasRenderer, LineChart, TitleComponent, TooltipComponent, LegendComponent]);
+  use([CanvasRenderer, LineChart, TitleComponent, TooltipComponent, LegendComponent, GridComponent]);
 
   const props = defineProps({
     data: {
@@ -78,10 +78,11 @@
             colorStops: [
               {
                 offset: 0,
-                color: 'rgba(59,113,238,0.1)' // 0% 处的颜色
+                color: 'rgba(59,113,238,0)' // 0% 处的颜色
               },
               {
-                offset: 1
+                offset: 1,
+                color: 'rgba(59,113,238,1)' // 0% 处的颜色
               }
             ]
           }

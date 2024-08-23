@@ -61,7 +61,25 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/iframe/index.vue'),
     meta: {
       title: '大屏自定义',
-      permissionId: 'base::theme:index'
+      permissionId: 'base::home:index'
+    }
+  },
+  {
+    name: 'base::themeConfig',
+    path: '/themeConfig',
+    component: () => import('@/views/themeConfig/index.vue'),
+    meta: {
+      title: '主题配置页',
+      permissionId: 'base::home:index'
+    }
+  },
+  {
+    name: 'base::loginConfig',
+    path: '/loginConfig',
+    component: () => import('@/views/loginConfig/index.vue'),
+    meta: {
+      title: '登录配置页',
+      permissionId: 'base::home:index'
     }
   },
   {

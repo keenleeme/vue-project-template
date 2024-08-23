@@ -638,9 +638,9 @@
   "resolved" "https://ci.das-security.cn/repository/ah_npm/@emotion/unitless/-/unitless-0.8.1.tgz"
   "version" "0.8.1"
 
-"@esbuild/win32-x64@0.18.20":
-  "integrity" "sha512-kTdfRcSiDfQca/y9QIkng02avJ+NCaQvrMejlsB3RRv5sE9rRoeBPISaZpKxHELzRxZyLvNts1P27W3wV+8geQ=="
-  "resolved" "https://ci.das-security.cn/repository/ah_npm/@esbuild/win32-x64/-/win32-x64-0.18.20.tgz"
+"@esbuild/darwin-x64@0.18.20":
+  "integrity" "sha512-pc5gxlMDxzm513qPGbCbDukOdsGtKhfxD1zJKXjCCcU7ju50O7MeAZ8c4krSJcOIJGFR+qx21yMMVYwiQvyTyQ=="
+  "resolved" "https://ci.das-security.cn/repository/ah_npm/@esbuild/darwin-x64/-/darwin-x64-0.18.20.tgz"
   "version" "0.18.20"
 
 "@eslint-community/eslint-utils@^4.1.2", "@eslint-community/eslint-utils@^4.2.0", "@eslint-community/eslint-utils@^4.4.0":
@@ -953,9 +953,9 @@
   "resolved" "https://ci.das-security.cn/repository/ah_npm/@sindresorhus/is/-/is-0.7.0.tgz"
   "version" "0.7.0"
 
-"@swc/core-win32-x64-msvc@1.3.102":
-  "integrity" "sha512-E/jfSD7sShllxBwwgDPeXp1UxvIqehj/ShSUqq1pjR/IDRXngcRSXKJK92mJkNFY7suH6BcCWwzrxZgkO7sWmw=="
-  "resolved" "https://ci.das-security.cn/repository/ah_npm/@swc/core-win32-x64-msvc/-/core-win32-x64-msvc-1.3.102.tgz"
+"@swc/core-darwin-x64@1.3.102":
+  "integrity" "sha512-X5akDkHwk6oAer49oER0qZMjNMkLH3IOZaV1m98uXIasAGyjo5WH1MKPeMLY1sY6V6TrufzwiSwD4ds571ytcg=="
+  "resolved" "https://ci.das-security.cn/repository/ah_npm/@swc/core-darwin-x64/-/core-darwin-x64-1.3.102.tgz"
   "version" "1.3.102"
 
 "@swc/core@^1.2.147", "@swc/core@^1.3.93", "@swc/core@>=1.2.50":
@@ -4342,9 +4342,9 @@
     "is-date-object" "^1.0.1"
     "is-symbol" "^1.0.2"
 
-"esbuild-windows-64@0.14.54":
-  "integrity" "sha512-AoHTRBUuYwXtZhjXZbA1pGfTo8cJo3vZIcWGLiUcTNgHpJJMC1rVA44ZereBHMJtotyN71S8Qw0npiCIkW96cQ=="
-  "resolved" "https://ci.das-security.cn/repository/ah_npm/esbuild-windows-64/-/esbuild-windows-64-0.14.54.tgz"
+"esbuild-darwin-64@0.14.54":
+  "integrity" "sha512-jtdKWV3nBviOd5v4hOpkVmpxsBy90CGzebpbO9beiqUYVMBtSc0AL9zGftFuBon7PNDcdvNCEuQqw2x0wP9yug=="
+  "resolved" "https://ci.das-security.cn/repository/ah_npm/esbuild-darwin-64/-/esbuild-darwin-64-0.14.54.tgz"
   "version" "0.14.54"
 
 "esbuild@^0.14.14":
@@ -5179,6 +5179,11 @@
   "integrity" "sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw=="
   "resolved" "https://ci.das-security.cn/repository/ah_npm/fs.realpath/-/fs.realpath-1.0.0.tgz"
   "version" "1.0.0"
+
+"fsevents@~2.3.2":
+  "integrity" "sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw=="
+  "resolved" "https://ci.das-security.cn/repository/ah_npm/fsevents/-/fsevents-2.3.3.tgz"
+  "version" "2.3.3"
 
 "function-bind@^1.1.2":
   "integrity" "sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA=="

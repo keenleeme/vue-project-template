@@ -1,10 +1,10 @@
 <template>
   <a-layout>
     <div
-      class="p2 pl-16 h-80"
+      class="p2 pl-16 h-40"
       :style="{ 'background-color': token.colorBgBase, borderLeft: `1px solid ${token.colorBorder}` }"
     >
-      <a-breadcrumb class="breadcrumb">
+      <!-- <a-breadcrumb class="breadcrumb">
         <template #separator>
           <RightOutlined style="vertical-align: revert-layer; font-size: 14px" />
         </template>
@@ -16,7 +16,7 @@
             <RouterLink :to="item.path">{{ item.title }}</RouterLink>
           </template>
         </a-breadcrumb-item>
-      </a-breadcrumb>
+      </a-breadcrumb> -->
       <div class="page-title">
         <LeftSquareOutlined size="14" style="color: #7e8494" />
         <div class="page-title-text">{{ $route.meta.title }}</div>

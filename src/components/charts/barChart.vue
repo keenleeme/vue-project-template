@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-  import { defineProps, ref } from 'vue';
+  import { ref } from 'vue';
   import ECharts from 'vue-echarts';
   import { PieChart } from 'echarts/charts';
   import { TitleComponent, TooltipComponent, LegendComponent } from 'echarts/components';

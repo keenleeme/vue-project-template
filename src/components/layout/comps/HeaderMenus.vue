@@ -217,484 +217,104 @@
 
   const data = ref([
     {
-      id: 2,
-      name: '模版导航',
-      submenu: [
-        {
-          id: 21,
-          name: '模版导航一级选项1',
-          // hideChildren: true,
-          submenu: [
-            {
-              id: 2131,
-              name: '主题配置',
-              url: '/theme'
-            },
-            {
-              id: 2132,
-              name: '首页',
-              url: '/home'
-            },
-            {
-              id: 2133,
-              name: '工作台',
-              url: '/workBench'
-            },
-            {
-              id: 2136,
-              name: '基础表单',
-              url: '/base-form'
-            },
-            {
-              id: 2134,
-              name: '基础详情',
-              url: '/base-detail'
-            },
-            {
-              id: 2135,
-              name: '二级选项隐藏',
-              hide: true
-            }
-          ]
-        },
-        {
-          id: 22,
-          name: '一级选项2',
-          submenu: [
-            {
-              id: 2231,
-              name: '二级选项'
-            },
-            {
-              id: 2232,
-              name: '二级选项'
-            },
-            {
-              id: 2233,
-              name: '二级选项'
-            },
-            {
-              id: 2234,
-              name: '二级选项'
-            },
-            {
-              id: 2235,
-              name: '二级选项'
-            }
-          ]
-        },
-        {
-          id: 23,
-          name: '一级选项',
-          submenu: [
-            {
-              id: 231,
-              name: '二级选项'
-            },
-            {
-              id: 232,
-              name: '二级选项'
-            },
-            {
-              id: 233,
-              name: '二级选项'
-            },
-            {
-              id: 234,
-              name: '二级选项'
-            },
-            {
-              id: 235,
-              name: '二级选项'
-            }
-          ]
-        },
-        {
-          id: 24,
-          name: '一级选项',
-          submenu: [
-            {
-              id: 2431,
-              name: '二级选项'
-            },
-            {
-              id: 2432,
-              name: '二级选项'
-            },
-            {
-              id: 2433,
-              name: '二级选项'
-            },
-            {
-              id: 2434,
-              name: '二级选项'
-            }
-          ]
-        },
-        {
-          id: 25,
-          name: '一级选项',
-          submenu: [
-            {
-              id: 2531,
-              name: '二级选项'
-            },
-            {
-              id: 2532,
-              name: '二级选项'
-            },
-            {
-              id: 2533,
-              name: '二级选项'
-            },
-            {
-              id: 2534,
-              name: '二级选项'
-            }
-          ]
-        }
-      ]
-    },
-    {
       id: 1,
-      name: '大屏自定义',
-      url: '/dasvScreen',
-      hideChildren: true,
+      name: '通用典型页面',
       submenu: [
         {
           id: 11,
-          name: '一级选项',
-          submenu: [
-            {
-              id: 1121,
-              name: '二级选项'
-            },
-            {
-              id: 1122,
-              name: '二级选项'
-            },
-            {
-              id: 1123,
-              name: '二级选项'
-            }
-          ]
+          name: 'dashboard',
+          hideChildren: true,
+          url: '/workBench',
+          submenu: []
         },
         {
           id: 12,
-          name: '一级选项',
-          submenu: [
-            {
-              id: 121,
-              name: '二级选项'
-            },
-            {
-              id: 122,
-              name: '二级选项'
-            },
-            {
-              id: 123,
-              name: '二级选项'
-            },
-            {
-              id: 124,
-              name: '二级选项'
-            },
-            {
-              id: 125,
-              name: '二级选项'
-            }
-          ]
+          name: '列表页',
+          hideChildren: true,
+          url: '/home',
+          submenu: []
         },
         {
           id: 13,
-          name: '一级选项',
-          submenu: [
-            {
-              id: 1321,
-              name: '二级选项'
-            },
-            {
-              id: 1322,
-              name: '二级选项'
-            },
-            {
-              id: 1323,
-              name: '二级选项'
-            }
-          ]
+          name: '表单页',
+          hideChildren: true,
+          url: '/base-form',
+          submenu: []
+        },
+        {
+          id: 14,
+          name: '详情页',
+          hideChildren: true,
+          url: '/base-detail',
+          submenu: []
+        },
+        {
+          id: 15,
+          name: '配置页',
+          hideChildren: true,
+          url: '/home',
+          submenu: []
         }
       ]
+    },
+    {
+      id: 2,
+      name: '大屏自定义',
+      url: '/dasvScreen',
+      hideChildren: true,
+      submenu: []
     },
     {
       id: 3,
-      name: '一级导航',
-      submenu: [
-        {
-          id: 31,
-          name: '一级选项'
-        },
-        {
-          id: 32,
-          name: '一级选项'
-        },
-        {
-          id: 33,
-          name: '一级选项',
-          submenu: [
-            {
-              id: 331,
-              name: '二级选项'
-            },
-            {
-              id: 332,
-              name: '二级选项'
-            }
-          ]
-        }
-      ]
+      name: '工作台自定义',
+      url: '/home',
+      hideChildren: true,
+      submenu: []
     },
     {
       id: 4,
-      name: '一级导航',
-      submenu: [
-        {
-          id: 41,
-          name: '一级选项'
-        },
-        {
-          id: 42,
-          name: '一级选项',
-          submenu: [
-            {
-              id: 421,
-              name: '二级选项'
-            },
-            {
-              id: 422,
-              name: '二级选项'
-            }
-          ]
-        }
-      ]
+      name: '报表自定义',
+      url: '/home',
+      hideChildren: true,
+      submenu: []
     },
     {
       id: 5,
-      name: '一级导航',
-      submenu: [
-        {
-          id: 51,
-          name: '一级选项'
-        },
-        {
-          id: 52,
-          name: '一级选项',
-          submenu: [
-            {
-              id: 521,
-              name: '二级选项'
-            },
-            {
-              id: 522,
-              name: '二级选项'
-            }
-          ]
-        },
-        {
-          id: 53,
-          name: '一级选项',
-          submenu: [
-            {
-              id: 531,
-              name: '二级选项'
-            },
-            {
-              id: 532,
-              name: '二级选项'
-            }
-          ]
-        }
-      ]
+      name: '图可视化呈现',
+      url: '/home',
+      hideChildren: true,
+      submenu: []
     },
     {
       id: 6,
-      name: '一级导航',
-      submenu: [
-        {
-          id: 61,
-          name: '一级选项'
-        },
-        {
-          id: 63,
-          name: '一级选项',
-          submenu: [
-            {
-              id: 631,
-              name: '二级选项'
-            },
-            {
-              id: 633,
-              name: '二级选项'
-            },
-            {
-              id: 634,
-              name: '二级选项'
-            },
-            {
-              id: 635,
-              name: '二级选项'
-            }
-          ]
-        }
-      ]
-    },
-    {
-      id: 9,
-      name: '一级导航'
+      name: '图编辑器',
+      url: '/home',
+      hideChildren: true,
+      submenu: []
     },
     {
       id: 7,
-      name: '一级导航',
-      submenu: [
-        {
-          id: 762,
-          name: '一级选项',
-          submenu: [
-            {
-              id: 7533,
-              name: '二级选项'
-            },
-            {
-              id: 7534,
-              name: '二级选项'
-            },
-            {
-              id: 7535,
-              name: '二级选项'
-            }
-          ]
-        },
-        {
-          id: 763,
-          name: '一级选项',
-          submenu: [
-            {
-              id: 7633,
-              name: '二级选项'
-            },
-            {
-              id: 7634,
-              name: '二级选项'
-            },
-            {
-              id: 7635,
-              name: '二级选项'
-            }
-          ]
-        }
-      ]
+      name: '流程编排',
+      url: '/home',
+      hideChildren: true,
+      submenu: []
     },
     {
       id: 8,
-      name: '一级导航',
-      submenu: [
-        {
-          id: 81,
-          name: '一级选项'
-        },
-        {
-          id: 82,
-          name: '一级选项',
-          submenu: [
-            {
-              id: 821,
-              name: '二级选项'
-            },
-            {
-              id: 8821,
-              name: '二级选项'
-            },
-            {
-              id: 8121,
-              name: '二级选项'
-            },
-            {
-              id: 8321,
-              name: '二级选项'
-            }
-          ]
-        },
-        {
-          id: 83,
-          name: '一级选项',
-          submenu: [
-            {
-              id: 831,
-              name: '二级选项'
-            },
-            {
-              id: 832,
-              name: '二级选项'
-            }
-          ]
-        }
-      ]
-    },
-    {
-      id: 10,
-      name: '一级导航',
-      submenu: [
-        {
-          id: 101,
-          name: '一级选项'
-        },
-        {
-          id: 102,
-          name: '一级选项',
-          submenu: [
-            {
-              id: 1021,
-              name: '二级选项'
-            },
-            {
-              id: 1022,
-              name: '二级选项'
-            },
-            {
-              id: 11121,
-              name: '二级选项'
-            },
-            {
-              id: 11022,
-              name: '二级选项'
-            }
-          ]
-        },
-        {
-          id: 103,
-          name: '一级选项',
-          submenu: [
-            {
-              id: 1031,
-              name: '二级选项'
-            },
-            {
-              id: 1032,
-              name: '二级选项'
-            }
-          ]
-        }
-      ]
-    },
-    {
-      id: 111,
       name: '系统设置',
       submenu: [
         {
-          id: 111,
-          name: '主题配置页'
+          id: 81,
+          name: '主题配置页',
+          url: '/themeConfig'
         },
         {
-          id: 112,
+          id: 82,
+          name: '登录配置页',
+          url: '/loginConfig'
+        },
+        {
+          id: 83,
           name: '在线升级',
           url: '/dasUpgrade'
         }
@@ -910,6 +530,108 @@
 </script>
 
 <style lang="less" scoped>
+  .demo-wrapper {
+    height: 100vh;
+
+    .demo-content {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .demo-content > div:last-child {
+      display: flex;
+      height: 0;
+      flex-grow: 1;
+      background-color: #f7f8fc;
+      z-index: 1;
+    }
+    &.header-dark {
+      .header {
+        background-color: #172034;
+        color: #fff;
+
+        .title {
+          color: #f6f7fb;
+        }
+
+        .icon-button {
+          color: #adb1bc;
+
+          &:hover {
+            background: #353c51;
+          }
+        }
+      }
+    }
+
+    &.dark {
+      .content {
+        background-color: #020c1e;
+        color: #fff;
+      }
+    }
+  }
+  .header {
+    height: 48px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    color: #1e2435;
+    box-shadow:
+      0px 2px 4px rgba(0, 0, 0, 0.12),
+      0 0 6px rgba(0, 0, 0, 0.04);
+    z-index: 99;
+    position: relative;
+
+    .logo {
+      font-size: 32px;
+      margin-left: 16px;
+      font-weight: 500;
+    }
+
+    .title {
+      font-size: 16px;
+      margin: 0 32px 0 8px;
+      font-weight: 500;
+    }
+
+    .top-menu-wrapper {
+      width: 50%;
+    }
+  }
+  .content {
+    flex-grow: 1;
+    width: 0;
+    color: #505968;
+
+    .menu-setting {
+      font-size: 14px;
+      margin-bottom: 32px;
+      .title {
+        font-size: 18px;
+        margin-bottom: 16px;
+        color: #1e2128;
+      }
+      .setting-item {
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+  .cut-form .cut-input {
+    width: 310px;
+  }
+  .form-item.origin-menu {
+    margin-top: -12px;
+  }
+  .form-item.page-params {
+    margin-top: -4px;
+    .cut-form-item__label {
+      opacity: 0;
+    }
+  }
   .header {
     position: relative;
     display: flex;
