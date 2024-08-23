@@ -83,6 +83,15 @@ const routes: RouteRecordRaw[] = [
     }
   },
   {
+    name: 'base::vueTour',
+    path: '/vueTour',
+    component: () => import('@/views/vueTour/index.vue'),
+    meta: {
+      title: '引导页测试',
+      permissionId: 'base::home:index'
+    }
+  },
+  {
     name: 'sum-one',
     path: '/sum-one',
     component: () => import('@/views/RoutersMenus/index.vue'),
