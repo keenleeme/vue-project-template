@@ -7,11 +7,8 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    ABreadcrumb: typeof import('ant-design-vue/es')['Breadcrumb']
-    ABreadcrumbItem: typeof import('ant-design-vue/es')['BreadcrumbItem']
     AButton: typeof import('ant-design-vue/es')['Button']
     ACheckbox: typeof import('ant-design-vue/es')['Checkbox']
-    ACol: typeof import('ant-design-vue/es')['Col']
     AConfigProvider: typeof import('ant-design-vue/es')['ConfigProvider']
     ADivider: typeof import('ant-design-vue/es')['Divider']
     ADrawer: typeof import('ant-design-vue/es')['Drawer']
@@ -29,8 +26,6 @@ declare module 'vue' {
     ARadioButton: typeof import('ant-design-vue/es')['RadioButton']
     ARadioGroup: typeof import('ant-design-vue/es')['RadioGroup']
     ARangePicker: typeof import('ant-design-vue/es')['RangePicker']
-    AResult: typeof import('ant-design-vue/es')['Result']
-    ARow: typeof import('ant-design-vue/es')['Row']
     ASelect: typeof import('ant-design-vue/es')['Select']
     ASelectOption: typeof import('ant-design-vue/es')['SelectOption']
     ASwitch: typeof import('ant-design-vue/es')['Switch']
@@ -38,10 +33,6 @@ declare module 'vue' {
     ATabPane: typeof import('ant-design-vue/es')['TabPane']
     ATabs: typeof import('ant-design-vue/es')['Tabs']
     ATag: typeof import('ant-design-vue/es')['Tag']
-    ATextarea: typeof import('ant-design-vue/es')['Textarea']
-    ATimeline: typeof import('ant-design-vue/es')['Timeline']
-    ATimelineItem: typeof import('ant-design-vue/es')['TimelineItem']
-    AUpload: typeof import('ant-design-vue/es')['Upload']
     AWatermark: typeof import('ant-design-vue/es')['Watermark']
     BarChart: typeof import('./src/components/charts/barChart.vue')['default']
     BlockCard: typeof import('./src/components/blockCard/index.vue')['default']
