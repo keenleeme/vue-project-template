@@ -6,7 +6,12 @@
         <img class="icon" :src="item.icon" />
         <div class="content">
           <div class="title">{{ item.title }}({{ item.unit }})</div>
-          <div class="data">{{ item.value }}</div>
+          <div v-show="item.type !== 'time'" class="data">{{ item.value }}</div>
+          <div v-show="item.type === 'time'" class="data">
+            <div v-for="child in item.timeValue" :key="child.label">
+              {{ child.value }}<span>{{ child.label }}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -42,7 +47,22 @@
       title: '我负责事件的平均处理时间',
       unit: '件',
       icon: threeSvg,
-      value: '5时36分12秒'
+      value: '5时36分12秒',
+      type: 'time',
+      timeValue: [
+        {
+          label: '时',
+          value: '5'
+        },
+        {
+          label: '分',
+          value: '36'
+        },
+        {
+          label: '秒',
+          value: '12'
+        }
+      ]
     },
     {
       title: '我负责的事件关闭率',
@@ -88,6 +108,13 @@
         color: #1e2435;
         line-height: 32px;
         font-weight: 600;
+        display: flex;
+        align-items: flex-end;
+        span {
+          font-size: 12px;
+          color: #7e8494;
+          margin: 0 4px;
+        }
       }
     }
   }

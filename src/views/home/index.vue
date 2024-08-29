@@ -1,5 +1,5 @@
 <template>
-  <h1>Home</h1>
+  <div class="table-wrap">首页</div>
 </template>
 
 <script setup lang="ts"></script>

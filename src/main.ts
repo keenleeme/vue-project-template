@@ -26,6 +26,7 @@ import pinia from './store';
 
 const app = createApp(App);
 app.use(pinia);
+app.config.globalProperties.$tours = {};
 
 // micro按需生成
 startMicro(router);

@@ -2,6 +2,15 @@ import type { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
   {
+    name: 'base::base-list',
+    path: '/base-list',
+    component: () => import('@/views/baseList/index.vue'),
+    meta: {
+      title: '列表页',
+      permissionId: 'base::home:index'
+    }
+  },
+  {
     name: 'base::home',
     path: '/home',
     component: () => import('@/views/home/index.vue'),
@@ -83,6 +92,15 @@ const routes: RouteRecordRaw[] = [
     }
   },
   {
+    name: 'base::vueTour',
+    path: '/vueTour',
+    component: () => import('@/views/vueTour/index.vue'),
+    meta: {
+      title: '引导页测试',
+      permissionId: 'base::home:index'
+    }
+  },
+  {
     name: 'sum-one',
     path: '/sum-one',
     component: () => import('@/views/RoutersMenus/index.vue'),
@@ -146,6 +164,15 @@ const routes: RouteRecordRaw[] = [
         ]
       }
     ]
+  },
+  {
+    name: 'example',
+    path: '/example',
+    meta: {
+      title: 'example',
+      permissionId: 'base::theme:index'
+    },
+    component: () => import('@/views/example/index.vue')
   }
 ];
 

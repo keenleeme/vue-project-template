@@ -17,7 +17,8 @@
     if (currentUrl === '/dasUpgrade') {
       inline.value = 'http://10.50.28.10:8599/das-upgrade/#/upgrade?activeName=offline';
     } else if (currentUrl === '/dasvScreen') {
-      inline.value = 'https://10.20.178.18/login';
+      inline.value =
+        'https://dasv.das-security.cn/?dasvAuthToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsInVzZXJuYW1lIjoiVUVEU2NyZWVuIiwib3JpZ2luIjoibG9jYWwiLCJvcmlnaW5JZCI6bnVsbCwicm9sZSI6WyJtZW1iZXIiXSwic2lkIjoic2Vzc2lvbjo6ZTQxZjEwZGRhZWEyNDEwMjhkZWRhNTdjNDlhNTZkMjkiLCJpYXQiOjE3MjMwODM1NTAsImV4cCI6MTg3ODYwMzU1MH0.bGBmTANqMRximqr4dING1X-UWW2GKHxMRDOdskDFA3Y';
     }
   });
 </script>
