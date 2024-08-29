@@ -1,3 +1,12 @@
+/*
+ * @Author: xzj 13819929694@163.com
+ * @Date: 2024-08-22 16:50:45
+ * @LastEditors: xzj 13819929694@163.com
+ * @LastEditTime: 2024-08-29 18:48:16
+ * @Description:
+ *
+ * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved.
+ */
 import { createApp } from 'vue';
 // import Soul from '@ailpha/soul-ui';
 // import '@ailpha/soul-ui/dist/styles/index.css';

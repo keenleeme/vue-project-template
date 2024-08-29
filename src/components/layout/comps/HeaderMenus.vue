@@ -188,13 +188,14 @@
 <script setup lang="ts">
   import { ref, watchEffect, watch, nextTick } from 'vue';
   import { useRouter } from 'vue-router';
-  import { generate } from '@ant-design/colors';
+  // import { generate } from '@ant-design/colors';
   import { UedTopMenu, UedMapMenu, UedUserMenu, ThemePanel, findNodeInTree } from '@ued-material/menu';
   import { storeToRefs } from 'pinia';
-  import { useAppStore, useMenusStore } from '@/store';
+  import { useAppStore, useMenusStore, useThemeStore } from '@/store';
 
   const menusStore = useMenusStore();
   const appStore = useAppStore();
+  const themeStore = useThemeStore();
 
   // 菜单
   const { activeMenus } = storeToRefs(menusStore);
@@ -212,6 +213,7 @@
   const handleLogout = () => {
     menusStore.reset();
     appStore.reset();
+    themeStore.reset();
     router.push('/login');
   };
 
@@ -327,25 +329,28 @@
     children: 'submenu'
   });
 
-  const defaultConfig = {
-    mode: 'light',
-    lang: 'ZH',
-    primaryColor: '#134BEA',
-    darkPrimaryColor: '#3B71EE',
-    lightDarkSwitch: true,
-    languageSwitch: true,
-    helpCenter: true,
-    layout: 'top',
-    topStyle: 'dark',
-    sideStyle: 'light',
-    header: true,
-    breadcrumb: true,
-    mapMenu: true,
-    accordion: true
-  };
-
+  // const defaultConfig = {
+  //   mode: 'light',
+  //   lang: 'ZH',
+  //   primaryColor: '#134BEA',
+  //   darkPrimaryColor: '#3B71EE',
+  //   lightDarkSwitch: true,
+  //   languageSwitch: true,
+  //   helpCenter: true,
+  //   layout: 'top',
+  //   topStyle: 'dark',
+  //   sideStyle: 'light',
+  //   header: true,
+  //   breadcrumb: true,
+  //   mapMenu: true,
+  //   accordion: true
+  // };
+  const { themeConfig } = storeToRefs(themeStore);
+  console.log('themeConfig', themeConfig.value.header, themeStore);
+  const mode = ref('mix');
   const config = ref({
-    ...defaultConfig
+    ...themeConfig.value,
+    mode: mode.value
   });
 
   const popActive = ref(true);
@@ -513,7 +518,7 @@
     config.value.primaryColor = '#134BEA';
   };
   const resetTheme = (newConfig?: any) => {
-    config.value = { ...defaultConfig, ...newConfig };
+    config.value = { ...themeConfig.value, ...newConfig };
   };
 
   // 帮助手册
