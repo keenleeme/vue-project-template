@@ -503,7 +503,9 @@
   };
 
   const changeConfig = (newConfig?: any) => {
-    config.value = { ...newConfig };
+    console.log(config.value, newConfig);
+    // config.value = { ...newConfig };
+    // console.log(config.value);
   };
 
   // 重置主题色
