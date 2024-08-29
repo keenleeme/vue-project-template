@@ -31,7 +31,7 @@
     themeColor: {
       type: Array,
       default: () => {
-        return [];
+        return ['#F53C3C', '#FF7F29', '#FFB005', '#7E8494'];
       }
     },
     darkColor: {
@@ -41,21 +41,19 @@
       }
     }
   });
-  const color = ref([
-    '#3B71EE',
-    '#62D592',
-    '#FF9B4F',
-    '#32cd32',
-    '#6495ed',
-    '#ff69b4',
-    '#ba55d3',
-    '#cd5c5c',
-    '#ffa500',
-    '#48e0de',
-    '#1e9off'
-  ]);
+  const color = ref<any[]>(props.themeColor);
+  const formatColor = (hexColors: any[]) => {
+    const rgbColor = hexColors.map((hexColor) => {
+      const red = parseInt(hexColor.slice(1, 3), 16);
+      const green = parseInt(hexColor.slice(3, 5), 16);
+      const blue = parseInt(hexColor.slice(5, 7), 16);
+      return `rgba(${red},${green},${blue}, 0.1)`;
+    });
+    return rgbColor;
+  };
+
   const pieOption = ref({
-    color,
+    color: color.value,
     tooltip: {
       trigger: 'item'
     },
@@ -64,9 +62,10 @@
       orient: 'vertical',
       right: 56,
       top: 36,
-      itemWidth: 12,
-      itemHeight: 8,
+      itemWidth: 10,
+      itemHeight: 6,
       itemGap: 12,
+      borderRadius: 6,
       formatter(name: any) {
         return name;
       }
@@ -93,20 +92,7 @@
             fontWeight: 'bold'
           }
         },
-        data: [
-          {
-            name: '高危',
-            value: 0
-          },
-          {
-            name: '中危',
-            value: 0
-          },
-          {
-            name: '低微',
-            value: 0
-          }
-        ]
+        data: props.data
       },
       {
         name: '',
@@ -128,7 +114,7 @@
         },
         emphasis: {
           label: {
-            show: true,
+            show: false,
             fontSize: '14',
             fontWeight: 'bold'
           }
@@ -136,25 +122,12 @@
         itemStyle: {
           normal: {
             color: (list: any) => {
-              const colorList = ['rgba(59,113,238,0.1)', 'rgba(98,213,146,0.1)', 'rgba(255,155,79,0.1)'];
+              const colorList = formatColor(color.value);
               return colorList[list.dataIndex];
             }
           }
         },
-        data: [
-          {
-            name: '高危',
-            value: 0
-          },
-          {
-            name: '中危',
-            value: 0
-          },
-          {
-            name: '低微',
-            value: 0
-          }
-        ]
+        data: props.data
       }
     ]
   });

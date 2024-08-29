@@ -3,12 +3,49 @@
     <div class="left">
       <BlockCard :title="'我负责事件的级别分配'">
         <template #content>
-          <PieChartComponent :data="[]" height="160px"></PieChartComponent>
+          <PieChartComponent
+            :data="[
+              {
+                name: '高危',
+                value: 0
+              },
+              {
+                name: '中危',
+                value: 0
+              },
+              {
+                name: '低微',
+                value: 0
+              }
+            ]"
+            height="160px"
+          ></PieChartComponent>
         </template>
       </BlockCard>
       <BlockCard :title="'我负责事件状态分布'">
         <template #content>
-          <PieChartComponent :data="[]" height="160px"></PieChartComponent>
+          <PieChartComponent
+            :data="[
+              {
+                name: '活动中',
+                value: 0
+              },
+              {
+                name: '已关闭',
+                value: 0
+              },
+              {
+                name: '已超时',
+                value: 0
+              },
+              {
+                name: '错误',
+                value: 0
+              }
+            ]"
+            :theme-color="['#134BEA', '#1DB969', '#F53C3C', '#A74748']"
+            height="160px"
+          ></PieChartComponent>
         </template>
       </BlockCard>
     </div>

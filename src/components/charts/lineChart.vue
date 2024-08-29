@@ -31,7 +31,7 @@
     themeColor: {
       type: Array,
       default: () => {
-        return [];
+        return ['#3B71EE', '#62D592', '#FF9B4F', '#32cd32'];
       }
     },
     darkColor: {
@@ -41,21 +41,16 @@
       }
     }
   });
-  const color = ref([
-    '#3B71EE',
-    '#62D592',
-    '#FF9B4F',
-    '#32cd32',
-    '#6495ed',
-    '#ff69b4',
-    '#ba55d3',
-    '#cd5c5c',
-    '#ffa500',
-    '#48e0de',
-    '#1e9off'
-  ]);
+  const color = ref<any[]>(props.themeColor);
   const pieOption = ref({
-    color,
+    color: color.value,
+    grid: {
+      top: '6%',
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
     xAxis: {
       type: 'category',
       boundaryGap: false,
@@ -68,6 +63,7 @@
       {
         data: [820, 932, 901, 934, 1290, 1330, 1320],
         type: 'line',
+        smooth: true,
         areaStyle: {
           color: {
             type: 'linear',
@@ -78,11 +74,11 @@
             colorStops: [
               {
                 offset: 0,
-                color: 'rgba(59,113,238,0)' // 0% 处的颜色
+                color: 'rgba(19,75,234,0.15)' // 0% 处的颜色
               },
               {
                 offset: 1,
-                color: 'rgba(59,113,238,1)' // 0% 处的颜色
+                color: 'rgba(19,75,234,0)' // 0% 处的颜色
               }
             ]
           }
