@@ -232,7 +232,7 @@
           id: 12,
           name: '列表页',
           hideChildren: true,
-          url: '/home',
+          url: '/base-list',
           submenu: []
         },
         {
@@ -318,6 +318,11 @@
           id: 83,
           name: '在线升级',
           url: '/dasUpgrade'
+        },
+        {
+          id: 84,
+          name: '用户引导',
+          url: '/vueTour'
         }
       ]
     }

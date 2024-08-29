@@ -2,11 +2,20 @@ import type { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
   {
+    name: 'base::base-list',
+    path: '/base-list',
+    component: () => import('@/views/baseList/index.vue'),
+    meta: {
+      title: '列表页',
+      permissionId: 'base::home:index'
+    }
+  },
+  {
     name: 'base::home',
     path: '/home',
     component: () => import('@/views/home/index.vue'),
     meta: {
-      title: '列表页',
+      title: '首页',
       permissionId: 'base::home:index'
     }
   },

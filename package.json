@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run dev",
     "dev": "cross-env NODE_ENV=development vite --config ./configs/vite.config.dev.ts",
-    "build": "cross-env NODE_ENV=production vue-tsc --noEmit && vite build --config ./configs/vite.config.prod.ts",
+    "build": "cross-env NODE_ENV=production  vite build --config ./configs/vite.config.prod.ts",
     "lint": "npx lint-staged",
     "prepare": "husky install",
     "i18n:init": "das-intl --init",

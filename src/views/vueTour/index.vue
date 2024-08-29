@@ -95,10 +95,10 @@
 
 <template>
   <div>
-    <span id="v-step-0" class="logo">LOGO</span>
-    <span id="v-step-1" class="title">XXXX安全管理系统</span>
-    <span id="v-step-2" class="logo">LOGO</span>
-    <span id="v-step-3" class="title">XXXX安全管理系统</span>
+    <span id="v-step-0" class="logo">welcome！,快来跟我一起快速上手吧</span>
+    <span id="v-step-1" class="title">这只是粗略的demo</span>
+    <span id="v-step-2" class="logo">后续我会完善的</span>
+    <span id="v-step-3" class="title">伙伴们敬请谅解～</span>
     <v-tour
       name="myTour"
       :steps="steps"
@@ -134,4 +134,11 @@
   </div>
 </template>
 
-<style></style>
+<style lang="less" scoped>
+  .logo,
+  .title {
+    font-size: 20px;
+    line-height: 120px;
+    margin: 50px;
+  }
+</style>
