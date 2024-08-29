@@ -1,94 +1,137 @@
-<script setup lang="ts">
-  const tours = ref(null);
-  const toursInstance = ref({ start: () => {} });
-  onMounted(() => {
-    const ctx = getCurrentInstance();
-    toursInstance.value = ctx?.appContext.config.globalProperties.$tours.myTour;
-    console.log(toursInstance.value, ctx?.appContext.config.globalProperties.$tours);
-    toursInstance.value.start();
-  });
-  const steps = [
+<script setup>
+  import { VTour, VStep } from '@ued-material/vue-tour';
+
+  const steps = ref([
     {
-      target: '#v-step-0', // We're using document.querySelector() under the hood
-      header: {
-        title: 'Get Started'
-      },
-      params: { mask: true, maskPadding: 8 },
-      content: `Discover <strong>Vue Tour</strong>!`
-    },
-    {
-      target: '.v-step-1',
-      content: 'An awesome plugin made with Vue.js!'
-    },
-    {
-      target: '[data-v-step="2"]',
-      content:
-        "Try it, you'll love it!<br>You can put HTML in the steps and completely customize the DOM to suit your needs.",
+      target: '#v-step-0',
+      title: '点击到下一步',
       params: {
-        placement: 'top' // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
+        // enabledButtons: {
+        //   buttonPrevious: false,
+        //   buttonNext: false,
+        //   buttonStop: false,
+        // },
+        maskPadding: 8,
+        hideCloseBtn: true
+      },
+      popover: {
+        placement: 'bottom-start',
+        modifiers: [
+          {
+            name: 'offset',
+            options: {
+              offset: [-8, 20]
+            }
+          }
+        ]
       }
     },
     {
-      target: '.menu-icon-cog',
-      content:
-        "Try it, you'll love it!<br>You can put HTML in the steps and completely customize the DOM to suit your needs.",
+      target: '#v-step-1',
+      title: '高亮区域可配置',
+      content: '默认为绑定元素区域高亮，可以设置padding',
       params: {
-        placement: 'top' // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
+        maskPadding: 8
+      },
+      popover: {
+        placement: 'bottom-end',
+        modifiers: [
+          {
+            name: 'offset',
+            options: {
+              offset: [8, 20]
+            }
+          }
+        ]
+      }
+    },
+    {
+      target: '#v-step-2',
+      title: '遮罩层支持关闭',
+      params: {
+        mask: false
+      }
+    },
+    {
+      target: '#v-step-3',
+      title: '恭喜你，完成demo引导',
+      content: '点击完成按钮结束本次引导',
+      popover: {
+        placement: 'top'
       }
     }
-  ];
+  ]);
 
-  // function nextStep() {
-  //   $tours.value.myTour.nextStep();
-  // }
-
-  // function showLastStep() {
-  //   $tours.value.myTour.currentStep = steps.value.length - 1;
-  // }
-
-  function myCustomPreviousStepCallback(currentStep = 1) {
+  const myCustomPreviousStepCallback = (currentStep) => {
     console.log(`[Vue Tour] A custom previousStep callback has been called on step ${currentStep + 1}`);
-  }
+  };
 
-  function myCustomNextStepCallback(currentStep = 1) {
+  const myCustomNextStepCallback = (currentStep) => {
     console.log(`[Vue Tour] A custom nextStep callback has been called on step ${currentStep + 1}`);
-    console.log(currentStep);
+
     if (currentStep === 1) {
       console.log('[Vue Tour] A custom nextStep callback has been called from step 2 to step 3');
     }
-  }
+  };
 
-  function muCustomFinishCallback() {
+  const muCustomFinishCallback = (val) => {
     document.documentElement.scrollTop = 0;
-    console.log('>>finish>>>');
-  }
+    console.log('>>finish>>>', val);
+  };
+
   const callbacks = ref({
     onPreviousStep: myCustomPreviousStepCallback,
     onNextStep: myCustomNextStepCallback,
     onFinish: muCustomFinishCallback
   });
+  const instance = getCurrentInstance();
+  onMounted(() => {
+    nextTick(() => {
+      console.log('>>instance>>>', instance.proxy.$tours);
+      instance.proxy.$tours.myTour.start();
+    });
+  });
 </script>
 
 <template>
-  <h1>example</h1>
-  <RouterLink to="/example/add">{{ $t('I18N.example.qianWangXinZengYe') }}</RouterLink>
   <div>
-    <div id="v-step-0">
-      A DOM element on your page. The first step will pop on this element because its ID is 'v-step-0'.
-    </div>
-    <div class="v-step-1">
-      A DOM element on your page. The second step will pop on this element because its ID is 'v-step-1'.
-    </div>
-    <div data-v-step="2">
-      A DOM element on your page. The third and final step will pop on this element because its ID is 'v-step-2'.
-    </div>
+    <span id="v-step-0" class="logo">LOGO</span>
+    <span id="v-step-1" class="title">XXXX安全管理系统</span>
+    <span id="v-step-2" class="logo">LOGO</span>
+    <span id="v-step-3" class="title">XXXX安全管理系统</span>
     <v-tour
-      ref="tours"
       name="myTour"
       :steps="steps"
       :callbacks="callbacks"
       :options="{ mask: true, maskPadding: 0, hideCloseBtn: false }"
     >
+      <template #default="tour">
+        <transition v-for="(step, index) of tour.steps" :key="index" name="fade">
+          <v-step
+            v-if="tour.currentStep === index"
+            :key="index"
+            :step="step"
+            :previous-step="tour.previousStep"
+            :next-step="tour.nextStep"
+            :stop="tour.stop"
+            :skip="tour.skip"
+            :finish="tour.finish"
+            :is-first="tour.isFirst"
+            :is-last="tour.isLast"
+            :labels="tour.labels"
+            :highlight="tour.highlight"
+            :enabled-buttons="tour.enabledButtons"
+            :mask="tour.mask"
+            :mask-padding="tour.maskPadding"
+            :hide-close-btn="tour.hideCloseBtn"
+            :index="index"
+            :length="tour.steps.length"
+          >
+          </v-step>
+        </transition>
+      </template>
     </v-tour>
   </div>
 </template>
+
+<style></style>

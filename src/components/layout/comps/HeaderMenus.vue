@@ -138,7 +138,8 @@
     @after-open-change="afterOpenChange"
   >
     <template #extra>
-      <a-button style="margin-right: 8px" @click="onClose">帮助文档</a-button>
+      <!-- <a-button style="margin-right: 8px" @click="onClose">帮助文档</a-button> -->
+      <img src="../images/export-outlined.png" class="icon-export" alt="" @click="onClose" />
     </template>
     <header>
       <h1>未来科技探索</h1>
@@ -649,6 +650,13 @@
     }
     p {
       text-indent: 2em;
+    }
+  }
+  .custom-class {
+    .icon-export {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
     }
   }
 </style>
