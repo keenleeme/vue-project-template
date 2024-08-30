@@ -74,6 +74,7 @@ module.exports = {
     'import/prefer-default-export': 0,
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': 'warn',
-    'no-console': 0
+    'no-console': 0,
+    'vue/no-deprecated-slot-attribute': 'off'
   }
 };

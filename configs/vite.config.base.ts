@@ -6,6 +6,8 @@ import Components from 'unplugin-vue-components/vite';
 import AutoImport from 'unplugin-auto-import/vite'
 import { defineConfig } from 'vite';
 import { loadEnv } from './utils';
+import { copy } from 'fs-extra'
+
 
 const env = loadEnv();
 
@@ -17,7 +19,8 @@ export default defineConfig({
       {
         template: {
           compilerOptions: {
-            isCustomElement: (tag) => /^micro-app/.test(tag)
+            isCustomElement: (tag) => /^(micro-app|ued-)/.test(tag)
+            // isCustomElement: (tag) => /^micro-app/.test(tag)
           }
         }
       }
@@ -42,7 +45,11 @@ export default defineConfig({
           importStyle: false // css in js
         })
       ]
-    })
+    }),
+    copy(
+      resolve(__dirname, '../node_modules/@ued-material/ued-wbc/dist/assets/ued-wbc'),
+      resolve(__dirname, '../public/assets/ued-wbc'),
+    )
   ],
   resolve: {
     alias: [
@@ -59,6 +66,28 @@ export default defineConfig({
   },
   define: {
     'process.env': JSON.stringify(env)
+  },
+  build: {
+    // rollupOptions: {
+    //   plugins: [
+    //     copy(
+    //       {
+    //         targets: [{
+    //           src: resolve(__dirname, '../node_modules/@ued-material/ued-wbc/dist/components/assets'),
+    //           dest: resolve(__dirname, '../dist/components/assets'),
+    //         }]
+    //       }
+    //     )
+    //   ]
+    // }
+    // copyPublicDir: true,
+    
+    // onEnd() {  
+    //   // 根据环境变量判断是否在生产环境下复制文件  
+    //   if (process.env.NODE_ENV === 'production') {  
+    //     copy('source/static', 'dist/static').catch(err => console.error('复制静态文件失败:', err));  
+    //   }  
+    // }  
   },
   css: {}
 });
