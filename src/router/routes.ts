@@ -96,7 +96,16 @@ const routes: RouteRecordRaw[] = [
     path: '/vueTour',
     component: () => import('@/views/vueTour/index.vue'),
     meta: {
-      title: '引导页测试',
+      title: '引导页',
+      permissionId: 'base::home:index'
+    }
+  },
+  {
+    name: 'base::vueTour2',
+    path: '/vueTour-page2',
+    component: () => import('@/views/vueTour/page2.vue'),
+    meta: {
+      title: '引导页2',
       permissionId: 'base::home:index'
     }
   },
