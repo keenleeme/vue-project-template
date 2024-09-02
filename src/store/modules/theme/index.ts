@@ -2,7 +2,7 @@
  * @Author: xzj 13819929694@163.com
  * @Date: 2024-08-28 19:05:12
  * @LastEditors: xzj 13819929694@163.com
- * @LastEditTime: 2024-08-29 13:36:00
+ * @LastEditTime: 2024-09-02 09:58:36
  * @Description:
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved.
  */
@@ -30,7 +30,14 @@ export default defineStore('theme', () => {
     return themeType.value;
   }
 
-  function reset() {}
+  function resetThemePrimaryColor() {
+    console.log(themeDefaultConfig);
+    themeConfig.value.primaryColor = themeDefaultConfig.primaryColor;
+  }
 
-  return { setThemeConfig, setThemeType, setTheme, getTheme, reset, themeConfig };
+  function reset() {
+    themeConfig.value = { ...themeDefaultConfig };
+  }
+
+  return { setThemeConfig, setThemeType, setTheme, getTheme, reset, resetThemePrimaryColor, themeConfig };
 });

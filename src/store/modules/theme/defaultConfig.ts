@@ -2,13 +2,15 @@
  * @Author: xzj 13819929694@163.com
  * @Date: 2024-08-28 19:19:55
  * @LastEditors: xzj 13819929694@163.com
- * @LastEditTime: 2024-08-29 09:38:47
+ * @LastEditTime: 2024-09-02 14:38:33
  * @Description:
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved.
  */
 import { ThemeConfigType } from './types';
 
 export const themeDefaultConfig: ThemeConfigType = {
+  title: '',
+  dark: false,
   mode: 'light',
   lang: 'ZH',
   primaryColor: '#134BEA',

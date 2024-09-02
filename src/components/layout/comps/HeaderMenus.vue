@@ -353,10 +353,11 @@
   // };
   const { themeConfig } = storeToRefs(themeStore);
   console.log('themeConfig', themeConfig.value.header, themeStore);
-  const mode = ref('mix');
   const config = ref({
-    ...themeConfig.value,
-    mode: mode.value
+    ...themeConfig.value
+  });
+  watchEffect(() => {
+    config.value = { ...themeConfig.value };
   });
 
   const popActive = ref(true);
@@ -515,16 +516,20 @@
 
   const changeConfig = (newConfig?: any) => {
     console.log(config.value, newConfig);
-    // config.value = { ...newConfig };
-    // console.log(config.value);
+    if (newConfig.type === 'change') {
+      return;
+    }
+    themeStore.themeConfig = { ...newConfig };
   };
 
   // 重置主题色
   const resetPrimaryColor = () => {
-    config.value.primaryColor = '#134BEA';
+    // config.value.primaryColor = '#134BEA';
+    themeStore.resetThemePrimaryColor();
   };
-  const resetTheme = (newConfig?: any) => {
-    config.value = { ...themeConfig.value, ...newConfig };
+  const resetTheme = () => {
+    themeStore.reset();
+    // themeStore.$reset();
   };
 
   // 帮助手册
