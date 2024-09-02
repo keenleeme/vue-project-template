@@ -1,6 +1,6 @@
-<script setup>
-  import { VTour, VStep } from '@ued-material/vue-tour';
-
+<script setup lang="ts">
+  const router = useRouter();
+  const route = useRoute();
   const steps = ref([
     {
       target: '#v-step-0',
@@ -13,6 +13,10 @@
         // },
         maskPadding: 8,
         hideCloseBtn: true
+      },
+      labels: {
+        // 按钮文字支持配置
+        buttonNext: '自定义下一步文字'
       },
       popover: {
         placement: 'bottom-start',
@@ -55,9 +59,14 @@
     {
       target: '#v-step-3',
       title: '恭喜你，完成demo引导',
-      content: '点击完成按钮结束本次引导',
+      content: '另一个页面引导',
       popover: {
         placement: 'top'
+      },
+      labels: {
+        // 按钮文字支持配置
+        buttonPrevious: '上一步哈哈',
+        buttonStop: '去另一个页面'
       }
     }
   ]);
@@ -66,7 +75,7 @@
     console.log(`[Vue Tour] A custom previousStep callback has been called on step ${currentStep + 1}`);
   };
 
-  const myCustomNextStepCallback = (currentStep) => {
+  const myCustomNextStepCallback = (currentStep: number) => {
     console.log(`[Vue Tour] A custom nextStep callback has been called on step ${currentStep + 1}`);
 
     if (currentStep === 1) {
@@ -77,6 +86,7 @@
   const muCustomFinishCallback = (val) => {
     document.documentElement.scrollTop = 0;
     console.log('>>finish>>>', val);
+    router.push(`/vueTour-page2?fromPath=${route.path}&stepLen=${steps.value.length - 1}`);
   };
 
   const callbacks = ref({
@@ -84,11 +94,12 @@
     onNextStep: myCustomNextStepCallback,
     onFinish: muCustomFinishCallback
   });
+
   const instance = getCurrentInstance();
   onMounted(() => {
     nextTick(() => {
-      console.log('>>instance>>>', instance.proxy.$tours);
-      instance.proxy.$tours.myTour.start();
+      console.log('>>instance>>>', instance.proxy.$tours, route.params);
+      instance.proxy.$tours.myTour.start(route.query.step || 0);
     });
   });
 </script>
@@ -99,38 +110,7 @@
     <span id="v-step-1" class="title">这只是粗略的demo</span>
     <span id="v-step-2" class="logo">后续我会完善的</span>
     <span id="v-step-3" class="title">伙伴们敬请谅解～</span>
-    <v-tour
-      name="myTour"
-      :steps="steps"
-      :callbacks="callbacks"
-      :options="{ mask: true, maskPadding: 0, hideCloseBtn: false }"
-    >
-      <template #default="tour">
-        <transition v-for="(step, index) of tour.steps" :key="index" name="fade">
-          <v-step
-            v-if="tour.currentStep === index"
-            :key="index"
-            :step="step"
-            :previous-step="tour.previousStep"
-            :next-step="tour.nextStep"
-            :stop="tour.stop"
-            :skip="tour.skip"
-            :finish="tour.finish"
-            :is-first="tour.isFirst"
-            :is-last="tour.isLast"
-            :labels="tour.labels"
-            :highlight="tour.highlight"
-            :enabled-buttons="tour.enabledButtons"
-            :mask="tour.mask"
-            :mask-padding="tour.maskPadding"
-            :hide-close-btn="tour.hideCloseBtn"
-            :index="index"
-            :length="tour.steps.length"
-          >
-          </v-step>
-        </transition>
-      </template>
-    </v-tour>
+    <vue-tour name="myTour" :steps="steps" :callbacks="callbacks"></vue-tour>
   </div>
 </template>
 
