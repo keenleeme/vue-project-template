@@ -8,13 +8,17 @@
 
 <script setup lang="ts">
   import { RouterView } from 'vue-router';
+  import { generate } from '@ant-design/colors';
   import zhCN from 'ant-design-vue/es/locale/zh_CN';
+  import Color from 'color';
+  import { storeToRefs } from 'pinia';
   import theme from '@/theme/theme';
-  // import { storeToRefs } from 'pinia';
   import { getWebsiteConfig } from './api/common';
   import Layout from './components/layout/index.vue';
-  import { useAppStore } from './store';
+  import { useAppStore, useThemeStore } from './store';
   import { AppConfigType } from './store/modules/app/types';
+
+  // const Color = require('color');
 
   const appStore = useAppStore();
   // 主题
@@ -63,6 +67,57 @@
       // code: false,
     });
   };
+
+  // 主题色设置
+  let primaryColors: string[] = [];
+  let darkPrimaryColors: string[] = [];
+  const themeStore = useThemeStore();
+  const { themeConfig } = storeToRefs(themeStore);
+  const config = ref({
+    ...themeConfig.value
+  });
+  watchEffect(() => {
+    config.value = { ...themeConfig.value };
+  });
+
+  watch(
+    () => config.value.primaryColor,
+    () => {
+      const color = Color(config.value.primaryColor);
+      const darkOriginColor = color
+        .saturate(15 / 85)
+        .lighten(0.25)
+        .hex();
+      primaryColors = generate(config.value.primaryColor);
+      darkPrimaryColors = generate(darkOriginColor, { theme: 'dark', backgroundColor: '#020C1E' });
+      nextTick(() => {
+        const bodyEl = document.body;
+        // bodyEl.className = config.value.mode === 'dark' || config.value.dark === true ? 'thmee-dark' : '';
+        bodyEl.style.setProperty('--um-primary-color-light', primaryColors[0]);
+        bodyEl.style.setProperty('--um-primary-color-hover', primaryColors[4]);
+        bodyEl.style.setProperty('--um-primary-color-normal', primaryColors[5]);
+        bodyEl.style.setProperty('--um-dark-primary-color-light', darkPrimaryColors[0]);
+        bodyEl.style.setProperty('--um-dark-primary-color-hover', darkPrimaryColors[4]);
+        bodyEl.style.setProperty('--um-dark-primary-color-normal', darkPrimaryColors[5]);
+        bodyEl.style.setProperty('--c-color-primary-7', primaryColors[7]);
+        bodyEl.style.setProperty('--c-color-primary-5', primaryColors[4]);
+        bodyEl.style.setProperty('--c-color-primary-6', primaryColors[5]);
+        bodyEl.style.setProperty('--c-color-primary-2', primaryColors[1]);
+      });
+    },
+    {
+      immediate: true,
+      deep: true
+    }
+  );
+
+  watch(
+    () => config.value.mode,
+    (val) => {
+      const bodyEl = document.body;
+      bodyEl.className = val === 'dark' ? 'theme-dark' : '';
+    }
+  );
 </script>
 
 <style>
@@ -75,7 +130,8 @@
 
   .theme-dark {
     --primary-color: #2c3e50; /* 暗色主题色 */
-    --primary-bg: #2c3e50; /* 暗色背景色 */
+    /* --primary-bg: #2c3e50; 暗色背景色 */
+    --primary-bg: #0d172a; /* 暗色背景色 */
     --primary-divider: #4d576e; /** 分割线颜色 */
   }
 

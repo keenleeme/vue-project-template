@@ -1,9 +1,16 @@
+<!--
+ * @Author: xzj 13819929694@163.com
+ * @Date: 2024-08-22 16:50:45
+ * @LastEditors: xzj 13819929694@163.com
+ * @LastEditTime: 2024-09-03 16:34:55
+ * @Description: 
+ * 
+ * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
+-->
 <template>
   <a-layout>
-    <div
-      class="p2 pl-16 h-40"
-      :style="{ 'background-color': token.colorBgBase, borderLeft: `1px solid ${token.colorBorder}` }"
-    >
+    <div class="p2 pl-16 h-40 page-top">
+      <!-- :style="{ 'background-color': token.colorBgBase, borderLeft: `1px solid ${token.colorBorder}` }" -->
       <!-- <a-breadcrumb class="breadcrumb">
         <template #separator>
           <RightOutlined style="vertical-align: revert-layer; font-size: 14px" />
@@ -31,33 +38,50 @@
 </template>
 
 <script setup lang="ts">
-  import { RouterView, useRouter } from 'vue-router';
-  import { RightOutlined, LeftSquareOutlined } from '@ant-design/icons-vue';
-  import { theme } from 'ant-design-vue';
-  import { storeToRefs } from 'pinia';
-  import { useMenusStore } from '@/store';
+  import { RouterView } from 'vue-router';
+  // import { useRouter } from 'vue-router';
+  import { LeftSquareOutlined } from '@ant-design/icons-vue';
 
-  const { useToken } = theme;
-  const { token } = useToken();
+  // import { RightOutlined } from '@ant-design/icons-vue';
+  // import { theme } from 'ant-design-vue';
+  // import { storeToRefs } from 'pinia';
+  // import { useMenusStore } from '@/store';
 
-  const router = useRouter();
-  const menusStore = useMenusStore();
-  const { activeBreadcrumb } = storeToRefs(menusStore);
+  // const { useToken } = theme;
+  // const { token } = useToken();
+
+  // const router = useRouter();
+  // const menusStore = useMenusStore();
+  // const { activeBreadcrumb } = storeToRefs(menusStore);
 </script>
 
 <style lang="less" scoped>
   .breadcrumb {
     height: 40px;
   }
-  .page-title {
-    display: flex;
-    height: 40px;
-    justify-content: flex-start;
-    align-items: center;
-    font-size: 16px;
+  .page-top {
     background-color: var(--primary-bg);
+    border-left: 1px solid var(--primary-bg);
+    .page-title {
+      display: flex;
+      height: 40px;
+      justify-content: flex-start;
+      align-items: center;
+      font-size: 16px;
+      background-color: var(--primary-bg);
+      .page-title-text {
+        margin-left: 8px;
+      }
+    }
+  }
+
+  .dark {
+    .page-top {
+      background-color: var(--primary-bg);
+      border-left: 1px solid var(--primary-bg);
+    }
     .page-title-text {
-      margin-left: 8px;
+      color: #fff;
     }
   }
 </style>

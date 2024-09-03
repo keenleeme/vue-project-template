@@ -1,5 +1,5 @@
 <template>
-  <div class="header">
+  <div v-if="!(themeConfig.layout === 'side' && !themeConfig.header)" class="header">
     <div class="logo-wrap">
       <span class="logo">LOGO</span>
       <span class="title">XXXX安全管理系统</span>
@@ -60,7 +60,7 @@
         v-if="config.lightDarkSwitch"
         class="icon-button menuicon"
         :class="config.mode === 'light' ? 'menu-icon-light' : 'menu-icon-black'"
-        @click="config.mode = config.mode === 'light' ? 'dark' : 'light'"
+        @click="themeConfig.mode = config.mode === 'light' ? 'dark' : 'light'"
       />
       <i
         v-if="config.languageSwitch"
@@ -187,7 +187,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, watchEffect, watch, nextTick } from 'vue';
+  import { ref, watchEffect } from 'vue';
   import { useRouter } from 'vue-router';
   // import { generate } from '@ant-design/colors';
   import { UedTopMenu, UedMapMenu, UedUserMenu, ThemePanel, findNodeInTree } from '@ued-material/menu';
@@ -657,8 +657,8 @@
     align-items: center;
     height: 48px;
     padding-right: 320px;
-    background-color: #172034;
-    color: #fff;
+    // background-color: #172034;
+    // color: #fff;
     .logo-wrap {
       min-width: 200px;
     }
@@ -668,6 +668,10 @@
     p {
       text-indent: 2em;
     }
+  }
+  .header-dark .header {
+    background-color: #172034;
+    color: #fff;
   }
   .custom-class {
     .icon-export {

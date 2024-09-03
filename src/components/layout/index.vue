@@ -1,6 +1,21 @@
+<!--
+ * @Author: xzj 13819929694@163.com
+ * @Date: 2024-08-22 16:50:45
+ * @LastEditors: xzj 13819929694@163.com
+ * @LastEditTime: 2024-09-02 16:06:21
+ * @Description: 
+ * 
+ * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
+-->
 <template>
   <a-watermark :content="watermark">
-    <a-layout class="h-screen w-screen">
+    <a-layout
+      class="h-screen w-screen"
+      :class="{
+        dark: themeConfig.mode === 'dark',
+        'header-dark': themeConfig.mode === 'dark' || (themeConfig.mode === 'light' && themeConfig.topStyle === 'dark')
+      }"
+    >
       <HeaderMenus v-if="!fullScreen"></HeaderMenus>
       <a-layout v-if="!fullScreen">
         <SiderMenus></SiderMenus>
@@ -15,7 +30,7 @@
   import { computed, watchEffect } from 'vue';
   import { useRoute } from 'vue-router';
   import { storeToRefs } from 'pinia';
-  import { useAppStore, useMenusStore } from '@/store';
+  import { useAppStore, useMenusStore, useThemeStore } from '@/store';
   import type { RouteItemType } from '@/store/modules/menus/types';
   import HeaderMenus from './comps/HeaderMenus.vue';
   import LayoutContent from './comps/LayoutContent.vue';
@@ -29,6 +44,12 @@
     const routes = route.meta.parentRoutes as RouteItemType[];
     menusStore.setActiveRoutes(routes);
   });
+
+  const themeStore = useThemeStore();
+  const { themeConfig } = storeToRefs(themeStore);
+  // watchEffect(() => {
+  //   const { layout, topStyle } = themeConfig.value;
+  // });
 
   const fullScreen = computed(() => {
     return route.meta.fullScreen;
