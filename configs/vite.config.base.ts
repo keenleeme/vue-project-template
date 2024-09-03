@@ -2,7 +2,7 @@
  * @Author: xzj 13819929694@163.com
  * @Date: 2024-08-22 16:50:45
  * @LastEditors: xzj 13819929694@163.com
- * @LastEditTime: 2024-09-03 16:11:38
+ * @LastEditTime: 2024-09-03 17:09:13
  * @Description: 
  * 
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
@@ -15,17 +15,11 @@ import Components from 'unplugin-vue-components/vite';
 import AutoImport from 'unplugin-auto-import/vite'
 import { defineConfig } from 'vite';
 import { loadEnv } from './utils';
-import commonjs from '@rollup/plugin-commonjs';
-import requireTransform from 'vite-plugin-require-transform';
 const env = loadEnv();
 
 export default defineConfig({
   base: env?.BASE_PATH || '/',
   plugins: [
-    commonjs() as any,
-    requireTransform({
-      fileRegex: /.js$|.ts$/  // 使用正则表达式匹配需要作用的文件
-    }),
     vue(
       // micro 按需生成
       {
