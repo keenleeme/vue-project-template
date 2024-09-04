@@ -122,18 +122,7 @@
 
 <style>
   @import url('./styles/reset.css');
-  :root {
-    --primary-color: #3498db; /* 默认主题色 */
-    --primary-bg: #ffffff; /* 默认背景色 */
-    --primary-divider: #cbd0db; /** 分割线颜色 */
-  }
-
-  .theme-dark {
-    --primary-color: #2c3e50; /* 暗色主题色 */
-    /* --primary-bg: #2c3e50; 暗色背景色 */
-    --primary-bg: #0d172a; /* 暗色背景色 */
-    --primary-divider: #4d576e; /** 分割线颜色 */
-  }
+  @import url('./styles/theme.css');
 
   /* 应用变量 */
   body {

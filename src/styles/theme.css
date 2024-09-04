@@ -1,0 +1,27 @@
+:root {
+  --primary-color: #3498db; /* 默认主题色 */
+  --primary-bg: #ffffff; /* 默认背景色 */
+  --primary-divider: #cbd0db; /** 分割线色 */
+  --color-page-bg: #f6f7fb; /** 页面背景色 */
+  --color-text-title: #1E2435; /** 标题色 */
+  --color-text-sub-title: #353C51; /** 次标题色 */
+  --color-text-content: #1E2435; /** 内容色 */
+  --color-text-placeholder: #7E8494; /** 占位符色 */
+  --color-text-disabled: #7E8494; /** 文字禁用色 */
+  --color-text-primary: #3498db; /** 文字默认色 */
+  --color-text-link: #3498db; /** 文字链接色 */
+}
+
+.theme-dark {
+  --primary-color: #2c3e50; /* 暗色主题色 */
+  --primary-bg: #0d172a; /* 暗色背景色 */
+  --primary-divider: #4d576e; /** 分割线色 */
+  --color-page-bg: #020c28; /** 页面背景色 */
+  --color-text-title: #ffffff; /** 标题色 */
+  --color-text-sub-title: #BCC3D1; /** 次标题色 */
+  --color-text-content: #ffffff; /** 内容色 */
+  --color-text-placeholder: #9096A5 ; /** 占位符色 */
+  --color-text-disabled: #9096A5 ; /** 文字禁用色 */
+  --color-text-primary: #3498db; /** 文字默认色 */
+  --color-text-link: #3498db; /** 文字链接色 */
+}

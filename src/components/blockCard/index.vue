@@ -42,13 +42,13 @@
       padding: 0 16px;
       font-weight: bold;
       &.title-border {
-        border-bottom: 1px solid #e9eaf0;
+        border-bottom: 1px solid var(--primary-divider);
       }
     }
     h2 {
       font-size: 14px;
       line-height: 26px;
-      color: #1e2435;
+      color: var(--color-text-title);
     }
   }
 </style>

@@ -3,12 +3,14 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { ref, watchEffect, watch } from 'vue';
   import ECharts from 'vue-echarts';
   import { PieChart } from 'echarts/charts';
   import { TitleComponent, TooltipComponent, LegendComponent } from 'echarts/components';
   import { use } from 'echarts/core';
   import { CanvasRenderer } from 'echarts/renderers';
+  import { storeToRefs } from 'pinia';
+  import { useThemeStore } from '@/store';
 
   use([CanvasRenderer, PieChart, TitleComponent, TooltipComponent, LegendComponent]);
 
@@ -37,11 +39,28 @@
     darkColor: {
       type: Array,
       default: () => {
-        return [];
+        return ['#1DB969', '#FF7F29', '#6A7285', '#F53C3C'];
       }
     }
   });
+
+  const legendLengthTop = ref<any>({
+    1: 74,
+    2: 60,
+    3: 46,
+    4: 32
+  });
+
+  const themeStore = useThemeStore();
+  const { themeConfig } = storeToRefs(themeStore);
+  const config = ref({
+    ...themeConfig.value
+  });
   const color = ref<any[]>(props.themeColor);
+  watchEffect(() => {
+    config.value = { ...themeConfig.value };
+  });
+
   const formatColor = (hexColors: any[]) => {
     const rgbColor = hexColors.map((hexColor) => {
       const red = parseInt(hexColor.slice(1, 3), 16);
@@ -55,17 +74,23 @@
   const pieOption = ref({
     color: color.value,
     tooltip: {
-      trigger: 'item'
+      trigger: 'item',
+      textStyle: {
+        color: config.value.mode === 'dark' ? '#fff' : '#1E2435'
+      }
     },
     legend: {
       type: 'scroll',
       orient: 'vertical',
       right: 56,
-      top: 36,
+      top: legendLengthTop.value[props.data.length],
       itemWidth: 10,
       itemHeight: 6,
       itemGap: 12,
       borderRadius: 6,
+      textStyle: {
+        color: config.value.mode === 'dark' ? '#fff' : '#1E2435'
+      },
       formatter(name: any) {
         return name;
       }
@@ -131,6 +156,20 @@
       }
     ]
   });
+
+  watch(
+    () => config.value.mode,
+    (val) => {
+      color.value = val === 'dark' ? props.darkColor : props.themeColor;
+      pieOption.value.color = color.value;
+      pieOption.value.legend.textStyle = {
+        color: val === 'dark' ? '#fff' : '#1E2435'
+      };
+      pieOption.value.tooltip.textStyle = {
+        color: val === 'dark' ? '#fff' : '#1E2435'
+      };
+    }
+  );
 </script>
 
 <style lang="less" scoped>
