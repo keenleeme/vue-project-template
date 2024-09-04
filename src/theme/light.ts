@@ -1,4 +1,12 @@
-const blueToken = {
+/*
+ * @Author: xzj 13819929694@163.com
+ * @Date: 2024-09-04 15:53:11
+ * @LastEditors: xzj 13819929694@163.com
+ * @LastEditTime: 2024-09-04 16:31:33
+ * @Description:
+ * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved.
+ */
+const lightToken = {
   // seed token
   colorPrimary: '#134bea', // 主色
   colorSuccess: '#1DB969', // 成功色
@@ -78,4 +86,4 @@ const blueToken = {
   colorBgMask: '#1f253673'
 };
 
-export default blueToken;
+export default lightToken;

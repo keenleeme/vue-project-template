@@ -100,19 +100,19 @@
       }
       .title {
         font-size: 12px;
-        color: #353c51;
+        color: var(--color-text-sub-title);
         line-height: 20px;
       }
       .data {
         font-size: 24px;
-        color: #1e2435;
+        color: var(--color-text-content);
         line-height: 32px;
         font-weight: 600;
         display: flex;
         align-items: flex-end;
         span {
           font-size: 12px;
-          color: #7e8494;
+          color: var(--color-text-placeholder);
           margin: 0 4px;
         }
       }

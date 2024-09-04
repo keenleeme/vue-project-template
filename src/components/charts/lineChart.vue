@@ -54,10 +54,22 @@
     xAxis: {
       type: 'category',
       boundaryGap: false,
-      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      splitLine: {
+        lineStyle: {
+          color: 'rgba(127, 127, 127, 1)',
+          type: 'dashed'
+        }
+      }
     },
     yAxis: {
-      type: 'value'
+      type: 'value',
+      splitLine: {
+        lineStyle: {
+          color: 'rgba(127, 127, 127, 1)',
+          type: 'dashed'
+        }
+      }
     },
     series: [
       {

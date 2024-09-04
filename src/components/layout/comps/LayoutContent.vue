@@ -2,7 +2,7 @@
  * @Author: xzj 13819929694@163.com
  * @Date: 2024-08-22 16:50:45
  * @LastEditors: xzj 13819929694@163.com
- * @LastEditTime: 2024-09-04 16:22:05
+ * @LastEditTime: 2024-09-04 17:06:37
  * @Description: 
  * 
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
@@ -25,7 +25,7 @@
         </a-breadcrumb-item>
       </a-breadcrumb>
       <div class="page-title">
-        <LeftSquareOutlined size="14" style="color: #7e8494" />
+        <LeftSquareOutlined size="14" class="page-icon" />
         <div class="page-title-text">{{ $route.meta.title }}</div>
       </div>
     </div>
@@ -66,6 +66,7 @@
 <style lang="less" scoped>
   .breadcrumb {
     height: 40px;
+    line-height: 40px;
   }
   .page-top {
     background-color: var(--primary-bg);
@@ -77,15 +78,18 @@
       align-items: center;
       font-size: 16px;
       background-color: var(--primary-bg);
+      .page-icon {
+        color: var(--color-text-placeholder);
+      }
       .page-title-text {
+        color: var(--color-text-title);
         margin-left: 8px;
       }
     }
   }
 
-  .dark {
-    .page-title-text {
-      color: #fff;
-    }
+  .w-full {
+    background-color: var(--color-page-bg);
+    border-left: 1px solid var(--primary-bg);
   }
 </style>

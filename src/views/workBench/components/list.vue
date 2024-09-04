@@ -130,7 +130,6 @@
 
 <style lang="less" scoped>
   .table-wrap {
-    height: 64px;
     background: var(--primary-bg);
     padding: 16px;
     margin: 16px;

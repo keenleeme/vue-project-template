@@ -1,4 +1,4 @@
-const redToken = {
+const darkToken = {
   // seed token
   colorPrimary: '#c41424', // 主色
   colorSuccess: '#1DB969', // 成功色
@@ -76,4 +76,4 @@ const redToken = {
   // colorFillTertiary: 'rgba(126, 132, 148, 0.04)'
 };
 
-export default redToken;
+export default darkToken;

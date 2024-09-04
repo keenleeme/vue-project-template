@@ -19,6 +19,7 @@
               }
             ]"
             height="160px"
+            :dark-color="['#B63154', '#F53C3C', '#FF7F29', '#F53C3C']"
           ></PieChartComponent>
         </template>
       </BlockCard>
@@ -44,6 +45,7 @@
               }
             ]"
             :theme-color="['#134BEA', '#1DB969', '#F53C3C', '#A74748']"
+            :dark-color="['#1DB969', '#FF7F29', '#6A7285', '#F53C3C']"
             height="160px"
           ></PieChartComponent>
         </template>
