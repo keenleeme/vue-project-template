@@ -1,4 +1,6 @@
 <template>
+  <!-- <a-config-provider :locale="zhCN" :theme="theme"> -->
+  <!-- <a-config-provider :locale="zhCN" :theme="{ algorithm: theme.darkAlgorithm }"> -->
   <a-config-provider :locale="zhCN" :theme="theme">
     <Layout>
       <RouterView></RouterView>
@@ -9,10 +11,11 @@
 <script setup lang="ts">
   import { RouterView } from 'vue-router';
   import { generate } from '@ant-design/colors';
+  // import { theme } from 'ant-design-vue';
   import zhCN from 'ant-design-vue/es/locale/zh_CN';
   import Color from 'color';
   import { storeToRefs } from 'pinia';
-  import theme from '@/theme/theme';
+  // import theme from '@/theme/theme';
   import { getWebsiteConfig } from './api/common';
   import Layout from './components/layout/index.vue';
   import { useAppStore, useThemeStore } from './store';
@@ -21,8 +24,14 @@
   // const Color = require('color');
 
   const appStore = useAppStore();
-  // 主题
+  // // antdesian组件主题
   // const { theme } = storeToRefs(appStore);
+  // watch(
+  //   () => theme.value,
+  //   (val) => {
+  //     console.log('theme changed',val, theme.value);
+  //   }
+  // );
 
   getWebsiteConfig()
     .then((data) => {
@@ -68,11 +77,11 @@
     });
   };
 
-  // 主题色设置
+  // 物料库组件 主题色设置
   let primaryColors: string[] = [];
   let darkPrimaryColors: string[] = [];
   const themeStore = useThemeStore();
-  const { themeConfig } = storeToRefs(themeStore);
+  const { themeConfig, theme } = storeToRefs(themeStore);
   const config = ref({
     ...themeConfig.value
   });
@@ -103,6 +112,7 @@
         bodyEl.style.setProperty('--c-color-primary-5', primaryColors[4]);
         bodyEl.style.setProperty('--c-color-primary-6', primaryColors[5]);
         bodyEl.style.setProperty('--c-color-primary-2', primaryColors[1]);
+        bodyEl.style.setProperty('colorPrimary', primaryColors[0]);
       });
     },
     {
@@ -120,6 +130,7 @@
   );
 </script>
 
+<!-- 默认主题变量 -->
 <style>
   @import url('./styles/reset.css');
   :root {

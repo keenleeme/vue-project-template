@@ -18,7 +18,7 @@
 
   const appStore = useAppStore();
 
-  const changeColorPrimary = (type: string) => {
-    appStore.setThemeTokenType(type);
-  };
+  // const changeColorPrimary = (type: string) => {
+  //   appStore.setThemeTokenType(type);
+  // };
 </script>

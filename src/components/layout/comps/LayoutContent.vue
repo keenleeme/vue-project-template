@@ -2,7 +2,7 @@
  * @Author: xzj 13819929694@163.com
  * @Date: 2024-08-22 16:50:45
  * @LastEditors: xzj 13819929694@163.com
- * @LastEditTime: 2024-09-04 11:00:21
+ * @LastEditTime: 2024-09-04 16:22:05
  * @Description: 
  * 
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
@@ -84,10 +84,6 @@
   }
 
   .dark {
-    .page-top {
-      background-color: var(--primary-bg);
-      border-left: 1px solid var(--primary-bg);
-    }
     .page-title-text {
       color: #fff;
     }

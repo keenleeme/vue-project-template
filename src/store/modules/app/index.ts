@@ -1,11 +1,11 @@
 import { computed, ref } from 'vue';
-import { theme } from 'ant-design-vue';
+// import { theme } from 'ant-design-vue';
 import { defineStore } from 'pinia';
-import { themeTokens, ThemeTypes } from '@/theme';
+// import { themeTokens, ThemeTypes } from '@/theme';
 import { defaultConfig } from './defaultConfig';
 import { AppConfigType } from './types';
 
-const { darkAlgorithm, defaultAlgorithm } = theme;
+// const { darkAlgorithm, defaultAlgorithm } = theme;
 
 export default defineStore(
   'app',
@@ -26,21 +26,21 @@ export default defineStore(
       const value = { ...defaultConfig, ...config };
       appConfig.value = value;
     };
-    // 主题
-    const themeType = ref<ThemeTypes>(ThemeTypes.Light);
-    const setThemeType = (theme: ThemeTypes) => {
-      themeType.value = theme;
-    };
-    const themeTokenType = ref('blue');
-    const setThemeTokenType = (theme: string) => {
-      themeTokenType.value = theme;
-    };
-    const theme = computed(() => {
-      return {
-        token: themeTokenType.value === 'red' ? themeTokens.red : themeTokens.blue,
-        algorithm: themeType.value === ThemeTypes.Dark ? darkAlgorithm : defaultAlgorithm
-      };
-    });
+    // // 主题
+    // const themeType = ref<ThemeTypes>(ThemeTypes.Light);
+    // const setThemeType = (theme: ThemeTypes) => {
+    //   themeType.value = theme;
+    // };
+    // const themeTokenType = ref('blue');
+    // const setThemeTokenType = (theme: string) => {
+    //   themeTokenType.value = theme;
+    // };
+    // const theme = computed(() => {
+    //   return {
+    //     // token: themeTokenType.value === 'red' ? themeTokens.red : themeTokens.blue,
+    //     algorithm: themeType.value === ThemeTypes.Dark ? darkAlgorithm : defaultAlgorithm
+    //   };
+    // });
     // 水印
     const watermark = ref<string>('');
     const setWatermark = (watermarkStr: string) => {
@@ -59,13 +59,13 @@ export default defineStore(
       setPermissionIds,
       appConfig,
       setAppConfig,
-      themeType,
-      setThemeType,
-      theme,
+      // themeType,
+      // setThemeType,
+      // theme,
       watermark,
-      setWatermark,
-      themeTokenType,
-      setThemeTokenType
+      setWatermark
+      // themeTokenType,
+      // setThemeTokenType
     };
   },
   {

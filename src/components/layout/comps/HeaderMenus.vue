@@ -352,12 +352,20 @@
   //   accordion: true
   // };
   const { themeConfig } = storeToRefs(themeStore);
+
   console.log('themeConfig', themeConfig.value.header, themeStore);
   const config = ref({
     ...themeConfig.value
   });
+
+  // 设置ant-design 主题色
+  const changeColorPrimary = (type: string) => {
+    themeStore.setThemeType(type);
+    themeStore.setThemeTokenType(type);
+  };
   watchEffect(() => {
     config.value = { ...themeConfig.value };
+    changeColorPrimary(config.value.mode);
   });
 
   const popActive = ref(true);
