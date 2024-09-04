@@ -5,7 +5,7 @@ export default {
     level: '等级',
     scene: '适用场景',
     action: '动作',
-    address: '源地',
+    address: '源地址',
     attachment: '附件',
     uplaodFile: '上传文件',
     uploadLimit: '仅支持 EXCEL 格式文件',

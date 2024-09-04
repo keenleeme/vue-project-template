@@ -6,7 +6,7 @@
         <div>
           <div class="header-info-text">
             <span class="mr-8">仅支持 EXCEL 格式文件</span>
-            <a-tag color="geekblue">默认标签</a-tag>
+            <a-tag color="geekblue" style="color: #3b71ee">默认标签</a-tag>
           </div>
         </div>
         <div class="header-info-status">
@@ -72,7 +72,7 @@
     <div class="more-info">
       <div class="base-detail-title">更多信息</div>
 
-      <a-form class="pd-24" name="basic" :label-col="{ style: { width: '60px' } }" autocomplete="off">
+      <a-form class="pd-16" name="basic" :label-col="{ style: { width: '60px' } }" autocomplete="off">
         <a-row>
           <a-col :span="8">
             <a-form-item label="资产编号">
@@ -112,7 +112,7 @@
       </a-form>
     </div>
     <!--任务记录-->
-    <div>
+    <div class="task-list">
       <div class="base-detail-title">任务记录</div>
 
       <a-timeline class="pd-24">
@@ -133,11 +133,14 @@
 
 <style lang="less" scoped>
   .base-detail-box {
+    padding: 24px 16px;
     .base-detail-header {
       display: flex;
       height: 112px;
       width: 100%;
       padding: 24px 16px;
+      background: var(--primary-bg);
+      border-bottom: 1px solid var(--primary-divider);
       .header-info-avator {
         width: 64px;
         height: 64px;
@@ -165,7 +168,12 @@
       }
     }
     .header-form {
-      padding: 16px;
+      padding: 16px 0;
+      background: var(--primary-bg);
+    }
+    .more-info {
+      margin: 16px 0;
+      background: var(--primary-bg);
     }
     .base-detail-title {
       height: 46px;
@@ -173,32 +181,39 @@
       text-indent: 16px;
       font-size: 14px;
       font-weight: 600;
-    }
-    .more-info {
-      margin: 16px 0;
+      border-bottom: 1px solid var(--primary-divider);
     }
 
-    .timeline-title {
-      font-size: 14px;
-      font-weight: 400;
-    }
-    .timeline-date {
-      font-size: 12px;
-      font-weight: 400;
+    .task-list {
+      background: var(--primary-bg);
+      .timeline-title {
+        font-size: 14px;
+        font-weight: 400;
+      }
+      .timeline-date {
+        font-size: 12px;
+        font-weight: 400;
+      }
     }
   }
 
   .mr-8 {
     margin-right: 8px;
   }
-  .pd-24 {
+  .pd-16 {
     padding: 16px;
+  }
+  .pd-24 {
+    padding: 24px 16px;
   }
 </style>
 
 <style lang="less">
   // 样式覆盖
   .base-detail-box {
+    .ant-form-item {
+      margin-bottom: 2px !important;
+    }
     .ant-form-item-label {
       label {
         font-size: 12px;
