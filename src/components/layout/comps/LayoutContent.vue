@@ -2,16 +2,16 @@
  * @Author: xzj 13819929694@163.com
  * @Date: 2024-08-22 16:50:45
  * @LastEditors: xzj 13819929694@163.com
- * @LastEditTime: 2024-09-03 16:34:55
+ * @LastEditTime: 2024-09-04 11:00:21
  * @Description: 
  * 
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
 -->
 <template>
   <a-layout>
-    <div class="p2 pl-16 h-40 page-top">
+    <div class="p2 pl-16 page-top">
       <!-- :style="{ 'background-color': token.colorBgBase, borderLeft: `1px solid ${token.colorBorder}` }" -->
-      <!-- <a-breadcrumb class="breadcrumb">
+      <a-breadcrumb v-if="themeConfig.breadcrumb" class="breadcrumb">
         <template #separator>
           <RightOutlined style="vertical-align: revert-layer; font-size: 14px" />
         </template>
@@ -23,7 +23,7 @@
             <RouterLink :to="item.path">{{ item.title }}</RouterLink>
           </template>
         </a-breadcrumb-item>
-      </a-breadcrumb> -->
+      </a-breadcrumb>
       <div class="page-title">
         <LeftSquareOutlined size="14" style="color: #7e8494" />
         <div class="page-title-text">{{ $route.meta.title }}</div>
@@ -41,18 +41,26 @@
   import { RouterView } from 'vue-router';
   // import { useRouter } from 'vue-router';
   import { LeftSquareOutlined } from '@ant-design/icons-vue';
-
   // import { RightOutlined } from '@ant-design/icons-vue';
   // import { theme } from 'ant-design-vue';
-  // import { storeToRefs } from 'pinia';
-  // import { useMenusStore } from '@/store';
+  import { storeToRefs } from 'pinia';
+  import { useMenusStore, useThemeStore } from '@/store';
 
   // const { useToken } = theme;
   // const { token } = useToken();
 
   // const router = useRouter();
-  // const menusStore = useMenusStore();
-  // const { activeBreadcrumb } = storeToRefs(menusStore);
+  const menusStore = useMenusStore();
+  const themeStore = useThemeStore();
+  const { activeBreadcrumb } = storeToRefs(menusStore);
+  const { themeConfig } = storeToRefs(themeStore);
+  // 监听activeBreadcrumb的变化，当activeBreadcrumb发生变化时，更新面包屑导航的显示内容
+  watch(
+    () => activeBreadcrumb.value,
+    (newValue) => {
+      console.log('activeBreadcrumb changed:', newValue);
+    }
+  );
 </script>
 
 <style lang="less" scoped>

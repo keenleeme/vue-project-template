@@ -10,5 +10,6 @@ export default {
     duoCengCaiDan: '多层菜单',
     yiCengCaiDan: '一层菜单',
     zhuTiYanShi: '主题演示',
+    yinDaoYe: '引导页',
   },
 };

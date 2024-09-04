@@ -6,13 +6,13 @@ export async function getMenus(): Promise<MenuType[]> {
   return [
     {
       id: 'vueTour',
-      title: I18N.common.home,
+      title: I18N.api.common.yinDaoYe,
       icon: 'AppstoreOutlined',
       path: '/vueTour'
     },
     {
       id: 'workBench',
-      title: I18N.common.home,
+      title: '工作台',
       icon: 'AppstoreOutlined',
       path: '/workBench'
     },
@@ -27,6 +27,54 @@ export async function getMenus(): Promise<MenuType[]> {
       title: I18N.api.common.zhuTiYanShi,
       icon: 'AppstoreOutlined',
       path: '/theme'
+    },
+    {
+      id: 'baseList',
+      title: '列表页',
+      icon: 'AppstoreOutlined',
+      path: '/base-list'
+    },
+    {
+      id: 'baseForm',
+      title: '基础表单',
+      icon: 'AppstoreOutlined',
+      path: '/base-form'
+    },
+    {
+      id: 'baseDetail',
+      title: '基础详情',
+      icon: 'AppstoreOutlined',
+      path: '/base-detail'
+    },
+    {
+      id: 'dasUpgrade',
+      title: '在线升级',
+      icon: 'AppstoreOutlined',
+      path: '/dasUpgrade'
+    },
+    {
+      id: 'dasvScreen',
+      title: '大屏自定义',
+      icon: 'AppstoreOutlined',
+      path: '/dasvScreen'
+    },
+    {
+      id: 'themeConfig',
+      title: '主题配置页',
+      icon: 'AppstoreOutlined',
+      path: '/themeConfig'
+    },
+    {
+      id: 'loginConfig',
+      title: '登录配置页',
+      icon: 'AppstoreOutlined',
+      path: '/loginConfig'
+    },
+    {
+      id: 'vueTour2',
+      title: '引导页2',
+      icon: 'AppstoreOutlined',
+      path: '/vueTour-page2'
     },
     {
       id: 'sum-one',
