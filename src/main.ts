@@ -8,6 +8,7 @@
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved.
  */
 import { createApp } from 'vue';
+import { ComponentLibrary } from '@ued-material/ued-wbc-vue3';
 // import Soul from '@ailpha/soul-ui';
 // import '@ailpha/soul-ui/dist/styles/index.css';
 import '@unocss/reset/normalize.css';
@@ -24,6 +25,7 @@ import { startMicro } from './micro';
 import router from './router';
 import pinia from './store';
 
+
 const app = createApp(App);
 app.use(pinia);
 app.config.globalProperties.$tours = {};
@@ -33,6 +35,7 @@ startMicro(router);
 
 i18n(app);
 app.use(Antd);
+app.use(ComponentLibrary);
 // app.use(Soul);
 app.use(router);
 app.mount('#app');

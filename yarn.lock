@@ -895,6 +895,22 @@
   version "1.3.102"
   resolved "https://ci.das-security.cn/repository/ah_npm/@swc/core-win32-x64-msvc/-/core-win32-x64-msvc-1.3.102.tgz"
   integrity sha512-E/jfSD7sShllxBwwgDPeXp1UxvIqehj/ShSUqq1pjR/IDRXngcRSXKJK92mJkNFY7suH6BcCWwzrxZgkO7sWmw==
+"@stencil-community/less@^2.0.0":
+  version "2.0.0"
+  resolved "https://ci.das-security.cn/repository/ah_npm/@stencil-community/less/-/less-2.0.0.tgz#bdaab54a7d717e949020ec8654d6e483c43db7e3"
+  integrity sha512-BVoAIJ5vmC9DZmJ9kZRuGlotq2KAsZs80yZ/WA0eBnMFaXe1cDUK2o88+Gd7io+slmAV88jfbScsPR/Q2ZtIGQ==
+  dependencies:
+    less "^4.2.0"
+
+"@stencil/core@^4.21.0":
+  version "4.21.0"
+  resolved "https://ci.das-security.cn/repository/ah_npm/@stencil/core/-/core-4.21.0.tgz#6e294c57468e58dd77a458244968fe73d589b41b"
+  integrity sha512-v50lnVbzS8mpMSnEVxR+G75XpvxHKtkJaQrNPE8+/fF6Ppr5z4bcdcBhcP8LPfEW+4BZcic6VifMXRwTopc+kw==
+
+"@swc/core-darwin-arm64@1.7.18":
+  version "1.7.18"
+  resolved "https://ci.das-security.cn/repository/ah_npm/@swc/core-darwin-arm64/-/core-darwin-arm64-1.7.18.tgz#4035e98ea38b2fb5f709b2c7d3d709627dba511e"
+  integrity sha512-MwLc5U+VGPMZm8MjlFBjEB2wyT1EK0NNJ3tn+ps9fmxdFP+PL8EpMiY1O1F2t1ydy2OzBtZz81sycjM9RieFBg==
 
 "@swc/core@^1.2.147", "@swc/core@^1.3.93", "@swc/core@>=1.2.50":
   version "1.3.102"
@@ -1364,6 +1380,25 @@
     "@types/sortablejs" "^1.15.7"
     sortablejs "^1.15.1"
     vue-demi latest
+
+"@ued-material/ued-wbc-vue3@^0.0.2":
+  version "0.0.2"
+  resolved "https://ci.das-security.cn/repository/ah_npm/@ued-material/ued-wbc-vue3/-/ued-wbc-vue3-0.0.2.tgz#98af8e09a0dff9c357a8a5c6cdf2c0975fd2a4d3"
+  integrity sha512-ADq3DGT/fGYUKhojvLwMsg6IqMlVyQhUjtrO+SgDvs2Dsr5tB6nb8IlqZ/IffVnK9Z65wiaHULVBXN1zaZrIyA==
+  dependencies:
+    "@ued-material/ued-wbc" "^0.0.2"
+
+"@ued-material/ued-wbc@^0.0.2":
+  version "0.0.2"
+  resolved "https://ci.das-security.cn/repository/ah_npm/@ued-material/ued-wbc/-/ued-wbc-0.0.2.tgz#af14dcf24f0bca296015063517bebb494b03245a"
+  integrity sha512-vG8x0oBTjaAJwzl9+mMG8eKQXrECK/gL4jb/OosbVAdtbe5Y/bpmvqy2NEgpcJDSNpkP769n/WtNtUrD/de+lg==
+  dependencies:
+    "@stencil-community/less" "^2.0.0"
+    "@stencil/core" "^4.21.0"
+    async-validator "^4.2.5"
+    qrcode "^1.5.4"
+    react "^18.3.1"
+    react-dom "^18.3.1"
 
 "@ued-material/vue-tour@^1.2.2":
   version "1.2.2"
@@ -2285,7 +2320,7 @@ assert-plus@^1.0.0, assert-plus@1.0.0:
   resolved "https://ci.das-security.cn/repository/ah_npm/assert-plus/-/assert-plus-1.0.0.tgz"
   integrity sha512-NfJ4UzBCcQGLDlQq7nHxH+tv3kyZ0hHQqF5BO6J7tNJeP5do1llPr8dZ8zHonfhAu0PHAdMkSo+8o0wxg9lZWw==
 
-async-validator@^4.0.0:
+async-validator@^4.0.0, async-validator@^4.2.5:
   version "4.2.5"
   resolved "https://ci.das-security.cn/repository/ah_npm/async-validator/-/async-validator-4.2.5.tgz"
   integrity sha512-7HhHjtERjqlNbZtqNqy2rckN/SpOOlmDliet+lP7k+eKZEjPk3DgyeU9lIXLdeLz0uBbbVp+9Qdow9wJWgwwfg==
@@ -2627,7 +2662,7 @@ camelcase@^2.0.0:
   resolved "https://ci.das-security.cn/repository/ah_npm/camelcase/-/camelcase-2.1.1.tgz"
   integrity sha512-DLIsRzJVBQu72meAKPkWQOLcujdXT32hwdfnkI1frSiSRMK1MofjKHf+MEx0SB6fjEFXL8fBDv1dKymBlOp4Qw==
 
-camelcase@^5.3.1:
+camelcase@^5.0.0, camelcase@^5.3.1:
   version "5.3.1"
   resolved "https://ci.das-security.cn/repository/ah_npm/camelcase/-/camelcase-5.3.1.tgz"
   integrity sha512-L28STB170nwWS63UjtlEOE3dldQApaJXZkOI1uMFfzf3rRuPegHaHesyee+YxQ+W6SvRDQV6UrdOdRiR153wJg==
@@ -2778,6 +2813,15 @@ cli-width@^2.0.0:
   version "2.2.1"
   resolved "https://ci.das-security.cn/repository/ah_npm/cli-width/-/cli-width-2.2.1.tgz"
   integrity sha512-GRMWDxpOB6Dgk2E5Uo+3eEBvtOOlimMmpbFiKuLFnQzYDavtLFY3K5ona41jgN/WdRZtG7utuVSVTL4HbZHGkw==
+
+cliui@^6.0.0:
+  version "6.0.0"
+  resolved "https://ci.das-security.cn/repository/ah_npm/cliui/-/cliui-6.0.0.tgz#511d702c0c4e41ca156d7d0e96021f23e13225b1"
+  integrity sha512-t6wbgtoCXvAzst7QgXxJYqPt0usEfbgQdftEPbLL/cvv6HPE5VgvqCuAIDR0NgU52ds6rFwqrgakNLrHEjCbrQ==
+  dependencies:
+    string-width "^4.2.0"
+    strip-ansi "^6.0.0"
+    wrap-ansi "^6.2.0"
 
 cliui@^8.0.1:
   version "8.0.1"
@@ -3266,7 +3310,7 @@ decamelize-keys@^1.1.0:
     decamelize "^1.1.0"
     map-obj "^1.0.0"
 
-decamelize@^1.1.0, decamelize@^1.1.2:
+decamelize@^1.1.0, decamelize@^1.1.2, decamelize@^1.2.0:
   version "1.2.0"
   resolved "https://ci.das-security.cn/repository/ah_npm/decamelize/-/decamelize-1.2.0.tgz"
   integrity sha512-z2S+W9X73hAUUki+N+9Za2lBlun89zigOyGrsax+KUQ6wKW4ZoWpEYBkGhQjwAjjDCkWxhY0VKEhk8wzY7F5cA==
@@ -3453,6 +3497,11 @@ diff@^4.0.1:
   version "4.0.2"
   resolved "https://ci.das-security.cn/repository/ah_npm/diff/-/diff-4.0.2.tgz"
   integrity sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==
+
+dijkstrajs@^1.0.1:
+  version "1.0.3"
+  resolved "https://ci.das-security.cn/repository/ah_npm/dijkstrajs/-/dijkstrajs-1.0.3.tgz#4c8dbdea1f0f6478bff94d9c49c784d623e4fc23"
+  integrity sha512-qiSlmBq9+BCdCA/L46dw8Uy93mloxsPSbwnm5yrKn2vMPiy8KyAskTF6zuV/j5BMsmOGZDPs7KjU+mjb670kfA==
 
 dir-glob@^2.0.0:
   version "2.2.2"
@@ -4643,7 +4692,7 @@ gensync@^1.0.0-beta.2:
   resolved "https://ci.das-security.cn/repository/ah_npm/gensync/-/gensync-1.0.0-beta.2.tgz"
   integrity sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==
 
-get-caller-file@^2.0.5:
+get-caller-file@^2.0.1, get-caller-file@^2.0.5:
   version "2.0.5"
   resolved "https://ci.das-security.cn/repository/ah_npm/get-caller-file/-/get-caller-file-2.0.5.tgz"
   integrity sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==
@@ -6251,7 +6300,7 @@ longest@^1.0.0:
   resolved "https://ci.das-security.cn/repository/ah_npm/longest/-/longest-1.0.1.tgz"
   integrity sha512-k+yt5n3l48JU4k8ftnKG6V7u32wyH2NfKzeMto9F/QRE0amxy/LayxwlvjjkZEIzqR+19IrtFO8p5kB9QaYUFg==
 
-loose-envify@^1.0.0:
+loose-envify@^1.0.0, loose-envify@^1.1.0:
   version "1.4.0"
   resolved "https://ci.das-security.cn/repository/ah_npm/loose-envify/-/loose-envify-1.4.0.tgz"
   integrity sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==
@@ -7291,6 +7340,11 @@ pkg-types@^1.0.3, pkg-types@^1.1.1, pkg-types@^1.1.3:
     mlly "^1.7.1"
     pathe "^1.1.2"
 
+pngjs@^5.0.0:
+  version "5.0.0"
+  resolved "https://ci.das-security.cn/repository/ah_npm/pngjs/-/pngjs-5.0.0.tgz#e79dd2b215767fd9c04561c01236df960bce7fbb"
+  integrity sha512-40QW5YalBNfQo5yRYmiw7Yz6TKKVr3h6970B2YE+3fQpsWcrbj1PzJgxeJ19DRQjhMbKPIuMY8rFaXc8moolVw==
+
 pngquant-bin@^6.0.0:
   version "6.0.1"
   resolved "https://ci.das-security.cn/repository/ah_npm/pngquant-bin/-/pngquant-bin-6.0.1.tgz"
@@ -7464,6 +7518,14 @@ qs@~6.5.2:
   version "6.5.3"
   resolved "https://ci.das-security.cn/repository/ah_npm/qs/-/qs-6.5.3.tgz"
   integrity sha512-qxXIEh4pCGfHICj1mAJQ2/2XVZkjCDTcEgfoSQxc/fYivUZxTkk7L3bDBJSoNrEzXI17oUO5Dp07ktqE5KzczA==
+qrcode@^1.5.4:
+  version "1.5.4"
+  resolved "https://ci.das-security.cn/repository/ah_npm/qrcode/-/qrcode-1.5.4.tgz#5cb81d86eb57c675febb08cf007fff963405da88"
+  integrity sha512-1ca71Zgiu6ORjHqFBDpnSMTR2ReToX4l1Au1VFLyVeBTFavzQnv5JxMFr3ukHVKpSrSA2MCk0lNJSykjUfz7Zg==
+  dependencies:
+    dijkstrajs "^1.0.1"
+    pngjs "^5.0.0"
+    yargs "^15.3.1"
 
 qs@6.11.0:
   version "6.11.0"
@@ -7529,6 +7591,21 @@ raw-body@2.5.1:
     http-errors "2.0.0"
     iconv-lite "0.4.24"
     unpipe "1.0.0"
+
+react-dom@^18.3.1:
+  version "18.3.1"
+  resolved "https://ci.das-security.cn/repository/ah_npm/react-dom/-/react-dom-18.3.1.tgz#c2265d79511b57d479b3dd3fdfa51536494c5cb4"
+  integrity sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==
+  dependencies:
+    loose-envify "^1.1.0"
+    scheduler "^0.23.2"
+
+react@^18.3.1:
+  version "18.3.1"
+  resolved "https://ci.das-security.cn/repository/ah_npm/react/-/react-18.3.1.tgz#49ab892009c53933625bd16b2533fc754cab2891"
+  integrity sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==
+  dependencies:
+    loose-envify "^1.1.0"
 
 read-pkg-up@^1.0.1:
   version "1.0.1"
@@ -7761,6 +7838,11 @@ require-from-string@^2.0.2:
   resolved "https://ci.das-security.cn/repository/ah_npm/require-from-string/-/require-from-string-2.0.2.tgz"
   integrity sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw==
 
+require-main-filename@^2.0.0:
+  version "2.0.0"
+  resolved "https://ci.das-security.cn/repository/ah_npm/require-main-filename/-/require-main-filename-2.0.0.tgz#d0b329ecc7cc0f61649f62215be69af54aa8989b"
+  integrity sha512-NKN5kMDylKuldxYLSUfrbo5Tuzh4hd+2E8NPPX02mZtn1VuREQToYe/ZdlJy+J3uCpfaiGF05e7B8W0iXbQHmg==
+
 requires-port@^1.0.0:
   version "1.0.0"
   resolved "https://ci.das-security.cn/repository/ah_npm/requires-port/-/requires-port-1.0.0.tgz"
@@ -7948,7 +8030,14 @@ sax@^1.2.4:
   resolved "https://ci.das-security.cn/repository/ah_npm/sax/-/sax-1.4.1.tgz"
   integrity sha512-+aWOz7yVScEGoKNd4PA10LZ8sk0A/z5+nXQG5giUO5rprX9jgYsTdov9qCchZiPIZezbZH+jRut8nPodFAX4Jg==
 
-schema-utils@^3.1.1:
+scheduler@^0.23.2:
+  version "0.23.2"
+  resolved "https://ci.das-security.cn/repository/ah_npm/scheduler/-/scheduler-0.23.2.tgz#414ba64a3b282892e944cf2108ecc078d115cdc3"
+  integrity sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==
+  dependencies:
+    loose-envify "^1.1.0"
+
+schema-utils@^3.1.1, schema-utils@^3.2.0:
   version "3.3.0"
   resolved "https://ci.das-security.cn/repository/ah_npm/schema-utils/-/schema-utils-3.3.0.tgz"
   integrity sha512-pN/yOAvcC+5rQ5nERGuwrjLlYvLTbCibnZ1I7B1LaiAz9BRBlE9GMgE/eqV30P7aJQUf7Ddimy/RsbYO/GrVGg==
@@ -8111,10 +8200,15 @@ serve-static@1.15.0:
     parseurl "~1.3.3"
     send "0.18.0"
 
-set-function-length@^1.1.1:
-  version "1.2.0"
-  resolved "https://ci.das-security.cn/repository/ah_npm/set-function-length/-/set-function-length-1.2.0.tgz"
-  integrity sha512-4DBHDoyHlM1IRPGYcoxexgh67y4ueR53FKV1yyxwFMY7aCqcN/38M1+SwZ/qJQ8iLv7+ck385ot4CcisOAPT9w==
+set-blocking@^2.0.0:
+  version "2.0.0"
+  resolved "https://ci.das-security.cn/repository/ah_npm/set-blocking/-/set-blocking-2.0.0.tgz#045f9782d011ae9a6803ddd382b24392b3d890f7"
+  integrity sha512-KiKBS8AnWGEyLzofFfmvKwpdPzqiy16LvQfK3yv/fVH7Bj13/wl3JSR1J+rfgRE9q7xUJK4qvgS8raSOeLUehw==
+
+set-function-length@^1.2.1:
+  version "1.2.2"
+  resolved "https://ci.das-security.cn/repository/ah_npm/set-function-length/-/set-function-length-1.2.2.tgz#aac72314198eaed975cf77b2c3b6b880695e5449"
+  integrity sha512-pgRc4hJ4/sNjWCSS9AmnS40x3bNMDTknHgL5UaMBTMyJnU90EgWh1Rz+MC9eFu4BuN/UwZjKQuY/1v3rM7HMfg==
   dependencies:
     define-data-property "^1.1.1"
     function-bind "^1.1.2"
@@ -9667,10 +9761,15 @@ which-boxed-primitive@^1.0.2:
     is-string "^1.0.5"
     is-symbol "^1.0.3"
 
-which-typed-array@^1.1.11, which-typed-array@^1.1.13:
-  version "1.1.13"
-  resolved "https://ci.das-security.cn/repository/ah_npm/which-typed-array/-/which-typed-array-1.1.13.tgz"
-  integrity sha512-P5Nra0qjSncduVPEAr7xhoF5guty49ArDTwzJ/yNuPIbZppyRxFQsRCWrocxIY+CnMVG+qfbU2FmDKyvSGClow==
+which-module@^2.0.0:
+  version "2.0.1"
+  resolved "https://ci.das-security.cn/repository/ah_npm/which-module/-/which-module-2.0.1.tgz#776b1fe35d90aebe99e8ac15eb24093389a4a409"
+  integrity sha512-iBdZ57RDvnOR9AGBhML2vFZf7h8vmBjhoaZqODJBFWHVtKkDmKuHai3cx5PgVMrX5YDNp27AofYbAwctSS+vhQ==
+
+which-typed-array@^1.1.14, which-typed-array@^1.1.15:
+  version "1.1.15"
+  resolved "https://ci.das-security.cn/repository/ah_npm/which-typed-array/-/which-typed-array-1.1.15.tgz#264859e9b11a649b388bfaaf4f767df1f779b38d"
+  integrity sha512-oV0jmFtUky6CXfkqehVvBP/LSWJ2sy4vWMioiENyJLePrBO/yKyV9OyJySfAKosh+RYkIl5zJCNZ8/4JncrpdA==
   dependencies:
     available-typed-arrays "^1.0.5"
     call-bind "^1.0.4"
@@ -9696,6 +9795,20 @@ wildcard@^2.0.0:
   version "2.0.1"
   resolved "https://ci.das-security.cn/repository/ah_npm/wildcard/-/wildcard-2.0.1.tgz"
   integrity sha512-CC1bOL87PIWSBhDcTrdeLo6eGT7mCFtrg0uIJtqJUFyK+eJnzl8A1niH56uu7KMa5XFrtiV+AQuHO3n7DsHnLQ==
+
+word-wrap@^1.2.5:
+  version "1.2.5"
+  resolved "https://ci.das-security.cn/repository/ah_npm/word-wrap/-/word-wrap-1.2.5.tgz#d2c45c6dd4fbce621a66f136cbe328afd0410b34"
+  integrity sha512-BN22B5eaMMI9UMtjrGd5g5eCYPpCPDUy0FJXbYsaT5zYxjFOckS53SQDE3pWkVoWpHXVb3BrYcEN4Twa55B5cA==
+
+wrap-ansi@^6.2.0:
+  version "6.2.0"
+  resolved "https://ci.das-security.cn/repository/ah_npm/wrap-ansi/-/wrap-ansi-6.2.0.tgz#e9393ba07102e6c91a3b221478f0257cd2856e53"
+  integrity sha512-r6lPcBGxZXlIcymEu7InxDMhdW0KDxpLgoFLcguasxCaJ/SOIZwINatK9KY/tf+ZrlywOKU0UDj3ATXUBfxJXA==
+  dependencies:
+    ansi-styles "^4.0.0"
+    string-width "^4.1.0"
+    strip-ansi "^6.0.0"
 
 wrap-ansi@^7.0.0:
   version "7.0.0"
@@ -9749,6 +9862,11 @@ xtend@^4.0.0:
   resolved "https://ci.das-security.cn/repository/ah_npm/xtend/-/xtend-4.0.2.tgz"
   integrity sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==
 
+y18n@^4.0.0:
+  version "4.0.3"
+  resolved "https://ci.das-security.cn/repository/ah_npm/y18n/-/y18n-4.0.3.tgz#b5f259c82cd6e336921efd7bfd8bf560de9eeedf"
+  integrity sha512-JKhqTOwSrqNA1NY5lSztJ1GrBiUodLMmIZuLiDaMRJ+itFd+ABVE8XBjOvIWL+rSqNDC74LCSFmlb/U4UZ4hJQ==
+
 y18n@^5.0.5:
   version "5.0.8"
   resolved "https://ci.das-security.cn/repository/ah_npm/y18n/-/y18n-5.0.8.tgz"
@@ -9774,6 +9892,14 @@ yaml@2.3.1:
   resolved "https://ci.das-security.cn/repository/ah_npm/yaml/-/yaml-2.3.1.tgz"
   integrity sha512-2eHWfjaoXgTBC2jNM1LRef62VQa0umtvRiDSk6HSzW7RvS5YtkabJrwYLLEKWBc8a5U2PTSCs+dJjUTJdlHsWQ==
 
+yargs-parser@^18.1.2:
+  version "18.1.3"
+  resolved "https://ci.das-security.cn/repository/ah_npm/yargs-parser/-/yargs-parser-18.1.3.tgz#be68c4975c6b2abf469236b0c870362fab09a7b0"
+  integrity sha512-o50j0JeToy/4K6OZcaQmW6lyXXKhq7csREXcDwk2omFPJEwUNOVtJKvmDr9EI1fAJZUyZcRF7kxGBWmRXudrCQ==
+  dependencies:
+    camelcase "^5.0.0"
+    decamelize "^1.2.0"
+
 yargs-parser@^20.2.3:
   version "20.2.9"
   resolved "https://ci.das-security.cn/repository/ah_npm/yargs-parser/-/yargs-parser-20.2.9.tgz"
@@ -9783,6 +9909,23 @@ yargs-parser@^21.1.1:
   version "21.1.1"
   resolved "https://ci.das-security.cn/repository/ah_npm/yargs-parser/-/yargs-parser-21.1.1.tgz"
   integrity sha512-tVpsJW7DdjecAiFpbIB1e3qxIQsE6NoPc5/eTdrbbIC4h0LVsWhnoa3g+m2HclBIujHzsxZ4VJVA+GUuc2/LBw==
+
+yargs@^15.3.1:
+  version "15.4.1"
+  resolved "https://ci.das-security.cn/repository/ah_npm/yargs/-/yargs-15.4.1.tgz#0d87a16de01aee9d8bec2bfbf74f67851730f4f8"
+  integrity sha512-aePbxDmcYW++PaqBsJ+HYUFwCdv4LVvdnhBy78E57PIor8/OVvhMrADFFEDh8DHDFRv/O9i3lPhsENjO7QX0+A==
+  dependencies:
+    cliui "^6.0.0"
+    decamelize "^1.2.0"
+    find-up "^4.1.0"
+    get-caller-file "^2.0.1"
+    require-directory "^2.1.1"
+    require-main-filename "^2.0.0"
+    set-blocking "^2.0.0"
+    string-width "^4.2.0"
+    which-module "^2.0.0"
+    y18n "^4.0.0"
+    yargs-parser "^18.1.2"
 
 yargs@^17.0.0:
   version "17.7.2"

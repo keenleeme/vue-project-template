@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-form :model="formState" autocomplete="off" @finish="onFinish" @finishFailed="onFinishFailed">
+    <a-form :model="formState" autocomplete="off" @finish="onFinish" @finish-failed="onFinishFailed">
       <a-form-item name="username" :rules="[{ required: true, message: $t('I18N.login.biTianXiang') }]">
         <a-input v-model:value="formState.username" :placeholder="$t('I18N.login.qingShuRuYongHu')" allow-clear>
           <template #prefix>
