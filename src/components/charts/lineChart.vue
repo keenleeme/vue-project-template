@@ -1,14 +1,16 @@
 <template>
-  <ECharts :option="pieOption" :auto-resize="true" :style="{ width: props.width, height: props.height }" />
+  <ECharts :option="lineOption" :auto-resize="true" :style="{ width: props.width, height: props.height }" />
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { ref, watchEffect, watch } from 'vue';
   import ECharts from 'vue-echarts';
   import { LineChart } from 'echarts/charts';
   import { TitleComponent, TooltipComponent, LegendComponent, GridComponent } from 'echarts/components';
   import { use } from 'echarts/core';
   import { CanvasRenderer } from 'echarts/renderers';
+  import { storeToRefs } from 'pinia';
+  import { useThemeStore } from '@/store';
 
   use([CanvasRenderer, LineChart, TitleComponent, TooltipComponent, LegendComponent, GridComponent]);
 
@@ -31,18 +33,47 @@
     themeColor: {
       type: Array,
       default: () => {
-        return ['#3B71EE', '#62D592', '#FF9B4F', '#32cd32'];
+        return ['#134BEA', '#FF7F29', '#FFB005', '#7E8494'];
       }
     },
     darkColor: {
       type: Array,
       default: () => {
-        return [];
+        return ['#1DB969', '#FF7F29', '#6A7285', '#F53C3C'];
       }
     }
   });
+
+  const themeStore = useThemeStore();
+  const { themeConfig } = storeToRefs(themeStore);
+  const config = ref({
+    ...themeConfig.value
+  });
   const color = ref<any[]>(props.themeColor);
-  const pieOption = ref({
+  const formatColor = (hexColors: any[]) => {
+    const rgbColor = hexColors.map((hexColor) => {
+      const red = parseInt(hexColor.slice(1, 3), 16);
+      const green = parseInt(hexColor.slice(3, 5), 16);
+      const blue = parseInt(hexColor.slice(5, 7), 16);
+      return [
+        {
+          offset: 0,
+          color: `rgba(${red},${green},${blue}, 0.1)` // 0% 处的颜色
+        },
+        {
+          offset: 1,
+          color: `rgba(${red},${green},${blue}, 0)` // 0% 处的颜色
+        }
+      ];
+    });
+    return rgbColor;
+  };
+  const gradientColor = ref<any[]>(formatColor(color.value));
+  watchEffect(() => {
+    config.value = { ...themeConfig.value };
+  });
+
+  const lineOption = ref({
     color: color.value,
     grid: {
       top: '6%',
@@ -57,8 +88,13 @@
       data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
       splitLine: {
         lineStyle: {
-          color: 'rgba(127, 127, 127, 1)',
+          color: '#4d576e',
           type: 'dashed'
+        }
+      },
+      axisLine: {
+        lineStyle: {
+          color: '#1E2435'
         }
       }
     },
@@ -66,8 +102,13 @@
       type: 'value',
       splitLine: {
         lineStyle: {
-          color: 'rgba(127, 127, 127, 1)',
+          color: '#4d576e',
           type: 'dashed'
+        }
+      },
+      axisLine: {
+        lineStyle: {
+          color: '#1E2435'
         }
       }
     },
@@ -83,21 +124,38 @@
             y: 0,
             x2: 0,
             y2: 1,
-            colorStops: [
-              {
-                offset: 0,
-                color: 'rgba(19,75,234,0.15)' // 0% 处的颜色
-              },
-              {
-                offset: 1,
-                color: 'rgba(19,75,234,0)' // 0% 处的颜色
-              }
-            ]
+            colorStops: gradientColor.value[0]
           }
         }
       }
     ]
   });
+  watch(
+    () => config.value.mode,
+    (val) => {
+      color.value = val === 'dark' ? props.darkColor : props.themeColor;
+      gradientColor.value = formatColor(color.value);
+      lineOption.value.series[0].areaStyle.color = {
+        type: 'linear',
+        x: 0,
+        y: 0,
+        x2: 0,
+        y2: 1,
+        colorStops: gradientColor.value[0]
+      };
+      lineOption.value.color = color.value;
+      lineOption.value.xAxis.axisLine = {
+        lineStyle: {
+          color: val === 'dark' ? '#ffffff' : '#1E2435'
+        }
+      };
+      lineOption.value.yAxis.axisLine = {
+        lineStyle: {
+          color: val === 'dark' ? '#ffffff' : '#1E2435'
+        }
+      };
+    }
+  );
 </script>
 
 <style lang="less" scoped>

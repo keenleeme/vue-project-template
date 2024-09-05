@@ -43,7 +43,7 @@ div
         <UpSquareOutlined v-if="expand" />
         <DownSquareOutlined v-if="expand" />
       </div>
-      <a-button v-if="isReset" type="default" class="search reset" @click="handleReset">重置</a-button>
+      <a-button v-if="isReset" type="default" class="search reset mr-8" @click="handleReset">重置</a-button>
       <a-button type="primary" class="search confirm" @click="handleSearch">搜索</a-button>
     </div>
   </div>

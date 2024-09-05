@@ -133,7 +133,6 @@
 <!-- 默认主题变量 -->
 <style>
   @import url('./styles/reset.css');
-  @import url('./styles/theme.css');
 
   /* 应用变量 */
   body {

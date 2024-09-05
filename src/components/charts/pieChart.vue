@@ -76,7 +76,7 @@
     tooltip: {
       trigger: 'item',
       textStyle: {
-        color: config.value.mode === 'dark' ? '#fff' : '#1E2435'
+        color: '#1E2435'
       }
     },
     legend: {
@@ -163,9 +163,6 @@
       color.value = val === 'dark' ? props.darkColor : props.themeColor;
       pieOption.value.color = color.value;
       pieOption.value.legend.textStyle = {
-        color: val === 'dark' ? '#fff' : '#1E2435'
-      };
-      pieOption.value.tooltip.textStyle = {
         color: val === 'dark' ? '#fff' : '#1E2435'
       };
     }
