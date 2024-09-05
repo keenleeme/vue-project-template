@@ -980,7 +980,7 @@
   dependencies:
     less "^4.2.0"
 
-"@stencil/core@^4.7.0":
+"@stencil/core@^4.21.0":
   version "4.21.0"
   resolved "https://ci.das-security.cn/repository/ah_npm/@stencil/core/-/core-4.21.0.tgz#6e294c57468e58dd77a458244968fe73d589b41b"
   integrity sha512-v50lnVbzS8mpMSnEVxR+G75XpvxHKtkJaQrNPE8+/fF6Ppr5z4bcdcBhcP8LPfEW+4BZcic6VifMXRwTopc+kw==
@@ -1486,22 +1486,24 @@
     sortablejs "^1.15.1"
     vue-demi latest
 
-"@ued-material/ued-wbc-vue3@^0.0.1":
-  version "0.0.1"
-  resolved "https://ci.das-security.cn/repository/ah_npm/@ued-material/ued-wbc-vue3/-/ued-wbc-vue3-0.0.1.tgz#4e72aad15e910bd67b5996ce14105d317c341e4c"
-  integrity sha512-vurdLpuqunrjwIxPB/6H0DreLHkWDz77CWH2shBIkmteazyvxaLCOmA2UPkpEWzigEd8BuX/bnc0CVnUrappPg==
+"@ued-material/ued-wbc-vue3@^0.0.2":
+  version "0.0.2"
+  resolved "https://ci.das-security.cn/repository/ah_npm/@ued-material/ued-wbc-vue3/-/ued-wbc-vue3-0.0.2.tgz#98af8e09a0dff9c357a8a5c6cdf2c0975fd2a4d3"
+  integrity sha512-ADq3DGT/fGYUKhojvLwMsg6IqMlVyQhUjtrO+SgDvs2Dsr5tB6nb8IlqZ/IffVnK9Z65wiaHULVBXN1zaZrIyA==
   dependencies:
-    "@ued-material/ued-wbc" "^0.0.1"
+    "@ued-material/ued-wbc" "^0.0.2"
 
-"@ued-material/ued-wbc@^0.0.1":
-  version "0.0.1"
-  resolved "https://ci.das-security.cn/repository/ah_npm/@ued-material/ued-wbc/-/ued-wbc-0.0.1.tgz#93d4e4d3c8cf17a56fb213d72673575c129ea656"
-  integrity sha512-rC96zDfux1rSWoftfeSmQWWG8D7THcWShDNwAYGaYXn5oyWNtgria7/4YU+SlEBXRtWrh7OpZPdV0/5SEO+XeQ==
+"@ued-material/ued-wbc@^0.0.2":
+  version "0.0.2"
+  resolved "https://ci.das-security.cn/repository/ah_npm/@ued-material/ued-wbc/-/ued-wbc-0.0.2.tgz#af14dcf24f0bca296015063517bebb494b03245a"
+  integrity sha512-vG8x0oBTjaAJwzl9+mMG8eKQXrECK/gL4jb/OosbVAdtbe5Y/bpmvqy2NEgpcJDSNpkP769n/WtNtUrD/de+lg==
   dependencies:
     "@stencil-community/less" "^2.0.0"
-    "@stencil/core" "^4.7.0"
+    "@stencil/core" "^4.21.0"
     async-validator "^4.2.5"
     qrcode "^1.5.4"
+    react "^18.3.1"
+    react-dom "^18.3.1"
 
 "@ued-material/vue-tour@^1.2.2":
   version "1.2.2"
@@ -6489,7 +6491,7 @@ longest@^1.0.0:
   resolved "https://ci.das-security.cn/repository/ah_npm/longest/-/longest-1.0.1.tgz#30a0b2da38f73770e8294a0d22e6625ed77d0097"
   integrity sha512-k+yt5n3l48JU4k8ftnKG6V7u32wyH2NfKzeMto9F/QRE0amxy/LayxwlvjjkZEIzqR+19IrtFO8p5kB9QaYUFg==
 
-loose-envify@^1.0.0:
+loose-envify@^1.0.0, loose-envify@^1.1.0:
   version "1.4.0"
   resolved "https://ci.das-security.cn/repository/ah_npm/loose-envify/-/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"
   integrity sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==
@@ -7778,6 +7780,21 @@ raw-body@2.5.2:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
+react-dom@^18.3.1:
+  version "18.3.1"
+  resolved "https://ci.das-security.cn/repository/ah_npm/react-dom/-/react-dom-18.3.1.tgz#c2265d79511b57d479b3dd3fdfa51536494c5cb4"
+  integrity sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==
+  dependencies:
+    loose-envify "^1.1.0"
+    scheduler "^0.23.2"
+
+react@^18.3.1:
+  version "18.3.1"
+  resolved "https://ci.das-security.cn/repository/ah_npm/react/-/react-18.3.1.tgz#49ab892009c53933625bd16b2533fc754cab2891"
+  integrity sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==
+  dependencies:
+    loose-envify "^1.1.0"
+
 read-pkg-up@^1.0.1:
   version "1.0.1"
   resolved "https://ci.das-security.cn/repository/ah_npm/read-pkg-up/-/read-pkg-up-1.0.1.tgz#9d63c13276c065918d57f002a57f40a1b643fb02"
@@ -8157,6 +8174,13 @@ sax@^1.2.4:
   version "1.4.1"
   resolved "https://ci.das-security.cn/repository/ah_npm/sax/-/sax-1.4.1.tgz#44cc8988377f126304d3b3fc1010c733b929ef0f"
   integrity sha512-+aWOz7yVScEGoKNd4PA10LZ8sk0A/z5+nXQG5giUO5rprX9jgYsTdov9qCchZiPIZezbZH+jRut8nPodFAX4Jg==
+
+scheduler@^0.23.2:
+  version "0.23.2"
+  resolved "https://ci.das-security.cn/repository/ah_npm/scheduler/-/scheduler-0.23.2.tgz#414ba64a3b282892e944cf2108ecc078d115cdc3"
+  integrity sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==
+  dependencies:
+    loose-envify "^1.1.0"
 
 schema-utils@^3.1.1, schema-utils@^3.2.0:
   version "3.3.0"

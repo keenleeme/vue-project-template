@@ -36,7 +36,7 @@
     "@international/vue3-i18n": "^1.2.0",
     "@micro-zoe/micro-app": "^1.0.0-rc.2",
     "@ued-material/menu": "^2.1.11",
-    "@ued-material/ued-wbc-vue3": "^0.0.1",
+    "@ued-material/ued-wbc-vue3": "^0.0.2",
     "@ued-material/vue-tour": "^1.2.2",
     "ant-design-vue": "^4.0.7",
     "axios": "^1.5.1",

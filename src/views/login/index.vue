@@ -1,7 +1,6 @@
 <template>
   <ued-login-layout :forms="forms" :style="background" @u-submit="handleLogin">
     <ued-logo slot="logo" src="/logo.png" width="180" height="100"></ued-logo>
-    <!-- select 双向绑定还有问题 -->
     <ued-select slot="language" v-model="configs.language" :clearable="false" :options="options"></ued-select>
     <div slot="copyright">
       <p>{{ $t('I18N.login.hangZhouAnHengXin') }}</p>
@@ -11,10 +10,12 @@
 
 <script setup lang="ts">
   import { ref, computed } from 'vue';
+  import { useRouter } from 'vue-router';
   import { storeToRefs } from 'pinia';
   import { useAppStore } from '@/store';
 
   const appStore = useAppStore();
+  const router = useRouter();
   const { appConfig } = storeToRefs(appStore);
   const configs = reactive({
     copy: 'qwe',
@@ -36,8 +37,8 @@
             {
               type: 'string',
               required: true,
-              min: 2,
-              max: 6
+              message: '请输入用户名',
+              min: 3
             }
           ]
         },
@@ -48,10 +49,10 @@
           icon: 'password',
           rules: {
             type: 'string',
-            min: 12,
+            min: 6,
             validator: (rule: any, value: any, cab: any) => {
-              if (value.length < 12) {
-                cab(new Error('密码不得小于12位'));
+              if (value.length < 6) {
+                cab(new Error('密码不得小于6位'));
               }
               cab();
             }
@@ -161,6 +162,8 @@
 
   const handleLogin = (e: CustomEvent) => {
     console.log(e.detail);
+    appStore.setToken('dsadsadsada');
+    router.replace('/');
   };
 
   watch(
