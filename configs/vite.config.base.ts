@@ -15,7 +15,7 @@ import Components from 'unplugin-vue-components/vite';
 import AutoImport from 'unplugin-auto-import/vite'
 import { defineConfig } from 'vite';
 import { loadEnv } from './utils';
-import { copy } from 'fs-extra'
+import extra from 'fs-extra'
 
 
 const env = loadEnv();
@@ -55,7 +55,7 @@ export default defineConfig({
         })
       ]
     }),
-    copy(
+    extra.copy(
       resolve(__dirname, '../node_modules/@ued-material/ued-wbc/dist/assets/ued-wbc'),
       resolve(__dirname, '../public/assets/ued-wbc'),
     )
