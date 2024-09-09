@@ -1,10 +1,10 @@
 <template>
-  <ued-login-layout :forms="forms" :style="background" @u-submit="handleLogin">
+  <ued-login-layout :forms="forms" :theme="themeConfig.mode" :style="background" @u-submit="handleLogin">
     <ued-logo slot="logo" src="/logo.png" width="180" height="100"></ued-logo>
     <ued-select slot="language" v-model="configs.language" :clearable="false" :options="options"></ued-select>
-    <div slot="copyright">
+    <template slot="copyright">
       <p>{{ $t('I18N.login.hangZhouAnHengXin') }}</p>
-    </div>
+    </template>
   </ued-login-layout>
 </template>
 
@@ -12,11 +12,14 @@
   import { ref, computed } from 'vue';
   import { useRouter } from 'vue-router';
   import { storeToRefs } from 'pinia';
-  import { useAppStore } from '@/store';
+  import { useAppStore, useThemeStore } from '@/store';
 
   const appStore = useAppStore();
+  const themeStore = useThemeStore();
   const router = useRouter();
+  const { themeConfig } = storeToRefs(themeStore);
   const { appConfig } = storeToRefs(appStore);
+
   const configs = reactive({
     copy: 'qwe',
     language: 'zh'
@@ -177,6 +180,7 @@
 
 <style lang="less" scoped>
   ued-login-layout {
+    --ued-login-primary-color: var(--um-primary-color-normal);
     height: 100%;
     ued-select {
       --ued-control-bg: transparent;
@@ -189,6 +193,9 @@
       :deep(.ued-form-control):hover {
         box-shadow: none !important;
       }
+    }
+    :deep(.dark) {
+      --ued-login-primary-color: var(--um-dark-primary-color-normal);
     }
   }
 </style>
