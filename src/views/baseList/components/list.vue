@@ -169,6 +169,7 @@
   .table-wrap {
     background: var(--primary-bg);
     margin: 16px;
+    // padding: 24px 16px;
     .link {
       padding: 0;
       margin-right: 28px;

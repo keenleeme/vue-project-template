@@ -2,7 +2,7 @@
  * @Author: xzj 13819929694@163.com
  * @Date: 2024-08-22 16:50:45
  * @LastEditors: xzj 13819929694@163.com
- * @LastEditTime: 2024-09-04 17:06:37
+ * @LastEditTime: 2024-09-13 15:13:12
  * @Description:
  *
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved.
@@ -12,9 +12,9 @@
     <div class="p2 pl-16 page-top">
       <!-- :style="{ 'background-color': token.colorBgBase, borderLeft: `1px solid ${token.colorBorder}` }" -->
       <a-breadcrumb v-if="themeConfig.breadcrumb" class="breadcrumb">
-        <template #separator>
+        <!-- <template #separator>
           <RightOutlined style="vertical-align: revert-layer; font-size: 14px" />
-        </template>
+        </template> -->
         <a-breadcrumb-item v-for="item in activeBreadcrumb" :key="item.title">
           <template v-if="!item.path">
             {{ item.title }}
@@ -40,8 +40,7 @@
 <script setup lang="ts">
   import { RouterView } from 'vue-router';
   // import { useRouter } from 'vue-router';
-  import { LeftSquareOutlined } from '@ant-design/icons-vue';
-  // import { RightOutlined } from '@ant-design/icons-vue';
+  import { LeftSquareOutlined, RightOutlined } from '@ant-design/icons-vue';
   // import { theme } from 'ant-design-vue';
   import { storeToRefs } from 'pinia';
   import { useMenusStore, useThemeStore } from '@/store';
@@ -55,6 +54,11 @@
   const { activeBreadcrumb } = storeToRefs(menusStore);
   const { themeConfig } = storeToRefs(themeStore);
   // 监听activeBreadcrumb的变化，当activeBreadcrumb发生变化时，更新面包屑导航的显示内容
+
+  // activeBreadcrumb.value.push({  path: 'string',
+  // title: 'string',
+  // component:true,
+  // })
   watch(
     () => activeBreadcrumb.value,
     (newValue) => {
