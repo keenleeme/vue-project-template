@@ -56,6 +56,15 @@ const routes: RouteRecordRaw[] = [
     }
   },
   {
+    name: 'base-config',
+    path: '/base-config',
+    component: () => import('@/views/baseConfig/index.vue'),
+    meta: {
+      title: '基础配置',
+      permissionId: 'base::theme:index'
+    }
+  },
+  {
     name: 'base::dasUpgrade',
     path: '/dasUpgrade',
     component: () => import('@/views/iframe/index.vue'),

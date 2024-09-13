@@ -255,7 +255,7 @@
           id: 15,
           name: '配置页',
           hideChildren: true,
-          url: '/home',
+          url: '/base-config',
           submenu: []
         }
       ]

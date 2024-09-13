@@ -2,7 +2,7 @@
  * @Author: xzj 13819929694@163.com
  * @Date: 2024-08-23 15:08:02
  * @LastEditors: xzj 13819929694@163.com
- * @LastEditTime: 2024-09-03 16:30:32
+ * @LastEditTime: 2024-09-13 10:41:46
  * @Description: 
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
 -->
@@ -182,18 +182,24 @@
 
 <style lang="less" scoped>
   .setting-wrapper {
-    background-color: #fff;
+    // background-color: #fff;
+    background-color: var(--primary-bg);
     height: 100%;
     display: flex;
     flex-direction: column;
 
     .page-content {
       flex-grow: 1;
-      background-color: #f7f8fc;
+      // background-color: #f7f8fc;
+      background-color: var(--color-page-bg);
       padding: 16px;
       height: 0;
       overflow-x: hidden;
-      color: #1e2435;
+      // color: #1e2435;
+      color: var(--color-text-content);
+      :deep(.page-item-title) {
+        font-size: 16px;
+      }
 
       .block-area {
         .theme-panel-item {
@@ -204,7 +210,7 @@
             line-height: 22px;
           }
 
-          .ttheme-panel-common-item > span {
+          .theme-panel-common-item > span {
             width: 98px;
             text-align: right;
           }
@@ -215,9 +221,11 @@
     .page-footer {
       padding: 16px;
       text-align: right;
-      border-top: 1px solid #e9eaf0;
+      // border-top: 1px solid #e9eaf0;
+      border-top: 1px solid var(--primary-divider);
       button {
         margin-left: 8px;
+        // color: var(--color-text-content);
       }
     }
   }
@@ -226,33 +234,15 @@
 <style lang="less" scoped>
   .dark {
     .setting-wrapper {
-      background-color: #0d172a;
-
-      .page-content {
-        background-color: #020c1e;
-        color: #fff;
-
-        .page-item {
-          background-color: #0d172a;
-
-          :deep(.page-item-title) {
-            color: #fff;
-            border-bottom: 1px solid #2d374e;
-          }
-        }
-      }
-
       .page-footer {
-        border-top: 1px solid #2d374e;
         button {
-          color: #fff;
-          border-color: #4d576e;
-          background-color: #0d172a;
-          outline: none;
+          // border-color: #4d576e;
+          // background-color: #0d172a;
+          // outline: none;
         }
-        .ant-btn-primary {
-          background-color: #3461dd;
-        }
+        // .ant-btn-primary {
+        //   background-color: #3461dd;
+        // }
       }
     }
   }
