@@ -66,7 +66,7 @@
   </vue-tour>
 </template>
 
-<style>
+<style lang="less" scoped>
   .logo,
   .title {
     font-size: 20px;

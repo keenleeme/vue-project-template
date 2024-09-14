@@ -135,7 +135,7 @@
   @import url('./styles/reset.css');
 
   /* 应用变量 */
-  body {
+  :is(body) {
     background-color: var(--primary-bg);
   }
 </style>

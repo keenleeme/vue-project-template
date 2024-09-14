@@ -5,16 +5,16 @@ import type { MenuType } from '@/store/modules/menus/types';
 export async function getMenus(): Promise<MenuType[]> {
   return [
     {
-      id: 'vueTour',
-      title: I18N.api.common.yinDaoYe,
-      icon: 'AppstoreOutlined',
-      path: '/vueTour'
-    },
-    {
       id: 'workBench',
       title: '工作台',
       icon: 'AppstoreOutlined',
       path: '/workBench'
+    },
+    {
+      id: 'vueTour',
+      title: I18N.api.common.yinDaoYe,
+      icon: 'AppstoreOutlined',
+      path: '/vueTour'
     },
     {
       id: 'home',

@@ -1,8 +1,8 @@
 <template>
   <div v-if="!(themeConfig.layout === 'side' && !themeConfig.header)" class="header">
     <div class="logo-wrap">
-      <span class="logo">LOGO</span>
-      <span class="title">XXXX安全管理系统</span>
+      <span class="logo">ZQ</span>
+      <span class="title">智启vue3孵化器系统</span>
     </div>
     <UedMapMenu
       v-if="config.layout !== 'side' && config.mapMenu"
@@ -68,6 +68,7 @@
         :class="config.lang === 'ZH' ? 'menu-icon-chinese' : 'menu-icon-english'"
         @click="config.lang = config.lang === 'ZH' ? 'EN' : 'ZH'"
       />
+      <FullscreenOutlined class="icon-button menuicon" size="24" @click="toggleFullScreen" />
       <UedUserMenu
         :props="dataProps"
         :data="userMenu"
@@ -189,6 +190,7 @@
 <script setup lang="ts">
   import { ref, watchEffect } from 'vue';
   import { useRouter } from 'vue-router';
+  import { FullscreenOutlined } from '@ant-design/icons-vue';
   // import { generate } from '@ant-design/colors';
   import { UedTopMenu, UedMapMenu, UedUserMenu, ThemePanel, findNodeInTree } from '@ued-material/menu';
   import { storeToRefs } from 'pinia';
@@ -553,51 +555,16 @@
     window.open('https://rd.das-security.cn/home');
     open.value = false;
   };
+  const toggleFullScreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  };
 </script>
 
 <style lang="less" scoped>
-  .demo-wrapper {
-    height: 100vh;
-
-    .demo-content {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .demo-content > div:last-child {
-      display: flex;
-      height: 0;
-      flex-grow: 1;
-      background-color: #f7f8fc;
-      z-index: 1;
-    }
-    &.header-dark {
-      .header {
-        background-color: #172034;
-        color: #fff;
-
-        .title {
-          color: #f6f7fb;
-        }
-
-        .icon-button {
-          color: #adb1bc;
-
-          &:hover {
-            background: #353c51;
-          }
-        }
-      }
-    }
-
-    &.dark {
-      .content {
-        background-color: #020c1e;
-        color: #fff;
-      }
-    }
-  }
   .header {
     height: 48px;
     width: 100%;
@@ -609,7 +576,11 @@
       0 0 6px rgba(0, 0, 0, 0.04);
     z-index: 99;
     position: relative;
-
+    background: #fff;
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+    }
     .logo {
       font-size: 32px;
       margin-left: 16px;
@@ -630,7 +601,6 @@
     flex-grow: 1;
     width: 0;
     color: #505968;
-
     .menu-setting {
       font-size: 14px;
       margin-bottom: 32px;
@@ -656,25 +626,6 @@
     margin-top: -4px;
     .cut-form-item__label {
       opacity: 0;
-    }
-  }
-  .header {
-    position: relative;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    height: 48px;
-    padding-right: 320px;
-    // background-color: #172034;
-    // color: #fff;
-    .logo-wrap {
-      min-width: 200px;
-    }
-    h1 {
-      text-align: center;
-    }
-    p {
-      text-indent: 2em;
     }
   }
   .header-dark .header {

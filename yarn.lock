@@ -608,11 +608,6 @@
   "resolved" "https://ci.das-security.cn/repository/ah_npm/@emotion/unitless/-/unitless-0.8.1.tgz"
   "version" "0.8.1"
 
-"@esbuild/win32-x64@0.18.20":
-  "integrity" "sha512-kTdfRcSiDfQca/y9QIkng02avJ+NCaQvrMejlsB3RRv5sE9rRoeBPISaZpKxHELzRxZyLvNts1P27W3wV+8geQ=="
-  "resolved" "https://ci.das-security.cn/repository/ah_npm/@esbuild/win32-x64/-/win32-x64-0.18.20.tgz"
-  "version" "0.18.20"
-
 "@eslint-community/eslint-utils@^4.1.2", "@eslint-community/eslint-utils@^4.2.0", "@eslint-community/eslint-utils@^4.4.0":
   "integrity" "sha512-1/sA4dwrzBAyeUoQ6oxahHKmrZvsnLCg4RfxW3ZFGGmQkSNQPFNLV9CUEFQP1x9EYXHTo5p6xdhZM1Ne9p/AfA=="
   "resolved" "https://ci.das-security.cn/repository/ah_npm/@eslint-community/eslint-utils/-/eslint-utils-4.4.0.tgz"
@@ -902,11 +897,6 @@
   "integrity" "sha512-v50lnVbzS8mpMSnEVxR+G75XpvxHKtkJaQrNPE8+/fF6Ppr5z4bcdcBhcP8LPfEW+4BZcic6VifMXRwTopc+kw=="
   "resolved" "https://ci.das-security.cn/repository/ah_npm/@stencil/core/-/core-4.21.0.tgz"
   "version" "4.21.0"
-
-"@swc/core-win32-x64-msvc@1.3.102":
-  "integrity" "sha512-E/jfSD7sShllxBwwgDPeXp1UxvIqehj/ShSUqq1pjR/IDRXngcRSXKJK92mJkNFY7suH6BcCWwzrxZgkO7sWmw=="
-  "resolved" "https://ci.das-security.cn/repository/ah_npm/@swc/core-win32-x64-msvc/-/core-win32-x64-msvc-1.3.102.tgz"
-  "version" "1.3.102"
 
 "@swc/core@^1.2.147", "@swc/core@^1.3.93", "@swc/core@>=1.2.50":
   "integrity" "sha512-OAjNLY/f6QWKSDzaM3bk31A+OYHu6cPa9P/rFIx8X5d24tHXUpRiiq6/PYI6SQRjUPlB72GjsjoEU8F+ALadHg=="
@@ -3820,11 +3810,6 @@
     "is-callable" "^1.1.4"
     "is-date-object" "^1.0.1"
     "is-symbol" "^1.0.2"
-
-"esbuild-windows-64@0.14.54":
-  "integrity" "sha512-AoHTRBUuYwXtZhjXZbA1pGfTo8cJo3vZIcWGLiUcTNgHpJJMC1rVA44ZereBHMJtotyN71S8Qw0npiCIkW96cQ=="
-  "resolved" "https://ci.das-security.cn/repository/ah_npm/esbuild-windows-64/-/esbuild-windows-64-0.14.54.tgz"
-  "version" "0.14.54"
 
 "esbuild@^0.14.14":
   "integrity" "sha512-Cy9llcy8DvET5uznocPyqL3BFRrFXSVqbgpMJ9Wz8oVjZlh/zUSNbPRbov0VX7VxN2JH1Oa0uNxZ7eLRb62pJA=="

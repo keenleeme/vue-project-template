@@ -2,7 +2,7 @@ import loginBg from '@/assets/images/login/defalut-login-bg.jpg';
 import { AppConfigType } from './types';
 
 export const defaultConfig: AppConfigType = {
-  title: 'vue3-project-template',
+  title: '智启vue3孵化器系统',
   subtitle: 'webpack',
   logo: '/logo.png',
   // 登录配置

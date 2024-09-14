@@ -1066,7 +1066,8 @@
 .ant-upload-select-text .ant-btn {
   color: var(--textColor);
   border: 0 !important;
-/* }
+}
+/* 
 .ant-upload-select-text:hover {
   border: 1px solid #3b71ee !important;
   color: #3b71ee !important;

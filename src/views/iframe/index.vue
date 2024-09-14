@@ -31,7 +31,7 @@
     .iframe {
       display: block;
       width: 100%;
-      height: calc(100vh - 50px);
+      height: calc(100vh - 150px);
       border: none;
     }
   }
