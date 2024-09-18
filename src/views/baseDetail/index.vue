@@ -1,12 +1,12 @@
 <template>
   <div class="base-detail-box">
     <div class="base-detail-header">
-      <div class="header-info-avator" />
+      <img class="header-info-avator" src="@/assets/images/login/ainta.png" />
       <div class="header-info">
         <div>
           <div class="header-info-text">
             <span class="mr-8">仅支持 EXCEL 格式文件</span>
-            <a-tag color="geekblue" style="color: #3b71ee">默认标签</a-tag>
+            <a-tag color="geekblue">默认标签</a-tag>
           </div>
         </div>
         <div class="header-info-status">
@@ -144,6 +144,7 @@
       .header-info-avator {
         width: 64px;
         height: 64px;
+        padding: 8px;
         border-radius: 4px;
         background-color: #6e9efd;
       }
@@ -153,9 +154,11 @@
         .header-info-text {
           font-size: 12px;
           margin-bottom: 16px;
+          color: var(--color-text-title);
         }
         .header-info-status {
           font-size: 12px;
+          color: var(--color-text-title);
           .circle-status {
             display: inline-block;
             width: 8px;
@@ -181,6 +184,7 @@
       text-indent: 16px;
       font-size: 14px;
       font-weight: 600;
+      color: var(--color-text-title);
       border-bottom: 1px solid var(--primary-divider);
     }
 
@@ -193,6 +197,7 @@
       .timeline-date {
         font-size: 12px;
         font-weight: 400;
+        color: var(--color-text-sub-title);
       }
     }
   }
@@ -218,6 +223,7 @@
       label {
         font-size: 12px;
         font-weight: 400;
+        color: var(--color-text-placeholder);
       }
     }
     .ant-form-item-control {
