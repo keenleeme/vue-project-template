@@ -139,44 +139,9 @@
     @after-open-change="afterOpenChange"
   >
     <template #extra>
-      <!-- <a-button style="margin-right: 8px" @click="onClose">帮助文档</a-button> -->
-      <img src="../images/export-outlined.png" class="icon-export" alt="" @click="onClose" />
+      <svg t="1726654047990" class="icon icon-export" @click="onClose" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4265" width="24" height="24"><path d="M887.488 467.072H591.616a34.112 34.112 0 1 0 0 68.224h213.44l-304.64 304.64a34.112 34.112 0 1 0 48.256 48.32l304.64-304.64v213.376a34.112 34.112 0 1 0 68.288 0V501.184a34.112 34.112 0 0 0-34.112-34.112z" p-id="4266"></path><path d="M876.096 347.328v-130.56c0-50.304-40.768-91.072-91.008-91.072H193.408c-50.24 0-91.008 40.768-91.008 91.072v523.392c0 50.24 40.768 91.008 91.008 91.008h204.8v-0.128a34.112 34.112 0 0 0 0-68.032v-0.128H216.192a45.504 45.504 0 0 1-45.504-45.504V330.496h637.12v18.176c0 0.704-0.192 1.408-0.192 2.176a34.432 34.432 0 1 0 68.864 0c0-1.216-0.256-2.368-0.384-3.52z m-68.288-62.336H170.688v-45.44c0-25.152 20.352-45.568 45.44-45.568h546.176c25.152 0 45.504 20.416 45.504 45.504v45.504z" p-id="4267"></path></svg>
     </template>
-    <header>
-      <h1>未来科技探索</h1>
-    </header>
-    <main>
-      <section>
-        <p>
-          在不远的将来，人类社会将经历一场前所未有的科技革命。随着量子计算技术的进步，我们已经能够解决许多过去无法处理的复杂问题。
-        </p>
-        <p>
-          在智能家居领域，智能助手已经成为每个家庭的必备成员，它们不仅能够管理日常事务，还能通过情感识别技术与家庭成员进行更加人性化的互动。
-        </p>
-        <p>
-          医疗健康方面，基因编辑技术取得了重大突破，使得许多遗传性疾病得以根治。同时，纳米机器人被用于人体内部进行精准治疗，大大提高了治疗效果。
-        </p>
-      </section>
-      <section>
-        <p>
-          教育领域也迎来了翻天覆地的变化。虚拟现实技术让远程学习变得更加生动有趣，学生们可以身临其境地参与到各种历史事件之中，或者在模拟环境中进行科学实验。
-        </p>
-        <p>
-          交通出行方面，自动驾驶汽车已经普及，而超高速磁悬浮列车则让人们能够在几小时内跨越大陆。此外，私人飞行器成为了城市间的快速交通工具，极大地缩短了人们的出行时间。
-        </p>
-      </section>
-      <section>
-        <p>
-          随着人工智能的发展，人们的工作方式也在发生变化。许多重复性劳动已经被机器人取代，人们有更多的时间专注于创造性工作和个人发展。
-        </p>
-        <p>
-          尽管未来充满了无限可能，但我们也面临着新的挑战，比如如何确保这些技术的安全性和道德性，以及如何让所有人都能平等地享受到科技进步带来的好处。
-        </p>
-      </section>
-    </main>
-    <footer>
-      <p>&copy; 2024 未来科技探索</p>
-    </footer>
+    <HelpDocument></HelpDocument>
   </a-drawer>
   <ThemePanel
     v-model:visible="themePanelVisible"
@@ -195,6 +160,7 @@
   import { UedTopMenu, UedMapMenu, UedUserMenu, ThemePanel, findNodeInTree } from '@ued-material/menu';
   import { storeToRefs } from 'pinia';
   import { useAppStore, useMenusStore, useThemeStore } from '@/store';
+  import HelpDocument from './HelpDocument.vue';
 
   const menusStore = useMenusStore();
   const appStore = useAppStore();
@@ -637,6 +603,9 @@
       width: 20px;
       height: 20px;
       cursor: pointer;
+      position: relative;
+      top: 4px;
+      fill: var(--color-text-sub-title);
     }
   }
 </style>
