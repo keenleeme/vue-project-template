@@ -47,6 +47,7 @@ declare module 'vue' {
     BlockCard: typeof import('./src/components/blockCard/index.vue')['default']
     Card: typeof import('./src/components/card/index.vue')['default']
     HeaderMenus: typeof import('./src/components/layout/comps/HeaderMenus.vue')['default']
+    HelpDocument: typeof import('./src/components/layout/comps/HelpDocument.vue')['default']
     IconDark: typeof import('./src/components/layout/comps/IconDark.vue')['default']
     IconI18n: typeof import('./src/components/layout/comps/IconI18n.vue')['default']
     IconLight: typeof import('./src/components/layout/comps/IconLight.vue')['default']
