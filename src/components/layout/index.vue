@@ -2,7 +2,7 @@
  * @Author: xzj 13819929694@163.com
  * @Date: 2024-08-22 16:50:45
  * @LastEditors: xzj 13819929694@163.com
- * @LastEditTime: 2024-09-02 16:06:21
+ * @LastEditTime: 2024-09-18 20:11:54
  * @Description: 
  * 
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
@@ -18,7 +18,7 @@
     >
       <HeaderMenus v-if="!fullScreen"></HeaderMenus>
       <a-layout v-if="!fullScreen">
-        <SiderMenus></SiderMenus>
+        <SiderMenus v-if="themeConfig.layout != 'top'"></SiderMenus>
         <LayoutContent></LayoutContent>
       </a-layout>
       <RouterView v-if="fullScreen"></RouterView>

@@ -329,6 +329,48 @@
           url: '/vueTour'
         }
       ]
+    },
+    {
+      id: 9,
+      name: '多层菜单',
+      url: '/sum-more',
+      // hideChildren: true,
+      submenu: [
+        {
+          id: 90,
+          name: '二级菜单',
+          url: '/sum-more-0'
+        },
+        {
+          id: 91,
+          name: '二级菜单分类1',
+          url: 'sum-more-1',
+          submenu: [
+            {
+              id: 910,
+              name: '三级菜单',
+              url: '/sum-more-1-0'
+            },
+            {
+              id: 911,
+              name: '自动添加前缀三级菜单',
+              url: '/sum-more/sum-more-1-1'
+            }
+          ]
+        },
+        {
+          id: 92,
+          name: '二级菜单分类2',
+          url: '/sum-more-2',
+          submenu: [
+            {
+              id: 920,
+              name: '自动添加多个前缀三级菜单',
+              url: '/sum-more/sum-more-2/sum-more-2-1'
+            }
+          ]
+        }
+      ]
     }
   ]);
 
