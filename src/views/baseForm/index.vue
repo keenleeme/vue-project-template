@@ -128,6 +128,7 @@
       line-height: 46px;
       font-size: 14px;
       font-weight: 600;
+      color: var(--color-text-title);
       border-bottom: 1px solid var(--primary-divider);
     }
     .base-form-content {
