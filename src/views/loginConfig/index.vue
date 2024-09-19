@@ -18,11 +18,10 @@
           <a-form-item v-if="loginConfig.bgMode === 'image'" label="图片">
             <div class="uploader">
               <a-image
-                :width="142"
-                :height="100"
                 :src="loginConfig.bgImage"
                 :preview="false"
                 :fallback="config.fallbackImg"
+                style="width: 142px; height: 100px"
               />
               <div>
                 <a-upload
@@ -48,11 +47,10 @@
             <a-form-item label="封面">
               <div class="uploader">
                 <a-image
-                  :width="142"
-                  :height="100"
                   :src="loginConfig.bgPoster"
                   :preview="false"
                   :fallback="config.fallbackImg"
+                  style="width: 142px; height: 100px"
                 />
                 <div>
                   <a-upload
@@ -80,7 +78,13 @@
                 <video v-if="loginConfig.bgVideo" width="142">
                   <source :src="loginConfig.bgVideo" />
                 </video>
-                <a-image v-else :width="142" :height="100" :preview="false" src="" :fallback="config.fallbackImg" />
+                <a-image
+                  v-else
+                  :preview="false"
+                  src=""
+                  :fallback="config.fallbackImg"
+                  style="width: 142px; height: 100px"
+                />
                 <div>
                   <a-upload
                     name="bgVideo"
@@ -119,11 +123,10 @@
             <a-form-item style="margin-top: 24px">
               <div class="uploader">
                 <a-image
-                  :width="80"
-                  :height="80"
                   :src="loginConfig.logoUrl"
                   :preview="false"
                   :fallback="config.fallbackImg"
+                  style="width: 80px; height: 80px"
                 />
                 <div>
                   <a-upload
@@ -185,47 +188,6 @@
       <!-- preview -->
       <div :key="previewKey" class="preview">
         <LoginDemo :forms="forms" :login-config="loginConfig"></LoginDemo>
-        <!-- <ued-login-layout
-          :forms="forms"
-          :theme="loginConfig.mode"
-          :bg-image="loginConfig.bgImage"
-          :bg-video="loginConfig.bgVideo"
-          :bg-attrs="{
-            poster: loginConfig.bgPoster
-          }"
-        >
-          <div v-if="loginConfig.logoMode" slot="logo">
-            <ued-logo
-              :key="loginConfig.logoMode"
-              :src="loginConfig.logoUrl"
-              :mode="loginConfig.logoMode"
-              width="110px"
-              height="60px"
-            >
-              {{ [LogoModeEnums.IMAGE].includes(loginConfig.logoMode) ? '' : loginConfig.logoName }}
-            </ued-logo>
-          </div>
-          <ued-select
-            v-if="loginConfig.showLanguage"
-            slot="language"
-            :clearable="false"
-            :options="config.languages"
-          ></ued-select>
-          <div slot="copyright">
-            <div>{{ loginConfig.slogan }}</div>
-            <div>{{ loginConfig.copyright }}</div>
-            <div>
-              <a style="color: #333; margin-top: 6px" target="_blank" :src="loginConfig.filingUrl || 'javascript:;'">{{
-                loginConfig.filing
-              }}</a>
-            </div>
-            <div>
-              <a style="color: #333; margin-top: 6px" target="_blank" :src="loginConfig.icpUrl || 'javascript:;'">{{
-                loginConfig.icp
-              }}</a>
-            </div>
-          </div>
-        </ued-login-layout> -->
         <div class="preview-control">
           <a-button @click="handlePreviewControl('reload')">刷新</a-button>
           <a-button @click="handlePreviewControl('fullscreen')">全屏</a-button>
@@ -237,10 +199,10 @@
       <a-button type="primary" @click="handleFormSet('apply')">应用当前设置</a-button>
     </div>
 
-    <a-modal v-model:open="dialogVisiable" :title="dialogTitle" :centered="true" :closable="false">
+    <a-modal v-model:open="dialogVisible" :title="dialogTitle" :centered="true" :closable="false">
       <div class="content">新主题风格将覆盖所有账号自定义风格，确定保存新主题风格并应用到所有账号系统吗？</div>
       <template #footer>
-        <a-button key="back" @click="dialogVisiable = false">取消</a-button>
+        <a-button key="back" @click="dialogVisible = false">取消</a-button>
         <a-button key="submit" type="primary" @click="handleSubmit">确定</a-button>
       </template>
     </a-modal>
@@ -284,7 +246,7 @@
   };
 
   const loginConfig = ref<LoginConfigDTO>(new LoginConfigDTO(appConfig.value?.loginConfig));
-  const dialogVisiable = ref(false);
+  const dialogVisible = ref(false);
   const dialogTitle = ref('');
   const previewKey = ref(0);
   const fullscreen = ref(false);
@@ -337,10 +299,10 @@
   const handleFormSet = (name: 'reset' | 'apply') => {
     if (name === 'reset') {
       dialogTitle.value = '恢复出厂设置';
-      dialogVisiable.value = true;
+      dialogVisible.value = true;
     } else if (name === 'apply') {
       dialogTitle.value = '应用当前设置';
-      dialogVisiable.value = true;
+      dialogVisible.value = true;
     }
   };
 
@@ -348,10 +310,10 @@
   const handleSubmit = () => {
     if (dialogTitle.value === '恢复出厂设置') {
       loginConfig.value = new LoginConfigDTO(appConfig.value?.loginConfig);
-      dialogVisiable.value = false;
+      dialogVisible.value = false;
     } else {
       appStore.setLoginConfig(loginConfig.value);
-      dialogVisiable.value = false;
+      dialogVisible.value = false;
     }
   };
 </script>
