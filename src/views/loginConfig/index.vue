@@ -10,31 +10,99 @@
             </a-radio-group>
           </a-form-item>
           <a-form-item label="登录页背景">
+            <a-radio-group v-model:value="loginConfig.bgMode">
+              <a-radio value="image">图片</a-radio>
+              <a-radio value="video">视频</a-radio>
+            </a-radio-group>
+          </a-form-item>
+          <a-form-item v-if="loginConfig.bgMode === 'image'" label="图片">
             <div class="uploader">
               <a-image
                 :width="142"
                 :height="100"
                 :src="loginConfig.bgImage"
-                fallback="data:image/png;base64,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"
+                :preview="false"
+                :fallback="config.fallbackImg"
               />
               <div>
                 <a-upload
-                  :file-list="[loginConfig.bgImage]"
-                  name="file"
-                  action=""
+                  name="bgImage"
                   :max-count="1"
-                  :accept="format.join(',')"
+                  :accept="config.format.join(',')"
                   :show-upload-list="false"
                   :before-upload="(v: UploadFile) => beforeUpload(v, 'bgImage')"
-                  :custom-request="customRequest"
+                  :custom-request="(v) => customRequest(v, 'bgImage')"
                 >
                   <a-button type="text">上传</a-button>
                 </a-upload>
-                <a-button type="text">恢复出厂图片</a-button>
+                <a-button type="text" @click="handleReset('bgImage')">恢复出厂图片</a-button>
               </div>
-              <p>只能上传{{ format.join('/').replace(/\./g, '') }}文件，且不超过{{ bgSizeText }}，建议图片比例16:9</p>
+              <p>
+                只能上传{{ config.format.join('/').replace(/\./g, '') }}文件，且不超过{{
+                  config.bgSizeText
+                }}，建议图片比例16:9
+              </p>
             </div>
           </a-form-item>
+          <template v-else>
+            <a-form-item label="封面">
+              <div class="uploader">
+                <a-image
+                  :width="142"
+                  :height="100"
+                  :src="loginConfig.bgPoster"
+                  :preview="false"
+                  :fallback="config.fallbackImg"
+                />
+                <div>
+                  <a-upload
+                    name="bgPoster"
+                    action=""
+                    :max-count="1"
+                    :accept="config.format.join(',')"
+                    :show-upload-list="false"
+                    :before-upload="(v: UploadFile) => beforeUpload(v, 'bgPoster')"
+                    :custom-request="(v) => customRequest(v, 'bgPoster')"
+                  >
+                    <a-button type="text">上传</a-button>
+                  </a-upload>
+                  <a-button type="text" @click="handleReset('bgPoster')">恢复出厂图片</a-button>
+                </div>
+                <p>
+                  只能上传{{ config.format.join('/').replace(/\./g, '') }}文件，且不超过{{
+                    config.bgSizeText
+                  }}，视频和图片尺寸保持一致，建议比例16:9
+                </p>
+              </div>
+            </a-form-item>
+            <a-form-item label="视频">
+              <div class="uploader">
+                <video v-if="loginConfig.bgVideo" width="142">
+                  <source :src="loginConfig.bgVideo" />
+                </video>
+                <a-image v-else :width="142" :height="100" :preview="false" src="" :fallback="config.fallbackImg" />
+                <div>
+                  <a-upload
+                    name="bgVideo"
+                    action=""
+                    :max-count="1"
+                    :accept="config.videoFormat.join(',')"
+                    :show-upload-list="false"
+                    :before-upload="(v: UploadFile) => beforeUpload(v, 'bgVideo')"
+                    :custom-request="(v) => customRequest(v, 'bgVideo')"
+                  >
+                    <a-button type="text">上传</a-button>
+                  </a-upload>
+                  <a-button type="text" @click="handleReset('bgVideo')">恢复出厂视频</a-button>
+                </div>
+                <p>
+                  只能上传{{ config.videoFormat.join('/').replace(/\./g, '') }}文件，且不超过{{
+                    config.videoSizeText
+                  }}，视频和图片尺寸保持一致，建议比例16:9
+                </p>
+              </div>
+            </a-form-item>
+          </template>
           <a-form-item label="登录页LOGO">
             <a-radio-group v-model:value="loginConfig.logoMode">
               <a-radio :value="LogoModeEnums.IMAGE">图片</a-radio>
@@ -43,33 +111,45 @@
             </a-radio-group>
           </a-form-item>
           <a-form-item label="LOGO名称">
-            <a-input v-model:value="loginConfig.logoName" placeholder="请输入LOGO名称" />
+            <a-input
+              v-model:value="loginConfig.logoName"
+              :disabled="[LogoModeEnums.IMAGE].includes(loginConfig.logoMode!)"
+              placeholder="请输入LOGO名称"
+            />
             <a-form-item style="margin-top: 24px">
               <div class="uploader">
                 <a-image
                   :width="80"
                   :height="80"
                   :src="loginConfig.logoUrl"
-                  fallback="data:image/png;base64,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"
+                  :preview="false"
+                  :fallback="config.fallbackImg"
                 />
                 <div>
                   <a-upload
-                    :file-list="[loginConfig.logoUrl]"
-                    name="file"
+                    name="logoUrl"
                     action=""
+                    :disabled="[LogoModeEnums.TEXT].includes(loginConfig.logoMode!)"
                     :max-count="1"
-                    :accept="format.join(',')"
+                    :accept="config.format.join(',')"
                     :show-upload-list="false"
-                    :before-upload="beforeUpload"
-                    :custom-request="customRequest"
+                    :before-upload="(v: UploadFile) => beforeUpload(v, 'logoUrl')"
+                    :custom-request="(v) => customRequest(v, 'logoUrl')"
                   >
-                    <a-button type="text">上传</a-button>
+                    <a-button type="text" :disabled="[LogoModeEnums.TEXT].includes(loginConfig.logoMode!)"
+                      >上传</a-button
+                    >
                   </a-upload>
-                  <a-button type="text">恢复出厂图片</a-button>
+                  <a-button
+                    type="text"
+                    :disabled="[LogoModeEnums.TEXT].includes(loginConfig.logoMode!)"
+                    @click="handleReset('logoUrl')"
+                    >恢复出厂图片</a-button
+                  >
                 </div>
                 <p>
-                  只能上传{{ format.join('/').replace(/\./g, '') }}文件，且不超过{{
-                    logoSizeText
+                  只能上传{{ config.format.join('/').replace(/\./g, '') }}文件，且不超过{{
+                    config.logoSizeText
                   }}，深色背景建议使用白色logo
                 </p>
               </div>
@@ -101,14 +181,35 @@
           </a-form-item>
         </a-form>
       </div>
-      <div class="preview">
-        <ued-login-layout :forms="forms" :theme="loginConfig.mode" :style="background">
-          <ued-logo slot="logo" :src="loginConfig.logoUrl || '/logo.png'" width="180" height="100"></ued-logo>
+      <!--  -->
+      <!-- preview -->
+      <div :key="previewKey" class="preview">
+        <LoginDemo :forms="forms" :login-config="loginConfig"></LoginDemo>
+        <!-- <ued-login-layout
+          :forms="forms"
+          :theme="loginConfig.mode"
+          :bg-image="loginConfig.bgImage"
+          :bg-video="loginConfig.bgVideo"
+          :bg-attrs="{
+            poster: loginConfig.bgPoster
+          }"
+        >
+          <div v-if="loginConfig.logoMode" slot="logo">
+            <ued-logo
+              :key="loginConfig.logoMode"
+              :src="loginConfig.logoUrl"
+              :mode="loginConfig.logoMode"
+              width="110px"
+              height="60px"
+            >
+              {{ [LogoModeEnums.IMAGE].includes(loginConfig.logoMode) ? '' : loginConfig.logoName }}
+            </ued-logo>
+          </div>
           <ued-select
             v-if="loginConfig.showLanguage"
             slot="language"
             :clearable="false"
-            :options="languages"
+            :options="config.languages"
           ></ued-select>
           <div slot="copyright">
             <div>{{ loginConfig.slogan }}</div>
@@ -124,10 +225,10 @@
               }}</a>
             </div>
           </div>
-        </ued-login-layout>
+        </ued-login-layout> -->
         <div class="preview-control">
-          <a-button>刷新</a-button>
-          <a-button>全屏</a-button>
+          <a-button @click="handlePreviewControl('reload')">刷新</a-button>
+          <a-button @click="handlePreviewControl('fullscreen')">全屏</a-button>
         </div>
       </div>
     </div>
@@ -136,12 +237,23 @@
       <a-button type="primary" @click="handleFormSet('apply')">应用当前设置</a-button>
     </div>
 
-    <a-modal v-model:open="dialogVisiable" :title="dialogTitle" centered="true" :closable="false">
+    <a-modal v-model:open="dialogVisiable" :title="dialogTitle" :centered="true" :closable="false">
       <div class="content">新主题风格将覆盖所有账号自定义风格，确定保存新主题风格并应用到所有账号系统吗？</div>
       <template #footer>
         <a-button key="back" @click="dialogVisiable = false">取消</a-button>
         <a-button key="submit" type="primary" @click="handleSubmit">确定</a-button>
       </template>
+    </a-modal>
+
+    <a-modal
+      v-model:open="fullscreen"
+      title=""
+      width="100%"
+      wrap-class-name="full-modal"
+      :closable="false"
+      :footer="null"
+    >
+      <LoginDemo :key="previewKey" fullscreen :forms="forms" :login-config="loginConfig"></LoginDemo>
     </a-modal>
   </div>
 </template>
@@ -151,14 +263,15 @@
   import { UploadFile, message } from 'ant-design-vue';
   import { storeToRefs } from 'pinia';
   import { useAppStore } from '@/store';
-  import { LoginConfigDTO, LogoModeEnums } from '@/store/modules/login/types';
+  import { defaultConfig } from '@/store/modules/app/defaultConfig';
+  import { LoginConfigDTO, LogoModeEnums } from '@/views/login/types';
+  import * as config from './index';
+  import type { FormUploadType } from './index';
+  import LoginDemo from './login-demo.vue';
 
   const appStore = useAppStore();
   const { appConfig } = storeToRefs(appStore);
 
-  const format = ['.jpg', '.png'];
-  const [bgSize, bgSizeText] = [1024 * 1024 * 1, '1MB']; // 1MB
-  const [logoSize, logoSizeText] = [1024 * 500, '500KB']; // 500KB
   const formItemLayout = {
     labelCol: {
       xs: { span: 24 },
@@ -169,13 +282,12 @@
       sm: { span: 18 }
     }
   };
-  const languages = [
-    { label: '中文', value: 'zh' },
-    { label: '英文', value: 'en' }
-  ];
-  const loginConfig = ref<LoginConfigDTO>(new LoginConfigDTO());
+
+  const loginConfig = ref<LoginConfigDTO>(new LoginConfigDTO(appConfig.value?.loginConfig));
   const dialogVisiable = ref(false);
   const dialogTitle = ref('');
+  const previewKey = ref(0);
+  const fullscreen = ref(false);
 
   const forms = reactive<FormDto[]>([
     {
@@ -188,30 +300,37 @@
       ]
     }
   ]);
-  const background = computed(() => {
-    return {
-      'background-image': `url(${loginConfig.value.bgImage || appConfig.value?.loginBg})`,
-      'background-size': 'cover',
-      'background-repeat': 'no-repeat'
-    };
-  });
 
   // 上传前校验
-  const beforeUpload = (file: UploadFile, key: 'bgImage' | 'logoUrl') => {
-    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+  const beforeUpload = (file: UploadFile, key: FormUploadType) => {
+    const isJpgOrPng = config.formatValidFull[key].includes(file.type!);
+    const limit = (file.size || 0) < config.limitValid[key];
     if (!isJpgOrPng) {
-      message.error(`文件格式不为${format.join('/').replace(/\./g, '')}`);
+      message.error(`文件格式不为${config.formatValid[key].join('/').replace(/\./g, '')}`);
     }
-    const limit = (file.size || 0) < (key === 'bgImage' ? bgSize : logoSize);
     if (!limit) {
-      message.error(`文件大小超过${bgSizeText}`);
+      message.error(`文件大小超过${config.limitText[key]}`);
     }
     return isJpgOrPng && limit;
   };
 
-  // 自定义上传
-  const customRequest = () => {
-    console.log('customRequest');
+  const customRequest = (v: any, key: FormUploadType) => {
+    const urlData = URL.createObjectURL(v.file);
+    loginConfig.value[key] = urlData;
+    v.onSuccess();
+  };
+
+  const handleReset = (key: FormUploadType) => {
+    loginConfig.value[key] = defaultConfig.loginConfig[key];
+  };
+
+  // 预览侧 按钮处理
+  const handlePreviewControl = (name: 'reload' | 'fullscreen') => {
+    if (name === 'reload') {
+      previewKey.value += 1;
+    } else {
+      fullscreen.value = true;
+    }
   };
 
   // 按钮处理
@@ -228,9 +347,11 @@
   // 提交
   const handleSubmit = () => {
     if (dialogTitle.value === '恢复出厂设置') {
-      loginConfig.value = new LoginConfigDTO();
+      loginConfig.value = new LoginConfigDTO(appConfig.value?.loginConfig);
+      dialogVisiable.value = false;
     } else {
-      // submit
+      appStore.setLoginConfig(loginConfig.value);
+      dialogVisiable.value = false;
     }
   };
 </script>
@@ -279,9 +400,15 @@
             padding: 0;
             color: #1f5aff;
             margin-right: 8px;
+            border: none;
             &:hover {
               color: var(--um-primary-color-hover);
               background-color: transparent;
+            }
+            &:disabled {
+              background: transparent !important;
+              border: none !important;
+              color: #adb1bc !important;
             }
           }
           .ant-upload-wrapper {
@@ -299,46 +426,6 @@
       .preview {
         background: #adb1bc;
         padding: 100px 21px 0 21px;
-        ued-login-layout {
-          --ued-login-primary-color: var(--um-primary-color-normal);
-          --ued-login-form-width: 400px;
-          --ued-login-form-height-min: 400px;
-          --ued-login-form-right: 0;
-          --ued-logo-top: 0;
-          --ued-logo-left: 0;
-          --ued-language-top: 0;
-          --ued-language-right: 0;
-          position: relative;
-          width: 100%;
-          height: 400px;
-          :deep(.ued-login) {
-            position: absolute;
-          }
-          :deep(.login-form-box) {
-            transform: scale(0.5);
-          }
-          :deep(ued-logo img) {
-            transform: scale(0.5);
-          }
-          :deep(.ued-login-language) {
-            --ued-control-bg: transparent;
-            --ued-control-border-width: 0;
-            --ued-control-inner-width: 100px;
-            transform: scale(0.6);
-            input {
-              text-align: right;
-            }
-            .ued-form-control,
-            .ued-form-control:hover {
-              box-shadow: none !important;
-            }
-            .ued-popover {
-              top: 41px !important;
-              left: 50px !important;
-              right: 0 !important;
-            }
-          }
-        }
         .preview-control {
           display: flex;
           align-items: center;
@@ -366,6 +453,29 @@
       button {
         margin-left: 8px;
       }
+    }
+  }
+</style>
+
+<style lang="less">
+  .full-modal {
+    .ant-modal {
+      max-width: 100%;
+      top: 0;
+      padding-bottom: 0;
+      margin: 0;
+    }
+    .ant-modal-content {
+      display: flex;
+      flex-direction: column;
+      width: 100vw;
+      height: 100vh;
+      max-width: 100vw;
+      max-height: 100vh;
+      padding: 0;
+    }
+    .ant-modal-body {
+      flex: 1;
     }
   }
 </style>

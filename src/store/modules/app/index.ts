@@ -1,6 +1,7 @@
 import { computed, ref } from 'vue';
 // import { theme } from 'ant-design-vue';
 import { defineStore } from 'pinia';
+import { LoginConfigDTO } from '@/views/login/types';
 // import { themeTokens, ThemeTypes } from '@/theme';
 import { defaultConfig } from './defaultConfig';
 import { AppConfigType } from './types';
@@ -21,10 +22,15 @@ export default defineStore(
       permissionIds.value = ids;
     };
     // 系统配置
-    const appConfig = ref<AppConfigType>();
+    const appConfig = ref<AppConfigType>({ ...defaultConfig });
     const setAppConfig = (config: AppConfigType) => {
       const value = { ...defaultConfig, ...config };
       appConfig.value = value;
+    };
+    const setLoginConfig = (config: LoginConfigDTO) => {
+      appConfig.value.loginConfig = new LoginConfigDTO(
+        Object.assign(defaultConfig.loginConfig, appConfig.value.loginConfig, defaultConfig.loginConfig, config)
+      );
     };
     // // 主题
     // const themeType = ref<ThemeTypes>(ThemeTypes.Light);
@@ -59,6 +65,7 @@ export default defineStore(
       setPermissionIds,
       appConfig,
       setAppConfig,
+      setLoginConfig,
       // themeType,
       // setThemeType,
       // theme,

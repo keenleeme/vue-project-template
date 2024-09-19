@@ -37,7 +37,7 @@
     "@micro-zoe/micro-app": "^1.0.0-rc.2",
     "@types/color": "^3.0.6",
     "@ued-material/menu": "^2.1.13",
-    "@ued-material/ued-wbc-vue3": "^0.0.2",
+    "@ued-material/ued-wbc-vue3": "^0.0.4",
     "@ued-material/vue-tour": "^1.2.2",
     "ant-design-vue": "^4.0.7",
     "axios": "^1.5.1",
