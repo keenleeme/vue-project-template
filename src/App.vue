@@ -36,6 +36,7 @@
   getWebsiteConfig()
     .then((data) => {
       appStore.setAppConfig(data as AppConfigType);
+      appStore.setLoginConfig(data.loginConfig);
     })
     .catch((error) => {
       console.log(error);
