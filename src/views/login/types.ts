@@ -1,9 +1,9 @@
 import type { ThemeType } from '@ued-material/ued-wbc/dist/types/types';
 
 export enum LogoModeEnums {
-  IMAGE = '1',
-  TEXT = '2',
-  IMAGE_TEXT = '3'
+  IMAGE = 'image',
+  TEXT = 'text',
+  IMAGE_TEXT = 'image-text'
 }
 
 export interface LanguagesVO {
@@ -15,15 +15,23 @@ export interface LanguagesVO {
 export class LoginConfigDTO {
   mode?: ThemeType = 'light'; // 主题风格
 
+  bgMode?: 'image' | 'video' = 'image'; // 登录页背景模式
+
   bgImage?: string = ''; // 登录页背景
 
-  logoMode?: LogoModeEnums = LogoModeEnums.IMAGE_TEXT; // 登录页LOGO
+  bgPoster?: string = ''; // 登录页视频封面
+
+  bgVideo?: string = ''; // 登录页视频
+
+  logoMode?: LogoModeEnums = LogoModeEnums.IMAGE; // 登录页LOGO
 
   logoName?: string = ''; // logo名称
 
   logoUrl?: string = ''; // logo图片
 
   showLanguage?: boolean = true; // 是否显示多语言
+
+  language?: string = 'zh'; // 默认语言
 
   languages?: LanguagesVO[] = []; // 多语言可选项
 

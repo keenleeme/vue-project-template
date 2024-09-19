@@ -10,6 +10,10 @@ declare module 'vue' {
     ABreadcrumb: typeof import('ant-design-vue/es')['Breadcrumb']
     ABreadcrumbItem: typeof import('ant-design-vue/es')['BreadcrumbItem']
     AButton: typeof import('ant-design-vue/es')['Button']
+<<<<<<< HEAD
+=======
+    ACheckboxGroup: typeof import('ant-design-vue/es')['CheckboxGroup']
+>>>>>>> cefd07c87c51853506fdd8bdc926a15f7da6eb63
     ACol: typeof import('ant-design-vue/es')['Col']
     AConfigProvider: typeof import('ant-design-vue/es')['ConfigProvider']
     ADatePicker: typeof import('ant-design-vue/es')['DatePicker']
@@ -17,17 +21,26 @@ declare module 'vue' {
     AForm: typeof import('ant-design-vue/es')['Form']
     AFormItem: typeof import('ant-design-vue/es')['FormItem']
     AInput: typeof import('ant-design-vue/es')['Input']
+<<<<<<< HEAD
     AiqlGuide: typeof import('./src/components/sql/aiqlGuide/index.vue')['default']
+=======
+    AInputNumber: typeof import('ant-design-vue/es')['InputNumber']
+>>>>>>> cefd07c87c51853506fdd8bdc926a15f7da6eb63
     ALayout: typeof import('ant-design-vue/es')['Layout']
     ALayoutContent: typeof import('ant-design-vue/es')['LayoutContent']
     ALayoutSider: typeof import('ant-design-vue/es')['LayoutSider']
     AMenu: typeof import('ant-design-vue/es')['Menu']
     AModal: typeof import('ant-design-vue/es')['Modal']
+<<<<<<< HEAD
     Animation: typeof import('./src/components/sql/input/animation.vue')['default']
+=======
+    APopover: typeof import('ant-design-vue/es')['Popover']
+>>>>>>> cefd07c87c51853506fdd8bdc926a15f7da6eb63
     ARadio: typeof import('ant-design-vue/es')['Radio']
     ARadioButton: typeof import('ant-design-vue/es')['RadioButton']
     ARadioGroup: typeof import('ant-design-vue/es')['RadioGroup']
     ARangePicker: typeof import('ant-design-vue/es')['RangePicker']
+    AResult: typeof import('ant-design-vue/es')['Result']
     ARow: typeof import('ant-design-vue/es')['Row']
     ArrayInTags: typeof import('./src/components/sql/tree/value-coms/arrayInTags.vue')['default']
     ASelect: typeof import('ant-design-vue/es')['Select']
@@ -37,6 +50,13 @@ declare module 'vue' {
     ATabPane: typeof import('ant-design-vue/es')['TabPane']
     ATabs: typeof import('ant-design-vue/es')['Tabs']
     ATag: typeof import('ant-design-vue/es')['Tag']
+<<<<<<< HEAD
+=======
+    ATextarea: typeof import('ant-design-vue/es')['Textarea']
+    ATimeline: typeof import('ant-design-vue/es')['Timeline']
+    ATimelineItem: typeof import('ant-design-vue/es')['TimelineItem']
+    AUpload: typeof import('ant-design-vue/es')['Upload']
+>>>>>>> cefd07c87c51853506fdd8bdc926a15f7da6eb63
     AWatermark: typeof import('ant-design-vue/es')['Watermark']
     BarChart: typeof import('./src/components/charts/barChart.vue')['default']
     Base: typeof import('./src/components/sql/demo/base.vue')['default']
@@ -47,6 +67,7 @@ declare module 'vue' {
     DynContent: typeof import('./src/components/sql/tree/dyn-content/index.vue')['default']
     FieldContent: typeof import('./src/components/sql/tree/field-content/index.vue')['default']
     HeaderMenus: typeof import('./src/components/layout/comps/HeaderMenus.vue')['default']
+    HelpDocument: typeof import('./src/components/layout/comps/HelpDocument.vue')['default']
     IconDark: typeof import('./src/components/layout/comps/IconDark.vue')['default']
     IconI18n: typeof import('./src/components/layout/comps/IconI18n.vue')['default']
     IconLight: typeof import('./src/components/layout/comps/IconLight.vue')['default']

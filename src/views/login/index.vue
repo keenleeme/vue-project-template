@@ -1,29 +1,60 @@
 <template>
-  <ued-login-layout :forms="forms" :theme="themeConfig.mode" :style="background" @u-submit="handleLogin">
-    <ued-logo slot="logo" src="/logo.png" width="180" height="100"></ued-logo>
-    <ued-select slot="language" v-model="configs.language" :clearable="false" :options="options"></ued-select>
-    <template slot="copyright">
-      <p>{{ $t('I18N.login.hangZhouAnHengXin') }}</p>
-    </template>
+  <ued-login-layout
+    :forms="forms"
+    :theme="loginConfig.mode"
+    :bg-image="loginConfig.bgImage"
+    :bg-video="loginConfig.bgVideo"
+    :bg-attrs="{
+      poster: loginConfig.bgPoster
+    }"
+    @u-submit="handleLogin"
+  >
+    <ued-logo
+      slot="logo"
+      :key="loginConfig.logoMode"
+      :src="loginConfig.logoUrl"
+      :mode="loginConfig.logoMode"
+      width="110px"
+      height="60px"
+    >
+      {{ loginConfig.logoMode && [LogoModeEnums.IMAGE].includes(loginConfig.logoMode) ? '' : loginConfig.logoName }}
+    </ued-logo>
+    <ued-select
+      v-if="loginConfig.showLanguage"
+      slot="language"
+      v-model="loginConfig.language"
+      :clearable="false"
+      :options="options"
+    ></ued-select>
+    <div slot="copyright">
+      <div>{{ loginConfig.slogan }}</div>
+      <div>{{ loginConfig.copyright }}</div>
+      <div>
+        <a style="color: #333; margin-top: 6px" target="_blank" :src="loginConfig.filingUrl || 'javascript:;'">{{
+          loginConfig.filing
+        }}</a>
+      </div>
+      <div>
+        <a style="color: #333; margin-top: 6px" target="_blank" :src="loginConfig.icpUrl || 'javascript:;'">{{
+          loginConfig.icp
+        }}</a>
+      </div>
+    </div>
   </ued-login-layout>
 </template>
 
 <script setup lang="ts">
-  import { ref, computed } from 'vue';
+  import { ref } from 'vue';
   import { useRouter } from 'vue-router';
   import { storeToRefs } from 'pinia';
-  import { useAppStore, useThemeStore } from '@/store';
+  import { useAppStore } from '@/store';
+  import { LoginConfigDTO, LogoModeEnums } from './types';
 
   const appStore = useAppStore();
-  const themeStore = useThemeStore();
   const router = useRouter();
-  const { themeConfig } = storeToRefs(themeStore);
   const { appConfig } = storeToRefs(appStore);
 
-  const configs = reactive({
-    copy: 'qwe',
-    language: 'zh'
-  });
+  const loginConfig = ref<LoginConfigDTO>(new LoginConfigDTO(appConfig.value.loginConfig));
 
   const forms = ref([
     {
@@ -155,14 +186,6 @@
     { label: '英文', value: 'en' }
   ]);
 
-  const background = computed(() => {
-    return {
-      'background-image': `url(${appConfig.value?.loginBg})`,
-      'background-size': 'cover',
-      'background-repeat': 'no-repeat'
-    };
-  });
-
   const handleLogin = (e: CustomEvent) => {
     console.log(e.detail);
     appStore.setToken('dsadsadsada');
@@ -170,9 +193,17 @@
   };
 
   watch(
-    configs,
+    appConfig.value.loginConfig,
     (v) => {
-      console.log('config-changes:', v);
+      loginConfig.value = Object.assign(loginConfig.value, v);
+      console.log('appConfig-changes:', loginConfig.value);
+    },
+    { deep: true, immediate: true }
+  );
+  watch(
+    loginConfig,
+    (v) => {
+      console.log('loginConfig-changes:', v);
     },
     { deep: true }
   );

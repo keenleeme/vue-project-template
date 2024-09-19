@@ -2,7 +2,7 @@
   <!-- <a-config-provider :locale="zhCN" :theme="theme"> -->
   <!-- <a-config-provider :locale="zhCN" :theme="{ algorithm: theme.darkAlgorithm }"> -->
   <a-config-provider :locale="zhCN" :theme="theme">
-    <Layout>
+    <Layout class="layout-overflow-x">
       <RouterView></RouterView>
     </Layout>
   </a-config-provider>
@@ -36,6 +36,7 @@
   getWebsiteConfig()
     .then((data) => {
       appStore.setAppConfig(data as AppConfigType);
+      appStore.setLoginConfig(data.loginConfig);
     })
     .catch((error) => {
       console.log(error);
@@ -137,5 +138,8 @@
   /* 应用变量 */
   :is(body) {
     background-color: var(--primary-bg);
+  }
+  .layout-overflow-x {
+    overflow-x: hidden;
   }
 </style>
