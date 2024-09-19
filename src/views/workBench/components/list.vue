@@ -63,9 +63,7 @@
   const columns: TableColumnType<TableDataType>[] = [
     {
       title: '项目名称',
-      dataIndex: 'name',
-      sorter: (a: TableDataType, b: TableDataType) => a.name.length - b.name.length,
-      sortDirections: ['descend']
+      dataIndex: 'name'
     },
     {
       title: '所属组织',
@@ -74,21 +72,7 @@
     {
       title: '所属类别',
       dataIndex: 'tags',
-      key: 'tags',
-      filters: [
-        {
-          text: 'London',
-          value: 'London'
-        },
-        {
-          text: 'New York',
-          value: 'New York'
-        }
-      ],
-      filterMultiple: false,
-      onFilter: (value: string, record: TableDataType) => record.tags.length === 0,
-      sorter: (a: TableDataType, b: TableDataType) => a.tags.length - b.tags.length,
-      sortDirections: ['descend', 'ascend']
+      key: 'tags'
     },
     {
       title: '操作',
