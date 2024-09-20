@@ -437,9 +437,9 @@
 .ant-checkbox-wrapper.ant-checkbox-wrapper-disabled .ant-checkbox-indeterminate .ant-checkbox-inner::after {
   background-color: #a0bdfa;
 } */
-.ant-select-dropdown .ant-select-item.ant-select-item-option-selected {
+/* .ant-select-dropdown .ant-select-item.ant-select-item-option-selected {
   background: #172444;
-}
+} */
 .ant-select-dropdown .ant-select-item.ant-select-item-option-selected .ant-select-item-option-content {
   color: var(--color-text-primary);
 }
