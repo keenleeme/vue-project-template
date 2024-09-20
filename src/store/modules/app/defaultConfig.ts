@@ -1,4 +1,3 @@
-import bgImage from '@/assets/images/login/defalut-login-bg.jpg';
 import { LoginConfigDTO, LogoModeEnums } from '@/views/login/types';
 import { AppConfigType } from './types';
 
@@ -11,7 +10,7 @@ export const defaultConfig: AppConfigType = {
     logoMode: LogoModeEnums.IMAGE,
     logoName: 'vue3-project-template',
     bgMode: 'image',
-    bgImage,
+    bgImage: '/assets/ued-wbc/bg-light.png',
     logoUrl: '/logo.png'
   })
   // logo: '/logo.png',
