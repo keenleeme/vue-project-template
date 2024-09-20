@@ -213,9 +213,12 @@
       width="100%"
       wrap-class-name="full-modal"
       :closable="false"
-      :footer="null"
     >
       <LoginDemo :key="previewKey" fullscreen :forms="forms" :login-config="loginConfig"></LoginDemo>
+
+      <template #footer>
+        <a-button class="close" @click="fullscreen = false">关闭</a-button>
+      </template>
     </a-modal>
   </div>
 </template>
@@ -325,7 +328,7 @@
     .page-content {
       display: flex;
       height: calc(100% - 65px);
-      background-color: #f7f8fc;
+      background-color: var(--color-page-bg);
       padding: 16px;
       color: #1e2435;
 
@@ -338,7 +341,7 @@
         overflow-x: hidden;
       }
       .setting {
-        background-color: #fff;
+        background-color: var(--primary-bg);
         padding: 31px 31px 31px 20px;
         .ant-form {
           --primaryColor: var(--um-primary-color-normal);
@@ -387,7 +390,8 @@
       }
       .preview {
         background: #adb1bc;
-        padding: 100px 21px 0 21px;
+        padding: 0 21px;
+        justify-content: center;
         .preview-control {
           display: flex;
           align-items: center;
@@ -410,8 +414,8 @@
       bottom: 0;
       padding: 16px;
       text-align: right;
-      border-top: 1px solid #e9eaf0;
-      background-color: #fff;
+      border-top: 1px solid var(--primary-divider);
+      background-color: var(--primary-bg);
       button {
         margin-left: 8px;
       }
@@ -438,6 +442,15 @@
     }
     .ant-modal-body {
       flex: 1;
+    }
+  }
+  .full-modal {
+    .close {
+      transform: translate(70%, 50%);
+      transition: all 0.3s 0.1s ease;
+      &:hover {
+        transform: translate(0, 0);
+      }
     }
   }
 </style>
