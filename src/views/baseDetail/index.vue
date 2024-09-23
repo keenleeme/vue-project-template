@@ -52,7 +52,7 @@
           </a-col>
           <a-col :span="8">
             <a-form-item label="设备IP">
-              <span><a>192.168.33.188</a></span>
+              <span><a style="color: var(--primary-color);">192.168.33.188</a></span>
             </a-form-item>
           </a-col>
           <a-col :span="8">
