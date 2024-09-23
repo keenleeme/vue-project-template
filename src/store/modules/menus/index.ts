@@ -105,6 +105,11 @@ export default defineStore('menus', () => {
     return [...[...activeMenus.value].reverse(), ...activeRoutes.value.slice(0, activeRoutes.value.length - 1)];
   });
 
+  const activeId = computed(() => {
+    console.log(22)
+    return activeMenus.value.length > 0 ? activeMenus.value[0].id : '';
+  })
+
   const reset = () => {
     menusData.value = [];
     menusMap.clear();
@@ -119,6 +124,7 @@ export default defineStore('menus', () => {
     activeBreadcrumb,
     activeMenus,
     siderMenus,
-    findFistSiderMenu
+    findFistSiderMenu,
+    activeId,
   };
 });

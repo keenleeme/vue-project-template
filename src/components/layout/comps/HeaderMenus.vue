@@ -186,12 +186,17 @@
   const themeStore = useThemeStore();
 
   // 菜单
-  const { activeMenus } = storeToRefs(menusStore);
+  const { activeMenus, activeId } = storeToRefs(menusStore);
   const selectMenuId = ref<string[]>([]);
   watchEffect(() => {
+    console.log(1111)
     if (activeMenus.value.length > 0) {
       const active = activeMenus.value[activeMenus.value.length - 1];
       selectMenuId.value = [active?.id];
+    }
+    if (activeId.value) {
+      // selectMenuId.value = [activeId.value];
+      console.log(activeId)
     }
   });
 
@@ -294,12 +299,12 @@
       name: '系统设置',
       submenu: [
         {
-          id: 81,
+          id: 'themeConfig',
           name: '主题配置页',
           url: '/themeConfig'
         },
         {
-          id: 82,
+          id: 'loginConfig',
           name: '登录配置页',
           url: '/loginConfig'
         },
@@ -398,9 +403,18 @@
   });
 
   const popActive = ref(true);
-  const activeId = ref(2132);
+  // let activeId = ref<string|number>();
   const recentlyKeys = ref([21, 11, 231, 31]);
   const starKeys = ref([11, 21, 231, 31]);
+
+  // watchEffect(() => {
+  //   // 获取当前激活的菜单项的id，并将其赋值给activeId。activeMenus是一个数组，需要获取最后一个元素。
+  //   // if (activeMenus.value.length > 0) {
+  //   //   console.log(activeMenus)
+  //   //   const active = activeMenus.value[activeMenus.value.length - 1];
+  //   //   activeId.value = active?.id;
+  //   // }
+  // });
 
   const userMenu = ref([
     {

@@ -49,7 +49,7 @@ export async function getMenus(): Promise<MenuType[]> {
       path: '/dasvScreen'
     },
     {
-      id: 'themeConfig',
+      id: 'themeConfig1',
       title: '系统设置',
       icon: 'AppstoreOutlined',
       path: '/themeConfig',
