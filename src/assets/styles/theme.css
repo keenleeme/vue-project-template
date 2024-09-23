@@ -7,7 +7,8 @@
   /*--primary-color: #3498db; /* 默认主题色 */
   --primary-color: #134BEA; /* 默认主题色 */
   --primary-bg: #ffffff; /* 默认背景色 */
-  --primary-divider: #cbd0db; /** 分割线色 */
+  /**--primary-divider: #cbd0db; /** 分割线色 */
+  --primary-divider: #E9EAF0; /** 分割线色 */
   --color-page-bg: #f6f7fb; /** 页面背景色 */
   --color-text-title: #1E2435; /** 标题色 */
   --color-text-sub-title: #353C51; /** 次标题色 */

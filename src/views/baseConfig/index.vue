@@ -2,7 +2,7 @@
  * @Author: xzj 13819929694@163.com
  * @Date: 2024-09-12 15:08:01
  * @LastEditors: xzj 13819929694@163.com
- * @LastEditTime: 2024-09-13 15:12:27
+ * @LastEditTime: 2024-09-23 11:23:41
  * @Description: 
  * 
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
@@ -162,6 +162,12 @@
     flex-direction: column;
     .tabs {
       padding: 0 16px;
+      background-color: var(--primary-bg);
+      /deep/ .ant-tabs {
+        .ant-tabs-nav {
+          margin-bottom: 0;
+        }
+      }
     }
     .base-config-content {
       padding: 16px;
@@ -192,7 +198,7 @@
           &:last-child {
             margin-bottom: 0;
           }
-          span {
+          span:not(:first-child) {
             margin: 0 8px;
           }
         }
