@@ -18,7 +18,7 @@
       <a-button size="small" style="float: right">描边按钮</a-button>
     </div>
     <div class="header-form">
-      <a-form name="basic" :label-col="{ style: { width: '80px' } }" autocomplete="off">
+      <a-form class="pd-16" name="basic" autocomplete="off">
         <a-row>
           <a-col :span="8">
             <a-form-item label="组件类型">
@@ -72,7 +72,7 @@
     <div class="more-info">
       <div class="base-detail-title">更多信息</div>
 
-      <a-form class="pd-16" name="basic" :label-col="{ style: { width: '60px' } }" autocomplete="off">
+      <a-form class="pd-16" name="basic" autocomplete="off">
         <a-row>
           <a-col :span="8">
             <a-form-item label="资产编号">
