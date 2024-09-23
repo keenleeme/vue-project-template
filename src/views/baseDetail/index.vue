@@ -231,4 +231,13 @@
       font-weight: 400;
     }
   }
+  .base-detail-box {
+    .ant-timeline .ant-timeline-item-head {
+      border-width: 2px;
+    }
+    .ant-timeline .ant-timeline-item-tail{
+      inset-block-start: 17px;
+      height: calc(100% - 24px);
+    }
+  }
 </style>
