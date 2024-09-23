@@ -624,25 +624,25 @@
       width: 50%;
     }
   }
-  .content {
-    flex-grow: 1;
-    width: 0;
-    color: #505968;
-    .menu-setting {
-      font-size: 14px;
-      margin-bottom: 32px;
-      .title {
-        font-size: 18px;
-        margin-bottom: 16px;
-        color: #1e2128;
-      }
-      .setting-item {
-        margin-bottom: 16px;
-        display: flex;
-        align-items: center;
-      }
-    }
-  }
+  // .content {
+  //   flex-grow: 1;
+  //   width: 0;
+  //   color: #505968;
+  //   .menu-setting {
+  //     font-size: 14px;
+  //     margin-bottom: 32px;
+  //     .title {
+  //       font-size: 18px;
+  //       margin-bottom: 16px;
+  //       color: #1e2128;
+  //     }
+  //     .setting-item {
+  //       margin-bottom: 16px;
+  //       display: flex;
+  //       align-items: center;
+  //     }
+  //   }
+  // }
   .cut-form .cut-input {
     width: 310px;
   }
@@ -655,9 +655,16 @@
       opacity: 0;
     }
   }
-  .header-dark .header {
-    background-color: #172034;
-    color: #fff;
+  .header-dark{ 
+    .header {
+      background-color: #172034;
+      color: #fff;
+    }
+    .header-operates {
+      .icon-button:hover {
+        background: #353c51;
+      }
+    }
   }
   .custom-class {
     .icon-export {

@@ -26,7 +26,8 @@
 }
 
 .theme-dark {
-  --primary-color: #0D172A; /* 暗色主题色 */
+  /*--primary-color: #0D172A; /* 暗色主题色 */
+  --primary-color: #3B71EE; /* 暗色主题色 */
   --primary-bg: #0d172a; /* 暗色背景色 */
   --primary-divider: #2D374E; /** 分割线色 */
   --color-page-bg: #020C1E; /** 页面背景色 */
