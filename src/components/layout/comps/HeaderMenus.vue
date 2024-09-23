@@ -53,7 +53,19 @@
     >
     </UedTopMenu>
     <div class="header-operates">
-      <i v-if="config.helpCenter" class="icon-button menuicon menu-icon-help" @click="showDrawer" />
+      <a-dropdown>
+        <i class="icon-button menuicon menu-icon-help" />
+        <template #overlay>
+          <a-menu>
+            <a-menu-item v-if="config.helpCenter">
+              <span @click="showDrawer">帮助文档</span>
+            </a-menu-item>
+            <a-menu-item>
+              <span @click="$router.push('/vueTour')">入门引导</span>
+            </a-menu-item>
+          </a-menu>
+        </template>
+      </a-dropdown>
       <i class="icon-button menuicon menu-icon-bell" />
       <i class="icon-button menuicon menu-icon-cog" @click="themePanelVisible = true" />
       <i
