@@ -129,7 +129,7 @@
       font-size: 14px;
       font-weight: 600;
       color: var(--color-text-title);
-      border-bottom: 1px solid var(--primary-divider);
+      border-bottom: 1px solid var(--color-divider);
     }
     .base-form-content {
       width: 50%;

@@ -140,7 +140,7 @@
       width: 100%;
       padding: 24px 16px;
       background: var(--primary-bg);
-      border-bottom: 1px solid var(--primary-divider);
+      border-bottom: 1px solid var(--color-divider);
       .header-info-avator {
         width: 64px;
         height: 64px;
@@ -185,7 +185,7 @@
       font-size: 14px;
       font-weight: 600;
       color: var(--color-text-title);
-      border-bottom: 1px solid var(--primary-divider);
+      border-bottom: 1px solid var(--color-divider);
     }
 
     .task-list {
