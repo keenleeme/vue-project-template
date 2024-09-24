@@ -23,6 +23,8 @@
   --color-table-td-hover-bg: #020C1E; /** 表格内容hover背景色 */
   --color-table-td-hover-text: #1E2435; /** 表格内容hover色 */
   --color-border-base: #CBD0DB; /** 边框色 */
+  --color-select: #E8F2FF;/**框选中色*/
+  --color-divider: #E9EAF0;/** 分割线色-页面 */
 }
 
 .theme-dark {
@@ -44,6 +46,8 @@
   --color-table-td-hover-bg: #020C1E; /** 表格内容hover背景色 */
   --color-table-td-hover-text: #1E2435; /** 表格内容hover色 */
   --color-border-base: #4D576E; /** 边框色 */
+  --color-select: #172444;/**框选中色*/
+  --color-divider: #2D374E; /**分割线色-页面*/
 }
 /* .ant-btn.ant-btn-primary:not(.ant-btn-background-ghost).ant-btn-dangerous:is(:disabled) {
   color: #ffffff;
@@ -438,9 +442,9 @@
 .ant-checkbox-wrapper.ant-checkbox-wrapper-disabled .ant-checkbox-indeterminate .ant-checkbox-inner::after {
   background-color: #a0bdfa;
 } */
-/* .ant-select-dropdown .ant-select-item.ant-select-item-option-selected {
-  background: #172444;
-} */
+.ant-select-dropdown .ant-select-item.ant-select-item-option-selected {
+  background: var(--color-select);
+}
 .ant-select-dropdown .ant-select-item.ant-select-item-option-selected .ant-select-item-option-content {
   color: var(--color-text-primary);
 }
@@ -1126,6 +1130,9 @@
   height: 24px;
 }
 .ant-picker-input input::placeholder{
+  color: var(--color-text-placeholder);
+}
+.ant-input::placeholder {
   color: var(--color-text-placeholder);
 }
 /* .ant-picker-focused {
