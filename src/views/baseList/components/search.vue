@@ -97,8 +97,6 @@ div
 
   const formRef = ref();
 
-  let formData = reactive<any>({});
-
   const expand = ref(props.defaultExpand);
 
   const showFormItems = ref<FormItem[]>([]);
@@ -141,6 +139,7 @@ div
     emit('onSearch', formData);
   };
 
+  let formData = reactive<any>(props.initialValues);
   const handleReset = () => {
     formData = props.initialValues || {};
     formRef.value?.resetFields();

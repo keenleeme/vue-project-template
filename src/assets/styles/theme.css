@@ -7,7 +7,7 @@
   /*--primary-color: #3498db; /* 默认主题色 */
   --primary-color: #134BEA; /* 默认主题色 */
   --primary-bg: #ffffff; /* 默认背景色 */
-  --primary-divider: #cbd0db; /** 分割线色 */
+  --primary-divider: #E9EAF0; /** 分割线色 */
   --color-page-bg: #f6f7fb; /** 页面背景色 */
   --color-text-title: #1E2435; /** 标题色 */
   --color-text-sub-title: #353C51; /** 次标题色 */
@@ -845,6 +845,24 @@
 /* .ant-tag-checkable-checked {
   color: #fff !important;
 } */
+.ant-table-wrapper .ant-table.ant-table-bordered >.ant-table-container >.ant-table-content >table >thead>tr>th, 
+.ant-table-wrapper .ant-table.ant-table-bordered >.ant-table-container >.ant-table-header >table >thead>tr>th, 
+.ant-table-wrapper .ant-table.ant-table-bordered >.ant-table-container >.ant-table-body >table >thead>tr>th, 
+.ant-table-wrapper .ant-table.ant-table-bordered >.ant-table-container >.ant-table-summary >table >thead>tr>th, 
+.ant-table-wrapper .ant-table.ant-table-bordered >.ant-table-container >.ant-table-content >table >tbody>tr>td, 
+.ant-table-wrapper .ant-table.ant-table-bordered >.ant-table-container >.ant-table-header >table >tbody>tr>td, 
+.ant-table-wrapper .ant-table.ant-table-bordered >.ant-table-container >.ant-table-body >table >tbody>tr>td, 
+.ant-table-wrapper .ant-table.ant-table-bordered >.ant-table-container >.ant-table-summary >table >tbody>tr>td, 
+.ant-table-wrapper .ant-table.ant-table-bordered >.ant-table-container >.ant-table-content >table >tfoot>tr>th, 
+.ant-table-wrapper .ant-table.ant-table-bordered >.ant-table-container >.ant-table-header >table >tfoot>tr>th, 
+.ant-table-wrapper .ant-table.ant-table-bordered >.ant-table-container >.ant-table-body >table >tfoot>tr>th, 
+.ant-table-wrapper .ant-table.ant-table-bordered >.ant-table-container >.ant-table-summary >table >tfoot>tr>th, 
+.ant-table-wrapper .ant-table.ant-table-bordered >.ant-table-container >.ant-table-content >table >tfoot>tr>td, 
+.ant-table-wrapper .ant-table.ant-table-bordered >.ant-table-container >.ant-table-header >table >tfoot>tr>td, 
+.ant-table-wrapper .ant-table.ant-table-bordered >.ant-table-container >.ant-table-body >table >tfoot>tr>td, 
+.ant-table-wrapper .ant-table.ant-table-bordered >.ant-table-container >.ant-table-summary >table >tfoot>tr>td{
+  border-inline-end: none;
+}
 .ant-table tr.ant-table-expanded-row > td {
   background: var(--color-table-td-bg);
   font-size: 12px;
@@ -1084,7 +1102,7 @@
   color: #adb1bc !important;
 } */
 .ant-picker {
-  padding: 5px 12px !important;
+  padding: 4px 12px !important;
   /* border-color: #cbd0db !important; */
 }
 .ant-picker-time-panel-cell-selected .ant-picker-time-panel-cell-inner {
