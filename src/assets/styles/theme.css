@@ -1110,6 +1110,9 @@
 .ant-picker-input input::placeholder{
   color: var(--color-text-placeholder);
 }
+.ant-input::placeholder {
+  color: var(--color-text-placeholder);
+}
 /* .ant-picker-focused {
   box-shadow: 0 0 0 2px rgba(19, 77, 236, 0.6) !important;
 } */
