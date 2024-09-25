@@ -59,8 +59,8 @@
   <vue-tour name="myTour" :steps="steps" :callbacks="callbacks">
     <template v-if="myTour.currentStep === 0" #actions>
       <div class="v-step_footer">
-        <button class="v-step__button" @click="toFromPage">上一步</button>
-        <button class="v-step__button v-step__button-primary" @click="myTour.nextStep()">下一步</button>
+        <a-button @click="toFromPage">上一步</a-button>
+        <a-button type="primary" @click="myTour.nextStep()">下一步</a-button>
       </div>
     </template>
   </vue-tour>

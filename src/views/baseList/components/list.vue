@@ -1,6 +1,6 @@
 <template>
   <div class="table-wrap">
-    <SearchComponent :is-reset="true" :form-items="formItems"></SearchComponent>
+    <SearchComponent :is-reset="true" :initial-values="initialValues" :form-items="formItems"></SearchComponent>
     <div class="operation-wrap">
       <div class="left">
         <a-button type="primary" class="mr-8">
@@ -61,15 +61,20 @@
     tags: string[];
   };
 
+  const initialValues = {
+    name: '',
+    sex: '1'
+  };
+
   const formItems = [
     {
       label: '输入框文本',
-      props: 'name',
+      prop: 'name',
       type: 'input'
     },
     {
       label: '选择器',
-      props: 'sex',
+      prop: 'sex',
       type: 'select',
       options: [
         {
@@ -84,13 +89,13 @@
     },
     {
       label: '日期',
-      props: 'date',
+      prop: 'date',
       type: 'date',
       placeholder: '请选择'
     },
     {
       label: '日期范围',
-      props: 'dateRange',
+      prop: 'dateRange',
       type: 'daterange',
       startPlaceholder: '开始日期',
       endPlaceholder: '结束日期'
