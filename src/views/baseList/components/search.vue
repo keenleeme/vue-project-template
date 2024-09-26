@@ -36,16 +36,18 @@ div
             </template>
           </a-form-item>
         </a-col>
+        <a-col :span="span">
+          <div class="search-btn-wrap">
+            <div @click="toShowMore">
+              <UpSquareOutlined v-if="expand" />
+              <DownSquareOutlined v-if="expand" />
+            </div>
+            <a-button v-if="isReset" type="default" class="search reset mr-8" @click="handleReset">重置</a-button>
+            <a-button type="primary" class="search confirm" @click="handleSearch">搜索</a-button>
+          </div>
+        </a-col>
       </a-row>
     </a-form>
-    <div class="search-btn-wrap">
-      <div @click="toShowMore">
-        <UpSquareOutlined v-if="expand" />
-        <DownSquareOutlined v-if="expand" />
-      </div>
-      <a-button v-if="isReset" type="default" class="search reset mr-8" @click="handleReset">重置</a-button>
-      <a-button type="primary" class="search confirm" @click="handleSearch">搜索</a-button>
-    </div>
   </div>
 </template>
 
@@ -84,7 +86,7 @@ div
     isDivider: true,
     isReset: false,
     initialValues: () => ({}),
-    span: 8,
+    span: 6,
     defaultExpand: false,
     mainViewRows: 1,
     formItems: () => []
@@ -162,10 +164,15 @@ div
       flex: 1;
     }
     .search-btn-wrap {
-      width: 200px;
       display: flex;
       justify-content: flex-end;
       align-items: center;
+    }
+    /deep/ .ant-form-item .ant-form-item-label > label {
+      font-size: 12px;
+    }
+    /deep/ .ant-col-14 {
+      max-width: calc(100% - 104px);
     }
   }
   .sql-input {
