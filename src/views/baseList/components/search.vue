@@ -4,7 +4,7 @@ div
     <a-form :ref="formRef" :model="formData" class="form-wrap" :label-col="labelCol" :wrapper-col="wrapperCol">
       <a-row>
         <a-col v-for="item in showFormItems" :key="item.label" :span="span">
-          <a-form-item :label="item.label" :prop="item.prop">
+          <a-form-item :label="item.label">
             <template v-if="item.type === 'input'">
               <a-input v-model:value="formData[item.prop]" :placeholder="item.placeholder || '请输入'" />
             </template>
@@ -141,9 +141,16 @@ div
     emit('onSearch', formData);
   };
 
-  let formData = reactive<any>(props.initialValues);
+  const initialValues = {
+    ...props.initialValues
+  };
+
+  let formData = reactive(props.initialValues);
   const handleReset = () => {
-    formData = props.initialValues || {};
+    for (const key in initialValues) {
+      formData[key] = initialValues[key];
+    }
+    // formData = initialValues || {};
     formRef.value?.resetFields();
     emit('onSearch', formData);
   };

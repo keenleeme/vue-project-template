@@ -63,7 +63,8 @@
 
   const initialValues = {
     name: '',
-    sex: '1'
+    sex: '1',
+    dateRange: undefined
   };
 
   const formItems = [
