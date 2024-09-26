@@ -1163,6 +1163,9 @@
 .ant-picker-focused .ant-picker-suffix {
   color: var(--primaryColor) !important;
 }
+.ant-picker .ant-picker-suffix{
+  color: var(--color-sql-icon);
+}
 /* .ant-picker:hover {
   border-color: #3b71ee !important;
 }
