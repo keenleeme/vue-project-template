@@ -35,7 +35,7 @@ export async function getMenus(): Promise<MenuType[]> {
           path: '/base-detail'
         },
         {
-          id: 'baseconfig',
+          id: 'baseConfig',
           title: '基础配置',
           icon: 'AppstoreOutlined',
           path: '/base-config'

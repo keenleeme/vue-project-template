@@ -1,6 +1,7 @@
 :root {
-  --primaryColor: #3498db;
+  /* --primaryColor: #3498db; */
   --errorColor: #f53c3c;
+  --warnColor:#ff7f29;
   --textColor: #1e2435;
 }
 :root {
@@ -165,7 +166,7 @@
 }
 .ant-divider.ant-divider-horizontal:is(.ant-divider-horizontal) .ant-divider-inner-text {
   font-size: 14px;
-  color: var(-textColor);
+  color: var(--textColor);
   font-weight: 400;
 }
 .ant-divider.ant-divider-horizontal:is(.ant-divider-horizontal)::before,
@@ -677,7 +678,7 @@
   height: 16px;
   inset-inline-start: -3px;
   inset-block-start: -3px;
-  box-shadow: 0 0 0 2px #134bea;
+  box-shadow: 0 0 0 2px var(--color-text-link);
 }
 .ant-switch {
   border-radius: 12px;
@@ -956,11 +957,11 @@
 }
 .ant-rate .ant-rate-star-full div,
 .ant-rate .ant-rate-star-full .anticon {
-  color: #ff7f29;
+  color: var(--warnColor);
 }
 .ant-rate .ant-rate-star-half,
 .ant-rate .ant-rate-star-active .ant-rate-star-first {
-  color: #ff7f29;
+  color: var(--warnColor);
 }
 .ant-progress-circle .ant-progress-text {
   color: var(--textColor);
@@ -999,7 +1000,7 @@
   background-color: #134bea;
 }
 .ant-progress-status-exception .ant-progress-bg {
-  background-color: #f53c3c;
+  background-color: var(--errorColor);
 }
 .ant-progress-status-success .ant-progress-bg {
   background-color: #1db969;
@@ -1211,19 +1212,19 @@
   box-shadow: 0 0 0 2px rgba(245, 60, 60, 0.6) !important;
 }
 .ant-picker-status-error.ant-picker-focused .ant-picker-suffix {
-  color: #f53c3c !important;
+  color: var(--errorColor) !important;
 }
 .ant-picker-status-error:hover {
-  border-color: #f53c3c !important;
+  border-color: var(--errorColor) !important;
 }
 .ant-picker-status-warning.ant-picker-focused {
   box-shadow: 0 0 0 2px rgba(255, 127, 41, 0.6) !important;
 }
 .ant-picker-status-warning.ant-picker-focused .ant-picker-suffix {
-  color: #ff7f29 !important;
+  color: var(--warnColor) !important;
 }
 .ant-picker-status-warning:hover {
-  border-color: #ff7f29 !important;
+  border-color: var(--warnColor) !important;
 }
 .ant-picker-disabled:hover {
   border-color: #cbd0db !important;

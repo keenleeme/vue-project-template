@@ -1,7 +1,8 @@
 <template>
   <div v-if="!(themeConfig.layout === 'side' && !themeConfig.header)" class="header">
     <div class="logo-wrap">
-      <span class="logo">ZQ</span>
+      
+      <span class="logo"><img src="@/assets/images/logo.svg" /></span>
       <span class="title">智启vue3孵化器系统</span>
     </div>
     <UedMapMenu
@@ -66,7 +67,7 @@
           </a-menu>
         </template>
       </a-dropdown>
-      <i class="icon-button menuicon menu-icon-bell" />
+      <!-- <i class="icon-button menuicon menu-icon-bell" /> -->
       <i class="icon-button menuicon menu-icon-cog" @click="themePanelVisible = true" />
       <i
         v-if="config.lightDarkSwitch"
@@ -228,35 +229,35 @@
       name: '通用典型页面',
       submenu: [
         {
-          id: 11,
+          id: 'workBench',
           name: 'dashboard',
           hideChildren: true,
           url: '/workBench',
           submenu: []
         },
         {
-          id: 12,
+          id: 'baseList',
           name: '列表页',
           hideChildren: true,
           url: '/base-list',
           submenu: []
         },
         {
-          id: 13,
+          id: 'baseForm',
           name: '表单页',
           hideChildren: true,
           url: '/base-form',
           submenu: []
         },
         {
-          id: 14,
+          id: 'baseDetail',
           name: '详情页',
           hideChildren: true,
           url: '/base-detail',
           submenu: []
         },
         {
-          id: 15,
+          id: 'baseConfig',
           name: '配置页',
           hideChildren: true,
           url: '/base-config',
@@ -265,7 +266,7 @@
       ]
     },
     {
-      id: 2,
+      id: 'dasvScreen',
       name: '大屏自定义',
       url: '/dasvScreen',
       hideChildren: true,
@@ -321,12 +322,12 @@
           url: '/loginConfig'
         },
         {
-          id: 83,
+          id: 'dasUpgrade',
           name: '在线升级',
           url: '/dasUpgrade'
         },
         {
-          id: 84,
+          id: 'vueTour',
           name: '用户引导',
           url: '/vueTour'
         }
@@ -635,9 +636,11 @@
       align-items: center;
     }
     .logo {
-      font-size: 32px;
       margin-left: 16px;
-      font-weight: 500;
+      margin-right: 8px;
+      img{
+        width: 30px;
+      }
     }
 
     .title {
