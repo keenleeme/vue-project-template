@@ -63,7 +63,8 @@
 
   const initialValues = {
     name: '',
-    sex: '1'
+    sex: '1',
+    dateRange: undefined
   };
 
   const formItems = [
@@ -87,12 +88,12 @@
         }
       ]
     },
-    {
-      label: '日期',
-      prop: 'date',
-      type: 'date',
-      placeholder: '请选择'
-    },
+    // {
+    //   label: '日期',
+    //   prop: 'date',
+    //   type: 'date',
+    //   placeholder: '请选择'
+    // },
     {
       label: '日期范围',
       prop: 'dateRange',

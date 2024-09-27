@@ -16,7 +16,8 @@
         @click.stop="onTreeIconClick"
       >
         <!-- <IconOpenTree /> -->
-        <img src="./icon/openTree.svg" />
+        <img v-if="config.mode !== 'dark'" src="./icon/openTree.svg" />
+        <img v-else src="./icon/openTreeDark.svg" />
         <!-- <svg class="iconfont" aria-hidden="true">
           <use xlink:href="#icon-com-organization-line"></use>
         </svg> -->
@@ -147,13 +148,8 @@
             :title="cmp_singleLiTitle(item)"
             :style="{
               backgroundColor:
-                inputData.data_optionIndex === index || inputData.data_hoverIndex === index
-                  ? '#eee'
-                  : 'transparent',
-              color:
-                inputData.data_optionIndex === index || inputData.data_hoverIndex === index
-                  ? '#1E2435'
-                  : ''
+                inputData.data_optionIndex === index || inputData.data_hoverIndex === index ? '#eee' : 'transparent',
+              color: inputData.data_optionIndex === index || inputData.data_hoverIndex === index ? '#1E2435' : ''
             }"
             :data-value="typeof item.value === 'boolean' ? `${item.value}` : item.value"
             :data-label="item.label"
@@ -217,7 +213,8 @@
     computed,
     onMounted,
     onBeforeUnmount,
-    getCurrentInstance
+    getCurrentInstance,
+    watchEffect
   } from 'vue';
   import { InfoCircleOutlined } from '@ant-design/icons-vue';
   import { Spin as ASpin, Tooltip as ATooltip } from 'ant-design-vue';
@@ -226,8 +223,10 @@
   import 'codemirror/addon/display/autorefresh';
   // import 'codemirror/lib/codemirror.css';
   import { cloneDeep, findLastIndex, uniqBy } from 'lodash';
+  import { storeToRefs } from 'pinia';
   import PinyinEngine from 'pinyin-engine';
   import { v4 as uuidv4 } from 'uuid';
+  import { useThemeStore } from '@/store';
   // import API from '@/common/apis/common';
   // import EventBus from '@/common/libs/bus.js';
   // import HTTP from '@/common/libs/http.js';
@@ -382,6 +381,15 @@
       type: Boolean,
       default: false
     }
+  });
+
+  const themeStore = useThemeStore();
+  const { themeConfig } = storeToRefs(themeStore);
+  const config = ref({
+    ...themeConfig.value
+  });
+  watchEffect(() => {
+    config.value = { ...themeConfig.value };
   });
 
   const contextData = inject('contextData');

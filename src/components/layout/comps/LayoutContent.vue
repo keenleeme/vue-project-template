@@ -77,7 +77,7 @@
   }
   .page-top {
     background-color: var(--primary-bg);
-    border-left: 1px solid var(--primary-bg);
+    border-left: 1px solid var(--primary-divider);
     .page-title {
       display: flex;
       height: 40px;
