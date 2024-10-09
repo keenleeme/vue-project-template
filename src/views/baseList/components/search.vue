@@ -4,7 +4,7 @@ div
     <a-form :ref="formRef" :model="formData" class="form-wrap" :label-col="labelCol" :wrapper-col="wrapperCol">
       <a-row>
         <a-col v-for="item in showFormItems" :key="item.label" :span="span">
-          <a-form-item :label="item.label" :prop="item.prop">
+          <a-form-item :label="item.label">
             <template v-if="item.type === 'input'">
               <a-input v-model:value="formData[item.prop]" :placeholder="item.placeholder || $t('I18N.base_form.pleaseEnter')" />
             </template>
@@ -36,16 +36,18 @@ div
             </template>
           </a-form-item>
         </a-col>
+        <a-col :span="span">
+          <div class="search-btn-wrap">
+            <div @click="toShowMore">
+              <UpSquareOutlined v-if="expand" />
+              <DownSquareOutlined v-if="expand" />
+            </div>
+            <a-button v-if="isReset" type="default" class="search reset mr-8" @click="handleReset">{{ $t('I18N.common.reset') }}</a-button>
+            <a-button type="primary" class="search confirm" @click="handleSearch">{{ $t('I18N.common.search') }}</a-button>
+          </div>
+        </a-col>
       </a-row>
     </a-form>
-    <div class="search-btn-wrap">
-      <div @click="toShowMore">
-        <UpSquareOutlined v-if="expand" />
-        <DownSquareOutlined v-if="expand" />
-      </div>
-      <a-button v-if="isReset" type="default" class="search reset mr-8" @click="handleReset">{{ $t('I18N.common.reset') }}</a-button>
-      <a-button type="primary" class="search confirm" @click="handleSearch">{{ $t('I18N.common.search') }}</a-button>
-    </div>
   </div>
 </template>
 
@@ -84,7 +86,7 @@ div
     isDivider: true,
     isReset: false,
     initialValues: () => ({}),
-    span: 8,
+    span: 6,
     defaultExpand: false,
     mainViewRows: 1,
     formItems: () => []
@@ -96,8 +98,6 @@ div
   const wrapperCol = { span: 14 };
 
   const formRef = ref();
-
-  let formData = reactive<any>({});
 
   const expand = ref(props.defaultExpand);
 
@@ -141,8 +141,16 @@ div
     emit('onSearch', formData);
   };
 
+  const initialValues = {
+    ...props.initialValues
+  };
+
+  let formData = reactive(props.initialValues);
   const handleReset = () => {
-    formData = props.initialValues || {};
+    for (const key in initialValues) {
+      formData[key] = initialValues[key];
+    }
+    // formData = initialValues || {};
     formRef.value?.resetFields();
     emit('onSearch', formData);
   };
@@ -163,10 +171,15 @@ div
       flex: 1;
     }
     .search-btn-wrap {
-      width: 200px;
       display: flex;
       justify-content: flex-end;
       align-items: center;
+    }
+    /deep/ .ant-form-item .ant-form-item-label > label {
+      font-size: 12px;
+    }
+    /deep/ .ant-col-14 {
+      max-width: calc(100% - 104px);
     }
   }
   .sql-input {

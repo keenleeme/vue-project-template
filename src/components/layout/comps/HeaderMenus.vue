@@ -1,7 +1,7 @@
 <template>
   <div v-if="!(themeConfig.layout === 'side' && !themeConfig.header)" class="header">
     <div class="logo-wrap">
-      <span class="logo">ZQ</span>
+      <span class="logo"><img src="@/assets/images/logo.svg" /></span>
       <span class="title">{{ $t('I18N.layout.zhiQiFuHuaQi') }}</span>
     </div>
     <UedMapMenu
@@ -66,7 +66,7 @@
           </a-menu>
         </template>
       </a-dropdown>
-      <i class="icon-button menuicon menu-icon-bell" />
+      <!-- <i class="icon-button menuicon menu-icon-bell" /> -->
       <i class="icon-button menuicon menu-icon-cog" @click="themePanelVisible = true" />
       <i
         v-if="config.lightDarkSwitch"
@@ -228,35 +228,35 @@
       name: I18N.layout.genericTypicalPage,
       submenu: [
         {
-          id: 11,
+          id: 'workBench',
           name: 'dashboard',
           hideChildren: true,
           url: '/workBench',
           submenu: []
         },
         {
-          id: 12,
+          id: 'baseList',
           name: I18N.layout.lieBiaoYe,
           hideChildren: true,
           url: '/base-list',
           submenu: []
         },
         {
-          id: 13,
+          id: 'baseForm',
           name: I18N.layout.biaoDanYe,
           hideChildren: true,
           url: '/base-form',
           submenu: []
         },
         {
-          id: 14,
+          id: 'baseDetail',
           name: I18N.layout.xiangQingYe,
           hideChildren: true,
           url: '/base-detail',
           submenu: []
         },
         {
-          id: 15,
+          id: 'baseConfig',
           name: I18N.layout.peiZhiYe,
           hideChildren: true,
           url: '/base-config',
@@ -265,7 +265,7 @@
       ]
     },
     {
-      id: 2,
+      id: 'dasvScreen',
       name: I18N.layout.daPingZiDingYi,
       url: '/dasvScreen',
       hideChildren: true,
@@ -321,12 +321,12 @@
           url: '/loginConfig'
         },
         {
-          id: 83,
+          id: 'dasUpgrade',
           name: I18N.layout.zaiXianShengJi,
           url: '/dasUpgrade'
         },
         {
-          id: 84,
+          id: 'vueTour',
           name: I18N.layout.yongHuYinDao,
           url: '/vueTour'
         }
@@ -644,9 +644,11 @@
       align-items: center;
     }
     .logo {
-      font-size: 32px;
       margin-left: 16px;
-      font-weight: 500;
+      margin-right: 8px;
+      img{
+        width: 30px;
+      }
     }
 
     .title {

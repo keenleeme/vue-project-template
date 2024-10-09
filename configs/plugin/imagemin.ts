@@ -7,6 +7,7 @@ import viteImagemin from 'vite-plugin-imagemin';
 
 export default function configImageminPlugin() {
   const imageminPlugin = viteImagemin({
+    disable: true,
     gifsicle: {
       optimizationLevel: 7,
       interlaced: false,

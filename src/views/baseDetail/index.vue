@@ -52,7 +52,7 @@
           </a-col>
           <a-col :span="8">
             <a-form-item :label="$t('I18N.layout.sheBei')">
-              <span><a>192.168.33.188</a></span>
+              <span><a style="color: var(--primary-color);">192.168.33.188</a></span>
             </a-form-item>
           </a-col>
           <a-col :span="8">
@@ -140,7 +140,7 @@
       width: 100%;
       padding: 24px 16px;
       background: var(--primary-bg);
-      border-bottom: 1px solid var(--primary-divider);
+      border-bottom: 1px solid var(--color-divider);
       .header-info-avator {
         width: 64px;
         height: 64px;
@@ -185,7 +185,7 @@
       font-size: 14px;
       font-weight: 600;
       color: var(--color-text-title);
-      border-bottom: 1px solid var(--primary-divider);
+      border-bottom: 1px solid var(--color-divider);
     }
 
     .task-list {
@@ -229,6 +229,15 @@
     .ant-form-item-control {
       font-size: 12px;
       font-weight: 400;
+    }
+  }
+  .base-detail-box {
+    .ant-timeline .ant-timeline-item-head {
+      border-width: 2px;
+    }
+    .ant-timeline .ant-timeline-item-tail{
+      inset-block-start: 17px;
+      height: calc(100% - 24px);
     }
   }
 </style>

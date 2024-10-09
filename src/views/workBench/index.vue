@@ -25,10 +25,10 @@
   import ChartsComponent from './components/charts.vue';
   import ListComponent from './components/list.vue';
   import SearchComponent from './components/search.vue';
-  import fourSvg from './images/four.svg';
-  import oneSvg from './images/one.svg';
-  import threeSvg from './images/three.svg';
-  import twoSvg from './images/two.svg';
+  import fourSvg from './images/four.png';
+  import oneSvg from './images/one.png';
+  import threeSvg from './images/three.png';
+  import twoSvg from './images/two.png';
 
   const cardData = ref([
     {

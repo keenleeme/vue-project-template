@@ -53,7 +53,19 @@
           :length="tour.steps.length"
         >
           <template #actions>
-            <slot name="actions"></slot>
+            <div class="buttons">
+              <slot name="actions">
+                <a-button v-if="!tour.isFirst && tour.enabledButtons.buttonPrevious" @click="tour.previousStep">{{
+                  tour.steps[index].labels ? tour.steps[index].labels.buttonPrevious : tour.labels.buttonPrevious
+                }}</a-button>
+                <a-button v-if="!tour.isLast && tour.enabledButtons.buttonNext" @click="tour.nextStep" type="primary">{{
+                  tour.steps[index].labels ? tour.steps[index].labels.buttonNext : tour.labels.buttonNext
+                }}</a-button>
+                <a-button v-if="tour.isLast && tour.enabledButtons.buttonStop" @click="tour.finish" type="primary">{{
+                  tour.steps[index].labels ? tour.steps[index].labels.buttonStop : tour.labels.buttonStop
+                }}</a-button>
+              </slot>
+            </div>
           </template>
         </v-step>
       </transition>
@@ -61,4 +73,10 @@
   </v-tour>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="less">
+  :deep(.buttons) {
+    button + button {
+      margin-left: 6px;
+    }
+  }
+</style>

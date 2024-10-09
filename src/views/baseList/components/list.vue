@@ -1,6 +1,6 @@
 <template>
   <div class="table-wrap">
-    <SearchComponent :is-reset="true" :form-items="formItems"></SearchComponent>
+    <SearchComponent :is-reset="true" :initial-values="initialValues" :form-items="formItems"></SearchComponent>
     <div class="operation-wrap">
       <div class="left">
         <a-button type="primary" class="mr-8">
@@ -61,10 +61,16 @@
     tags: string[];
   };
 
+  const initialValues = {
+    name: '',
+    sex: '1',
+    dateRange: undefined
+  };
+
   const formItems = [
     {
       label: I18N.layout.shuRuKuangWenBen,
-      props: 'name',
+      prop: 'name',
       type: 'input'
     },
     {
@@ -82,15 +88,15 @@
         }
       ]
     },
-    {
-      label: I18N.layout.riQi,
-      props: 'date',
-      type: 'date',
-      placeholder: I18N.layout.qingXuanZe,
-    },
+    // {
+    //   label: I18N.layout.riQi,
+    //   prop: 'date',
+    //   type: 'date',
+    //   placeholder: I18N.layout.qingXuanZe,
+    // },
     {
       label: I18N.layout.riQiFanWei,
-      props: 'dateRange',
+      prop: 'dateRange',
       type: 'daterange',
       startPlaceholder: I18N.layout.kaiShiShiJian,
       endPlaceholder: I18N.layout.jieShuShiJian,
