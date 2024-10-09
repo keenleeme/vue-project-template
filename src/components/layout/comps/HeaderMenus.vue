@@ -198,6 +198,8 @@
   const appStore = useAppStore();
   const themeStore = useThemeStore();
 
+  const { themePanelVisible } = storeToRefs(appStore);
+
   // 菜单
   const { activeMenus, activeId } = storeToRefs(menusStore);
   const selectMenuId = ref<string[]>([]);
@@ -572,7 +574,7 @@
     });
   };
 
-  const themePanelVisible = ref(false);
+  // const themePanelVisible = ref(false);
 
   const log = (val: any) => {
     console.log(val);
@@ -621,6 +623,7 @@
 
   const handleLocaleChangeA = (value: string) => {
     let locale = value === 'ZH'?'en':'zh';
+    // themeConfig.value.locale = locale;
     changeLocale(locale);
     window.location.reload();
   }

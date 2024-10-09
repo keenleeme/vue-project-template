@@ -1,3 +1,12 @@
+/*
+ * @Author: xzj 13819929694@163.com
+ * @Date: 2024-09-19 18:31:40
+ * @LastEditors: xzj 13819929694@163.com
+ * @LastEditTime: 2024-10-09 15:28:58
+ * @Description: 
+ * 
+ * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
+ */
 import { computed, ref } from 'vue';
 // import { theme } from 'ant-design-vue';
 import { defineStore } from 'pinia';
@@ -32,6 +41,11 @@ export default defineStore(
         Object.assign(defaultConfig.loginConfig, appConfig.value.loginConfig, defaultConfig.loginConfig, config)
       );
     };
+    // 主题控制面板
+    const themePanelVisible = ref<boolean>(false);
+    const setThemePanelVisible = (show: boolean) => {
+      themePanelVisible.value = show;
+    }
     // // 主题
     // const themeType = ref<ThemeTypes>(ThemeTypes.Light);
     // const setThemeType = (theme: ThemeTypes) => {
@@ -70,9 +84,11 @@ export default defineStore(
       // setThemeType,
       // theme,
       watermark,
-      setWatermark
+      setWatermark,
       // themeTokenType,
       // setThemeTokenType
+      themePanelVisible,
+      setThemePanelVisible
     };
   },
   {

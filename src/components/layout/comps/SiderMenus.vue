@@ -2,7 +2,7 @@
  * @Author: xzj 13819929694@163.com
  * @Date: 2024-10-08 10:18:29
  * @LastEditors: xzj 13819929694@163.com
- * @LastEditTime: 2024-10-09 15:15:09
+ * @LastEditTime: 2024-10-09 15:50:46
  * @Description: 
  * 
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
@@ -39,7 +39,7 @@
     >
       <template #header>
         <div class="side-menu-header" v-if="config.layout === 'side' && !config.header">
-          <span class="logo"><img style="height: 40px;" src="@/assets/images/logo.svg" /></span>
+          <span class="logo"><img style="height: 30px;" src="@/assets/images/logo.svg" /></span>
         </div>
       </template>
       <template #footer>
@@ -52,7 +52,7 @@
             <i class="menuicon menu-icon-bell" />
             <span>消息</span>
           </div>
-          <div class="side-menu-footer-item" @click="themePanelVisible = true">
+          <div class="side-menu-footer-item" @click="handleThemePanelChange">
             <i class="menuicon menu-icon-cog" />
             <span>设置</span>
           </div>
@@ -72,18 +72,18 @@
           </div>
           <div v-show="!fold" class="side-menu-switch-group">
             <div v-if="config.lightDarkSwitch" class="switch-item">
-              <div :class="{ active: config.mode === 'dark' }" @click="config.mode = 'dark'">
+              <div :class="{ active: config.mode === 'dark' }" @click="changeConfig('mode','dark')">
                 <i class="menuicon menu-icon-black" />
               </div>
-              <div :class="{ active: config.mode === 'light' }" @click="config.mode = 'light'">
+              <div :class="{ active: config.mode === 'light' }" @click="changeConfig('mode','light')">
                 <i class="menuicon menu-icon-light" />
               </div>
             </div>
             <div v-if="config.languageSwitch" class="switch-item">
-              <div :class="{ active: config.lang === 'ZH' }" @click="config.lang = 'ZH'">
+              <div :class="{ active: config.lang === 'ZH' }" @click="handleLocaleChangeA('ZH')">
                 <i class="menuicon menu-icon-chinese" />
               </div>
-              <div :class="{ active: config.lang === 'EN' }" @click="config.lang = 'EN'">
+              <div :class="{ active: config.lang === 'EN' }" @click="handleLocaleChangeA('EN')">
                 <i class="menuicon menu-icon-english" />
               </div>
             </div>
@@ -111,8 +111,9 @@
   import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons-vue';
   import { theme } from 'ant-design-vue';
   import { storeToRefs } from 'pinia';
-  import { useMenusStore, useThemeStore } from '@/store';
+  import { useAppStore, useMenusStore, useThemeStore } from '@/store';
   import { UedSideMenu, UedUserMenu } from '@ued-material/menu';
+  import { changeLocale } from '@international/vue3-i18n';
 
   // 菜单折叠逻辑
   let collapsed = ref(false);
@@ -133,6 +134,11 @@
   watchEffect(() => {
     config.value = { ...themeConfig.value };
   });
+  const changeConfig = (key: string, newConfig: any) => {
+    console.log('changeConfig', key, newConfig);
+    themeConfig.value = { ...themeConfig.value, [key]: newConfig };
+  };
+
 
   watch(
     ()=>config.value,
@@ -334,6 +340,17 @@
   
   const userMenuClick = (item: any) => {
     console.log('>>userMenuClick>>', item)
+  }
+  
+  const appStore = useAppStore();
+  const handleThemePanelChange = () => {
+    appStore.setThemePanelVisible(true);
+  }
+
+  const handleLocaleChangeA = (value: string) => {
+    let locale = value === 'ZH'?'zh':'en';
+    changeLocale(locale);
+    window.location.reload();
   }
 
 </script>
