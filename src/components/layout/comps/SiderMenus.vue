@@ -2,7 +2,7 @@
  * @Author: xzj 13819929694@163.com
  * @Date: 2024-10-08 10:18:29
  * @LastEditors: xzj 13819929694@163.com
- * @LastEditTime: 2024-10-09 14:43:54
+ * @LastEditTime: 2024-10-09 15:03:56
  * @Description: 
  * 
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
@@ -37,14 +37,13 @@
       @menu-click="handleMenuClick"
       @update:fold="handleMenuCollapse"
     >
-      <template v-if="config.layout === 'side' && !config.header">
-        <!-- header -->
-        <div slot="header" class="side-menu-header">
-          <!-- <span class="logo">LOGO</span> -->
-          <span class="logo"><img src="@/assets/images/logo.svg" /></span>
+      <template #header>
+        <div class="side-menu-header" v-if="config.layout === 'side' && !config.header">
+          <span class="logo"><img style="height: 40px;" src="@/assets/images/logo.svg" /></span>
         </div>
-        <!-- footer -->
-        <div slot="footer" class="side-menu-footer">
+      </template>
+      <template #footer>
+        <div class="side-menu-footer">
           <div v-if="config.helpCenter" class="side-menu-footer-item">
             <i class="menuicon menu-icon-help" />
             <span>帮助</span>
