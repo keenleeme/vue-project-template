@@ -7,11 +7,11 @@
           <template #icon>
             <PlusOutlined />
           </template>
-          新建
+          {{ $t('I18N.layout.xinJian') }}
         </a-button>
-        <a-button class="mr-8"> 导出 </a-button>
-        <a-button class="mr-8"> 重点关注 </a-button>
-        <a-button> 取消关注 </a-button>
+        <a-button class="mr-8"> {{ $t('I18N.layout.daoChu') }} </a-button>
+        <a-button class="mr-8"> {{ $t('I18N.layout.zhongDianGuanZhu') }} </a-button>
+        <a-button> {{ $t('I18N.layout.quXiaoGuanZhu') }} </a-button>
       </div>
       <div class="right">
         <a-button class="mr-8">
@@ -41,8 +41,8 @@
           </span>
         </template>
         <template v-else-if="column.key === 'operation'">
-          <a-button class="link" type="link">详情</a-button>
-          <a-button class="link" type="link">删除</a-button>
+          <a-button class="link" type="link">{{ $t('I18N.layout.xiangQing') }}</a-button>
+          <a-button class="link" type="link">{{ $t('I18N.common.delete') }}</a-button>
         </template>
       </template>
     </a-table>
@@ -63,56 +63,56 @@
 
   const formItems = [
     {
-      label: '输入框文本',
+      label: I18N.layout.shuRuKuangWenBen,
       props: 'name',
       type: 'input'
     },
     {
-      label: '选择器',
+      label: I18N.layout.xuanZeQi,
       props: 'sex',
       type: 'select',
       options: [
         {
-          label: '选择项1',
+          label: I18N.layout.xuanZeXiang1,
           value: '1'
         },
         {
-          label: '选择项2',
+          label: I18N.layout.xuanZeXiang2,
           value: '2'
         }
       ]
     },
     {
-      label: '日期',
+      label: I18N.layout.riQi,
       props: 'date',
       type: 'date',
-      placeholder: '请选择'
+      placeholder: I18N.layout.qingXuanZe,
     },
     {
-      label: '日期范围',
+      label: I18N.layout.riQiFanWei,
       props: 'dateRange',
       type: 'daterange',
-      startPlaceholder: '开始日期',
-      endPlaceholder: '结束日期'
+      startPlaceholder: I18N.layout.kaiShiShiJian,
+      endPlaceholder: I18N.layout.jieShuShiJian,
     }
   ];
 
   const columns: TableColumnType<TableDataType>[] = [
     {
-      title: '项目名称',
+      title: I18N.layout.xiangMuMingCheng,
       dataIndex: 'name'
     },
     {
-      title: '所属组织',
+      title: I18N.layout.suoShuZuZhi,
       dataIndex: 'age'
     },
     {
-      title: '所属类别',
+      title: I18N.layout.suoShuLeiBie,
       dataIndex: 'tags',
       key: 'tags'
     },
     {
-      title: '操作',
+      title: I18N.layout.caoZuo,
       dataIndex: 'address',
       key: 'operation'
     }

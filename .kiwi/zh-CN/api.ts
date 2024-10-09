@@ -11,5 +11,7 @@ export default {
     yiCengCaiDan: '一层菜单',
     zhuTiYanShi: '主题演示',
     yinDaoYe: '引导页',
+    yiJiCaiDan: '一级菜单',
+    yinDaoYe2: '引导页2'
   },
 };

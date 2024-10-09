@@ -6,37 +6,37 @@ export async function getMenus(): Promise<MenuType[]> {
   return [
     {
       id: 'workBench',
-      title: '通用典型页面',
+      title: I18N.layout.genericTypicalPage,
       icon: 'AppstoreOutlined',
       path: '/workBench',
       children: [
         {
           id: 'workBench',
-          title: '工作台',
+          title: I18N.layout.gongZuoTai,
           icon: 'AppstoreOutlined',
           path: '/workBench'
         },
         {
           id: 'baseList',
-          title: '列表页',
+          title: I18N.layout.lieBiaoYe,
           icon: 'AppstoreOutlined',
           path: '/base-list'
         },
         {
           id: 'baseForm',
-          title: '基础表单',
+          title: I18N.layout.jiChuBiaoDan,
           icon: 'AppstoreOutlined',
           path: '/base-form'
         },
         {
           id: 'baseDetail',
-          title: '基础详情',
+          title: I18N.layout.jiChuXiangQing,
           icon: 'AppstoreOutlined',
           path: '/base-detail'
         },
         {
           id: 'baseconfig',
-          title: '基础配置',
+          title: I18N.layout.jiChuPeiZhi,
           icon: 'AppstoreOutlined',
           path: '/base-config'
         }
@@ -44,31 +44,31 @@ export async function getMenus(): Promise<MenuType[]> {
     },
     {
       id: 'dasvScreen',
-      title: '大屏自定义',
+      title: I18N.layout.daPingZiDingYi,
       icon: 'AppstoreOutlined',
       path: '/dasvScreen'
     },
     {
       id: 'themeConfig1',
-      title: '系统设置',
+      title: I18N.layout.xiTongSheZhi,
       icon: 'AppstoreOutlined',
       path: '/themeConfig',
       children: [
         {
           id: 'themeConfig',
-          title: '主题配置页',
+          title: I18N.layout.zhuTiPeiZhiYe,
           icon: 'AppstoreOutlined',
           path: '/themeConfig'
         },
         {
           id: 'loginConfig',
-          title: '登录配置页',
+          title: I18N.layout.dengLuPeiZhiYe,
           icon: 'AppstoreOutlined',
           path: '/loginConfig'
         },
         {
           id: 'dasUpgrade',
-          title: '在线升级',
+          title: I18N.layout.zaiXianShengJi,
           icon: 'AppstoreOutlined',
           path: '/dasUpgrade'
         },
@@ -94,7 +94,7 @@ export async function getMenus(): Promise<MenuType[]> {
     },
     {
       id: 'vueTour2',
-      title: '引导页2',
+      title: I18N.api.common.yinDaoYe2,
       icon: 'AppstoreOutlined',
       path: '/vueTour-page2'
     },

@@ -10,6 +10,8 @@ export default {
     "duoCengCaiDan": "Multi Level Menu",
     "yiCengCaiDan": "First Level Menu",
     "zhuTiYanShi": "Theme Demonstration",
-    "yinDaoYe": "引导页"
+    "yinDaoYe": "Introduction page",
+    "yiJiCaiDan": "First level menu",
+    "yinDaoYe2": "Introductory page 2"
   }
 }
