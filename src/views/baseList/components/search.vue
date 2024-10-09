@@ -6,12 +6,12 @@ div
         <a-col v-for="item in showFormItems" :key="item.label" :span="span">
           <a-form-item :label="item.label">
             <template v-if="item.type === 'input'">
-              <a-input v-model:value="formData[item.prop]" :placeholder="item.placeholder || '请输入'" />
+              <a-input v-model:value="formData[item.prop]" :placeholder="item.placeholder || $t('I18N.base_form.pleaseEnter')" />
             </template>
             <template v-else-if="item.type === 'select'">
               <a-select
                 v-model:value="formData[item.prop]"
-                :placeholder="item.placeholder || '请选择'"
+                :placeholder="item.placeholder || $t('I18N.base_form.pleaseChoose')"
                 :multiple="item.multiple"
                 :collapse-tags="item.collapseTags"
               >
@@ -31,7 +31,7 @@ div
               <a-range-picker
                 v-model:value="formData[item.prop]"
                 :picker="item.type || ''"
-                :placeholder="[item.startPlaceholder || '请选择开始时间', item.endPlaceholder || '请选择结束时间']"
+                :placeholder="[item.startPlaceholder || $t('I18N.layout.qingXuanZeKaiShiShiJian'), item.endPlaceholder || $t('I18N.layout.qingXuanZeJieShuShiJian')]"
               />
             </template>
           </a-form-item>
@@ -42,8 +42,8 @@ div
               <UpSquareOutlined v-if="expand" />
               <DownSquareOutlined v-if="expand" />
             </div>
-            <a-button v-if="isReset" type="default" class="search reset mr-8" @click="handleReset">重置</a-button>
-            <a-button type="primary" class="search confirm" @click="handleSearch">搜索</a-button>
+            <a-button v-if="isReset" type="default" class="search reset mr-8" @click="handleReset">{{ $t('I18N.common.reset') }}</a-button>
+            <a-button type="primary" class="search confirm" @click="handleSearch">{{ $t('I18N.common.search') }}</a-button>
           </div>
         </a-col>
       </a-row>

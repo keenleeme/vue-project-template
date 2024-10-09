@@ -1,9 +1,8 @@
 <template>
   <div v-if="!(themeConfig.layout === 'side' && !themeConfig.header)" class="header">
     <div class="logo-wrap">
-      
       <span class="logo"><img src="@/assets/images/logo.svg" /></span>
-      <span class="title">智启vue3孵化器系统</span>
+      <span class="title">{{ $t('I18N.layout.zhiQiFuHuaQi') }}</span>
     </div>
     <!-- <UedMapMenu
       v-if="config.layout !== 'side' && config.mapMenu"
@@ -31,13 +30,13 @@
       @drag-menu="dragMenu"
     >
       <template #addBtn>
-        <a-button type="primary">新增菜单</a-button>
+        <a-button type="primary">{{ $t('I18N.common.add') }}{{ $t('I18N.common.menu') }}</a-button>
       </template>
       <template #saveBtn>
-        <a-button type="primary">保存</a-button>
+        <a-button type="primary">{{ $t('I18N.common.save') }}</a-button>
       </template>
       <template #cancelBtn>
-        <a-button>取消</a-button>
+        <a-button>{{ $t('I18N.common.cancel') }}</a-button>
       </template>
     </UedMapMenu> -->
     <UedTopMenu
@@ -59,10 +58,10 @@
         <template #overlay>
           <a-menu>
             <a-menu-item v-if="config.helpCenter">
-              <span @click="showDrawer">帮助文档</span>
+              <span @click="showDrawer">{{ $t('I18N.layout.bangZhuWenDang') }}</span>
             </a-menu-item>
             <a-menu-item>
-              <span @click="$router.push('/vueTour')">入门引导</span>
+              <span @click="$router.push('/vueTour')">{{ $t('I18N.layout.ruMenYinDao') }}</span>
             </a-menu-item>
           </a-menu>
         </template>
@@ -79,7 +78,7 @@
         v-if="config.languageSwitch"
         class="icon-button menuicon"
         :class="config.lang === 'ZH' ? 'menu-icon-chinese' : 'menu-icon-english'"
-        @click="config.lang = config.lang === 'ZH' ? 'EN' : 'ZH'"
+        @click="handleLocaleChangeA(config.lang)"
       />
       <FullscreenOutlined class="icon-button menuicon" size="24" @click="toggleFullScreen" />
       <UedUserMenu
@@ -95,57 +94,57 @@
   </div>
   <a-modal
     v-model:open="dialogVisible"
-    :title="`${dialogType === 'add' ? '新增' : '编辑'}菜单`"
+    :title="`${dialogType === 'add' ? $t('I18N.common.add') : $t('I18N.common.edit')}`"
     :append-to-body="true"
     width="480px"
   >
     <a-form ref="ruleForm" :model="form" label-position="right" :inline="true" label-width="110px">
-      <a-form-item label="菜单名称" prop="name" :rules="rules.name">
-        <a-input v-model="form.name" placeholder="请输入菜单名称" auto-complete="off" />
+      <a-form-item :label="$t('I18N.layout.caiDanMingCheng')" prop="name" :rules="rules.name">
+        <a-input v-model="form.name" :placeholder="$t('I18N.layout.qingShuRuCaiDanMingCheng')" auto-complete="off" />
       </a-form-item>
-      <a-form-item v-if="dialogType === 'add'" label="菜单体系" prop="level" :rules="rules.level">
-        <a-select v-model="form.level" placeholder="请选择菜单体系">
+      <a-form-item v-if="dialogType === 'add'" :label="$t('I18N.layout.caiDanTiXi')" prop="level" :rules="rules.level">
+        <a-select v-model="form.level" :placeholder="$t('I18N.layout.qingShuRuCaiDanTiXi')">
           <a-select-option v-for="item in levelOptions" :key="item.value" :label="item.label" :value="item.value" />
         </a-select>
       </a-form-item>
       <a-form-item
         v-if="dialogType === 'add' && form.level === 2"
-        label="所属一级菜单"
+        :label="$t('I18N.layout.suoShuYiJiCaiDan')"
         prop="parentId"
         :rules="rules.parentId"
       >
-        <a-select v-model="form.parentId" placeholder="请选择所属一级菜单">
+        <a-select v-model="form.parentId" :placeholder="$t('I18N.layout.qingXuanZeSuoShuYiJiCaiDan')">
           <a-select-option v-for="item in level2Menus" :key="item.id" :label="item.name" :value="item.id" />
         </a-select>
       </a-form-item>
       <template v-if="dialogType === 'add' || editingItem.accessType">
-        <a-form-item label="访问方式" prop="accessType">
+        <a-form-item :label="$t('I18N.layout.fangWenFangShi')" prop="accessType">
           <a-radio-group v-model="form.accessType">
-            <a-radio label="new">新开页面</a-radio>
-            <a-radio label="iframe">内嵌页面</a-radio>
+            <a-radio label="new">{{ $t('I18N.layout.xinKaiYeMian') }}</a-radio>
+            <a-radio label="iframe">{{ $t('I18N.layout.neiQianYeMian') }}</a-radio>
           </a-radio-group>
         </a-form-item>
-        <a-form-item class="form-item origin-menu" label="保留原菜单" prop="originMenu">
+        <a-form-item class="form-item origin-menu" :label="$t('I18N.layout.baoLiuYuanCaiDan')" prop="originMenu">
           <a-switch v-model="form.originMenu" />
         </a-form-item>
-        <a-form-item label="关联URL" prop="url" :rules="rules.url">
-          <a-input v-model="form.url" placeholder="请输入页面地址" auto-complete="off" />
+        <a-form-item :label="$t('I18N.layout.guanLianURL')" prop="url" :rules="rules.url">
+          <a-input v-model="form.url" :placeholder="$t('I18N.layout.qingShuRuYeMianDiZhi')" auto-complete="off" />
         </a-form-item>
-        <a-form-item class="form-item page-params" label="页面参数">
-          <a-input v-model="form.params" placeholder="请输入对应产品的菜单显隐参数" auto-complete="off" />
+        <a-form-item class="form-item page-params" :label="$t('I18N.layout.yeMianCanShu')">
+          <a-input v-model="form.params" :placeholder="$t('I18N.layout.caiDanXianYinCanShu')" auto-complete="off" />
         </a-form-item>
       </template>
     </a-form>
     <template #footer>
-      <a-button @click="dialogVisible = false">取 消</a-button>
-      <a-button type="primary" @click="dialogConfirm">确 定</a-button>
+      <a-button @click="dialogVisible = false">{{ $t('I18N.common.cancel') }}</a-button>
+      <a-button type="primary" @click="dialogConfirm">{{ $t('I18N.common.confirm') }}</a-button>
     </template>
   </a-modal>
   <a-drawer
     v-model:open="open"
     class="custom-class"
     root-class-name="root-class-name"
-    title="帮助文档"
+    :title="$t('I18N.layout.bangZhuWenDang')"
     width="520"
     :closable="false"
     placement="right"
@@ -193,6 +192,7 @@
   import { storeToRefs } from 'pinia';
   import { useAppStore, useMenusStore, useThemeStore } from '@/store';
   import HelpDocument from './HelpDocument.vue';
+  import { changeLocale } from '@international/vue3-i18n';
 
   const menusStore = useMenusStore();
   const appStore = useAppStore();
@@ -222,11 +222,10 @@
     themeStore.reset();
     router.push('/login');
   };
-
   const data = ref([
     {
       id: 1,
-      name: '通用典型页面',
+      name: I18N.layout.genericTypicalPage,
       submenu: [
         {
           id: 'workBench',
@@ -237,28 +236,28 @@
         },
         {
           id: 'baseList',
-          name: '列表页',
+          name: I18N.layout.lieBiaoYe,
           hideChildren: true,
           url: '/base-list',
           submenu: []
         },
         {
           id: 'baseForm',
-          name: '基础表单',
+          name: I18N.layout.biaoDanYe,
           hideChildren: true,
           url: '/base-form',
           submenu: []
         },
         {
           id: 'baseDetail',
-          name: '基础详情',
+          name: I18N.layout.xiangQingYe,
           hideChildren: true,
           url: '/base-detail',
           submenu: []
         },
         {
           id: 'baseConfig',
-          name: '基础配置',
+          name: I18N.layout.peiZhiYe,
           hideChildren: true,
           url: '/base-config',
           submenu: []
@@ -267,108 +266,108 @@
     },
     {
       id: 'dasvScreen',
-      name: '大屏自定义',
+      name: I18N.layout.daPingZiDingYi,
       url: '/dasvScreen',
       hideChildren: true,
       submenu: []
     },
     {
       id: 3,
-      name: '工作台自定义',
+      name: I18N.layout.gongZuoTaiZiDingYi,
       url: '/home',
       hideChildren: true,
       submenu: []
     },
     {
       id: 4,
-      name: '报表自定义',
+      name: I18N.layout.baoBiaoZiDingYi,
       url: '/home',
       hideChildren: true,
       submenu: []
     },
     {
       id: 5,
-      name: '图可视化呈现',
+      name: I18N.layout.tuKeShiHuaChengXian,
       url: '/home',
       hideChildren: true,
       submenu: []
     },
     {
       id: 6,
-      name: '图编辑器',
+      name: I18N.layout.tuBianJiQi,
       url: '/home',
       hideChildren: true,
       submenu: []
     },
     {
       id: 7,
-      name: '流程编排',
+      name: I18N.layout.liuChengBianPai,
       url: '/home',
       hideChildren: true,
       submenu: []
     },
     {
-      id: 'themeConfig1',
-      name: '系统设置',
+      id: 8,
+      name: I18N.layout.xiTongSheZhi,
       submenu: [
         {
           id: 'themeConfig',
-          name: '主题配置页',
+          name: I18N.layout.zhuTiPeiZhiYe,
           url: '/themeConfig'
         },
         {
           id: 'loginConfig',
-          name: '登录配置页',
+          name: I18N.layout.dengLuPeiZhiYe,
           url: '/loginConfig'
         },
         {
           id: 'dasUpgrade',
-          name: '在线升级',
+          name: I18N.layout.zaiXianShengJi,
           url: '/dasUpgrade'
         },
         {
           id: 'vueTour',
-          name: '用户引导',
+          name: I18N.layout.yongHuYinDao,
           url: '/vueTour'
         }
       ]
     },
     {
       id: 'sum-more',
-      name: '多层菜单',
+      name: I18N.api.common.duoCengCaiDan,
       url: '/sum-more',
       // hideChildren: true,
       submenu: [
         {
-          id: 'sum-more-0',
-          name: '二级菜单',
+          id: 90,
+          name: I18N.api.common.erJiCaiDan,
           url: '/sum-more-0'
         },
         {
           id: 'sum-more-1',
-          name: '二级菜单分类1',
+          name: I18N.api.common.erJiCaiDanFen2,
           url: 'sum-more-1',
           submenu: [
             {
               id: 'sum-more-1-0',
-              name: '三级菜单',
+              name: I18N.api.common.sanJiCaiDan,
               url: '/sum-more-1-0'
             },
             {
               id: 'sum-more-1-1',
-              name: '自动添加前缀三级菜单',
+              name: I18N.api.common.ziDongTianJiaQian,
               url: '/sum-more/sum-more-1-1'
             }
           ]
         },
         {
           id: 'sum-more-2',
-          name: '二级菜单分类2',
+          name: I18N.api.common.erJiCaiDanFen,
           url: '/sum-more-2',
           submenu: [
             {
               id: 'sum-more-2-1',
-              name: '自动添加多个前缀三级菜单',
+              name: I18N.api.common.ziDongTianJiaDuo,
               url: '/sum-more/sum-more-2/sum-more-2-1'
             }
           ]
@@ -433,7 +432,7 @@
   const userMenu = ref([
     {
       id: 1,
-      name: '退出登录'
+      name: I18N.layout.tuiChuDengLu
     }
   ]);
 
@@ -460,21 +459,21 @@
     params: ''
   });
   const rules: any = ref({
-    name: [{ required: true, message: '请输入菜单名称', trigger: 'blur' }],
-    level: [{ required: true, message: '请选择菜单体系', trigger: 'blur' }],
-    parentId: [{ required: true, message: '请选择所属一级菜单', trigger: 'change' }],
-    url: [{ required: true, message: '请输入菜单关联的URL', trigger: 'blur' }]
+    name: [{ required: true, message: I18N.layout.qingShuRuCaiDanMingCheng, trigger: 'blur' }],
+    level: [{ required: true, message: I18N.layout.qingShuRuCaiDanTiXi, trigger: 'blur' }],
+    parentId: [{ required: true, message: I18N.layout.suoShuYiJiCaiDan, trigger: 'change' }],
+    url: [{ required: true, message: I18N.layout.caiDanGuanLianURL, trigger: 'blur' }]
   });
   const dialogType = ref<'add' | 'edit'>('add');
   const editingItem = ref();
 
   const levelOptions = ref([
     {
-      label: '一级菜单',
+      label: I18N.common.yiJiCaiDan,
       value: 1
     },
     {
-      label: '二级菜单',
+      label: I18N.common.erJiCaiDan,
       value: 2
     }
   ]);
@@ -617,6 +616,15 @@
       document.exitFullscreen();
     }
   };
+  
+  // 国际化切换
+
+  const handleLocaleChangeA = (value: string) => {
+    let locale = value === 'ZH'?'en':'zh';
+    changeLocale(locale);
+    window.location.reload();
+  }
+  
 </script>
 
 <style lang="less" scoped>

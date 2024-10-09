@@ -12,7 +12,7 @@ export const themeDefaultConfig: ThemeConfigType = {
   title: '',
   dark: false,
   mode: 'light',
-  lang: 'ZH',
+  lang: localStorage.getItem('das-intl-locale')==='zh'?'ZH':'EN',
   primaryColor: '#134BEA',
   // primaryColor: '#3b71ee',
   // darkPrimaryColor: '#3B71EE',

@@ -2,7 +2,7 @@
  * @Author: xzj 13819929694@163.com
  * @Date: 2024-10-08 10:18:29
  * @LastEditors: xzj 13819929694@163.com
- * @LastEditTime: 2024-10-09 14:40:34
+ * @LastEditTime: 2024-10-09 14:43:54
  * @Description: 
  * 
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
@@ -157,7 +157,7 @@
   const data = ref([
     {
       id: 1,
-      name: '通用典型页面',
+      name: I18N.layout.genericTypicalPage,
       submenu: [
         {
           id: 'workBench',
@@ -168,28 +168,28 @@
         },
         {
           id: 'baseList',
-          name: '列表页',
+          name: I18N.layout.lieBiaoYe,
           hideChildren: true,
           url: '/base-list',
           submenu: []
         },
         {
           id: 'baseForm',
-          name: '基础表单',
+          name: I18N.layout.biaoDanYe,
           hideChildren: true,
           url: '/base-form',
           submenu: []
         },
         {
           id: 'baseDetail',
-          name: '基础详情',
+          name: I18N.layout.xiangQingYe,
           hideChildren: true,
           url: '/base-detail',
           submenu: []
         },
         {
           id: 'baseConfig',
-          name: '基础配置',
+          name: I18N.layout.peiZhiYe,
           hideChildren: true,
           url: '/base-config',
           submenu: []
@@ -198,108 +198,108 @@
     },
     {
       id: 'dasvScreen',
-      name: '大屏自定义',
+      name: I18N.layout.daPingZiDingYi,
       url: '/dasvScreen',
       hideChildren: true,
       submenu: []
     },
     {
       id: 3,
-      name: '工作台自定义',
+      name: I18N.layout.gongZuoTaiZiDingYi,
       url: '/home',
       hideChildren: true,
       submenu: []
     },
     {
       id: 4,
-      name: '报表自定义',
+      name: I18N.layout.baoBiaoZiDingYi,
       url: '/home',
       hideChildren: true,
       submenu: []
     },
     {
       id: 5,
-      name: '图可视化呈现',
+      name: I18N.layout.tuKeShiHuaChengXian,
       url: '/home',
       hideChildren: true,
       submenu: []
     },
     {
       id: 6,
-      name: '图编辑器',
+      name: I18N.layout.tuBianJiQi,
       url: '/home',
       hideChildren: true,
       submenu: []
     },
     {
       id: 7,
-      name: '流程编排',
+      name: I18N.layout.liuChengBianPai,
       url: '/home',
       hideChildren: true,
       submenu: []
     },
     {
-      id: 'themeConfig1',
-      name: '系统设置',
+      id: 8,
+      name: I18N.layout.xiTongSheZhi,
       submenu: [
         {
           id: 'themeConfig',
-          name: '主题配置页',
+          name: I18N.layout.zhuTiPeiZhiYe,
           url: '/themeConfig'
         },
         {
           id: 'loginConfig',
-          name: '登录配置页',
+          name: I18N.layout.dengLuPeiZhiYe,
           url: '/loginConfig'
         },
         {
           id: 'dasUpgrade',
-          name: '在线升级',
+          name: I18N.layout.zaiXianShengJi,
           url: '/dasUpgrade'
         },
         {
           id: 'vueTour',
-          name: '用户引导',
+          name: I18N.layout.yongHuYinDao,
           url: '/vueTour'
         }
       ]
     },
     {
       id: 'sum-more',
-      name: '多层菜单',
+      name: I18N.api.common.duoCengCaiDan,
       url: '/sum-more',
       // hideChildren: true,
       submenu: [
         {
-          id: 'sum-more-0',
-          name: '二级菜单',
+          id: 90,
+          name: I18N.api.common.erJiCaiDan,
           url: '/sum-more-0'
         },
         {
           id: 'sum-more-1',
-          name: '二级菜单分类1',
+          name: I18N.api.common.erJiCaiDanFen2,
           url: 'sum-more-1',
           submenu: [
             {
               id: 'sum-more-1-0',
-              name: '三级菜单',
+              name: I18N.api.common.sanJiCaiDan,
               url: '/sum-more-1-0'
             },
             {
               id: 'sum-more-1-1',
-              name: '自动添加前缀三级菜单',
+              name: I18N.api.common.ziDongTianJiaQian,
               url: '/sum-more/sum-more-1-1'
             }
           ]
         },
         {
           id: 'sum-more-2',
-          name: '二级菜单分类2',
+          name: I18N.api.common.erJiCaiDanFen,
           url: '/sum-more-2',
           submenu: [
             {
               id: 'sum-more-2-1',
-              name: '自动添加多个前缀三级菜单',
+              name: I18N.api.common.ziDongTianJiaDuo,
               url: '/sum-more/sum-more-2/sum-more-2-1'
             }
           ]
