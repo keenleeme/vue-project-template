@@ -2,7 +2,7 @@
  * @Author: xzj 13819929694@163.com
  * @Date: 2024-10-08 10:18:29
  * @LastEditors: xzj 13819929694@163.com
- * @LastEditTime: 2024-10-09 15:03:56
+ * @LastEditTime: 2024-10-09 15:15:09
  * @Description: 
  * 
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
@@ -88,7 +88,7 @@
               </div>
             </div>
           </div>
-          <ued-user-menu
+          <UedUserMenu
             :props="dataProps"
             :data="userMenu"
             :placement="fold ? 'right' : 'top'"
@@ -320,4 +320,20 @@
   const handleMenuCollapse = (fold) => {
     collapsed.value = fold;
   }
+
+  const dataProps = ref({
+    label: 'name',
+    children: 'submenu',
+  })
+  const userMenu = ref([
+    {
+      id: 1,
+      name: '退出登录',
+    },
+  ])
+  
+  const userMenuClick = (item: any) => {
+    console.log('>>userMenuClick>>', item)
+  }
+
 </script>
