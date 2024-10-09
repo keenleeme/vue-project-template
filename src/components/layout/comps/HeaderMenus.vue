@@ -5,7 +5,7 @@
       <span class="logo"><img src="@/assets/images/logo.svg" /></span>
       <span class="title">智启vue3孵化器系统</span>
     </div>
-    <UedMapMenu
+    <!-- <UedMapMenu
       v-if="config.layout !== 'side' && config.mapMenu"
       v-model:star-keys="starKeys"
       :props="dataProps"
@@ -39,7 +39,7 @@
       <template #cancelBtn>
         <a-button>取消</a-button>
       </template>
-    </UedMapMenu>
+    </UedMapMenu> -->
     <UedTopMenu
       v-if="config.layout !== 'side'"
       v-model:active-id="activeId"
@@ -230,7 +230,7 @@
       submenu: [
         {
           id: 'workBench',
-          name: 'dashboard',
+          name: '工作台',
           hideChildren: true,
           url: '/workBench',
           submenu: []
@@ -244,21 +244,21 @@
         },
         {
           id: 'baseForm',
-          name: '表单页',
+          name: '基础表单',
           hideChildren: true,
           url: '/base-form',
           submenu: []
         },
         {
           id: 'baseDetail',
-          name: '详情页',
+          name: '基础详情',
           hideChildren: true,
           url: '/base-detail',
           submenu: []
         },
         {
           id: 'baseConfig',
-          name: '配置页',
+          name: '基础配置',
           hideChildren: true,
           url: '/base-config',
           submenu: []
@@ -308,7 +308,7 @@
       submenu: []
     },
     {
-      id: 8,
+      id: 'themeConfig1',
       name: '系统设置',
       submenu: [
         {
@@ -334,40 +334,40 @@
       ]
     },
     {
-      id: 9,
+      id: 'sum-more',
       name: '多层菜单',
       url: '/sum-more',
       // hideChildren: true,
       submenu: [
         {
-          id: 90,
+          id: 'sum-more-0',
           name: '二级菜单',
           url: '/sum-more-0'
         },
         {
-          id: 91,
+          id: 'sum-more-1',
           name: '二级菜单分类1',
           url: 'sum-more-1',
           submenu: [
             {
-              id: 910,
+              id: 'sum-more-1-0',
               name: '三级菜单',
               url: '/sum-more-1-0'
             },
             {
-              id: 911,
+              id: 'sum-more-1-1',
               name: '自动添加前缀三级菜单',
               url: '/sum-more/sum-more-1-1'
             }
           ]
         },
         {
-          id: 92,
+          id: 'sum-more-2',
           name: '二级菜单分类2',
           url: '/sum-more-2',
           submenu: [
             {
-              id: 920,
+              id: 'sum-more-2-1',
               name: '自动添加多个前缀三级菜单',
               url: '/sum-more/sum-more-2/sum-more-2-1'
             }
@@ -417,8 +417,9 @@
 
   const popActive = ref(true);
   // let activeId = ref<string|number>();
-  const recentlyKeys = ref([21, 11, 231, 31]);
-  const starKeys = ref([11, 21, 231, 31]);
+  const recentlyKeys = ref([]);
+  // const starKeys = ref(['baseForm', 'baseDetail', 'baseConfig', 'themeConfig']);
+  const starKeys = ref([]);
 
   // watchEffect(() => {
   //   // 获取当前激活的菜单项的id，并将其赋值给activeId。activeMenus是一个数组，需要获取最后一个元素。
