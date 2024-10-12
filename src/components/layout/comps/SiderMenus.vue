@@ -1,12 +1,3 @@
-<!--
- * @Author: xzj 13819929694@163.com
- * @Date: 2024-10-08 10:18:29
- * @LastEditors: xzj 13819929694@163.com
- * @LastEditTime: 2024-10-09 15:50:46
- * @Description: 
- * 
- * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
--->
 <template>
   <a-layout-sider
     v-show="siderMenus?.length"

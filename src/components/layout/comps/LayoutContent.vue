@@ -1,12 +1,3 @@
-<!--
- * @Author: xzj 13819929694@163.com
- * @Date: 2024-08-22 16:50:45
- * @LastEditors: xzj 13819929694@163.com
- * @LastEditTime: 2024-09-13 15:13:12
- * @Description:
- *
- * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved.
--->
 <template>
   <a-layout>
     <div class="p2 pl-16 page-top">

@@ -1,11 +1,3 @@
-/*
- * @Author: xzj 13819929694@163.com
- * @Date: 2024-08-28 19:05:12
- * @LastEditors: xzj 13819929694@163.com
- * @LastEditTime: 2024-09-25 20:52:35
- * @Description:
- * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved.
- */
 import { ref } from 'vue';
 import { theme as theme1 } from 'ant-design-vue';
 import { defineStore } from 'pinia';

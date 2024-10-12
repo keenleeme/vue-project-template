@@ -1,11 +1,3 @@
-<!--
- * @Author: xzj 13819929694@163.com
- * @Date: 2024-08-23 15:08:02
- * @LastEditors: xzj 13819929694@163.com
- * @LastEditTime: 2024-09-13 10:41:46
- * @Description: 
- * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
--->
 <template>
   <div class="setting-wrapper">
     <div class="page-content">

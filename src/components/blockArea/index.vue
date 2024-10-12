@@ -1,13 +1,3 @@
-<!--
- * @Author: xzj 13819929694@163.com
- * @Date: 2024-09-02 09:22:41
- * @LastEditors: xzj 13819929694@163.com
- * @LastEditTime: 2024-09-13 10:14:33
- * @Description: 
- * 
- * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
--->
-import UedMaterialMenu from '@ued-material/menu';
 <template>
   <div class="page-item">
     <div class="page-item-title">
