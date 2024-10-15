@@ -20,8 +20,9 @@
 
     const props = defineProps({
         menuData: {
-            type: Object,
-            required: true
+            type: Array,
+            required: true,
+            default: () => [],
         },
         dataProps: {
             type: Object,

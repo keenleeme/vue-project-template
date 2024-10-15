@@ -89,12 +89,14 @@
 
   const props = defineProps({
     menuData: {
-      type: Object,
-      required: true
+      type: Array,
+      required: true,
+      default: () => [],
     },
     userMenuData: {
-      type: Object,
-      required: true
+      type: Array,
+      required: true,
+      default: () => [],
     },
     dataProps: {
       type: Object,
@@ -191,6 +193,6 @@
 </script>
 <style>
 .side-menu-wrapper.is-fold .side-menu-header .logo {
-  transform: unset;
+  transform: unset !important;
 }
 </style>

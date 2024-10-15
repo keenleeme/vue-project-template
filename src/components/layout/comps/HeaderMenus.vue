@@ -9,7 +9,7 @@
       v-if="config.layout !== 'side' && config.mapMenu"
       v-model:star-keys="starKeys"
       :props="dataProps"
-      :data="data"
+      :data="topMenuData"
       :dark="config.mode === 'dark' || (config.mode === 'light' && config.topStyle === 'dark')"
       :pop-dark="config.mode === 'dark' || (config.mode === 'light' && config.topStyle === 'dark')"
       :star="true"
@@ -43,7 +43,7 @@
 
     <TopMenu
       v-if="config.layout !== 'side'"
-      :menuData="data" 
+      :menuData="topMenuData" 
     ></TopMenu>
 
     <div class="header-operates">
@@ -140,219 +140,56 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, watchEffect } from 'vue';
+  import { ref, watchEffect, computed } from 'vue';
   import { useRouter } from 'vue-router';
   import { FullscreenOutlined } from '@ant-design/icons-vue';
   import { changeLocale } from '@international/vue3-i18n';
-  // import { generate } from '@ant-design/colors';
-  import { UedTopMenu, UedMapMenu, UedUserMenu, ThemePanel, findNodeInTree } from '@ued-material/menu';
+  import { UedMapMenu, ThemePanel, findNodeInTree } from '@ued-material/menu';
   import docsViewer from 'docs-viewer';
   import 'docs-viewer/dist/lib.css';
   import { storeToRefs } from 'pinia';
-  import { useAppStore, useMenusStore, useThemeStore } from '@/store';
-  import HelpDocument from './HelpDocument.vue';
+  import { useAppStore, useThemeStore } from '@/store';
   import TopMenu from '@/components/menu/topMenu.vue'
   import UserMenu from '@/components/menu/userMenu.vue'
   import { LoginConfigDTO } from '@/views/login/types';
 
-  const menusStore = useMenusStore();
+  const props = defineProps({
+    menuData: {
+      type: Array,
+      // required: true
+      default: () => [],
+    },
+    userMenu: {
+      type: Array,
+      // required: true,
+      default: () => [],
+    },
+    dataProps: {
+      type: Object,
+      default: {
+        id: 'id',
+        label: 'name',
+        children: 'submenu',
+        icon: 'icon',
+        hide: 'hide',
+        html: 'html',
+        hideChildren: 'hideChildren',
+        disabled: 'disabled',
+      },
+    },
+  });
+
   const appStore = useAppStore();
   const themeStore = useThemeStore();
 
   const { themePanelVisible, appConfig } = storeToRefs(appStore);
   const loginConfig = ref<LoginConfigDTO>(new LoginConfigDTO(appConfig.value?.loginConfig));
 
-  // 菜单
-  const { activeMenus, activeId } = storeToRefs(menusStore);
-  const selectMenuId = ref<string[]>([]);
-  watchEffect(() => {
-    if (activeMenus.value.length > 0) {
-      const active = activeMenus.value[activeMenus.value.length - 1];
-      selectMenuId.value = [active?.id];
-    }
-    if (activeId.value) {
-      // selectMenuId.value = [activeId.value];
-      console.log(activeId);
-    }
+  // 菜单数据
+  const topMenuData = computed(() => {
+    return props.menuData;
   });
 
-  const data = ref([
-    {
-      id: 1,
-      name: I18N.layout.genericTypicalPage,
-      icon:'menu-icon-desktop',
-      submenu: [
-        {
-          id: 'workBench',
-          name: '工作台',
-          hideChildren: true,
-          icon:'menu-icon-desktop',
-          url: '/workBench',
-          submenu: []
-        },
-        {
-          id: 'baseList',
-          name: I18N.layout.lieBiaoYe,
-          hideChildren: true,
-          url: '/base-list',
-          submenu: []
-        },
-        {
-          id: 'baseForm',
-          name: I18N.layout.biaoDanYe,
-          hideChildren: true,
-          url: '/base-form',
-          submenu: []
-        },
-        {
-          id: 'baseDetail',
-          name: I18N.layout.xiangQingYe,
-          hideChildren: true,
-          url: '/base-detail',
-          submenu: []
-        },
-        {
-          id: 'baseConfig',
-          name: I18N.layout.peiZhiYe,
-          hideChildren: true,
-          url: '/base-config',
-          submenu: []
-        }
-      ]
-    },
-    {
-      id: 'dasvScreen',
-      name: I18N.layout.daPingZiDingYi,
-      url: '/dasvScreen',
-      hideChildren: true,
-      submenu: []
-    },
-    {
-      id: 3,
-      name: I18N.layout.gongZuoTaiZiDingYi,
-      url: '/home',
-      hideChildren: true,
-      submenu: []
-    },
-    {
-      id: 4,
-      name: I18N.layout.baoBiaoZiDingYi,
-      url: '/home',
-      hideChildren: true,
-      submenu: []
-    },
-    {
-      id: 5,
-      name: I18N.layout.tuKeShiHuaChengXian,
-      url: '/home',
-      hideChildren: true,
-      submenu: []
-    },
-    {
-      id: 6,
-      name: I18N.layout.tuBianJiQi,
-      url: '/home',
-      hideChildren: true,
-      submenu: []
-    },
-    {
-      id: 7,
-      name: I18N.layout.liuChengBianPai,
-      url: '/home',
-      hideChildren: true,
-      submenu: []
-    },
-    {
-      id: 8,
-      name: I18N.layout.xiTongSheZhi,
-      submenu: [
-        {
-          id: 'themeConfig',
-          name: I18N.layout.zhuTiPeiZhiYe,
-          url: '/themeConfig'
-        },
-        {
-          id: 'loginConfig',
-          name: I18N.layout.dengLuPeiZhiYe,
-          url: '/loginConfig'
-        },
-        {
-          id: 'dasUpgrade',
-          name: I18N.layout.zaiXianShengJi,
-          url: '/dasUpgrade'
-        },
-        {
-          id: 'vueTour',
-          name: I18N.layout.yongHuYinDao,
-          url: '/vueTour'
-        }
-      ]
-    },
-    {
-      id: 'sum-more',
-      name: I18N.api.common.duoCengCaiDan,
-      url: '/sum-more',
-      // hideChildren: true,
-      submenu: [
-        {
-          id: 90,
-          name: I18N.api.common.erJiCaiDan,
-          url: '/sum-more-0'
-        },
-        {
-          id: 'sum-more-1',
-          name: I18N.api.common.erJiCaiDanFen2,
-          url: 'sum-more-1',
-          submenu: [
-            {
-              id: 'sum-more-1-0',
-              name: I18N.api.common.sanJiCaiDan,
-              url: '/sum-more-1-0'
-            },
-            {
-              id: 'sum-more-1-1',
-              name: I18N.api.common.ziDongTianJiaQian,
-              url: '/sum-more/sum-more-1-1'
-            }
-          ]
-        },
-        {
-          id: 'sum-more-2',
-          name: I18N.api.common.erJiCaiDanFen,
-          url: '/sum-more-2',
-          submenu: [
-            {
-              id: 'sum-more-2-1',
-              name: I18N.api.common.ziDongTianJiaDuo,
-              url: '/sum-more/sum-more-2/sum-more-2-1'
-            }
-          ]
-        }
-      ]
-    }
-  ]);
-
-  const dataProps = ref({
-    label: 'name',
-    children: 'submenu'
-  });
-
-  // const defaultConfig = {
-  //   mode: 'light',
-  //   lang: 'ZH',
-  //   primaryColor: '#134BEA',
-  //   darkPrimaryColor: '#3B71EE',
-  //   lightDarkSwitch: true,
-  //   languageSwitch: true,
-  //   helpCenter: true,
-  //   layout: 'top',
-  //   topStyle: 'dark',
-  //   sideStyle: 'light',
-  //   header: true,
-  //   breadcrumb: true,
-  //   mapMenu: true,
-  //   accordion: true
-  // };
   const { themeConfig } = storeToRefs(themeStore);
 
   console.log('themeConfig', themeConfig.value.header, themeStore);
@@ -362,7 +199,7 @@
 
   // 设置ant-design 主题色
   const changeColorPrimary = (type: string) => {
-    themeStore.setThemeType(type);
+    // themeStore.setThemeType(type);
     themeStore.setThemeTokenType(type);
   };
   watchEffect(() => {
@@ -370,25 +207,11 @@
     changeColorPrimary(config.value.mode);
   });
 
-  const popActive = ref(true);
-  // let activeId = ref<string|number>();
   const recentlyKeys = ref([]);
-  // const starKeys = ref(['baseForm', 'baseDetail', 'baseConfig', 'themeConfig']);
   const starKeys = ref([]);
 
-  const userMenu = ref([
-    {
-      id: 1,
-      name: I18N.layout.tuiChuDengLu
-    }
-  ]);
-
-  const originMenuData = JSON.parse(JSON.stringify(data.value));
+  const originMenuData = JSON.parse(JSON.stringify(topMenuData.value));
   const tempMenu = ref();
-
-  // const userMenuClick = () => {
-  //   handleLogout();
-  // };
 
   const dialogVisible = ref(false);
   const ruleForm = ref();
@@ -423,7 +246,7 @@
 
   const level2Menus = ref<any[]>([]);
   const updateLevel2Menus = () => {
-    level2Menus.value = data.value.filter((item) => item.submenu && item.submenu.length > 0);
+    level2Menus.value = topMenuData.value.filter((item) => item.submenu && item.submenu.length > 0);
   };
 
   const openAddMenuDialog = () => {
@@ -444,9 +267,9 @@
 
   const editItem = (val: any) => {
     const { type, id } = val;
-    const itemData = findNodeInTree(data.value, id, dataProps.value) as any;
+    const itemData = findNodeInTree(topMenuData.value, id, props.dataProps.value) as any;
     if (type === 'reset') {
-      const originItem = findNodeInTree(originMenuData, id, dataProps.value) as any;
+      const originItem = findNodeInTree(originMenuData, id, props.dataProps.value) as any;
       itemData.name = originItem.name;
     }
     if (type === 'edit') {
@@ -461,21 +284,21 @@
   };
 
   const resetMenu = () => {
-    data.value = JSON.parse(JSON.stringify(originMenuData));
+    topMenuData.value = JSON.parse(JSON.stringify(originMenuData));
   };
 
   const startEdit = () => {
-    tempMenu.value = JSON.parse(JSON.stringify(data.value));
+    tempMenu.value = JSON.parse(JSON.stringify(topMenuData.value));
   };
 
   const cancelEdit = () => {
-    data.value = JSON.parse(JSON.stringify(tempMenu.value));
+    topMenuData.value = JSON.parse(JSON.stringify(tempMenu.value));
   };
 
   const saveEdit = () => {};
 
   const dragMenu = (val: any) => {
-    data.value = val.newData;
+    topMenuData.value = val.newData;
   };
 
   const newId = 999;
@@ -495,9 +318,9 @@
           params
         };
         if (level === 1) {
-          data.value.push(menuInfo);
+          topMenuData.value.push(menuInfo);
         } else {
-          const parent = data.value.find((item: any) => item.id === parentId) as any;
+          const parent = topMenuData.value.find((item: any) => item.id === parentId) as any;
           if (!parent.submenu) parent.submenu = [];
           parent.submenu.push(menuInfo);
         }

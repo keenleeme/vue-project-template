@@ -1,4 +1,5 @@
-import { ref } from 'vue';
+// import { defaultConfig } from './../app/defaultConfig';
+import { ref, watch } from 'vue';
 import { theme as theme1 } from 'ant-design-vue';
 import { defineStore } from 'pinia';
 import { themeTokens, ThemeTypes } from '@/theme';
@@ -6,12 +7,22 @@ import { themeDefaultConfig } from './defaultConfig';
 import { ThemeConfigType } from './types';
 import Color from 'color';
 import { generate } from '@ant-design/colors';
+import { debounce } from 'lodash';
 
 const { darkAlgorithm, defaultAlgorithm } = theme1;
 export default defineStore('theme', () => {
   // 主题配置项-布局，面包屑，明暗切换，地图导航，多语言，帮助中心，顶栏
-  const themeConfig = ref<ThemeConfigType>({ ...themeDefaultConfig });
+  // const defaultThemeConfig = ref<ThemeConfigType>({ ...themeDefaultConfig });
+  const localThemeConfig = JSON.parse(localStorage.getItem('ZQTHEMECONFIG') || '{}')
+  const themeConfig = ref<ThemeConfigType>({ ...themeDefaultConfig, ...localThemeConfig });
+
+  watch(themeConfig,(newValue, oldValue)=>{
+    debounce(()=>{
+      localStorage.setItem('ZQTHEMECONFIG',JSON.stringify(newValue))
+    },1000)
+  })
   const setThemeConfig = (config: ThemeConfigType) => {
+    
     const value = { ...themeDefaultConfig, ...config };
     themeConfig.value = value;
   };
@@ -27,7 +38,6 @@ export default defineStore('theme', () => {
 
   // 主题色
   const themeType = ref<ThemeTypes>(ThemeTypes.Light);
-  console.log('themeType', themeType.value);
   const setThemeType = (theme: ThemeTypes) => {
     themeType.value = theme;
     console.log('themeType', themeType.value);
@@ -66,7 +76,8 @@ export default defineStore('theme', () => {
     };
     return {
       token,
-      algorithm: themeType.value === ThemeTypes.Dark ? darkAlgorithm : defaultAlgorithm
+      // algorithm: themeType.value === ThemeTypes.Dark ? darkAlgorithm : defaultAlgorithm
+      algorithm: themeTokenType.value === ThemeTypes.Dark ? darkAlgorithm : defaultAlgorithm
     };
   });
 
