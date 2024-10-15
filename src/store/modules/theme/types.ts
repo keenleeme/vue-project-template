@@ -4,7 +4,7 @@ export interface ThemeConfigType {
   dark: boolean; // 暗黑模式
   mode: string; // 模式 	'light'/'dark'
   lang: string; // 语言 	'zh'/'en'
-  lightDarkSwitch: boolean; // 亮暗切换
+  lightDarkSwitch: boolean; // 亮暗切换按钮
   primaryColor: string; // 主题色
   layout: string; // 布局方式 'top'/'side'/'mix'
   topStyle: string; // 顶部样式 	'dark'/'light'

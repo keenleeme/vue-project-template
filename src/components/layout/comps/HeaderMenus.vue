@@ -192,14 +192,8 @@
     ...themeConfig.value
   });
 
-  // 设置ant-design 主题色
-  const changeColorPrimary = (type: string) => {
-    // themeStore.setThemeType(type);
-    themeStore.setThemeTokenType(type);
-  };
   watchEffect(() => {
     config.value = { ...themeConfig.value };
-    changeColorPrimary(config.value.mode);
   });
 
   const recentlyKeys = ref([]);

@@ -23,7 +23,6 @@ export default defineStore('theme', () => {
   };
 
   function resetThemePrimaryColor() {
-    console.log(themeDefaultConfig);
     themeConfig.value.primaryColor = themeDefaultConfig.primaryColor;
   }
 
@@ -38,7 +37,6 @@ export default defineStore('theme', () => {
     console.log('themeType', themeType.value);
   };
 
-  // let darkOriginColor = ref<string>('') ; // 暗黑模式下的原始颜色，用于计算其他颜色值，如背景色，分割线等
   function getPrimaryColors() {
     let primaryColors: string[] = [];
     let darkPrimaryColors: string[] = [];
@@ -52,12 +50,8 @@ export default defineStore('theme', () => {
     return {primaryColors, darkPrimaryColors}
   }
 
-  // const primaryColors = computed(() => generate(themeConfig.value.primaryColor));
-  // const darkPrimaryColors = computed(() => generate(getPrimaryColors(), { theme: 'dark', backgroundColor: '#020C1E' };
-  const themeTokenType = ref('light');
-  const setThemeTokenType = (theme: string) => {
-    themeTokenType.value = theme;
-  };
+  const themeTokenType = computed(() => {return themeConfig.value.mode});
+
   const theme = computed(() => {
     // let token = themeTokenType.value === 'dark' ? themeTokens.dark : themeTokens.light;
     let token = themeTokens[themeTokenType.value as keyof typeof themeTokens];
@@ -80,7 +74,6 @@ export default defineStore('theme', () => {
     themeType,
     setThemeType,
     themeTokenType,
-    setThemeTokenType,
     theme,
     setThemeConfig,
     reset,

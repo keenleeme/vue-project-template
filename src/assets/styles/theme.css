@@ -404,9 +404,9 @@
   border-bottom: 1px solid var(--primary-divider);
   background: transparent;
 }
-.ant-tabs.ant-tabs-card .ant-tabs-nav .sourant-tabs-nav-wrap .ant-tabs-nav-list .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-remove svg path {
+/* .ant-tabs.ant-tabs-card .ant-tabs-nav .sourant-tabs-nav-wrap .ant-tabs-nav-list .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-remove svg path {
   fill: var(--color-text-primary);
-}
+} */
 .ant-tabs.ant-tabs-card .ant-tabs-nav .ant-tabs-nav-wrap .ant-tabs-nav-list .ant-tabs-nav-add {
   border-radius: 0;
   margin-left: -1px;
