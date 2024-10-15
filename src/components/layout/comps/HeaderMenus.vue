@@ -52,7 +52,7 @@
         <template #overlay>
           <a-menu>
             <a-menu-item v-if="config.helpCenter">
-              <span @click="showDrawer">{{ $t('I18N.layout.bangZhuWenDang') }}</span>
+              <span @click="showHelpDocument">{{ $t('I18N.layout.bangZhuWenDang') }}</span>
             </a-menu-item>
             <a-menu-item>
               <span @click="$router.push('/vueTour')">{{ $t('I18N.layout.ruMenYinDao') }}</span>
@@ -126,40 +126,10 @@
       <a-button type="primary" @click="dialogConfirm">{{ $t('I18N.common.confirm') }}</a-button>
     </template>
   </a-modal>
-  <a-drawer
-    v-model:open="open"
-    class="custom-class"
-    root-class-name="root-class-name"
-    :title="$t('I18N.layout.bangZhuWenDang')"
-    width="520"
-    :closable="false"
-    placement="right"
-    @after-open-change="afterOpenChange"
-  >
-    <template #extra>
-      <svg
-        t="1726654047990"
-        class="icon icon-export"
-        viewBox="0 0 1024 1024"
-        version="1.1"
-        xmlns="http://www.w3.org/2000/svg"
-        p-id="4265"
-        width="24"
-        height="24"
-        @click="onClose"
-      >
-        <path
-          d="M887.488 467.072H591.616a34.112 34.112 0 1 0 0 68.224h213.44l-304.64 304.64a34.112 34.112 0 1 0 48.256 48.32l304.64-304.64v213.376a34.112 34.112 0 1 0 68.288 0V501.184a34.112 34.112 0 0 0-34.112-34.112z"
-          p-id="4266"
-        ></path>
-        <path
-          d="M876.096 347.328v-130.56c0-50.304-40.768-91.072-91.008-91.072H193.408c-50.24 0-91.008 40.768-91.008 91.072v523.392c0 50.24 40.768 91.008 91.008 91.008h204.8v-0.128a34.112 34.112 0 0 0 0-68.032v-0.128H216.192a45.504 45.504 0 0 1-45.504-45.504V330.496h637.12v18.176c0 0.704-0.192 1.408-0.192 2.176a34.432 34.432 0 1 0 68.864 0c0-1.216-0.256-2.368-0.384-3.52z m-68.288-62.336H170.688v-45.44c0-25.152 20.352-45.568 45.44-45.568h546.176c25.152 0 45.504 20.416 45.504 45.504v45.504z"
-          p-id="4267"
-        ></path>
-      </svg>
-    </template>
-    <HelpDocument></HelpDocument>
-  </a-drawer>
+
+  <!-- 帮助文档 -->
+  <div ref="helpDocument" class="help-document"></div>
+
   <ThemePanel
     v-model:visible="themePanelVisible"
     v-model:config="config"
@@ -173,15 +143,17 @@
   import { ref, watchEffect } from 'vue';
   import { useRouter } from 'vue-router';
   import { FullscreenOutlined } from '@ant-design/icons-vue';
+  import { changeLocale } from '@international/vue3-i18n';
   // import { generate } from '@ant-design/colors';
   import { UedTopMenu, UedMapMenu, UedUserMenu, ThemePanel, findNodeInTree } from '@ued-material/menu';
+  import docsViewer from 'docs-viewer';
+  import 'docs-viewer/dist/lib.css';
   import { storeToRefs } from 'pinia';
   import { useAppStore, useMenusStore, useThemeStore } from '@/store';
   import HelpDocument from './HelpDocument.vue';
   import TopMenu from '@/components/menu/topMenu.vue'
   import UserMenu from '@/components/menu/userMenu.vue'
   import { LoginConfigDTO } from '@/views/login/types';
-  import { changeLocale } from '@international/vue3-i18n';
 
   const menusStore = useMenusStore();
   const appStore = useAppStore();
@@ -194,14 +166,13 @@
   const { activeMenus, activeId } = storeToRefs(menusStore);
   const selectMenuId = ref<string[]>([]);
   watchEffect(() => {
-    console.log(1111)
     if (activeMenus.value.length > 0) {
       const active = activeMenus.value[activeMenus.value.length - 1];
       selectMenuId.value = [active?.id];
     }
     if (activeId.value) {
       // selectMenuId.value = [activeId.value];
-      console.log(activeId)
+      console.log(activeId);
     }
   });
 
@@ -569,18 +540,15 @@
   };
 
   // 帮助手册
-  const open = ref<boolean>(false);
+  const helpDocument = ref(null);
 
-  const afterOpenChange = (bool: boolean) => {
-    console.log('open', bool);
+  const showHelpDocument = () => {
+    docsViewer.open({
+      container: helpDocument.value,
+      src: 'http://10.20.114.19:8089/docs/' // 即你上个步骤部署的文档的静态资源地址
+    });
   };
-  const showDrawer = () => {
-    open.value = true;
-  };
-  const onClose = () => {
-    window.open('https://rd.das-security.cn/home');
-    open.value = false;
-  };
+
   const toggleFullScreen = () => {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen();
@@ -588,16 +556,15 @@
       document.exitFullscreen();
     }
   };
-  
+
   // 国际化切换
 
   const handleLocaleChangeA = (value: string) => {
-    let locale = value === 'ZH'?'en':'zh';
+    let locale = value === 'ZH' ? 'en' : 'zh';
     // themeConfig.value.locale = locale;
     changeLocale(locale);
     window.location.reload();
-  }
-  
+  };
 </script>
 
 <style lang="less" scoped>
@@ -620,7 +587,7 @@
     .logo {
       margin-left: 16px;
       margin-right: 8px;
-      img{
+      img {
         width: 30px;
       }
     }
@@ -666,7 +633,7 @@
       opacity: 0;
     }
   }
-  .header-dark{ 
+  .header-dark {
     .header {
       background-color: #172034;
       color: #fff;
