@@ -107,14 +107,14 @@
               </div>
             </a-form-item>
           </template>
-          <a-form-item label="登录页LOGO">
+          <a-form-item label="产品LOGO">
             <a-radio-group v-model:value="loginConfig.logoMode">
               <a-radio :value="LogoModeEnums.IMAGE">图片</a-radio>
               <a-radio :value="LogoModeEnums.TEXT">文字</a-radio>
               <a-radio :value="LogoModeEnums.IMAGE_TEXT">图片+文字</a-radio>
             </a-radio-group>
           </a-form-item>
-          <a-form-item label="LOGO名称">
+          <a-form-item label="产品名称">
             <a-input
               v-model:value="loginConfig.logoName"
               :disabled="[LogoModeEnums.IMAGE].includes(loginConfig.logoMode!)"

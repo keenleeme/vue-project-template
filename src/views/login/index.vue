@@ -30,12 +30,12 @@
       <div>{{ loginConfig.slogan }}</div>
       <div>{{ loginConfig.copyright }}</div>
       <div>
-        <a style="color: #333; margin-top: 6px" target="_blank" :src="loginConfig.filingUrl || 'javascript:;'">{{
+        <a target="_blank" :src="loginConfig.filingUrl || 'javascript:;'">{{
           loginConfig.filing
         }}</a>
       </div>
       <div>
-        <a style="color: #333; margin-top: 6px" target="_blank" :src="loginConfig.icpUrl || 'javascript:;'">{{
+        <a target="_blank" :src="loginConfig.icpUrl || 'javascript:;'">{{
           loginConfig.icp
         }}</a>
       </div>
@@ -210,23 +210,5 @@
 </script>
 
 <style lang="less" scoped>
-  ued-login-layout {
-    --ued-login-primary-color: var(--um-primary-color-normal);
-    height: 100%;
-    ued-select {
-      --ued-control-bg: transparent;
-      --ued-control-border-width: 0;
-      --ued-control-inner-width: 100px;
-      :deep(input) {
-        text-align: right;
-      }
-      :deep(.ued-form-control),
-      :deep(.ued-form-control):hover {
-        box-shadow: none !important;
-      }
-    }
-    :deep(.dark) {
-      --ued-login-primary-color: var(--um-dark-primary-color-normal);
-    }
-  }
+  @import './index.less';
 </style>
