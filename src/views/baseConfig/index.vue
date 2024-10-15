@@ -2,7 +2,7 @@
  * @Author: xzj 13819929694@163.com
  * @Date: 2024-09-12 15:08:01
  * @LastEditors: xzj 13819929694@163.com
- * @LastEditTime: 2024-09-13 15:12:27
+ * @LastEditTime: 2024-09-24 15:27:39
  * @Description: 
  * 
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
@@ -11,35 +11,35 @@
   <div class="base-config-wrap">
     <div v-if="showTabs" class="tabs">
       <a-tabs v-model:activeKey="activeKey">
-        <a-tab-pane key="1" tab="默认选项1"></a-tab-pane>
-        <a-tab-pane key="2" tab="默认选项2"></a-tab-pane>
-        <a-tab-pane key="3" tab="默认选项3" disabled></a-tab-pane>
+        <a-tab-pane key="1" :tab="$t('I18N.layout.moRenXuanXiang1')"></a-tab-pane>
+        <a-tab-pane key="2" :tab="$t('I18N.layout.moRenXuanXiang2')"></a-tab-pane>
+        <a-tab-pane key="3" :tab="$t('I18N.layout.moRenXuanXiang3')" disabled></a-tab-pane>
       </a-tabs>
     </div>
     <div class="base-config-content">
-      <BlockArea title="密码安全设置" class="block-area">
+      <BlockArea :title="$t('I18N.layout.miMaAnQuanSheZhi')" class="block-area">
         <template #description>
-          <span class="head-description">（配置密码安全要求，防止弱口令）</span>
+          <span class="head-description">（{{ $t('I18N.layout.peiZhiMiMaAnQuanYaoQiu') }}）</span>
         </template>
         <div class="content">
           <div class="content-row">
-            <span>最小密码长度设置为</span>
+            <span>{{ $t('I18N.layout.zuiXiaoMiMaChangDu') }}</span>
             <a-input-number v-model:value="minPasswordLen" :min="1" :max="80" />
-            <span>位，最大密码长度设置为</span>
+            <span>{{ $t('I18N.layout.wei') }}，{{ $t('I18N.layout.zuiDaMiMaChangDu') }}</span>
             <a-input-number v-model:value="maxPasswordLen" :min="1" :max="80" />
-            <span>位</span>
+            <span>{{ $t('I18N.layout.wei') }}</span>
           </div>
           <div class="content-row">
-            <span>最小密码长度设置为</span>
+            <span>{{ $t('I18N.layout.zuiXiaoMiMaChangDu') }}</span>
             <a-checkbox-group v-model:value="state.checkedList" :options="plainOptions" />
           </div>
           <div class="content-row">
-            <span>建议设置</span>
+            <span>{{ $t('I18N.layout.jianYiSheZhi') }}</span>
             <a-input-number v-model:value="timeCount" :min="1" />
-            <span>天更换一次密码</span>
-            <a-popover title="提示">
+            <span>{{ $t('I18N.layout.tianGengHuanYiCiMiMa') }}</span>
+            <a-popover :title="$t('I18N.layout.tiShi')">
               <template #content>
-                <p>建议每3个月更新一次</p>
+                <p>{{ $t('I18N.layout.jianYiMei3GeYueGengXinYiCi') }}</p>
               </template>
               <InfoCircleOutlined />
             </a-popover>
@@ -47,36 +47,36 @@
         </div>
       </BlockArea>
 
-      <BlockArea title="登录安全设置" class="block-area">
+      <BlockArea :title="$t('I18N.layout.dengLuAnQuanSheZhi')" class="block-area">
         <template #description>
-          <span class="head-description">（限制用户登录失败频率和锁定方式，保护系统登录安全）</span>
+          <span class="head-description">（{{ $t('I18N.layout.xianZhiYongHuDengLuFangShi') }}）</span>
         </template>
         <div class="content">
           <div class="content-row">
             <a-input-number v-model:value="loginSafeConfig.limitTime" :min="1" />
-            <span>秒之内，用户尝试登录的失败次数超过</span>
+            <span>{{ $t('I18N.layout.miaoZhiNei') }}</span>
             <a-input-number v-model:value="loginSafeConfig.lockCount" :min="1" />
-            <span>次，锁定该</span>
+            <span>{{ $t('I18N.layout.ciSuoDing') }}</span>
             <a-radio-group v-model:value="loginSafeConfig.lockContent" name="radioGroup">
-              <a-radio value="1">账户</a-radio>
+              <a-radio value="1">{{ $t('I18N.layout.zhangHu') }}</a-radio>
               <a-radio value="2">IP</a-radio>
             </a-radio-group>
           </div>
         </div>
       </BlockArea>
 
-      <div class="area-head">已锁定账户/IP</div>
-      <BlockArea title="超时设置" class="block-area">
+      <div class="area-head">{{ $t('I18N.layout.suoDingZhangHu') }}/IP</div>
+      <BlockArea :title="$t('I18N.layout.chaoShiSheZhi')" class="block-area">
         <template #description>
-          <span class="head-description">（保护用户数据安全，防止信息泄露）</span>
+          <span class="head-description">（{{ $t('I18N.layout.baoHuYongHuShuJuAnQuan') }}）</span>
         </template>
         <div class="content">
           <div class="content-row">
             <a-input-number v-model:value="overTimeConfig" :min="1" />
-            <span>分钟之内，用户无任何操作，系统将退出登录</span>
-            <a-popover title="提示">
+            <span>{{ $t('I18N.layout.fenZhongZhiNeiYongHuWuCaoZuo') }}</span>
+            <a-popover :title="$t('I18N.layout.tiShi')">
               <template #content>
-                <p>建议...</p>
+                <p>{{ $t('I18N.layout.jianYi') }}...</p>
               </template>
               <InfoCircleOutlined />
             </a-popover>
@@ -84,22 +84,22 @@
         </div>
       </BlockArea>
 
-      <BlockArea title="磁盘储存设置" class="block-area">
+      <BlockArea :title="$t('I18N.layout.ciPanChuCunSheZhi')" class="block-area">
         <template #description>
-          <span class="head-description">（自动清理磁盘，防止磁盘过载）</span>
+          <span class="head-description">（{{ $t('I18N.layout.ziDongQingLiCiPan') }}）</span>
         </template>
         <div class="content">
           <div class="content-row">
-            <span>当磁盘存储空间超过</span>
+            <span>{{ $t('I18N.layout.dangCiPanKongJianChaoGuo') }}</span>
             <a-input-number v-model:value="diskStorageConfig" :min="1" />
-            <span>%，数据将自动循环覆盖并产生告警提示</span>
+            <span>%，{{ $t('I18N.layout.shuJuJiangZiDongXunHuanFuGai') }}</span>
           </div>
         </div>
       </BlockArea>
     </div>
     <div class="page-footer">
-      <a-button @click="cancel">取消</a-button>
-      <a-button type="primary" @click="save">保存</a-button>
+      <a-button @click="cancel">{{ $t('I18N.common.cancel') }}</a-button>
+      <a-button type="primary" @click="save">{{ $t('I18N.common.save') }}</a-button>
     </div>
   </div>
 </template>
@@ -113,12 +113,11 @@
   const activeKey = ref('1');
   const minPasswordLen = ref<number>(8);
   const maxPasswordLen = ref<number>(20);
-
-  const plainOptions = ['数字', '字母（大小写）', '特殊字符'];
+  const plainOptions = [I18N.layout.shuZi, I18N.layout.ziMuDaXiaoXie, I18N.layout.teShuZiFu];
   const state = reactive({
     indeterminate: true,
     checkAll: false,
-    checkedList: ['数字', '字母（大小写）', '特殊字符']
+    checkedList: [I18N.layout.shuZi, I18N.layout.ziMuDaXiaoXie, I18N.layout.teShuZiFu]
   });
   watch(
     () => state.checkedList,
@@ -162,6 +161,12 @@
     flex-direction: column;
     .tabs {
       padding: 0 16px;
+      background-color: var(--primary-bg);
+      :deep(.ant-tabs) {
+        .ant-tabs-nav {
+          margin-bottom: 0;
+        }
+      }
     }
     .base-config-content {
       padding: 16px;
@@ -192,8 +197,14 @@
           &:last-child {
             margin-bottom: 0;
           }
-          span {
+          span:not(:first-child) {
             margin: 0 8px;
+          }
+          span:first-child {
+            margin-right: 8px;
+          }
+          .ant-radio-wrapper,:deep(.ant-checkbox-wrapper) {
+            font-size: 12px !important;
           }
         }
       }

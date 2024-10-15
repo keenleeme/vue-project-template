@@ -50,7 +50,7 @@
               <a-select
                 v-model:value="formState.address"
                 class="address-select"
-                :options="[{ label: '地址', value: 'location' }]"
+                :options="[{ label: $t('I18N.layout.diZhi'), value: 'location' }]"
               />
               <a-input v-model:value="formState.ip" :placeholder="$t('I18N.base_form.pleaseEnterContent')" />
             </div>
@@ -93,13 +93,13 @@
   }
 
   const levelOptions = [
-    { label: '高风险', value: 'high' },
-    { label: '中风险', value: 'middle' },
-    { label: '低风险', value: 'low' }
+    { label: I18N.layout.gaoFengXian, value: 'high' },
+    { label: I18N.layout.zhongFengXian, value: 'middle' },
+    { label: I18N.layout.diFengXian, value: 'low' }
   ];
   const actionOptions = [
-    { label: '允许访问', value: true },
-    { label: '命令阻断', value: false }
+    { label: I18N.layout.yunXuFangWen, value: true },
+    { label: I18N.layout.mingLingZuDuan, value: false }
   ];
 
   const formState = reactive<FormState>({
@@ -129,7 +129,7 @@
       font-size: 14px;
       font-weight: 600;
       color: var(--color-text-title);
-      border-bottom: 1px solid var(--primary-divider);
+      border-bottom: 1px solid var(--color-divider);
     }
     .base-form-content {
       width: 50%;

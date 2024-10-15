@@ -5,63 +5,63 @@
       <div class="header-info">
         <div>
           <div class="header-info-text">
-            <span class="mr-8">仅支持 EXCEL 格式文件</span>
-            <a-tag color="geekblue">默认标签</a-tag>
+            <span class="mr-8">{{ $t('I18N.layout.jinZhiChiEXCELGeShiWenJian') }}</span>
+            <a-tag color="geekblue">{{ $t('I18N.layout.moRenBiaoQian') }}</a-tag>
           </div>
         </div>
         <div class="header-info-status">
           <span class="circle-status" />
-          在线
+          {{ $t('I18N.layout.zaiXian') }}
         </div>
       </div>
 
-      <a-button size="small" style="float: right">描边按钮</a-button>
+      <a-button size="small" style="float: right">{{ $t('I18N.layout.miaoBianAnNiu') }}</a-button>
     </div>
     <div class="header-form">
-      <a-form name="basic" :label-col="{ style: { width: '80px' } }" autocomplete="off">
+      <a-form class="pd-16" name="basic" autocomplete="off" labelAlign="left">
         <a-row>
           <a-col :span="8">
-            <a-form-item label="组件类型">
-              <span>流量探针(APT)</span>
+            <a-form-item :label="$t('I18N.layout.zuJianLeiXing')">
+              <span>{{ $t('I18N.layout.liuLiangTanZhen') }}</span>
             </a-form-item>
           </a-col>
           <a-col :span="8">
-            <a-form-item label="注册时间">
+            <a-form-item :label="$t('I18N.layout.zhuCeShiJian')">
               <span>2022-04-21 20:15:08</span>
             </a-form-item>
           </a-col>
           <a-col :span="8">
-            <a-form-item label="本日上送条数">
-              <span>0条</span>
+            <a-form-item :label="$t('I18N.layout.benRiShangSongTiaoShu')">
+              <span>0{{ $t('I18N.layout.tiao') }}</span>
             </a-form-item>
           </a-col>
           <a-col :span="8">
-            <a-form-item label="唯一标识">
+            <a-form-item :label="$t('I18N.layout.weiYiBiaoShi')">
               <span>apt-192.168.33.126-2773879f</span>
             </a-form-item>
           </a-col>
           <a-col :span="8">
-            <a-form-item label="软件版本">
+            <a-form-item :label="$t('I18N.layout.ruanJianBanBen')">
               <span>asen2.0.69.47825.220421_s</span>
             </a-form-item>
           </a-col>
           <a-col :span="8">
-            <a-form-item label="许可证">
-              <span>正式(2030-01-28到期)</span>
+            <a-form-item :label="$t('I18N.layout.xuKeZheng')">
+              <span>{{ $t('I18N.layout.zhengShi') }}(2030-01-28{{ $t('I18N.layout.daoQi') }})</span>
             </a-form-item>
           </a-col>
           <a-col :span="8">
-            <a-form-item label="设备IP">
-              <span><a>192.168.33.188</a></span>
+            <a-form-item :label="$t('I18N.layout.sheBei')">
+              <span><a style="color: var(--primary-color);">192.168.33.188</a></span>
             </a-form-item>
           </a-col>
           <a-col :span="8">
-            <a-form-item label="规则版本">
+            <a-form-item :label="$t('I18N.layout.guiZeBanBen')">
               <span>2.0.25727.220121.1</span>
             </a-form-item>
           </a-col>
           <a-col :span="8">
-            <a-form-item label="单位">
+            <a-form-item :label="$t('I18N.layout.danWei')">
               <span>TZ9533</span>
             </a-form-item>
           </a-col>
@@ -70,39 +70,39 @@
     </div>
     <!--更多信息-->
     <div class="more-info">
-      <div class="base-detail-title">更多信息</div>
+      <div class="base-detail-title">{{ $t('I18N.layout.gengDuoXinXi') }}</div>
 
-      <a-form class="pd-16" name="basic" :label-col="{ style: { width: '60px' } }" autocomplete="off">
+      <a-form class="pd-16" name="basic" autocomplete="off" labelAlign="left">
         <a-row>
           <a-col :span="8">
-            <a-form-item label="资产编号">
+            <a-form-item :label="$t('I18N.layout.ziChanBianHao')">
               <span>213892894</span>
             </a-form-item>
           </a-col>
           <a-col :span="8">
-            <a-form-item label="使用状态">
-              <span>使用中</span>
+            <a-form-item :label="$t('I18N.layout.shiYongZhuangTai')">
+              <span>{{ $t('I18N.layout.shiYongZhong') }}</span>
             </a-form-item>
           </a-col>
           <a-col :span="8">
-            <a-form-item label="使用人">
+            <a-form-item :label="$t('I18N.layout.shiYongRen')">
               <span>小龙人</span>
             </a-form-item>
           </a-col>
           <a-col :span="16">
-            <a-form-item label="描述信息">
+            <a-form-item :label="$t('I18N.layout.miaoShuXinXi')">
               <span>
                 资产描述‘process_open’函数存在安全漏洞，该漏洞源于程序在只读模式下没有正确的阻止写入操作。支持对所有的持对所有的持对…
               </span>
             </a-form-item>
           </a-col>
           <a-col :span="8">
-            <a-form-item label="国产化">
-              <span>普通</span>
+            <a-form-item :label="$t('I18N.layout.guoChanHua')">
+              <span>{{ $t('I18N.layout.puTong') }}</span>
             </a-form-item>
           </a-col>
           <a-col :span="16">
-            <a-form-item label="更多信息">
+            <a-form-item :label="$t('I18N.layout.gengDuoXinXi')">
               <span>
                 这是服务于浙江省的涉疫系统的重要组成部分，服务于杭州市的数字化这是服务于浙江省的涉疫系统的重要组成部分，这是服务于浙江省的涉疫系统的重要组成部分。
               </span>
@@ -113,7 +113,7 @@
     </div>
     <!--任务记录-->
     <div class="task-list">
-      <div class="base-detail-title">任务记录</div>
+      <div class="base-detail-title">{{ $t('I18N.layout.renWuJiLu') }}</div>
 
       <a-timeline class="pd-24">
         <a-timeline-item>
@@ -140,7 +140,7 @@
       width: 100%;
       padding: 24px 16px;
       background: var(--primary-bg);
-      border-bottom: 1px solid var(--primary-divider);
+      border-bottom: 1px solid var(--color-divider);
       .header-info-avator {
         width: 64px;
         height: 64px;
@@ -185,7 +185,7 @@
       font-size: 14px;
       font-weight: 600;
       color: var(--color-text-title);
-      border-bottom: 1px solid var(--primary-divider);
+      border-bottom: 1px solid var(--color-divider);
     }
 
     .task-list {
@@ -229,6 +229,15 @@
     .ant-form-item-control {
       font-size: 12px;
       font-weight: 400;
+    }
+  }
+  .base-detail-box {
+    .ant-timeline .ant-timeline-item-head {
+      border-width: 2px;
+    }
+    .ant-timeline .ant-timeline-item-tail{
+      inset-block-start: 17px;
+      height: calc(100% - 24px);
     }
   }
 </style>

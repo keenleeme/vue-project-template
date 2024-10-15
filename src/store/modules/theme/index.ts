@@ -2,7 +2,7 @@
  * @Author: xzj 13819929694@163.com
  * @Date: 2024-08-28 19:05:12
  * @LastEditors: xzj 13819929694@163.com
- * @LastEditTime: 2024-09-04 16:20:56
+ * @LastEditTime: 2024-09-25 20:52:35
  * @Description:
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved.
  */
@@ -12,6 +12,8 @@ import { defineStore } from 'pinia';
 import { themeTokens, ThemeTypes } from '@/theme';
 import { themeDefaultConfig } from './defaultConfig';
 import { ThemeConfigType } from './types';
+import Color from 'color';
+import { generate } from '@ant-design/colors';
 
 const { darkAlgorithm, defaultAlgorithm } = theme1;
 export default defineStore('theme', () => {
@@ -38,6 +40,23 @@ export default defineStore('theme', () => {
     themeType.value = theme;
     console.log('themeType', themeType.value);
   };
+
+  // let darkOriginColor = ref<string>('') ; // 暗黑模式下的原始颜色，用于计算其他颜色值，如背景色，分割线等
+  function getPrimaryColors() {
+    let primaryColors: string[] = [];
+    let darkPrimaryColors: string[] = [];
+    const color = Color(themeConfig.value.primaryColor);
+    const darkOriginColor = color
+      .saturate(15 / 85)
+      .lighten(0.25)
+      .hex();
+      primaryColors = generate(themeConfig.value.primaryColor);
+      darkPrimaryColors = generate(darkOriginColor, { theme: 'dark', backgroundColor: '#020C1E' });
+    return {primaryColors, darkPrimaryColors}
+  }
+
+  // const primaryColors = computed(() => generate(themeConfig.value.primaryColor));
+  // const darkPrimaryColors = computed(() => generate(getPrimaryColors(), { theme: 'dark', backgroundColor: '#020C1E' };
   const themeTokenType = ref('light');
   const setThemeTokenType = (theme: string) => {
     themeTokenType.value = theme;
@@ -45,7 +64,14 @@ export default defineStore('theme', () => {
   const theme = computed(() => {
     // let token = themeTokenType.value === 'dark' ? themeTokens.dark : themeTokens.light;
     let token = themeTokens[themeTokenType.value as keyof typeof themeTokens];
-    token = { ...token, colorPrimary: themeConfig.value.primaryColor };
+    const {primaryColors, darkPrimaryColors} = getPrimaryColors();
+    const isDark = themeTokenType.value === 'dark' ? true : false;
+    token = { 
+      ...token,
+      colorPrimary: themeConfig.value.primaryColor,
+      colorPrimaryActive: isDark ? darkPrimaryColors[5] : primaryColors[5],
+      colorPrimaryHover: isDark ? darkPrimaryColors[4] : primaryColors[4],
+    };
     return {
       token,
       algorithm: themeType.value === ThemeTypes.Dark ? darkAlgorithm : defaultAlgorithm

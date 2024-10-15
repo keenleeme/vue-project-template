@@ -88,7 +88,7 @@
       data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
       splitLine: {
         lineStyle: {
-          color: '#4d576e',
+          color: '#E9EAF0',
           type: 'dashed'
         }
       },
@@ -102,7 +102,7 @@
       type: 'value',
       splitLine: {
         lineStyle: {
-          color: '#4d576e',
+          color: '#E9EAF0',
           type: 'dashed'
         }
       },
