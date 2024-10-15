@@ -1,8 +1,7 @@
 <template>
   <div v-if="!(themeConfig.layout === 'side' && !themeConfig.header)" class="header">
     <div class="logo-wrap">
-      <!-- <span class="logo"><img src="@/assets/images/logo.svg" /></span> -->
-      <span class="logo"><img :src="loginConfig.logoUrl" /></span>
+      <span class="logo"><img src="@/assets/images/logo.svg" /></span>
       <span class="title">{{ $t('I18N.layout.zhiQiFuHuaQi') }}</span>
     </div>
     <UedMapMenu
@@ -40,12 +39,19 @@
         <a-button>{{ $t('I18N.common.cancel') }}</a-button>
       </template>
     </UedMapMenu>
-
-    <TopMenu
+    <UedTopMenu
       v-if="config.layout !== 'side'"
-      :menuData="data" 
-    ></TopMenu>
-
+      v-model:active-id="activeId"
+      :props="dataProps"
+      :data="data"
+      :pop-active="popActive"
+      :dark="config.mode === 'dark' || (config.mode === 'light' && config.topStyle === 'dark')"
+      :pop-dark="config.mode === 'dark' || (config.mode === 'light' && config.topStyle === 'dark')"
+      :mix="config.mode === 'mix'"
+      popover-class="top-menu-popover"
+      @menu-click="handleMenuClick"
+    >
+    </UedTopMenu>
     <div class="header-operates">
       <a-dropdown>
         <i class="icon-button menuicon menu-icon-help" />
@@ -75,7 +81,15 @@
         @click="handleLocaleChangeA(config.lang)"
       />
       <FullscreenOutlined class="icon-button menuicon" size="24" @click="toggleFullScreen" />
-      <UserMenu :menuData="userMenu" ></UserMenu>
+      <UedUserMenu
+        :props="dataProps"
+        :data="userMenu"
+        :dark="config.mode === 'dark' || (config.mode === 'light' && config.topStyle === 'dark')"
+        :pop-dark="config.mode === 'dark' || (config.mode === 'light' && config.topStyle === 'dark')"
+        name="Admin"
+        popover-class="user-menu-popover"
+        @menu-click="userMenuClick"
+      />
     </div>
   </div>
   <a-modal
@@ -178,17 +192,13 @@
   import { storeToRefs } from 'pinia';
   import { useAppStore, useMenusStore, useThemeStore } from '@/store';
   import HelpDocument from './HelpDocument.vue';
-  import TopMenu from '@/components/menu/topMenu.vue'
-  import UserMenu from '@/components/menu/userMenu.vue'
-  import { LoginConfigDTO } from '@/views/login/types';
   import { changeLocale } from '@international/vue3-i18n';
 
   const menusStore = useMenusStore();
   const appStore = useAppStore();
   const themeStore = useThemeStore();
 
-  const { themePanelVisible, appConfig } = storeToRefs(appStore);
-  const loginConfig = ref<LoginConfigDTO>(new LoginConfigDTO(appConfig.value?.loginConfig));
+  const { themePanelVisible } = storeToRefs(appStore);
 
   // 菜单
   const { activeMenus, activeId } = storeToRefs(menusStore);
@@ -205,6 +215,15 @@
     }
   });
 
+  const router = useRouter();
+
+  // 退出登录
+  const handleLogout = () => {
+    menusStore.reset();
+    appStore.reset();
+    themeStore.reset();
+    router.push('/login');
+  };
   const data = ref([
     {
       id: 1,
@@ -405,6 +424,15 @@
   // const starKeys = ref(['baseForm', 'baseDetail', 'baseConfig', 'themeConfig']);
   const starKeys = ref([]);
 
+  // watchEffect(() => {
+  //   // 获取当前激活的菜单项的id，并将其赋值给activeId。activeMenus是一个数组，需要获取最后一个元素。
+  //   // if (activeMenus.value.length > 0) {
+  //   //   console.log(activeMenus)
+  //   //   const active = activeMenus.value[activeMenus.value.length - 1];
+  //   //   activeId.value = active?.id;
+  //   // }
+  // });
+
   const userMenu = ref([
     {
       id: 1,
@@ -412,12 +440,16 @@
     }
   ]);
 
+  const handleMenuClick = (item: any) => {
+    router.push(item.url);
+  };
+
   const originMenuData = JSON.parse(JSON.stringify(data.value));
   const tempMenu = ref();
 
-  // const userMenuClick = () => {
-  //   handleLogout();
-  // };
+  const userMenuClick = () => {
+    handleLogout();
+  };
 
   const dialogVisible = ref(false);
   const ruleForm = ref();

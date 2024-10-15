@@ -1,6 +1,5 @@
 <template>
   <a-layout-sider
-    v-show="siderMenus?.length"
     v-model:collapsed="collapsed"
     :style="{ background: token.colorBgBase }"
     width="176"
@@ -8,149 +7,28 @@
     :trigger="null"
     collapsible
   >
-    <UedSideMenu
-      v-if="config.layout !== 'top'"
-      :props="{
-        label: 'name',
-        children: 'submenu'
-      }"
-      :data="data"
-      :activeId.sync="activeId"
-      :popActive="popActive"
-      :dark="config.mode === 'dark' || (config.mode === 'light' && config.sideStyle === 'dark')"
-      :fold.sync="fold"
-      :popDark="config.mode === 'dark' || (config.mode === 'light' && config.sideStyle === 'dark')"
-      :tooltipDark="tooltipDark"
-      :openActive="true"
-      :mix="config.layout === 'mix'"
-      :accordion="config.accordion"
-      popoverClass="side-menu-popover"
-      @menu-click="handleMenuClick"
-      @update:fold="handleMenuCollapse"
+    <SideMenu 
+      :menuData="menuData" 
+      v-bind="userMenuConfig" 
+      @menuCollapse="handleMenuCollapse"
+      @userMenuClick="handleUserMenuClick"
     >
-      <template #header>
-        <div class="side-menu-header" v-if="config.layout === 'side' && !config.header">
-          <span class="logo"><img style="height: 30px;" src="@/assets/images/logo.svg" /></span>
-        </div>
-      </template>
-      <template #footer>
-        <div class="side-menu-footer">
-          <div v-if="config.helpCenter" class="side-menu-footer-item">
-            <i class="menuicon menu-icon-help" />
-            <span>帮助</span>
-          </div>
-          <div class="side-menu-footer-item">
-            <i class="menuicon menu-icon-bell" />
-            <span>消息</span>
-          </div>
-          <div class="side-menu-footer-item" @click="handleThemePanelChange">
-            <i class="menuicon menu-icon-cog" />
-            <span>设置</span>
-          </div>
-          <div v-if="fold && config.lightDarkSwitch" class="side-menu-footer-item">
-            <i
-              class="menuicon"
-              :class="config.mode === 'dark' ? 'menu-icon-black' : 'menu-icon-light'"
-              @click="config.mode = config.mode === 'dark' ? 'light' : 'dark'"
-            />
-          </div>
-          <div v-show="fold && config.languageSwitch" class="side-menu-footer-item">
-            <i
-              class="menuicon"
-              :class="config.lang === 'ZH' ? 'menu-icon-chinese' : 'menu-icon-english'"
-              @click="config.lang = config.lang === 'ZH' ? 'EN' : 'ZH'"
-            />
-          </div>
-          <div v-show="!fold" class="side-menu-switch-group">
-            <div v-if="config.lightDarkSwitch" class="switch-item">
-              <div :class="{ active: config.mode === 'dark' }" @click="changeConfig('mode','dark')">
-                <i class="menuicon menu-icon-black" />
-              </div>
-              <div :class="{ active: config.mode === 'light' }" @click="changeConfig('mode','light')">
-                <i class="menuicon menu-icon-light" />
-              </div>
-            </div>
-            <div v-if="config.languageSwitch" class="switch-item">
-              <div :class="{ active: config.lang === 'ZH' }" @click="handleLocaleChangeA('ZH')">
-                <i class="menuicon menu-icon-chinese" />
-              </div>
-              <div :class="{ active: config.lang === 'EN' }" @click="handleLocaleChangeA('EN')">
-                <i class="menuicon menu-icon-english" />
-              </div>
-            </div>
-          </div>
-          <UedUserMenu
-            :props="dataProps"
-            :data="userMenu"
-            :placement="fold ? 'right' : 'top'"
-            :dark="config.mode === 'dark' || (config.mode === 'light' && config.sideStyle === 'dark')"
-            :popDark="config.mode === 'dark' || (config.mode === 'light' && config.sideStyle === 'dark')"
-            name="Admin"
-            popoverClass="user-menu-popover"
-            @menu-click="userMenuClick"
-          />
-        </div>
-      </template>
-    </UedSideMenu>
+    </SideMenu>
   </a-layout-sider>
 
 </template>
 
 <script setup lang="ts">
-  import { ref, watchEffect } from 'vue';
-  import { useRouter } from 'vue-router';
-  import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons-vue';
+  import { ref } from 'vue';
   import { theme } from 'ant-design-vue';
-  import { storeToRefs } from 'pinia';
-  import { useAppStore, useMenusStore, useThemeStore } from '@/store';
-  import { UedSideMenu, UedUserMenu } from '@ued-material/menu';
-  import { changeLocale } from '@international/vue3-i18n';
+  import SideMenu from '@/components/menu/sideMenu.vue'
 
-  // 菜单折叠逻辑
-  let collapsed = ref(false);
-  const tooltipDark = ref(true);
-  const fold = ref(false);
-  // const activeId = ref('');
-  const popActive = ref(true);
-
+  
   const { useToken } = theme;
   const { token } = useToken();
-  console.log(token);
 
-  const themeStore = useThemeStore();
-  const { themeConfig } = storeToRefs(themeStore);
-  const config = ref({
-    ...themeConfig.value
-  });
-  watchEffect(() => {
-    config.value = { ...themeConfig.value };
-  });
-  const changeConfig = (key: string, newConfig: any) => {
-    console.log('changeConfig', key, newConfig);
-    themeConfig.value = { ...themeConfig.value, [key]: newConfig };
-  };
-
-
-  watch(
-    ()=>config.value,
-    (val) => {
-      console.log('config', config.value)
-    }
-  )
-
-  const menusStore = useMenusStore();
-  const { siderMenus, activeMenus, activeId } = storeToRefs(menusStore);
-  const selectMenuId = ref<string[]>([]);
-  const openKeys = ref<string[]>([]);
-  watchEffect(() => {
-    if (activeMenus.value.length > 1) {
-      const menus = activeMenus.value.slice(0, activeMenus.value.length - 1);
-      selectMenuId.value = menus.filter((item) => item.path).map((item) => item.id);
-      openKeys.value = menus.filter((item) => !item.path).map((item) => item.id);
-    }
-  });
-
-  const data = ref([
+  // 侧边菜单数据
+  const menuData = ref([
     {
       id: 1,
       name: I18N.layout.genericTypicalPage,
@@ -304,44 +182,30 @@
     }
   ]);
 
-  const router = useRouter();
-  // @ts-ignore;
-  const handleSelect = ({ item }) => {
-    router.push(item.path);
-  };
+  // 用户菜单配置和数据
+  const userMenuConfig = ref({
+    dataProps: {
+      label: 'name',
+      children: 'submenu',
+    },
+    userMenuData:[
+      {
+        id: 1,
+        name: I18N.layout.tuiChuDengLu,
+      },
+    ]
+  })
 
-  const handleMenuClick = (e) => {
-    console.log('click', e);
-    router.push(e.url);
-  }
-  const handleMenuCollapse = (fold) => {
+  // 菜单折叠逻辑
+  let collapsed = ref(false);
+  const handleMenuCollapse = (fold: boolean) => {
     collapsed.value = fold;
   }
 
-  const dataProps = ref({
-    label: 'name',
-    children: 'submenu',
-  })
-  const userMenu = ref([
-    {
-      id: 1,
-      name: '退出登录',
-    },
-  ])
-  
-  const userMenuClick = (item: any) => {
-    console.log('>>userMenuClick>>', item)
-  }
-  
-  const appStore = useAppStore();
-  const handleThemePanelChange = () => {
-    appStore.setThemePanelVisible(true);
+  //  用户菜单点击
+  const handleUserMenuClick = (menuData: any ) => {
+    // console.log('>>userMenuClick>>', menuData)
   }
 
-  const handleLocaleChangeA = (value: string) => {
-    let locale = value === 'ZH'?'zh':'en';
-    changeLocale(locale);
-    window.location.reload();
-  }
 
 </script>
