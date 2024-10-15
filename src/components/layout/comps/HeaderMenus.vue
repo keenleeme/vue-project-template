@@ -58,7 +58,7 @@
         <template #overlay>
           <a-menu>
             <a-menu-item v-if="config.helpCenter">
-              <span @click="showDrawer">{{ $t('I18N.layout.bangZhuWenDang') }}</span>
+              <span @click="showHelpDocument">{{ $t('I18N.layout.bangZhuWenDang') }}</span>
             </a-menu-item>
             <a-menu-item>
               <span @click="$router.push('/vueTour')">{{ $t('I18N.layout.ruMenYinDao') }}</span>
@@ -142,7 +142,7 @@
   </a-modal>
 
   <!-- 帮助文档 -->
-  <div ref="helpDocument" v-show="helpDocumentOpen" class="help-document"></div>
+  <div ref="helpDocument" class="help-document"></div>
 
   <ThemePanel
     v-model:visible="themePanelVisible"
@@ -154,7 +154,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, onMounted, watchEffect } from 'vue';
+  import { ref, watchEffect } from 'vue';
   import { useRouter } from 'vue-router';
   import { FullscreenOutlined } from '@ant-design/icons-vue';
   import { changeLocale } from '@international/vue3-i18n';
@@ -569,19 +569,13 @@
   };
 
   // 帮助手册
-  const helpDocumentOpen = ref<boolean>(false);
   const helpDocument = ref(null);
 
-  onMounted(() => {
-    docsViewer.mount({
+  const showHelpDocument = () => {
+    docsViewer.open({
       container: helpDocument.value,
       src: 'http://10.20.114.19:8089/docs/' // 即你上个步骤部署的文档的静态资源地址
     });
-  });
-
-  const showDrawer = () => {
-    helpDocumentOpen.value = true;
-    docsViewer.open();
   };
 
   const toggleFullScreen = () => {
