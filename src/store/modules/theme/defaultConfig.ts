@@ -4,7 +4,7 @@ export const themeDefaultConfig: ThemeConfigType = {
   title: '',
   dark: false,
   mode: 'light',
-  lang: localStorage.getItem('das-intl-locale')==='zh'?'ZH':'EN',
+  lang: localStorage.getItem('das-intl-locale')==='zh'?'zh':'en',
   primaryColor: '#134BEA',
   // primaryColor: '#3b71ee',
   // darkPrimaryColor: '#3B71EE',

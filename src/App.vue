@@ -129,6 +129,10 @@
       bodyEl.className = val === 'dark' ? 'theme-dark' : '';
     }
   );
+
+  onUnmounted(()=>{
+    // window.localStorage.clear();
+  })
 </script>
 
 <!-- 默认主题变量 -->

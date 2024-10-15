@@ -71,7 +71,7 @@
       <i
         v-if="config.languageSwitch"
         class="icon-button menuicon"
-        :class="config.lang === 'ZH' ? 'menu-icon-chinese' : 'menu-icon-english'"
+        :class="config.lang === 'zh' ? 'menu-icon-chinese' : 'menu-icon-english'"
         @click="handleLocaleChangeA(config.lang)"
       />
       <FullscreenOutlined class="icon-button menuicon" size="24" @click="toggleFullScreen" />
@@ -140,8 +140,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, watchEffect, computed } from 'vue';
-  import { useRouter } from 'vue-router';
+  import { ref, watchEffect, watch, computed } from 'vue';
   import { FullscreenOutlined } from '@ant-design/icons-vue';
   import { changeLocale } from '@international/vue3-i18n';
   import { UedMapMenu, ThemePanel, findNodeInTree } from '@ued-material/menu';
@@ -186,13 +185,9 @@
   const loginConfig = ref<LoginConfigDTO>(new LoginConfigDTO(appConfig.value?.loginConfig));
 
   // 菜单数据
-  const topMenuData = computed(() => {
-    return props.menuData;
-  });
+  const topMenuData = ref(props.menuData)
 
   const { themeConfig } = storeToRefs(themeStore);
-
-  console.log('themeConfig', themeConfig.value.header, themeStore);
   const config = ref({
     ...themeConfig.value
   });
@@ -338,8 +333,6 @@
     });
   };
 
-  // const themePanelVisible = ref(false);
-
   const log = (val: any) => {
     console.log(val);
   };
@@ -354,12 +347,10 @@
 
   // 重置主题色
   const resetPrimaryColor = () => {
-    // config.value.primaryColor = '#134BEA';
     themeStore.resetThemePrimaryColor();
   };
   const resetTheme = () => {
     themeStore.reset();
-    // themeStore.$reset();
   };
 
   // 帮助手册
@@ -383,8 +374,9 @@
   // 国际化切换
 
   const handleLocaleChangeA = (value: string) => {
-    let locale = value === 'ZH' ? 'en' : 'zh';
-    // themeConfig.value.locale = locale;
+    let locale = value === 'zh' ? 'en' : 'zh';
+    // setThemeConfig({...config})
+    themeConfig.value = { ...themeConfig.value, lang: locale };
     changeLocale(locale);
     window.location.reload();
   };

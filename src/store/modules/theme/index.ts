@@ -7,22 +7,17 @@ import { themeDefaultConfig } from './defaultConfig';
 import { ThemeConfigType } from './types';
 import Color from 'color';
 import { generate } from '@ant-design/colors';
-import { debounce } from 'lodash';
 
 const { darkAlgorithm, defaultAlgorithm } = theme1;
 export default defineStore('theme', () => {
   // 主题配置项-布局，面包屑，明暗切换，地图导航，多语言，帮助中心，顶栏
-  // const defaultThemeConfig = ref<ThemeConfigType>({ ...themeDefaultConfig });
   const localThemeConfig = JSON.parse(localStorage.getItem('ZQTHEMECONFIG') || '{}')
   const themeConfig = ref<ThemeConfigType>({ ...themeDefaultConfig, ...localThemeConfig });
 
   watch(themeConfig,(newValue, oldValue)=>{
-    debounce(()=>{
-      localStorage.setItem('ZQTHEMECONFIG',JSON.stringify(newValue))
-    },1000)
+    localStorage.setItem('ZQTHEMECONFIG',JSON.stringify(newValue))
   })
   const setThemeConfig = (config: ThemeConfigType) => {
-    
     const value = { ...themeDefaultConfig, ...config };
     themeConfig.value = value;
   };

@@ -46,8 +46,8 @@
           <div v-show="fold && config.languageSwitch" class="side-menu-footer-item">
             <i
               class="menuicon"
-              :class="config.lang === 'ZH' ? 'menu-icon-chinese' : 'menu-icon-english'"
-              @click="config.lang = config.lang === 'ZH' ? 'EN' : 'ZH'"
+              :class="config.lang === 'zh' ? 'menu-icon-chinese' : 'menu-icon-english'"
+              @click="config.lang = config.lang === 'zh' ? 'en' : 'zh'"
             />
           </div>
           <div v-show="!fold" class="side-menu-switch-group">
@@ -60,10 +60,10 @@
               </div>
             </div>
             <div v-if="config.languageSwitch" class="switch-item">
-              <div :class="{ active: config.lang === 'ZH' }" @click="handleLocaleChangeA('ZH')">
+              <div :class="{ active: config.lang === 'zh' }" @click="handleLocaleChangeA('zh')">
                 <i class="menuicon menu-icon-chinese" />
               </div>
-              <div :class="{ active: config.lang === 'EN' }" @click="handleLocaleChangeA('EN')">
+              <div :class="{ active: config.lang === 'en' }" @click="handleLocaleChangeA('en')">
                 <i class="menuicon menu-icon-english" />
               </div>
             </div>
@@ -180,7 +180,8 @@
 
   // 中英文切换
   const handleLocaleChangeA = (value: string) => {
-    let locale = value === 'ZH'?'zh':'en';
+    let locale = value === 'zh'?'zh':'en';
+    changeConfig('lang',locale)
     changeLocale(locale);
     window.location.reload();
   }

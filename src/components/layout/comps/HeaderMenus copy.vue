@@ -77,7 +77,7 @@
       <i
         v-if="config.languageSwitch"
         class="icon-button menuicon"
-        :class="config.lang === 'ZH' ? 'menu-icon-chinese' : 'menu-icon-english'"
+        :class="config.lang === 'zh' ? 'menu-icon-chinese' : 'menu-icon-english'"
         @click="handleLocaleChangeA(config.lang)"
       />
       <FullscreenOutlined class="icon-button menuicon" size="24" @click="toggleFullScreen" />
@@ -387,7 +387,7 @@
 
   // const defaultConfig = {
   //   mode: 'light',
-  //   lang: 'ZH',
+  //   lang: 'zh',
   //   primaryColor: '#134BEA',
   //   darkPrimaryColor: '#3B71EE',
   //   lightDarkSwitch: true,
@@ -624,7 +624,7 @@
   // 国际化切换
 
   const handleLocaleChangeA = (value: string) => {
-    let locale = value === 'ZH'?'en':'zh';
+    let locale = value === 'zh'?'en':'zh';
     // themeConfig.value.locale = locale;
     changeLocale(locale);
     window.location.reload();
