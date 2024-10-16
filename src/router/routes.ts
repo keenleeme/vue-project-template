@@ -6,7 +6,7 @@ const routes: RouteRecordRaw[] = [
     path: '/base-list',
     component: () => import('@/views/baseList/index.vue'),
     meta: {
-      title: '列表页',
+      title: 'I18N.layout.lieBiaoYe',
       permissionId: 'base::home:index'
     }
   },
@@ -15,7 +15,7 @@ const routes: RouteRecordRaw[] = [
     path: '/home',
     component: () => import('@/views/home/index.vue'),
     meta: {
-      title: '首页',
+      title: 'I18N.common.home',
       permissionId: 'base::home:index'
     }
   },
@@ -24,7 +24,7 @@ const routes: RouteRecordRaw[] = [
     path: '/theme',
     component: () => import('@/views/theme/index.vue'),
     meta: {
-      title: '主题',
+      title: 'I18N.theme.zhuTi',
       permissionId: 'base::theme:index'
     }
   },
@@ -33,7 +33,7 @@ const routes: RouteRecordRaw[] = [
     path: '/workBench',
     component: () => import('@/views/workBench/index.vue'),
     meta: {
-      title: '工作台',
+      title: 'I18N.layout.gongZuoTai',
       permissionId: 'base::workBench:index'
     }
   },
@@ -42,7 +42,7 @@ const routes: RouteRecordRaw[] = [
     path: '/base-form',
     component: () => import('@/views/baseForm/index.vue'),
     meta: {
-      title: '基础表单',
+      title: 'I18N.layout.jiChuBiaoDan',
       permissionId: 'base::theme:index'
     }
   },
@@ -51,7 +51,7 @@ const routes: RouteRecordRaw[] = [
     path: '/base-detail',
     component: () => import('@/views/baseDetail/index.vue'),
     meta: {
-      title: '基础详情',
+      title: 'I18N.layout.jiChuXiangQing',
       permissionId: 'base::theme:index'
     }
   },
@@ -60,7 +60,7 @@ const routes: RouteRecordRaw[] = [
     path: '/base-config',
     component: () => import('@/views/baseConfig/index.vue'),
     meta: {
-      title: '基础配置',
+      title: 'I18N.layout.jiChuPeiZhi',
       permissionId: 'base::theme:index'
     }
   },
@@ -69,7 +69,7 @@ const routes: RouteRecordRaw[] = [
     path: '/dasUpgrade',
     component: () => import('@/views/iframe/index.vue'),
     meta: {
-      title: '在线升级',
+      title: 'I18N.layout.zaiXianShengJi',
       permissionId: 'base::theme:index'
     }
   },
@@ -78,7 +78,7 @@ const routes: RouteRecordRaw[] = [
     path: '/dasvScreen',
     component: () => import('@/views/iframe/index.vue'),
     meta: {
-      title: '大屏自定义',
+      title: 'I18N.layout.daPingZiDingYi',
       permissionId: 'base::home:index'
     }
   },
@@ -87,7 +87,7 @@ const routes: RouteRecordRaw[] = [
     path: '/themeConfig',
     component: () => import('@/views/themeConfig/index.vue'),
     meta: {
-      title: '主题配置页',
+      title: 'I18N.layout.zhuTiPeiZhiYe',
       permissionId: 'base::home:index'
     }
   },
@@ -96,7 +96,7 @@ const routes: RouteRecordRaw[] = [
     path: '/loginConfig',
     component: () => import('@/views/loginConfig/index.vue'),
     meta: {
-      title: '登录配置页',
+      title: 'I18N.layout.dengLuPeiZhiYe',
       permissionId: 'base::home:index'
     }
   },
@@ -105,7 +105,7 @@ const routes: RouteRecordRaw[] = [
     path: '/vueTour',
     component: () => import('@/views/vueTour/index.vue'),
     meta: {
-      title: '引导页',
+      title: 'I18N.api.common.yinDaoYe',
       permissionId: 'base::home:index'
     }
   },
@@ -114,7 +114,7 @@ const routes: RouteRecordRaw[] = [
     path: '/vueTour-page2',
     component: () => import('@/views/vueTour/page2.vue'),
     meta: {
-      title: '引导页2',
+      title: 'I18N.api.common.yinDaoYe2',
       permissionId: 'base::home:index'
     }
   },

@@ -3,24 +3,29 @@
   const steps = ref([
     {
       target: '#v-step-00',
-      title: '可能需要返回上一次页面引导的情况',
+      title: I18N.layout.keNengXuYaoFanHuiShangYiCi,
       params: {},
       popover: {
         placement: 'bottom-start'
       },
       labels: {
         // 按钮文字支持配置
-        buttonPrevious: '上一步哈哈',
-        buttonNext: '下一步'
+        buttonPrevious: I18N.layout.shangYiBuHaHa,
+        buttonNext: I18N.layout.xiaYiBu,
       }
     },
     {
       target: '#v-step-10',
-      title: '完成',
+      title: I18N.layout.wanCheng,
       params: {},
       popover: {
         placement: 'left-start'
-      }
+      },
+      labels: {
+        // 按钮文字支持配置
+        buttonPrevious: I18N.layout.shangYiBu,
+        buttonStop:I18N.layout.wanCheng,
+      },
     }
   ]);
   const myCustomPreviousStepCallback = (currentStep) => {
@@ -54,13 +59,13 @@
 </script>
 
 <template>
-  <span id="v-step-00" class="logo">另一个页面引导1</span>
-  <span id="v-step-10" class="title">另一个页面引导2</span>
+  <span id="v-step-00" class="logo">{{ $t('I18N.layout.lingYiGeYeMianYinDao') }}1</span>
+  <span id="v-step-10" class="title">{{ $t('I18N.layout.lingYiGeYeMianYinDao') }}2</span>
   <vue-tour name="myTour" :steps="steps" :callbacks="callbacks">
     <template v-if="myTour.currentStep === 0" #actions>
       <div class="v-step_footer">
-        <a-button @click="toFromPage">上一步</a-button>
-        <a-button type="primary" @click="myTour.nextStep()">下一步</a-button>
+        <a-button @click="toFromPage">{{ $t('I18N.layout.shangYiBu') }}</a-button>
+        <a-button type="primary" @click="myTour.nextStep()">{{ $t('I18N.layout.xiaYiBu') }}</a-button>
       </div>
     </template>
   </vue-tour>

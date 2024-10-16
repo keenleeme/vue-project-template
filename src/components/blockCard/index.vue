@@ -3,7 +3,7 @@
     <div class="block-card-header" :class="{ 'title-border': topBorder }">
       <h2>{{ title }}</h2>
       <slot name="operation" />
-      <a-button v-show="more" type="link"> 更多 </a-button>
+      <a-button v-show="more" type="link"> {{ $t('I18N.layout.gengDuo') }} </a-button>
     </div>
     <slot name="content" />
   </div>

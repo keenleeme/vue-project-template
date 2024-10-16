@@ -1,20 +1,20 @@
 <template>
   <div class="chart-wrap">
     <div class="left">
-      <BlockCard :title="'我负责事件的级别分配'">
+      <BlockCard :title="$t('I18N.layout.woFuZeShiJianDeJiBieFenPei')">
         <template #content>
           <PieChartComponent
             :data="[
               {
-                name: '高危',
+                name: $t('I18N.layout.gaoWei'),
                 value: 0
               },
               {
-                name: '中危',
+                name: $t('I18N.layout.zhongWei'),
                 value: 0
               },
               {
-                name: '低微',
+                name: $t('I18N.layout.diWei'),
                 value: 0
               }
             ]"
@@ -23,24 +23,24 @@
           ></PieChartComponent>
         </template>
       </BlockCard>
-      <BlockCard :title="'我负责事件状态分布'">
+      <BlockCard :title="$t('I18N.layout.woFuZeShiJianZhuangTaiFenBu')">
         <template #content>
           <PieChartComponent
             :data="[
               {
-                name: '活动中',
+                name: $t('I18N.layout.huoDongZhong'),
                 value: 0
               },
               {
-                name: '已关闭',
+                name: $t('I18N.layout.yiGuanBi'),
                 value: 0
               },
               {
-                name: '已超时',
+                name: $t('I18N.layout.yiChaoShi'),
                 value: 0
               },
               {
-                name: '错误',
+                name: $t('I18N.layout.cuoWu'),
                 value: 0
               }
             ]"
@@ -52,7 +52,7 @@
       </BlockCard>
     </div>
     <div class="right">
-      <BlockCard :title="'我负责事件数量趋势'">
+      <BlockCard :title="$t('I18N.layout.woFuZeShiJianShuLiangQuShi')">
         <template #content>
           <LineChartComponent :data="[]" height="160px"></LineChartComponent>
         </template>

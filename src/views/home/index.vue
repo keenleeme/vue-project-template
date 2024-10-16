@@ -1,6 +1,6 @@
 <template>
   <div class="table-wrap">
-    <h1>功能开发中，敬请期待～</h1>
+    <h1>{{ $t('I18N.layout.gongNengKaiFaZhong') }}</h1>
   </div>
 </template>
 

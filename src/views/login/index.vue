@@ -8,6 +8,7 @@
       poster: loginConfig.bgPoster
     }"
     @u-submit="handleLogin"
+    :class="loginConfig.language === 'EN'?'loginEnglish':''"
   >
     <ued-logo
       slot="logo"
@@ -25,6 +26,7 @@
       v-model="loginConfig.language"
       :clearable="false"
       :options="options"
+      @change="handleLocaleChangeA(loginConfig.language)"
     ></ued-select>
     <div slot="copyright">
       <div>{{ loginConfig.slogan }}</div>
@@ -47,31 +49,34 @@
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
   import { storeToRefs } from 'pinia';
-  import { useAppStore } from '@/store';
+  import { useAppStore,useThemeStore } from '@/store';
   import { LoginConfigDTO, LogoModeEnums } from './types';
+  import { changeLocale } from '@international/vue3-i18n';
 
   const appStore = useAppStore();
   const router = useRouter();
   const { appConfig } = storeToRefs(appStore);
+  const themeStore = useThemeStore();
+  const { themeConfig } = storeToRefs(themeStore);
 
   const loginConfig = ref<LoginConfigDTO>(new LoginConfigDTO(appConfig.value.loginConfig));
 
   const forms = ref([
     {
       type: 'login-password',
-      name: '账号密码登录',
-      btnText: '登录',
+      name: I18N.layout.zhangHaoMiMaDengLu,
+      btnText: I18N.common.login,
       items: [
         {
           type: 'ued-input',
           field: 'username',
-          label: '用户名',
+          label: I18N.common.username,
           icon: 'user',
           rules: [
             {
               type: 'string',
               required: true,
-              message: '请输入用户名',
+              message: I18N.login.qingShuRuYongHu,
               min: 3
             }
           ]
@@ -79,14 +84,14 @@
         {
           type: 'ued-password',
           field: 'password',
-          label: '密码',
+          label: I18N.common.password,
           icon: 'password',
           rules: {
             type: 'string',
             min: 6,
             validator: (rule: any, value: any, cab: any) => {
               if (value.length < 6) {
-                cab(new Error('密码不得小于6位'));
+                cab(new Error(I18N.layout.miMaBuDeXiaoYu));
               }
               cab();
             }
@@ -95,20 +100,20 @@
         {
           type: 'ued-code-image',
           field: 'verifyCode',
-          label: '验证码',
-          icon: 'code'
+          label: I18N.layout.yanZhengMa,
+          icon: 'code',
         }
       ]
     },
     {
       type: 'login-phone',
-      name: '手机验证码登录',
-      btnText: '登录',
+      name: I18N.layout.shouJiYanZhengMaDengLu,
+      btnText: I18N.common.login,
       items: [
         {
           type: 'ued-input',
           field: 'username',
-          label: '手机号码',
+          label: I18N.layout.shouJiHaoMa,
           icon: 'phone',
           rules: [
             {
@@ -122,7 +127,7 @@
         {
           type: 'ued-password',
           field: 'password',
-          label: '密码',
+          label: I18N.common.password,
           icon: 'password',
           rules: {
             type: 'string',
@@ -132,7 +137,7 @@
         {
           type: 'ued-code',
           field: 'verifyCode',
-          label: '验证码',
+          label: I18N.layout.yanZhengMa,
           icon: 'code',
           api: () => {
             return new Promise((resolve) => {
@@ -145,45 +150,45 @@
         {
           type: 'ued-touch-bar',
           field: 'touchVerify',
-          label: '滑块验证'
+          label: I18N.layout.huaKuaiYanZheng,
         }
       ]
     },
     {
       type: 'registry-phone',
-      name: '注册账号',
-      btnText: '注册',
+      name: I18N.layout.zhuCeZhangHao,
+      btnText: I18N.common.signup,
       items: [
-        { type: 'ued-input', field: 'phone', label: '手机号码', icon: 'phone' },
-        { type: 'ued-code', field: 'code', label: '手机验证码', icon: 'code-phone' },
-        { type: 'ued-input', field: 'username', label: '用户名', icon: 'user' },
-        { type: 'ued-password', field: 'pwd', label: '密码', icon: 'password' },
-        { type: 'ued-password', field: 'pwdConfirm', label: '确认密码', icon: 'password' }
+        { type: 'ued-input', field: 'phone', label: I18N.layout.shouJiHaoMa, icon: 'phone' },
+        { type: 'ued-code', field: 'code', label: I18N.layout.shouJiYanZhengMa, icon: 'code-phone' },
+        { type: 'ued-input', field: 'username', label: I18N.common.username, icon: 'user' },
+        { type: 'ued-password', field: 'pwd', label: I18N.common.password, icon: 'password' },
+        { type: 'ued-password', field: 'pwdConfirm', label: I18N.layout.queRenMiMa, icon: 'password' }
       ]
     },
     {
       type: 'forget-phone',
-      name: '找回密码',
-      btnText: '找回密码',
+      name: I18N.layout.zhaoHuiMiMa,
+      btnText: I18N.layout.zhaoHuiMiMa,
       items: [
-        { type: 'ued-input', field: 'phone', label: '手机号码', icon: 'phone' },
-        { type: 'ued-code', field: 'code', label: '手机验证码', icon: 'code-phone' },
-        { type: 'ued-password', field: 'pwd', label: '新密码', icon: 'password' },
-        { type: 'ued-password', field: 'pwdConfirm', label: '确认密码', icon: 'password' }
+        { type: 'ued-input', field: 'phone', label: I18N.layout.shouJiHaoMa, icon: 'phone' },
+        { type: 'ued-code', field: 'code', label: I18N.layout.shouJiYanZhengMa, icon: 'code-phone' },
+        { type: 'ued-password', field: 'pwd', label: I18N.layout.xinMiMa, icon: 'password' },
+        { type: 'ued-password', field: 'pwdConfirm', label: I18N.layout.queRenMiMa, icon: 'password' }
       ]
     },
     {
       type: 'qr-ding',
-      name: '钉钉扫码登录'
+      name: I18N.layout.dingDingSaoMa,
     },
     {
       type: 'qr-wx',
-      name: '微信扫码登录'
+      name: I18N.layout.weiXinSaoMa,
     }
   ]);
   const options = ref([
-    { label: '中文', value: 'zh' },
-    { label: '英文', value: 'en' }
+    { label: '中文', value: 'ZH' },
+    { label: 'English', value: 'EN' }
   ]);
 
   const handleLogin = (e: CustomEvent) => {
@@ -192,10 +197,17 @@
     router.replace('/');
   };
 
+  const handleLocaleChangeA = (value: string)=>{
+    let locale = value === 'EN'?'en':'zh';
+    changeLocale(locale);
+    window.location.reload();
+  }
+
   watch(
     appConfig.value.loginConfig,
     (v) => {
       loginConfig.value = Object.assign(loginConfig.value, v);
+      loginConfig.value.language = themeConfig.value.lang
       console.log('appConfig-changes:', loginConfig.value);
     },
     { deep: true, immediate: true }
@@ -204,6 +216,7 @@
     loginConfig,
     (v) => {
       console.log('loginConfig-changes:', v);
+      handleLocaleChangeA(v.language);
     },
     { deep: true }
   );

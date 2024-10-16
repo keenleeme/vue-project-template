@@ -4,7 +4,7 @@
     class="tree-input-com w-300"
     size="small"
     allow-clear
-    placeholder="请输入"
+    :placeholder="$t('I18N.base_form.pleaseEnter')"
     @change="onChange"
     @focus="onFocus"
   />

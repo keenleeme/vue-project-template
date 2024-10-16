@@ -4,7 +4,7 @@
   const steps = ref([
     {
       target: '#v-step-0',
-      title: '点击到下一步',
+      title: I18N.layout.dianJiDaoXiaYiBu,
       params: {
         // enabledButtons: {
         //   buttonPrevious: false,
@@ -16,7 +16,7 @@
       },
       labels: {
         // 按钮文字支持配置
-        buttonNext: '自定义下一步文字'
+        buttonNext: I18N.layout.ziDingYiXiaYiBuWenZi,
       },
       popover: {
         placement: 'bottom-start',
@@ -32,10 +32,15 @@
     },
     {
       target: '#v-step-1',
-      title: '高亮区域可配置',
-      content: '默认为绑定元素区域高亮，可以设置padding',
+      title: I18N.layout.ziDingYiXiaYiBuWenZi,
+      content: I18N.layout.moRenWeiBangDingYuanSuQuYu,
       params: {
         maskPadding: 8
+      },
+      labels: {
+        // 按钮文字支持配置
+        buttonPrevious: I18N.layout.shangYiBu,
+        buttonNext: I18N.layout.xiaYiBu,
       },
       popover: {
         placement: 'bottom-end',
@@ -51,22 +56,27 @@
     },
     {
       target: '#v-step-2',
-      title: '遮罩层支持关闭',
+      title: I18N.layout.zheZhaoCengZhiChiGuanBi,
       params: {
         mask: false
-      }
+      },
+      labels: {
+        // 按钮文字支持配置
+        buttonPrevious: I18N.layout.shangYiBu,
+        buttonNext: I18N.layout.xiaYiBu,
+      },
     },
     {
       target: '#v-step-3',
-      title: '恭喜你，完成demo引导',
-      content: '另一个页面引导',
+      title: I18N.layout.gongXiNiWanChengYinDao,
+      content: I18N.layout.lingYiGeYeMianYinDao,
       popover: {
         placement: 'top'
       },
       labels: {
         // 按钮文字支持配置
-        buttonPrevious: '上一步哈哈',
-        buttonStop: '去另一个页面'
+        buttonPrevious: I18N.layout.shangYiBuHaHa,
+        buttonStop: I18N.layout.quLingYiGeYeMian,
       }
     }
   ]);
@@ -106,11 +116,11 @@
 
 <template>
   <div>
-    <span id="v-step-0" class="logo">welcome！,快来跟我一起快速上手吧</span>
-    <span id="v-step-1" class="title">这只是粗略的demo</span>
-    <span id="v-step-2" class="logo">后续我会完善的</span>
-    <span id="v-step-3" class="title">伙伴们敬请谅解～</span>
-    <vue-tour name="myTour" :steps="steps" :callbacks="callbacks"></vue-tour>
+    <span id="v-step-0" class="logo">{{ $t('I18N.layout.yiQiShangShou') }}</span>
+    <span id="v-step-1" class="title">{{ $t('I18N.layout.cuiLueDedemo') }}</span>
+    <span id="v-step-2" class="logo">{{ $t('I18N.layout.huiXuHuiWanShan') }}</span>
+    <span id="v-step-3" class="title">{{ $t('I18N.layout.jingQingQiDai') }}</span>
+    <vue-tour name="myTour" :steps="steps" :callbacks="callbacks" class="step_relative"></vue-tour>
   </div>
 </template>
 

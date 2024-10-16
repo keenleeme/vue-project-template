@@ -1,13 +1,13 @@
 <template>
   <div class="search-wrap divider">
     <a-radio-group v-model:value="tabPosition" style="margin: 8px">
-      <a-radio-button value="1">默认</a-radio-button>
-      <a-radio-button value="2">自定义</a-radio-button>
+      <a-radio-button value="1">{{ $t('I18N.layout.moRen') }}</a-radio-button>
+      <a-radio-button value="2">{{ $t('I18N.layout.ziDingYi') }}</a-radio-button>
     </a-radio-group>
     <div class="sql-input ml-8">
       <SqlTipTree :props_allFieldList="dataSource"></SqlTipTree>
     </div>
-    <a-range-picker v-model:value="timeValue" class="ml-8" />
+    <a-range-picker v-model:value="timeValue" class="ml-8" :placeholder="[$t('I18N.layout.kaiShiRiQi'), $t('I18N.layout.jieShuRiQi')]" />
     <a-button class="ml-8">
       <template #icon>
         <Icon :style="{ position: 'relative', top: '2px' }">
@@ -33,7 +33,7 @@
           </template>
         </Icon>
       </template>
-      设置偏好
+      {{ $t('I18N.layout.sheZhiPianHao') }}
     </a-button>
   </div>
 </template>

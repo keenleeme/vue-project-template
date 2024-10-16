@@ -58,6 +58,12 @@
 .ant-btn-primary:not(:disabled):hover {
   background: var(--um-primary-color-hover);
 }
+.loginEnglish .tabs.sc-ued-tabs .item.sc-ued-tabs {
+  line-height: 22px;
+}
+.step_relative .v-step{
+  min-width: 400px;
+}
 /* .ant-btn.ant-btn-primary:not(.ant-btn-background-ghost).ant-btn-dangerous:is(:disabled) {
   color: #ffffff;
   background: #ffada4;

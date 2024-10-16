@@ -2,20 +2,20 @@
   <div class="setting-wrapper">
     <div class="page-content">
       <div class="setting">
-        <a-form :colon="false" label-align="right" v-bind="formItemLayout">
-          <a-form-item label="主题风格">
+        <a-form :colon="false" label-align="right" v-bind="formItemLayout" :label-col="{style:{'width': '33.3%', 'white-space':'normal'}}">
+          <a-form-item :label="$t('I18N.layout.zhuTiFengGe')">
             <a-radio-group v-model:value="loginConfig.mode">
-              <a-radio value="dark">深色</a-radio>
-              <a-radio value="light">浅色</a-radio>
+              <a-radio value="dark">{{ $t('I18N.layout.shenSe') }}</a-radio>
+              <a-radio value="light">{{ $t('I18N.layout.qianSe') }}</a-radio>
             </a-radio-group>
           </a-form-item>
-          <a-form-item label="登录页背景">
+          <a-form-item :label="$t('I18N.layout.dengLuYeBeiJing')">
             <a-radio-group v-model:value="loginConfig.bgMode">
-              <a-radio value="image">图片</a-radio>
-              <a-radio value="video">视频</a-radio>
+              <a-radio value="image">{{ $t('I18N.layout.tuPian') }}</a-radio>
+              <a-radio value="video">{{ $t('I18N.layout.shiPin') }}</a-radio>
             </a-radio-group>
           </a-form-item>
-          <a-form-item v-if="loginConfig.bgMode === 'image'" label="图片">
+          <a-form-item v-if="loginConfig.bgMode === 'image'" :label="$t('I18N.layout.tuPian')">
             <div class="uploader">
               <a-image
                 :src="loginConfig.bgImage"
@@ -32,19 +32,19 @@
                   :before-upload="(v: UploadFile) => beforeUpload(v, 'bgImage')"
                   :custom-request="(v) => customRequest(v, 'bgImage')"
                 >
-                  <a-button type="text">上传</a-button>
+                  <a-button type="text">{{ $t('I18N.layout.shangChuan') }}</a-button>
                 </a-upload>
-                <a-button type="text" @click="handleReset('bgImage')">恢复出厂图片</a-button>
+                <a-button type="text" @click="handleReset('bgImage')">{{ $t('I18N.layout.huiFuChuChangTuPian') }}</a-button>
               </div>
               <p>
-                只能上传{{ config.format.join('/').replace(/\./g, '') }}文件，且不超过{{
+                {{ $t('I18N.layout.zhiNengShangChuan') }}{{ config.format.join('/').replace(/\./g, '') }}{{ $t('I18N.layout.wenJian') }}，{{ $t('I18N.layout.qieBuChaoGuo') }}{{
                   config.bgSizeText
-                }}，建议图片比例16:9
+                }}，{{ $t('I18N.layout.jianYiTuPianBiLi') }}16:9
               </p>
             </div>
           </a-form-item>
           <template v-else>
-            <a-form-item label="封面">
+            <a-form-item :label="$t('I18N.layout.fengMian')">
               <div class="uploader">
                 <a-image
                   :src="loginConfig.bgPoster"
@@ -62,18 +62,18 @@
                     :before-upload="(v: UploadFile) => beforeUpload(v, 'bgPoster')"
                     :custom-request="(v) => customRequest(v, 'bgPoster')"
                   >
-                    <a-button type="text">上传</a-button>
+                    <a-button type="text">{{ $t('I18N.layout.shangChuan') }}</a-button>
                   </a-upload>
-                  <a-button type="text" @click="handleReset('bgPoster')">恢复出厂图片</a-button>
+                  <a-button type="text" @click="handleReset('bgPoster')">{{ $t('I18N.layout.huiFuChuChangTuPian') }}</a-button>
                 </div>
                 <p>
-                  只能上传{{ config.format.join('/').replace(/\./g, '') }}文件，且不超过{{
+                  {{ $t('I18N.layout.zhiNengShangChuan') }}{{ config.format.join('/').replace(/\./g, '') }}{{ $t('I18N.layout.wenJian') }}，{{ $t('I18N.layout.qieBuChaoGuo') }}{{
                     config.bgSizeText
-                  }}，视频和图片尺寸保持一致，建议比例16:9
+                  }}，{{ $t('I18N.layout.shiPinHeTuPianYiZhi') }}，{{ $t('I18N.layout.jianYiBiLi') }}16:9
                 </p>
               </div>
             </a-form-item>
-            <a-form-item label="视频">
+            <a-form-item :label="$t('I18N.layout.shiPin')">
               <div class="uploader">
                 <video v-if="loginConfig.bgVideo" width="142">
                   <source :src="loginConfig.bgVideo" />
@@ -95,30 +95,30 @@
                     :before-upload="(v: UploadFile) => beforeUpload(v, 'bgVideo')"
                     :custom-request="(v) => customRequest(v, 'bgVideo')"
                   >
-                    <a-button type="text">上传</a-button>
+                    <a-button type="text">{{ $t('I18N.layout.shangChuan') }}</a-button>
                   </a-upload>
-                  <a-button type="text" @click="handleReset('bgVideo')">恢复出厂视频</a-button>
+                  <a-button type="text" @click="handleReset('bgVideo')">{{ $t('I18N.layout.huiFuChuChangShiPin') }}</a-button>
                 </div>
                 <p>
-                  只能上传{{ config.videoFormat.join('/').replace(/\./g, '') }}文件，且不超过{{
+                  {{ $t('I18N.layout.zhiNengShangChuan') }}{{ config.videoFormat.join('/').replace(/\./g, '') }}{{ $t('I18N.layout.wenJian') }}，{{ $t('I18N.layout.qieBuChaoGuo') }}{{
                     config.videoSizeText
-                  }}，视频和图片尺寸保持一致，建议比例16:9
+                  }}，{{ $t('I18N.layout.shiPinHeTuPianYiZhi') }}，{{ $t('I18N.layout.jianYiBiLi') }}16:9
                 </p>
               </div>
             </a-form-item>
           </template>
-          <a-form-item label="登录页LOGO">
+          <a-form-item :label="$t('I18N.layout.dengLuYe')+'LOGO'">
             <a-radio-group v-model:value="loginConfig.logoMode">
-              <a-radio :value="LogoModeEnums.IMAGE">图片</a-radio>
-              <a-radio :value="LogoModeEnums.TEXT">文字</a-radio>
-              <a-radio :value="LogoModeEnums.IMAGE_TEXT">图片+文字</a-radio>
+              <a-radio :value="LogoModeEnums.IMAGE">{{ $t('I18N.layout.tuPian') }}</a-radio>
+              <a-radio :value="LogoModeEnums.TEXT">{{ $t('I18N.layout.wenzi') }}</a-radio>
+              <a-radio :value="LogoModeEnums.IMAGE_TEXT">{{ $t('I18N.layout.tuPian') }}+{{ $t('I18N.layout.wenzi') }}</a-radio>
             </a-radio-group>
           </a-form-item>
-          <a-form-item label="LOGO名称">
+          <a-form-item :label="'LOGO '+$t('I18N.base_form.name')">
             <a-input
               v-model:value="loginConfig.logoName"
               :disabled="[LogoModeEnums.IMAGE].includes(loginConfig.logoMode!)"
-              placeholder="请输入LOGO名称"
+              :placeholder="$t('I18N.base_form.pleaseEnter')+'LOGO'+$t('I18N.base_form.name')"
             />
             <a-form-item style="margin-top: 24px">
               <div class="uploader">
@@ -140,47 +140,47 @@
                     :custom-request="(v) => customRequest(v, 'logoUrl')"
                   >
                     <a-button type="text" :disabled="[LogoModeEnums.TEXT].includes(loginConfig.logoMode!)"
-                      >上传</a-button
+                      >{{ $t('I18N.layout.shangChuan') }}</a-button
                     >
                   </a-upload>
                   <a-button
                     type="text"
                     :disabled="[LogoModeEnums.TEXT].includes(loginConfig.logoMode!)"
                     @click="handleReset('logoUrl')"
-                    >恢复出厂图片</a-button
+                    >{{ $t('I18N.layout.huiFuChuChangTuPian') }}</a-button
                   >
                 </div>
                 <p>
-                  只能上传{{ config.format.join('/').replace(/\./g, '') }}文件，且不超过{{
+                  {{ $t('I18N.layout.zhiNengShangChuan') }}{{ config.format.join('/').replace(/\./g, '') }}{{ $t('I18N.layout.wenJian') }}，{{ $t('I18N.layout.qieBuChaoGuo') }}{{
                     config.logoSizeText
-                  }}，深色背景建议使用白色logo
+                  }}，{{ $t('I18N.layout.shenSeBeiJingJianYiShiYong') }}
                 </p>
               </div>
             </a-form-item>
           </a-form-item>
-          <a-form-item label="显示多语言切换">
+          <a-form-item :label="$t('I18N.layout.xianShiDuoYuYanQieHuan')">
             <a-switch v-model:checked="loginConfig.showLanguage"></a-switch>
           </a-form-item>
-          <a-form-item label="宣传标语">
-            <a-input v-model:value="loginConfig.slogan" placeholder="请输入宣传标语"></a-input>
+          <a-form-item :label="$t('I18N.layout.xuanChuanBiaoYu')">
+            <a-input v-model:value="loginConfig.slogan" :placeholder="$t('I18N.base_form.pleaseEnter')+$t('I18N.layout.xuanChuanBiaoYu')"></a-input>
           </a-form-item>
-          <a-form-item label="公司名称">
-            <a-input v-model:value="loginConfig.companyName" placeholder="请输入公司名称"></a-input>
+          <a-form-item :label="$t('I18N.layout.gongSiMingCheng')">
+            <a-input v-model:value="loginConfig.companyName" :placeholder="$t('I18N.base_form.pleaseEnter')+$t('I18N.layout.gongSiMingCheng')"></a-input>
           </a-form-item>
-          <a-form-item label="平台版权信息">
-            <a-input v-model:value="loginConfig.copyright" placeholder="请输入平台版权信息"></a-input>
+          <a-form-item :label="$t('I18N.layout.pingTaiBanQuanXinXi')">
+            <a-input v-model:value="loginConfig.copyright" :placeholder="$t('I18N.base_form.pleaseEnter')+$t('I18N.layout.pingTaiBanQuanXinXi')"></a-input>
           </a-form-item>
-          <a-form-item label="公安机关备案信息">
-            <a-input v-model:value="loginConfig.filing" placeholder="请输入公安机关备案信息"></a-input>
+          <a-form-item :label="$t('I18N.layout.gongAnJiGuanBeiAnXinXi')">
+            <a-input v-model:value="loginConfig.filing" :placeholder="$t('I18N.base_form.pleaseEnter')+$t('I18N.layout.gongAnJiGuanBeiAnXinXi')"></a-input>
           </a-form-item>
-          <a-form-item label="公安机关备案信息超链地址">
-            <a-input v-model:value="loginConfig.filingUrl" placeholder="请输入公安机关备案信息超链地址"></a-input>
+          <a-form-item :label="$t('I18N.layout.gongAnJiGuanBeiAnChaoLianDiZhi')">
+            <a-input v-model:value="loginConfig.filingUrl" :placeholder="$t('I18N.base_form.pleaseEnter')+$t('I18N.layout.gongAnJiGuanBeiAnChaoLianDiZhi')"></a-input>
           </a-form-item>
-          <a-form-item label="ICP备案信息">
-            <a-input v-model:value="loginConfig.icp" placeholder="请输入ICP备案信息"></a-input>
+          <a-form-item :label="$t('I18N.layout.ICPbeiAnXinXi')">
+            <a-input v-model:value="loginConfig.icp" :placeholder="$t('I18N.base_form.pleaseEnter')+$t('I18N.layout.ICPbeiAnXinXi')"></a-input>
           </a-form-item>
-          <a-form-item label="ICP备案超链地址">
-            <a-input v-model:value="loginConfig.icpUrl" placeholder="请输入ICP备案超链地址"></a-input>
+          <a-form-item :label="$t('I18N.layout.ICPbeiAnChaoLianDiZhi')">
+            <a-input v-model:value="loginConfig.icpUrl" :placeholder="$t('I18N.base_form.pleaseEnter')+$t('I18N.layout.ICPbeiAnChaoLianDiZhi')"></a-input>
           </a-form-item>
         </a-form>
       </div>
@@ -189,21 +189,21 @@
       <div :key="previewKey" class="preview">
         <LoginDemo :forms="forms" :login-config="loginConfig"></LoginDemo>
         <div class="preview-control">
-          <a-button @click="handlePreviewControl('reload')">刷新</a-button>
-          <a-button @click="handlePreviewControl('fullscreen')">全屏</a-button>
+          <a-button @click="handlePreviewControl('reload')">{{ $t('I18N.layout.shuaXin') }}</a-button>
+          <a-button @click="handlePreviewControl('fullscreen')">{{ $t('I18N.layout.quanPing') }}</a-button>
         </div>
       </div>
     </div>
     <div class="page-footer">
-      <a-button @click="handleFormSet('reset')">恢复出厂设置</a-button>
-      <a-button type="primary" @click="handleFormSet('apply')">应用当前设置</a-button>
+      <a-button @click="handleFormSet('reset')">{{ $t('I18N.layout.huiFuChuChangSheZhi') }}</a-button>
+      <a-button type="primary" @click="handleFormSet('apply')">{{ $t('I18N.layout.yingYongDangQianSheZhi') }}</a-button>
     </div>
 
     <a-modal v-model:open="dialogVisible" :title="dialogTitle" :centered="true" :closable="false">
-      <div class="content">新主题风格将覆盖所有账号自定义风格，确定保存新主题风格并应用到所有账号系统吗？</div>
+      <div class="content">{{ $t('I18N.layout.xinZhuTiFengGeTiShi') }}</div>
       <template #footer>
-        <a-button key="back" @click="dialogVisible = false">取消</a-button>
-        <a-button key="submit" type="primary" @click="handleSubmit">确定</a-button>
+        <a-button key="back" @click="dialogVisible = false">{{ $t('I18N.common.cancel') }}</a-button>
+        <a-button key="submit" type="primary" @click="handleSubmit">{{ $t('I18N.common.confirm') }}</a-button>
       </template>
     </a-modal>
 
@@ -217,7 +217,7 @@
       <LoginDemo :key="previewKey" fullscreen :forms="forms" :login-config="loginConfig"></LoginDemo>
 
       <template #footer>
-        <a-button class="close" @click="fullscreen = false">关闭</a-button>
+        <a-button class="close" @click="fullscreen = false">{{ $t('I18N.common.close') }}</a-button>
       </template>
     </a-modal>
   </div>
@@ -257,11 +257,11 @@
   const forms = reactive<FormDto[]>([
     {
       type: 'login-password',
-      btnText: '登录',
+      btnText: I18N.common.login,
       items: [
-        { type: 'ued-input', label: '用户名', field: 'username', placeholder: '请输入用户名', icon: 'user' },
-        { type: 'ued-password', label: '密码', field: 'username', placeholder: '请输入密码', icon: 'password' },
-        { type: 'ued-touch-bar', label: '验证', field: 'valide', icon: 'touch' }
+        { type: 'ued-input', label: I18N.common.username, field: 'username', placeholder: I18N.login.qingShuRuYongHu, icon: 'user' },
+        { type: 'ued-password', label: I18N.common.password, field: 'username', placeholder: I18N.login.qingShuRuMiMa, icon: 'password' },
+        { type: 'ued-touch-bar', label: I18N.layout.yanZheng, field: 'valide', icon: 'touch' }
       ]
     }
   ]);
@@ -271,10 +271,10 @@
     const isJpgOrPng = config.formatValidFull[key].includes(file.type!);
     const limit = (file.size || 0) < config.limitValid[key];
     if (!isJpgOrPng) {
-      message.error(`文件格式不为${config.formatValid[key].join('/').replace(/\./g, '')}`);
+      message.error(`${I18N.layout.wenJianGeShiBuWei}${config.formatValid[key].join('/').replace(/\./g, '')}`);
     }
     if (!limit) {
-      message.error(`文件大小超过${config.limitText[key]}`);
+      message.error(`${I18N.layout.wenJianDaXiaoChaoGuo}${config.limitText[key]}`);
     }
     return isJpgOrPng && limit;
   };
@@ -301,17 +301,17 @@
   // 按钮处理
   const handleFormSet = (name: 'reset' | 'apply') => {
     if (name === 'reset') {
-      dialogTitle.value = '恢复出厂设置';
+      dialogTitle.value = I18N.layout.huiFuChuChangSheZhi;
       dialogVisible.value = true;
     } else if (name === 'apply') {
-      dialogTitle.value = '应用当前设置';
+      dialogTitle.value = I18N.layout.yingYongDangQianSheZhi;
       dialogVisible.value = true;
     }
   };
 
   // 提交
   const handleSubmit = () => {
-    if (dialogTitle.value === '恢复出厂设置') {
+    if (dialogTitle.value === I18N.layout.yingYongDangQianSheZhi) {
       loginConfig.value = new LoginConfigDTO(appConfig.value?.loginConfig);
       dialogVisible.value = false;
     } else {

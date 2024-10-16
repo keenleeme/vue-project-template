@@ -11,9 +11,9 @@
       }"
     >
       <div class="table-header">
-        <div class="item short">语法</div>
-        <div class="item short">描述</div>
-        <div class="item flex">示例</div>
+        <div class="item short">{{ $t('I18N.base_form.yuFa') }}</div>
+        <div class="item short">{{ $t('I18N.base_form.desc') }}</div>
+        <div class="item flex">{{ $t('I18N.base_form.shiLi') }}</div>
       </div>
       <div class="table-content">
         <div v-for="item in aiqlGuide" :key="item.expression" class="table-item">

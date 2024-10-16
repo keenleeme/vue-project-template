@@ -32,40 +32,40 @@
 
   const cardData = ref([
     {
-      title: '我参与的事件总数',
-      unit: '件',
+      title: I18N.layout.woCanYuDeShiJianZongShu,
+      unit: I18N.layout.jian,
       icon: oneSvg,
       value: 1315
     },
     {
-      title: '我负责的事件总数',
-      unit: '件',
+      title: I18N.layout.woCanYuDeShiJianZongShu,
+      unit: I18N.layout.jian,
       icon: twoSvg,
       value: 1315
     },
     {
-      title: '我负责事件的平均处理时间',
-      unit: '件',
+      title: I18N.layout.woFuZeDeShiJianZongShu,
+      unit: I18N.layout.jian,
       icon: threeSvg,
       value: '5时36分12秒',
       type: 'time',
       timeValue: [
         {
-          label: '时',
+          label: I18N.layout.shi,
           value: '5'
         },
         {
-          label: '分',
+          label: I18N.layout.fen,
           value: '36'
         },
         {
-          label: '秒',
+          label: I18N.layout.miao,
           value: '12'
         }
       ]
     },
     {
-      title: '我负责的事件关闭率',
+      title: I18N.layout.woFuZeDeShiJianGuanBiLv,
       unit: '%',
       icon: fourSvg,
       value: 37.32

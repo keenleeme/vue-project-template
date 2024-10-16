@@ -10,10 +10,10 @@
   <div class="setting-wrapper">
     <div class="page-content">
       <!-- <h1>主题配置页themeConfig</h1> -->
-      <BlockArea title="主题风格" class="block-area">
+      <BlockArea :title="$t('I18N.layout.zhuTiFengGe')" class="block-area">
         <ThemePanelItem
           type="mode"
-          title="默认主题"
+          :title="$t('I18N.layout.moRenZhuTi')"
           :mode="config.mode"
           :dark="config.mode === 'dark'"
           @update:mode="(value: string) => changeConfig('mode', value)"
@@ -22,7 +22,7 @@
 
         <ThemePanelItem
           type="primaryColor"
-          title="默认主题色"
+          :title="$t('I18N.layout.moRenZhuTiSe')"
           :mode="config.mode"
           :primary-color="config.primaryColor"
           :dark="config.mode === 'dark'"
@@ -32,10 +32,10 @@
         <!-- @update:primary-color="changePrimaryColor" -->
       </BlockArea>
 
-      <BlockArea title="导航设置" class="block-area">
+      <BlockArea :title="$t('I18N.layout.daoHangSheZhi')" class="block-area">
         <ThemePanelItem
           type="layout"
-          title="导航布局"
+          :title="$t('I18N.layout.daoHangBuJu')"
           :dark="config.mode === 'dark'"
           :mode="config.mode"
           :layout="config.layout"
@@ -57,7 +57,7 @@
 
         <ThemePanelItem
           type="others"
-          title="其他设置"
+          :title="$t('I18N.layout.qiTaSheZhi')"
           :dark="config.mode === 'dark'"
           :light-dark-switch="config.lightDarkSwitch"
           :language-switch="config.languageSwitch"
@@ -69,24 +69,24 @@
       </BlockArea>
     </div>
     <div class="page-footer">
-      <a-button @click="resetTheme">恢复出厂设置</a-button>
-      <a-button @click="dialogVisiable = true">生成页面嵌套参数</a-button>
-      <a-button type="primary" @click="useTheme">应用当前主题</a-button>
+      <a-button @click="resetTheme">{{ $t('I18N.layout.huiFuChuChangSheZhi') }}</a-button>
+      <a-button @click="dialogVisiable = true">{{ $t('I18N.layout.shengChengYeMianQianTaoCanShu') }}</a-button>
+      <a-button type="primary" @click="useTheme">{{ $t('I18N.layout.yingYongDangQianZhuTi') }}</a-button>
     </div>
 
-    <a-modal v-model:open="dialogVisiable" title="生成页面嵌套参数" centered="true" :closable="false">
+    <a-modal v-model:open="dialogVisiable" :title="$t('I18N.layout.shengChengYeMianQianTaoCanShu')" centered="true" :closable="false">
       <div>
-        <p>复制页面新风格，并将页面的菜单区和内容区分离的参数。如内嵌时需隐藏页面菜单，请带上此参数。</p>
+        <p>{{ $t('I18N.layout.shengChengYeMianQianTaoCanShuTanChuangWenAn') }}</p>
         <div class="params-content">
-          <span class="params-label">菜单显隐参数：</span>
+          <span class="params-label">{{ $t('I18N.layout.caiDanXianYinCanShu2') }}：</span>
           <span class="params-value">
             iFrameWeb=ewogICJ0aGVtZSI6ImRhcmsiLAogICJpc0VuYWJsZWQiOnRydWUsCiAgInNpZGUiOiB0cnVlLAogICJ0b3AiOiB0cnVlCn0=
           </span>
         </div>
       </div>
       <template #footer>
-        <a-button key="back" @click="dialogVisiable = false">取消</a-button>
-        <a-button key="submit" type="primary" @click="copyParams">复制参数</a-button>
+        <a-button key="back" @click="dialogVisiable = false">{{ $t('I18N.common.cancel') }}</a-button>
+        <a-button key="submit" type="primary" @click="copyParams">{{ $t('I18N.layout.fuZhiCanShu') }}</a-button>
       </template>
     </a-modal>
   </div>
@@ -152,14 +152,14 @@
 
   const useTheme = () => {
     Modal.confirm({
-      title: '应用当前主题',
+      title: I18N.layout.yingYongDangQianZhuTi,
       // icon: createVNode(ExclamationCircleOutlined),
       icon: h(''),
       centered: true,
-      content: '新主题风格将覆盖所有账号自定义风格，确定保存新主题风格并应用到所有账号系统吗？',
-      okText: '确认',
+      content: I18N.layout.xinZhuTiFengGeTiShi,
+      okText: I18N.layout.queRen,
       okType: 'danger',
-      cancelText: '取消',
+      cancelText: I18N.common.cancel,
       onCancel(...args) {
         console.log('onCancel', ...args);
       },
@@ -175,7 +175,7 @@
         'iFrameWeb=ewogICJ0aGVtZSI6ImRhcmsiLAogICJpc0VuYWJsZWQiOnRydWUsCiAgInNpZGUiOiB0cnVlLAogICJ0b3AiOiB0cnVlCn0='
       );
     }
-    message.success('复制成功，请将参数粘贴到新增菜单对应表单处');
+    message.success(I18N.layout.fuZhiChengGongWenAn);
     dialogVisiable.value = false;
   };
 </script>

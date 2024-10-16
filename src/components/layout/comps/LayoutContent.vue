@@ -26,7 +26,7 @@
       </a-breadcrumb>
       <div class="page-title">
         <LeftSquareOutlined size="14" class="page-icon" />
-        <div class="page-title-text">{{ $route.meta.title }}</div>
+        <div class="page-title-text">{{ $t(`${$route.meta.title}`) }}</div>
       </div>
     </div>
     <a-layout-content>

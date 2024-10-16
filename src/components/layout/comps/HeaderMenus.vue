@@ -229,7 +229,7 @@
       submenu: [
         {
           id: 'workBench',
-          name: 'dashboard',
+          name: I18N.layout.gongZuoTai,
           hideChildren: true,
           url: '/workBench',
           submenu: []
