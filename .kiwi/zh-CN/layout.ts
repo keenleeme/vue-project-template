@@ -249,4 +249,5 @@ export default {
   shiLi:'示例',
   kaiShiRiQi:'开始日期',
   jieShuRiQi:'结束日期',
+  chanPin:'产品',
 };
