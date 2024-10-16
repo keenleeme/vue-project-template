@@ -1,12 +1,3 @@
-/*
- * @Author: xzj 13819929694@163.com
- * @Date: 2024-08-22 16:50:45
- * @LastEditors: xzj 13819929694@163.com
- * @LastEditTime: 2024-08-29 18:48:16
- * @Description:
- *
- * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved.
- */
 import { createApp } from 'vue';
 import { ComponentLibrary } from '@ued-material/ued-wbc-vue3';
 // import Soul from '@ailpha/soul-ui';
@@ -17,7 +8,7 @@ import 'ant-design-vue/dist/reset.css';
 
 /* eslint-disable */
 import 'virtual:uno.css';
-import '@/assets/styles/theme.css';
+import '@/theme/theme.css'
 import App from './App.vue';
 import i18n from './locale/index';
 // micro按需生成

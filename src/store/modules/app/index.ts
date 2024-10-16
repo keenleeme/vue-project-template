@@ -1,7 +1,7 @@
 import { computed, ref } from 'vue';
 // import { theme } from 'ant-design-vue';
 import { defineStore } from 'pinia';
-import { LoginConfigDTO } from '@/views/login/types';
+import { LoginConfigDTO } from '@/views/uedModule/login/types';
 // import { themeTokens, ThemeTypes } from '@/theme';
 import { defaultConfig } from './defaultConfig';
 import { AppConfigType } from './types';
@@ -32,6 +32,11 @@ export default defineStore(
         Object.assign(defaultConfig.loginConfig, appConfig.value.loginConfig, defaultConfig.loginConfig, config)
       );
     };
+    // 主题控制面板
+    const themePanelVisible = ref<boolean>(false);
+    const setThemePanelVisible = (show: boolean) => {
+      themePanelVisible.value = show;
+    }
     // // 主题
     // const themeType = ref<ThemeTypes>(ThemeTypes.Light);
     // const setThemeType = (theme: ThemeTypes) => {
@@ -70,9 +75,11 @@ export default defineStore(
       // setThemeType,
       // theme,
       watermark,
-      setWatermark
+      setWatermark,
       // themeTokenType,
       // setThemeTokenType
+      themePanelVisible,
+      setThemePanelVisible
     };
   },
   {

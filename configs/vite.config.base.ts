@@ -1,12 +1,3 @@
-/*
- * @Author: xzj 13819929694@163.com
- * @Date: 2024-08-22 16:50:45
- * @LastEditors: xzj 13819929694@163.com
- * @LastEditTime: 2024-09-03 17:09:13
- * @Description: 
- * 
- * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
- */
 import vue from '@vitejs/plugin-vue';
 import { resolve } from 'path';
 import UnoCSS from 'unocss/vite';
@@ -47,7 +38,7 @@ export default defineConfig({
         globalsPropValue: true,
       },
       vueTemplate: false,
-     }),
+    }),
     Components({
       resolvers: [
         AntDesignVueResolver({
@@ -90,7 +81,7 @@ export default defineConfig({
     //   ]
     // }
     // copyPublicDir: true,
-    
+
     // onEnd() {  
     //   // 根据环境变量判断是否在生产环境下复制文件  
     //   if (process.env.NODE_ENV === 'production') {  

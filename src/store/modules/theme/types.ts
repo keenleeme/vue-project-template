@@ -1,18 +1,10 @@
-/*
- * @Author: xzj 13819929694@163.com
- * @Date: 2024-08-28 19:20:06
- * @LastEditors: xzj 13819929694@163.com
- * @LastEditTime: 2024-09-02 14:37:21
- * @Description:
- * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved.
- */
 export interface ThemeConfigType {
   // type: string; // 配置项类型 'mode'/'primaryColor'/'layout'/'others'
   title: string;
   dark: boolean; // 暗黑模式
   mode: string; // 模式 	'light'/'dark'
   lang: string; // 语言 	'zh'/'en'
-  lightDarkSwitch: boolean; // 亮暗切换
+  lightDarkSwitch: boolean; // 亮暗切换按钮
   primaryColor: string; // 主题色
   layout: string; // 布局方式 'top'/'side'/'mix'
   topStyle: string; // 顶部样式 	'dark'/'light'

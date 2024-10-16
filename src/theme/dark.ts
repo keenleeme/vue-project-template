@@ -1,12 +1,3 @@
-/*
- * @Author: xzj 13819929694@163.com
- * @Date: 2024-09-04 14:45:48
- * @LastEditors: xzj 13819929694@163.com
- * @LastEditTime: 2024-09-25 19:31:06
- * @Description:
- *
- * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved.
- */
 const darkToken = {
   // seed token
   colorPrimary: '#3b71ee', // 主色

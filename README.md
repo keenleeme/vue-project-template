@@ -35,7 +35,7 @@ import { createApp } from 'vue';
 import Antd from 'ant-design-vue';
 import App from './App';
 import 'ant-design-vue/dist/reset.css';
-import '@/assets/styles/theme.css'
+import '@/theme/theme.css'
 
 const app = createApp(App);
 

@@ -1,14 +1,15 @@
 <template>
   <div v-if="!(themeConfig.layout === 'side' && !themeConfig.header)" class="header">
     <div class="logo-wrap">
-      <span class="logo"><img src="@/assets/images/logo.svg" /></span>
+      <!-- <span class="logo"><img src="@/assets/images/logo.svg" /></span> -->
+      <span class="logo"><img :src="loginConfig.logoUrl" /></span>
       <span class="title">{{ $t('I18N.layout.zhiQiFuHuaQi') }}</span>
     </div>
     <UedMapMenu
       v-if="config.layout !== 'side' && config.mapMenu"
       v-model:star-keys="starKeys"
       :props="dataProps"
-      :data="data"
+      :data="topMenuData"
       :dark="config.mode === 'dark' || (config.mode === 'light' && config.topStyle === 'dark')"
       :pop-dark="config.mode === 'dark' || (config.mode === 'light' && config.topStyle === 'dark')"
       :star="true"
@@ -39,26 +40,19 @@
         <a-button>{{ $t('I18N.common.cancel') }}</a-button>
       </template>
     </UedMapMenu>
-    <UedTopMenu
+
+    <TopMenu
       v-if="config.layout !== 'side'"
-      v-model:active-id="activeId"
-      :props="dataProps"
-      :data="data"
-      :pop-active="popActive"
-      :dark="config.mode === 'dark' || (config.mode === 'light' && config.topStyle === 'dark')"
-      :pop-dark="config.mode === 'dark' || (config.mode === 'light' && config.topStyle === 'dark')"
-      :mix="config.mode === 'mix'"
-      popover-class="top-menu-popover"
-      @menu-click="handleMenuClick"
-    >
-    </UedTopMenu>
+      :menuData="topMenuData" 
+    ></TopMenu>
+
     <div class="header-operates">
       <a-dropdown>
         <i class="icon-button menuicon menu-icon-help" />
         <template #overlay>
           <a-menu>
             <a-menu-item v-if="config.helpCenter">
-              <span @click="showDrawer">{{ $t('I18N.layout.bangZhuWenDang') }}</span>
+              <span @click="showHelpDocument">{{ $t('I18N.layout.bangZhuWenDang') }}</span>
             </a-menu-item>
             <a-menu-item>
               <span @click="$router.push('/vueTour')">{{ $t('I18N.layout.ruMenYinDao') }}</span>
@@ -77,19 +71,11 @@
       <i
         v-if="config.languageSwitch"
         class="icon-button menuicon"
-        :class="config.lang === 'ZH' ? 'menu-icon-chinese' : 'menu-icon-english'"
+        :class="config.lang === 'zh' ? 'menu-icon-chinese' : 'menu-icon-english'"
         @click="handleLocaleChangeA(config.lang)"
       />
       <FullscreenOutlined class="icon-button menuicon" size="24" @click="toggleFullScreen" />
-      <UedUserMenu
-        :props="dataProps"
-        :data="userMenu"
-        :dark="config.mode === 'dark' || (config.mode === 'light' && config.topStyle === 'dark')"
-        :pop-dark="config.mode === 'dark' || (config.mode === 'light' && config.topStyle === 'dark')"
-        name="Admin"
-        popover-class="user-menu-popover"
-        @menu-click="userMenuClick"
-      />
+      <UserMenu :menuData="userMenu" ></UserMenu>
     </div>
   </div>
   <a-modal
@@ -140,40 +126,10 @@
       <a-button type="primary" @click="dialogConfirm">{{ $t('I18N.common.confirm') }}</a-button>
     </template>
   </a-modal>
-  <a-drawer
-    v-model:open="open"
-    class="custom-class"
-    root-class-name="root-class-name"
-    :title="$t('I18N.layout.bangZhuWenDang')"
-    width="520"
-    :closable="false"
-    placement="right"
-    @after-open-change="afterOpenChange"
-  >
-    <template #extra>
-      <svg
-        t="1726654047990"
-        class="icon icon-export"
-        viewBox="0 0 1024 1024"
-        version="1.1"
-        xmlns="http://www.w3.org/2000/svg"
-        p-id="4265"
-        width="24"
-        height="24"
-        @click="onClose"
-      >
-        <path
-          d="M887.488 467.072H591.616a34.112 34.112 0 1 0 0 68.224h213.44l-304.64 304.64a34.112 34.112 0 1 0 48.256 48.32l304.64-304.64v213.376a34.112 34.112 0 1 0 68.288 0V501.184a34.112 34.112 0 0 0-34.112-34.112z"
-          p-id="4266"
-        ></path>
-        <path
-          d="M876.096 347.328v-130.56c0-50.304-40.768-91.072-91.008-91.072H193.408c-50.24 0-91.008 40.768-91.008 91.072v523.392c0 50.24 40.768 91.008 91.008 91.008h204.8v-0.128a34.112 34.112 0 0 0 0-68.032v-0.128H216.192a45.504 45.504 0 0 1-45.504-45.504V330.496h637.12v18.176c0 0.704-0.192 1.408-0.192 2.176a34.432 34.432 0 1 0 68.864 0c0-1.216-0.256-2.368-0.384-3.52z m-68.288-62.336H170.688v-45.44c0-25.152 20.352-45.568 45.44-45.568h546.176c25.152 0 45.504 20.416 45.504 45.504v45.504z"
-          p-id="4267"
-        ></path>
-      </svg>
-    </template>
-    <HelpDocument></HelpDocument>
-  </a-drawer>
+
+  <!-- 帮助文档 -->
+  <div ref="helpDocument" class="help-document"></div>
+
   <ThemePanel
     v-model:visible="themePanelVisible"
     v-model:config="config"
@@ -184,36 +140,52 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, watchEffect } from 'vue';
-  import { useRouter } from 'vue-router';
+  import { ref, watchEffect, watch, computed } from 'vue';
   import { FullscreenOutlined } from '@ant-design/icons-vue';
-  // import { generate } from '@ant-design/colors';
-  import { UedTopMenu, UedMapMenu, UedUserMenu, ThemePanel, findNodeInTree } from '@ued-material/menu';
-  import { storeToRefs } from 'pinia';
-  import { useAppStore, useMenusStore, useThemeStore } from '@/store';
-  import HelpDocument from './HelpDocument.vue';
   import { changeLocale } from '@international/vue3-i18n';
+  import { UedMapMenu, ThemePanel, findNodeInTree } from '@ued-material/menu';
+  import docsViewer from 'docs-viewer';
+  import 'docs-viewer/dist/lib.css';
+  import { storeToRefs } from 'pinia';
+  import { useAppStore, useThemeStore } from '@/store';
+  import TopMenu from '@/components/menu/topMenu.vue'
+  import UserMenu from '@/components/menu/userMenu.vue'
+  import { LoginConfigDTO } from '@/views/uedModule/login/types';
 
-  const menusStore = useMenusStore();
+  const props = defineProps({
+    menuData: {
+      type: Array,
+      // required: true
+      default: () => [],
+    },
+    userMenu: {
+      type: Array,
+      // required: true,
+      default: () => [],
+    },
+    dataProps: {
+      type: Object,
+      default: {
+        id: 'id',
+        label: 'name',
+        children: 'submenu',
+        icon: 'icon',
+        hide: 'hide',
+        html: 'html',
+        hideChildren: 'hideChildren',
+        disabled: 'disabled',
+      },
+    },
+  });
+
   const appStore = useAppStore();
   const themeStore = useThemeStore();
 
-  // 菜单
-  const { activeMenus, activeId } = storeToRefs(menusStore);
-  const selectMenuId = ref<string[]>([]);
-  watchEffect(() => {
-    console.log(1111)
-    if (activeMenus.value.length > 0) {
-      const active = activeMenus.value[activeMenus.value.length - 1];
-      selectMenuId.value = [active?.id];
-    }
-    if (activeId.value) {
-      // selectMenuId.value = [activeId.value];
-      console.log(activeId)
-    }
-  });
+  const { themePanelVisible, appConfig } = storeToRefs(appStore);
+  const loginConfig = ref<LoginConfigDTO>(new LoginConfigDTO(appConfig.value?.loginConfig));
 
-  const router = useRouter();
+  // 菜单数据
+  const topMenuData = ref(props.menuData)
 
   // 退出登录
   const handleLogout = () => {
@@ -398,53 +370,19 @@
   //   accordion: true
   // };
   const { themeConfig } = storeToRefs(themeStore);
-
-  console.log('themeConfig', themeConfig.value.header, themeStore);
   const config = ref({
     ...themeConfig.value
   });
 
-  // 设置ant-design 主题色
-  const changeColorPrimary = (type: string) => {
-    themeStore.setThemeType(type);
-    themeStore.setThemeTokenType(type);
-  };
   watchEffect(() => {
     config.value = { ...themeConfig.value };
-    changeColorPrimary(config.value.mode);
   });
 
-  const popActive = ref(true);
-  // let activeId = ref<string|number>();
-  const recentlyKeys = ref([21, 11, 231, 31]);
-  const starKeys = ref([11, 21, 231, 31]);
+  const recentlyKeys = ref([]);
+  const starKeys = ref([]);
 
-  // watchEffect(() => {
-  //   // 获取当前激活的菜单项的id，并将其赋值给activeId。activeMenus是一个数组，需要获取最后一个元素。
-  //   // if (activeMenus.value.length > 0) {
-  //   //   console.log(activeMenus)
-  //   //   const active = activeMenus.value[activeMenus.value.length - 1];
-  //   //   activeId.value = active?.id;
-  //   // }
-  // });
-
-  const userMenu = ref([
-    {
-      id: 1,
-      name: I18N.layout.tuiChuDengLu
-    }
-  ]);
-
-  const handleMenuClick = (item: any) => {
-    router.push(item.url);
-  };
-
-  const originMenuData = JSON.parse(JSON.stringify(data.value));
+  const originMenuData = JSON.parse(JSON.stringify(topMenuData.value));
   const tempMenu = ref();
-
-  const userMenuClick = () => {
-    handleLogout();
-  };
 
   const dialogVisible = ref(false);
   const ruleForm = ref();
@@ -479,7 +417,7 @@
 
   const level2Menus = ref<any[]>([]);
   const updateLevel2Menus = () => {
-    level2Menus.value = data.value.filter((item) => item.submenu && item.submenu.length > 0);
+    level2Menus.value = topMenuData.value.filter((item) => item.submenu && item.submenu.length > 0);
   };
 
   const openAddMenuDialog = () => {
@@ -500,9 +438,9 @@
 
   const editItem = (val: any) => {
     const { type, id } = val;
-    const itemData = findNodeInTree(data.value, id, dataProps.value) as any;
+    const itemData = findNodeInTree(topMenuData.value, id, props.dataProps.value) as any;
     if (type === 'reset') {
-      const originItem = findNodeInTree(originMenuData, id, dataProps.value) as any;
+      const originItem = findNodeInTree(originMenuData, id, props.dataProps.value) as any;
       itemData.name = originItem.name;
     }
     if (type === 'edit') {
@@ -517,21 +455,21 @@
   };
 
   const resetMenu = () => {
-    data.value = JSON.parse(JSON.stringify(originMenuData));
+    topMenuData.value = JSON.parse(JSON.stringify(originMenuData));
   };
 
   const startEdit = () => {
-    tempMenu.value = JSON.parse(JSON.stringify(data.value));
+    tempMenu.value = JSON.parse(JSON.stringify(topMenuData.value));
   };
 
   const cancelEdit = () => {
-    data.value = JSON.parse(JSON.stringify(tempMenu.value));
+    topMenuData.value = JSON.parse(JSON.stringify(tempMenu.value));
   };
 
   const saveEdit = () => {};
 
   const dragMenu = (val: any) => {
-    data.value = val.newData;
+    topMenuData.value = val.newData;
   };
 
   const newId = 999;
@@ -551,9 +489,9 @@
           params
         };
         if (level === 1) {
-          data.value.push(menuInfo);
+          topMenuData.value.push(menuInfo);
         } else {
-          const parent = data.value.find((item: any) => item.id === parentId) as any;
+          const parent = topMenuData.value.find((item: any) => item.id === parentId) as any;
           if (!parent.submenu) parent.submenu = [];
           parent.submenu.push(menuInfo);
         }
@@ -571,8 +509,6 @@
     });
   };
 
-  const themePanelVisible = ref(false);
-
   const log = (val: any) => {
     console.log(val);
   };
@@ -587,27 +523,22 @@
 
   // 重置主题色
   const resetPrimaryColor = () => {
-    // config.value.primaryColor = '#134BEA';
     themeStore.resetThemePrimaryColor();
   };
   const resetTheme = () => {
     themeStore.reset();
-    // themeStore.$reset();
   };
 
   // 帮助手册
-  const open = ref<boolean>(false);
+  const helpDocument = ref(null);
 
-  const afterOpenChange = (bool: boolean) => {
-    console.log('open', bool);
+  const showHelpDocument = () => {
+    docsViewer.open({
+      container: helpDocument.value,
+      src: 'http://10.20.114.19:8089/docs/' // 即你上个步骤部署的文档的静态资源地址
+    });
   };
-  const showDrawer = () => {
-    open.value = true;
-  };
-  const onClose = () => {
-    window.open('https://rd.das-security.cn/home');
-    open.value = false;
-  };
+
   const toggleFullScreen = () => {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen();
@@ -615,15 +546,16 @@
       document.exitFullscreen();
     }
   };
-  
+
   // 国际化切换
 
   const handleLocaleChangeA = (value: string) => {
-    let locale = value === 'ZH'?'en':'zh';
+    let locale = value === 'zh' ? 'en' : 'zh';
+    // setThemeConfig({...config})
+    themeConfig.value = { ...themeConfig.value, lang: locale };
     changeLocale(locale);
     window.location.reload();
-  }
-  
+  };
 </script>
 
 <style lang="less" scoped>
@@ -646,7 +578,7 @@
     .logo {
       margin-left: 16px;
       margin-right: 8px;
-      img{
+      img {
         width: 30px;
       }
     }
@@ -692,7 +624,7 @@
       opacity: 0;
     }
   }
-  .header-dark{ 
+  .header-dark {
     .header {
       background-color: #172034;
       color: #fff;
