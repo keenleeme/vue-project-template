@@ -6,7 +6,7 @@
 }
 :root {
   /*--primary-color: #3498db; /* 默认主题色 */
-  --primary-color: #134BEA; /* 默认主题色 */
+  /* --primary-color: #134BEA; 默认主题色 */
   --primary-bg: #ffffff; /* 默认背景色 */
   /**--primary-divider: #cbd0db; /** 分割线色 */
   --primary-divider: #E9EAF0; /** 分割线色 */
@@ -18,7 +18,7 @@
   --color-text-disabled: #7E8494; /** 文字禁用色 */
   /*--color-text-primary: #3498db; /** 文字默认色 */
   /*--color-text-link: #3498db; /** 文字链接色 */
-  --color-text-primary: #134BEA; /** 文字默认色 */
+  /* --color-text-primary: #134BEA;  文字默认色 */
   --color-text-link: #134BEA; /** 文字链接色 */
   --color-table-border-color: #E9EAF0; /** 表格边框景色 */
   --color-table-th-bg: #F6F7FB; /** 表格头部背景色 */
@@ -33,7 +33,7 @@
 
 .theme-dark {
   /*--primary-color: #0D172A; /* 暗色主题色 */
-  --primary-color: #3B71EE; /* 暗色主题色 */
+  /*--primary-color: #3B71EE;  暗色主题色 */
   --primary-bg: #0d172a; /* 暗色背景色 */
   --primary-divider: #2D374E; /** 分割线色 */
   --color-page-bg: #020C1E; /** 页面背景色 */
@@ -42,7 +42,7 @@
   --color-text-content: #ffffff; /** 内容色 */
   --color-text-placeholder: #9096A5 ; /** 占位符色 */
   --color-text-disabled: #6A7285 ; /** 文字禁用色 */
-  --color-text-primary: #3B71EE; /** 文字默认色 */
+  /*--color-text-primary: #3B71EE;  文字默认色 */
   --color-text-link: #3B71EE; /** 文字链接色 */
   --textColor: #ffffff;
   --color-table-border-color: #2D374E; /** 表格边框景色 */
