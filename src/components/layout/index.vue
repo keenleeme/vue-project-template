@@ -9,7 +9,10 @@
     >
       <HeaderMenus v-if="!fullScreen" v-bind="menuConfig"></HeaderMenus>
       <a-layout v-if="!fullScreen">
-        <SiderMenus v-if="themeConfig.layout != 'top'" v-bind="menuConfig"></SiderMenus>
+        <SiderMenus
+          v-if="themeConfig.layout === 'side' || (siderMenus && siderMenus.length > 0 && themeConfig.layout === 'mix')"
+          v-bind="menuConfig"
+        ></SiderMenus>
         <LayoutContent></LayoutContent>
       </a-layout>
       <RouterView v-if="fullScreen"></RouterView>
@@ -30,6 +33,7 @@
   const appStore = useAppStore();
   const { watermark } = storeToRefs(appStore);
   const menusStore = useMenusStore();
+  const { siderMenus } = storeToRefs(menusStore);
   const route = useRoute();
   watchEffect(() => {
     const routes = route.meta.parentRoutes as RouteItemType[];
@@ -47,25 +51,27 @@
   });
 
   const menuConfig = ref({
-    dataProps:{
+    dataProps: {
       label: 'name',
       children: 'submenu'
     },
-    userMenu:[{
-      id: 1,
-      name: I18N.layout.tuiChuDengLu
-    }],
-    menuData:[
+    userMenu: [
+      {
+        id: 1,
+        name: I18N.layout.tuiChuDengLu
+      }
+    ],
+    menuData: [
       {
         id: 1,
         name: I18N.layout.genericTypicalPage,
-        icon:'menu-icon-desktop',
+        icon: 'menu-icon-desktop',
         submenu: [
           {
             id: 'workBench',
             name: '工作台',
             hideChildren: true,
-            icon:'menu-icon-desktop',
+            icon: 'menu-icon-desktop',
             url: '/workBench',
             submenu: []
           },
@@ -210,5 +216,5 @@
         ]
       }
     ]
-  })
+  });
 </script>
