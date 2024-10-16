@@ -18,6 +18,7 @@ export default {
   setting: '设置',
   menu: '菜单',
   home: '首页',
+  example: '示例',
   username: '用户名',
   password: '密码',
   email: '邮箱',

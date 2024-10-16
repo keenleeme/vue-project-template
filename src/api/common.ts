@@ -81,10 +81,10 @@ export async function getMenus(): Promise<MenuType[]> {
       ]
     },
     {
-      id: 'home',
-      title: I18N.common.home,
+      id: 'example',
+      title: I18N.common.example,
       icon: 'AppstoreOutlined',
-      path: '/home'
+      path: '/example'
     },
     {
       id: 'theme',
@@ -155,7 +155,7 @@ export async function getMenus(): Promise<MenuType[]> {
 
 // 获取权限数据
 export async function getPermissions() {
-  return ['base::home:index', 'base::theme:index', 'base::workBench:index', 'sum-one', 'sum-two', 'sum-more'];
+  return ['base::example:index', 'base::theme:index', 'base::workBench:index', 'sum-one', 'sum-two', 'sum-more'];
 }
 
 // 获取网站配置

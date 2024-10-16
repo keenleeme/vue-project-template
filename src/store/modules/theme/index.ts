@@ -14,8 +14,8 @@ export default defineStore('theme', () => {
   const localThemeConfig = JSON.parse(localStorage.getItem('ZQTHEMECONFIG') || '{}')
   const themeConfig = ref<ThemeConfigType>({ ...themeDefaultConfig, ...localThemeConfig });
 
-  watch(themeConfig,(newValue, oldValue)=>{
-    localStorage.setItem('ZQTHEMECONFIG',JSON.stringify(newValue))
+  watch(themeConfig, (newValue, oldValue) => {
+    localStorage.setItem('ZQTHEMECONFIG', JSON.stringify(newValue))
   })
   const setThemeConfig = (config: ThemeConfigType) => {
     const value = { ...themeDefaultConfig, ...config };
@@ -45,19 +45,19 @@ export default defineStore('theme', () => {
       .saturate(15 / 85)
       .lighten(0.25)
       .hex();
-      primaryColors = generate(themeConfig.value.primaryColor);
-      darkPrimaryColors = generate(darkOriginColor, { theme: 'dark', backgroundColor: '#020C1E' });
-    return {primaryColors, darkPrimaryColors}
+    primaryColors = generate(themeConfig.value.primaryColor);
+    darkPrimaryColors = generate(darkOriginColor, { theme: 'dark', backgroundColor: '#020C1E' });
+    return { primaryColors, darkPrimaryColors }
   }
 
-  const themeTokenType = computed(() => {return themeConfig.value.mode});
+  const themeTokenType = computed(() => { return themeConfig.value.mode });
 
   const theme = computed(() => {
     // let token = themeTokenType.value === 'dark' ? themeTokens.dark : themeTokens.light;
     let token = themeTokens[themeTokenType.value as keyof typeof themeTokens];
-    const {primaryColors, darkPrimaryColors} = getPrimaryColors();
+    const { primaryColors, darkPrimaryColors } = getPrimaryColors();
     const isDark = themeTokenType.value === 'dark' ? true : false;
-    token = { 
+    token = {
       ...token,
       colorPrimary: themeConfig.value.primaryColor,
       colorPrimaryActive: isDark ? darkPrimaryColors[5] : primaryColors[5],

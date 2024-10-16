@@ -79,11 +79,11 @@
     </UedSideMenu>
 </template>
 <script lang="ts" setup>
-  import { ref, watchEffect, defineProps } from 'vue';
+  import { ref, watchEffect } from 'vue';
   import { storeToRefs } from 'pinia';
   import { useAppStore, useMenusStore, useThemeStore } from '@/store';
   import { UedSideMenu, UedUserMenu } from '@ued-material/menu';
-  import { LoginConfigDTO } from '@/views/login/types';
+  import { LoginConfigDTO } from '@/views/uedModule/login/types';
   import { changeLocale } from '@international/vue3-i18n';
   import UserMenu from '@/components/menu/userMenu.vue'
 

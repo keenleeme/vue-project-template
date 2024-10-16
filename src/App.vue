@@ -137,7 +137,7 @@
 
 <!-- 默认主题变量 -->
 <style>
-  @import url('./styles/reset.css');
+  @import url('./assets/styles/reset.css');
 
   /* 应用变量 */
   :is(body) {

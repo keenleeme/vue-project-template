@@ -1,4 +1,4 @@
-import { LoginConfigDTO, LogoModeEnums } from '@/views/login/types';
+import { LoginConfigDTO, LogoModeEnums } from '@/views/uedModule/login/types';
 import { AppConfigType } from './types';
 
 export const defaultConfig: AppConfigType = {

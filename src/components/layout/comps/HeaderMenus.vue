@@ -150,7 +150,7 @@
   import { useAppStore, useThemeStore } from '@/store';
   import TopMenu from '@/components/menu/topMenu.vue'
   import UserMenu from '@/components/menu/userMenu.vue'
-  import { LoginConfigDTO } from '@/views/login/types';
+  import { LoginConfigDTO } from '@/views/uedModule/login/types';
 
   const props = defineProps({
     menuData: {

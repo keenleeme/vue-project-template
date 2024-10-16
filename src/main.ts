@@ -8,7 +8,7 @@ import 'ant-design-vue/dist/reset.css';
 
 /* eslint-disable */
 import 'virtual:uno.css';
-import '@/assets/styles/theme.css';
+import '@/theme/theme.css'
 import App from './App.vue';
 import i18n from './locale/index';
 // micro按需生成

@@ -18,6 +18,7 @@ export default {
   setting: 'Set up',
   menu: 'Menu',
   home: 'Home page',
+  example: 'example page',
   username: 'User name',
   password: 'Password',
   email: 'Mailbox',

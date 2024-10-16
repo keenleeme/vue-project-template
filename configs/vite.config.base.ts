@@ -38,7 +38,7 @@ export default defineConfig({
         globalsPropValue: true,
       },
       vueTemplate: false,
-     }),
+    }),
     Components({
       resolvers: [
         AntDesignVueResolver({
@@ -81,7 +81,7 @@ export default defineConfig({
     //   ]
     // }
     // copyPublicDir: true,
-    
+
     // onEnd() {  
     //   // 根据环境变量判断是否在生产环境下复制文件  
     //   if (process.env.NODE_ENV === 'production') {  

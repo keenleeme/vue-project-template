@@ -4,34 +4,25 @@ const routes: RouteRecordRaw[] = [
   {
     name: 'base::base-list',
     path: '/base-list',
-    component: () => import('@/views/baseList/index.vue'),
+    component: () => import('@/views/uedTypical/baseList/index.vue'),
     meta: {
       title: '列表页',
-      permissionId: 'base::home:index'
+      permissionId: 'base::workBench:index'
     }
   },
   {
-    name: 'base::home',
-    path: '/home',
-    component: () => import('@/views/home/index.vue'),
+    name: 'base::example',
+    path: '/example',
+    component: () => import('@/views/uedTypical/example/index.vue'),
     meta: {
-      title: '首页',
-      permissionId: 'base::home:index'
-    }
-  },
-  {
-    name: 'base::theme',
-    path: '/theme',
-    component: () => import('@/views/theme/index.vue'),
-    meta: {
-      title: '主题',
-      permissionId: 'base::theme:index'
+      title: '示例',
+      permissionId: 'base::workBench:index'
     }
   },
   {
     name: 'base::workBench',
     path: '/workBench',
-    component: () => import('@/views/workBench/index.vue'),
+    component: () => import('@/views/uedTypical/workBench/index.vue'),
     meta: {
       title: '工作台',
       permissionId: 'base::workBench:index'
@@ -40,7 +31,7 @@ const routes: RouteRecordRaw[] = [
   {
     name: 'base-form',
     path: '/base-form',
-    component: () => import('@/views/baseForm/index.vue'),
+    component: () => import('@/views/uedTypical/baseForm/index.vue'),
     meta: {
       title: '基础表单',
       permissionId: 'base::theme:index'
@@ -49,7 +40,7 @@ const routes: RouteRecordRaw[] = [
   {
     name: 'base-detail',
     path: '/base-detail',
-    component: () => import('@/views/baseDetail/index.vue'),
+    component: () => import('@/views/uedTypical/baseDetail/index.vue'),
     meta: {
       title: '基础详情',
       permissionId: 'base::theme:index'
@@ -58,7 +49,7 @@ const routes: RouteRecordRaw[] = [
   {
     name: 'base-config',
     path: '/base-config',
-    component: () => import('@/views/baseConfig/index.vue'),
+    component: () => import('@/views/uedTypical/baseConfig/index.vue'),
     meta: {
       title: '基础配置',
       permissionId: 'base::theme:index'
@@ -67,7 +58,7 @@ const routes: RouteRecordRaw[] = [
   {
     name: 'base::dasUpgrade',
     path: '/dasUpgrade',
-    component: () => import('@/views/iframe/index.vue'),
+    component: () => import('@/views/uedTypical/iframe/index.vue'),
     meta: {
       title: '在线升级',
       permissionId: 'base::theme:index'
@@ -76,52 +67,52 @@ const routes: RouteRecordRaw[] = [
   {
     name: 'base::dasvScreen',
     path: '/dasvScreen',
-    component: () => import('@/views/iframe/index.vue'),
+    component: () => import('@/views/uedTypical/iframe/index.vue'),
     meta: {
       title: '大屏自定义',
-      permissionId: 'base::home:index'
+      permissionId: 'base::workBench:index'
     }
   },
   {
     name: 'base::themeConfig',
     path: '/themeConfig',
-    component: () => import('@/views/themeConfig/index.vue'),
+    component: () => import('@/views/uedModule/themeConfig/index.vue'),
     meta: {
       title: '主题配置页',
-      permissionId: 'base::home:index'
+      permissionId: 'base::workBench:index'
     }
   },
   {
     name: 'base::loginConfig',
     path: '/loginConfig',
-    component: () => import('@/views/loginConfig/index.vue'),
+    component: () => import('@/views/uedModule/loginConfig/index.vue'),
     meta: {
       title: '登录配置页',
-      permissionId: 'base::home:index'
+      permissionId: 'base::workBench:index'
     }
   },
   {
     name: 'base::vueTour',
     path: '/vueTour',
-    component: () => import('@/views/vueTour/index.vue'),
+    component: () => import('@/views/uedTypical/vueTour/index.vue'),
     meta: {
       title: '引导页',
-      permissionId: 'base::home:index'
+      permissionId: 'base::workBench:index'
     }
   },
   {
     name: 'base::vueTour2',
     path: '/vueTour-page2',
-    component: () => import('@/views/vueTour/page2.vue'),
+    component: () => import('@/views/uedTypical/vueTour/page2.vue'),
     meta: {
       title: '引导页2',
-      permissionId: 'base::home:index'
+      permissionId: 'base::workBench:index'
     }
   },
   {
     name: 'sum-one',
     path: '/sum-one',
-    component: () => import('@/views/RoutersMenus/index.vue'),
+    component: () => import('@/views/uedTypical/example/index.vue'),
     meta: {
       title: 'sum-one',
       permissionId: 'sum-one'
@@ -137,7 +128,7 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         name: 'sum-more-0',
-        component: () => import('@/views/RoutersMenus/index.vue'),
+        component: () => import('@/views/uedTypical/example/index.vue'),
         path: '/sum-more-0',
         meta: {
           permissionId: 'sum-more'
@@ -145,7 +136,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         name: 'sum-more-1-0',
-        component: () => import('@/views/RoutersMenus/index.vue'),
+        component: () => import('@/views/uedTypical/example/index.vue'),
         path: '/sum-more-1-0',
         meta: {
           permissionId: 'sum-more'
@@ -153,7 +144,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         name: 'sum-more-1-1',
-        component: () => import('@/views/RoutersMenus/index.vue'),
+        component: () => import('@/views/uedTypical/example/index.vue'),
         path: 'sum-more-1-1',
         meta: {
           permissionId: 'sum-more'
@@ -161,7 +152,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         name: 'sum-more-1-2',
-        component: () => import('@/views/RoutersMenus/index.vue'),
+        component: () => import('@/views/uedTypical/example/index.vue'),
         path: '/sum-more/sum-more-1-2',
         meta: {
           permissionId: 'sum-more'
@@ -173,7 +164,7 @@ const routes: RouteRecordRaw[] = [
         children: [
           {
             name: 'sum-more-2-1',
-            component: () => import('@/views/RoutersMenus/index.vue'),
+            component: () => import('@/views/uedTypical/example/index.vue'),
             path: 'sum-more-2-1',
             meta: {
               permissionId: 'sum-more'
@@ -183,22 +174,13 @@ const routes: RouteRecordRaw[] = [
       }
     ]
   },
-  {
-    name: 'example',
-    path: '/example',
-    meta: {
-      title: 'example',
-      permissionId: 'base::theme:index'
-    },
-    component: () => import('@/views/example/index.vue')
-  }
 ];
 
 const wihitetRoutes: RouteRecordRaw[] = [
   {
     name: 'login',
     path: '/login',
-    component: () => import('@/views/login/index.vue'),
+    component: () => import('@/views/uedModule/login/index.vue'),
     meta: {
       title: '登录',
       fullScreen: true
@@ -207,7 +189,7 @@ const wihitetRoutes: RouteRecordRaw[] = [
   {
     name: '404',
     path: '/404',
-    component: () => import('@/views/NotFound/index.vue'),
+    component: () => import('@/views/uedTypical/notFound/index.vue'),
     meta: {
       title: '404',
       fullScreen: true

@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, defineProps, computed } from 'vue';
+  import { ref, computed } from 'vue';
   import { theme } from 'ant-design-vue';
   import SideMenu from '@/components/menu/sideMenu.vue'
 

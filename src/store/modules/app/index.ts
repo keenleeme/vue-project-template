@@ -1,7 +1,7 @@
 import { computed, ref } from 'vue';
 // import { theme } from 'ant-design-vue';
 import { defineStore } from 'pinia';
-import { LoginConfigDTO } from '@/views/login/types';
+import { LoginConfigDTO } from '@/views/uedModule/login/types';
 // import { themeTokens, ThemeTypes } from '@/theme';
 import { defaultConfig } from './defaultConfig';
 import { AppConfigType } from './types';

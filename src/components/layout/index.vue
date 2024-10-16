@@ -115,35 +115,35 @@
       {
         id: 3,
         name: I18N.layout.gongZuoTaiZiDingYi,
-        url: '/home',
+        url: '/example',
         hideChildren: true,
         submenu: []
       },
       {
         id: 4,
         name: I18N.layout.baoBiaoZiDingYi,
-        url: '/home',
+        url: '/example',
         hideChildren: true,
         submenu: []
       },
       {
         id: 5,
         name: I18N.layout.tuKeShiHuaChengXian,
-        url: '/home',
+        url: '/example',
         hideChildren: true,
         submenu: []
       },
       {
         id: 6,
         name: I18N.layout.tuBianJiQi,
-        url: '/home',
+        url: '/example',
         hideChildren: true,
         submenu: []
       },
       {
         id: 7,
         name: I18N.layout.liuChengBianPai,
-        url: '/home',
+        url: '/example',
         hideChildren: true,
         submenu: []
       },

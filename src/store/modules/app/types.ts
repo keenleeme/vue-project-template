@@ -1,4 +1,4 @@
-import { LoginConfigDTO } from '@/views/login/types';
+import { LoginConfigDTO } from '@/views/uedModule/login/types';
 
 export interface User {
   name: string;

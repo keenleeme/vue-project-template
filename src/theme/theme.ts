@@ -1,7 +1,6 @@
 const theme = {
   token: {
-    // colorPrimary: '#134bea',
-    colorPrimary: '#F53C3C',
+    colorPrimary: '#134bea',
     colorPrimaryHover: '#3B71EE',
     colorPrimaryActive: '#0639C3',
     colorError: '#F53C3C',
