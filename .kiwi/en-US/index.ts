@@ -1,11 +1,8 @@
-import api from './api';
-import common from './common';
-import example from './example';
-import layout from './layout';
-import login from './login';
-import not_found from './not_found';
-import theme from './theme';
-import base_form from './base_form';
+import common from './uedModule/common'; //ued国际化通用翻译 
+import api from './uedModule/api';
+import layout from './uedModule/layout';
+import login from './uedModule/login';
+import base_form from './uedModule/base_form';
 
 export default Object.assign(
   {},
@@ -13,10 +10,7 @@ export default Object.assign(
     common,
     api,
     layout,
-    example,
     login,
-    theme,
-    not_found,
     base_form
   }
 );

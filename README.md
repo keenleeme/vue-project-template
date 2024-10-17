@@ -28,6 +28,8 @@
 ## 使用文档
 
 [项目开发文档](https://wiki.das-security.cn/pages/viewpage.action?pageId=72484136)
+[项目Q&A](https://wiki.das-security.cn/pages/viewpage.action?pageId=88318914)
+[项目工程结构说明](https://wiki.das-security.cn/pages/viewpage.action?pageId=88319752)
 ### 主题使用方式
 - 引入组件样式
 ```jsx
@@ -35,7 +37,7 @@ import { createApp } from 'vue';
 import Antd from 'ant-design-vue';
 import App from './App';
 import 'ant-design-vue/dist/reset.css';
-import '@/assets/styles/theme.css'
+import '@/theme/theme.css'
 
 const app = createApp(App);
 

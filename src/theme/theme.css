@@ -1,0 +1,49 @@
+:root {
+  --primary-color: #134BEA; /* 默认主题色 */
+  --primary-bg: #ffffff; /* 默认背景色 */
+  --primary-divider: #E9EAF0; /** 分割线色 */
+  --color-page-bg: #f6f7fb; /** 页面背景色 */
+  --color-text-title: #1E2435; /** 标题色 */
+  --color-text-sub-title: #353C51; /** 次标题色 */
+  --color-text-content: #1E2435; /** 内容色 */
+  --color-text-placeholder: #7E8494; /** 占位符色 */
+  --color-text-disabled: #7E8494; /** 文字禁用色 */
+  --color-text-primary: #134BEA; /** 文字默认色 */
+  --color-text-link: #134BEA; /** 文字链接色 */
+  --color-table-border-color: #E9EAF0; /** 表格边框景色 */
+  --color-table-th-bg: #F6F7FB; /** 表格头部背景色 */
+  --color-table-td-bg: #ffffff; /** 表格内容背景色 */
+  --color-table-td-hover-bg: #020C1E; /** 表格内容hover背景色 */
+  --color-table-td-hover-text: #1E2435; /** 表格内容hover色 */
+  --color-border-base: #CBD0DB; /** 边框色 */
+  --color-select: #E8F2FF;/**框选中色*/
+  --color-divider: #E9EAF0;/** 分割线色-页面 */
+  --color-sql-icon: #1E2435; /** sql框icon颜色 */
+  --errorColor: #f53c3c;
+  --warnColor:#ff7f29;
+  --textColor: #1e2435;
+}
+
+.theme-dark {
+  --primary-color: #3B71EE; /* 暗色主题色 */
+  --primary-bg: #0d172a; /* 暗色背景色 */
+  --primary-divider: #2D374E; /** 分割线色 */
+  --color-page-bg: #020C1E; /** 页面背景色 */
+  --color-text-title: #ffffff; /** 标题色 */
+  --color-text-sub-title: #BCC3D1; /** 次标题色 */
+  --color-text-content: #ffffff; /** 内容色 */
+  --color-text-placeholder: #9096A5 ; /** 占位符色 */
+  --color-text-disabled: #6A7285 ; /** 文字禁用色 */
+  --color-text-primary: #3B71EE; /** 文字默认色 */
+  --color-text-link: #3B71EE; /** 文字链接色 */
+  --textColor: #ffffff;
+  --color-table-border-color: #2D374E; /** 表格边框景色 */
+  --color-table-th-bg: #020C1E; /** 表格头部背景色 */
+  --color-table-td-bg: #0D172A; /** 表格内容背景色 */
+  --color-table-td-hover-bg: #020C1E; /** 表格内容hover背景色 */
+  --color-table-td-hover-text: #1E2435; /** 表格内容hover色 */
+  --color-border-base: #4D576E; /** 边框色 */
+  --color-select: #172444;/**框选中色*/
+  --color-divider: #2D374E; /**分割线色-页面*/
+  --color-sql-icon: #9096A5; /** sql框icon颜色 */
+}
