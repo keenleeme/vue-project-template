@@ -15,7 +15,8 @@
   import { useAppStore } from './store';
   import { AppConfigType } from './store/uedModule/app/types';
   import themeAlgorithm from './theme/themeAlgorithm';
-
+import { storeToRefs } from 'pinia';
+import { useThemeStore } from './store';
   const appStore = useAppStore();
 
   // 机器人注册
@@ -24,6 +25,9 @@
 
   //修改主题色算法
   themeAlgorithm();
+  const themeStore = useThemeStore();
+  const { themeConfig, theme } = storeToRefs(themeStore);
+
 
   getWebsiteConfig()
     .then((data) => {
