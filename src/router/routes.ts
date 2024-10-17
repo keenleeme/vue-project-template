@@ -110,15 +110,6 @@ const routes: RouteRecordRaw[] = [
     }
   },
   {
-    name: 'sum-one',
-    path: '/sum-one',
-    component: () => import('@/views/uedTypical/example/index.vue'),
-    meta: {
-      title: 'sum-one',
-      permissionId: 'sum-one'
-    }
-  },
-  {
     name: 'sum-more',
     path: '/sum-more',
     meta: {
@@ -131,6 +122,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/views/uedTypical/example/index.vue'),
         path: '/sum-more-0',
         meta: {
+          title: 'sum-more-0',
           permissionId: 'sum-more'
         }
       },
@@ -139,6 +131,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/views/uedTypical/example/index.vue'),
         path: '/sum-more-1-0',
         meta: {
+          title: 'sum-more-1-0',
           permissionId: 'sum-more'
         }
       },
@@ -147,6 +140,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/views/uedTypical/example/index.vue'),
         path: 'sum-more-1-1',
         meta: {
+          title: 'sum-more-1-1',
           permissionId: 'sum-more'
         }
       },
@@ -155,6 +149,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/views/uedTypical/example/index.vue'),
         path: '/sum-more/sum-more-1-2',
         meta: {
+          title: 'sum-more-1-2',
           permissionId: 'sum-more'
         }
       },
@@ -167,6 +162,7 @@ const routes: RouteRecordRaw[] = [
             component: () => import('@/views/uedTypical/example/index.vue'),
             path: 'sum-more-2-1',
             meta: {
+              title: 'sum-more-2-1',
               permissionId: 'sum-more'
             }
           }

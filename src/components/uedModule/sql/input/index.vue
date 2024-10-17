@@ -236,7 +236,7 @@
     ELEMENT_AND_OBJECT_SUPPORT_TYPE,
     ALL_LOGIC_OPERATOR_OPTIONS_WITHOUT_NOT
   } from '../keytype-op-comtype.js';
-  import { setCurrentOperatorList } from '../mixins';
+  import { setCurrentOperatorList } from '../mixins.js';
   import ComAnimationDiv from './animation.vue';
   import customizeMode from './bassElMode.js';
   import elementImgSrc from './icon/element.png';

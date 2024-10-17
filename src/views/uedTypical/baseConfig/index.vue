@@ -98,7 +98,7 @@
 <script setup lang="ts">
   import { ref } from 'vue';
   import { InfoCircleOutlined } from '@ant-design/icons-vue';
-  import BlockArea from '@/components/blockArea/index.vue';
+  import BlockArea from '@/components/uedModule/blockArea/index.vue';
 
   const showTabs = ref(true);
   const activeKey = ref('1');

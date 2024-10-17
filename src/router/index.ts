@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory, createWebHistory, type RouteRecordRaw } from 'vue-router';
-import type { RouteItemType } from '@/store/modules/menus/types';
+import type { RouteItemType } from '@/store/uedModule/menus/types';
 import { setupPermissionGuard } from './guard';
 import routes from './routes';
 

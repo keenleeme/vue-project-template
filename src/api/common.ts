@@ -1,5 +1,5 @@
-import { AppConfigType } from '@/store/modules/app/types';
-import type { MenuType } from '@/store/modules/menus/types';
+import { AppConfigType } from '@/store/uedModule/app/types';
+import type { MenuType } from '@/store/uedModule/menus/types';
 
 // 获取菜单数据
 export async function getMenus(): Promise<MenuType[]> {

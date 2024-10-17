@@ -90,7 +90,7 @@
   import { Modal, message } from 'ant-design-vue';
   import { storeToRefs } from 'pinia';
   import { useThemeStore } from '@/store';
-  import BlockArea from '../../../components/blockArea/index.vue';
+  import BlockArea from '../../../components/uedModule/blockArea/index.vue';
 
   const themeStore = useThemeStore();
 

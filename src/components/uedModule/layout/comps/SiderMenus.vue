@@ -21,7 +21,7 @@
 <script setup lang="ts">
   import { ref, computed } from 'vue';
   import { theme } from 'ant-design-vue';
-  import SideMenu from '@/components/menu/sideMenu.vue'
+  import SideMenu from '@/components/uedModule/menu/sideMenu.vue'
 
   const props = defineProps({
     menuData: {
