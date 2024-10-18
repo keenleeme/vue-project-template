@@ -228,7 +228,7 @@
   import { UploadFile, message } from 'ant-design-vue';
   import { storeToRefs } from 'pinia';
   import { useAppStore } from '@/store';
-  import { defaultConfig } from '@/store/modules/app/defaultConfig';
+  import { defaultConfig } from '@/store/uedModule/app/defaultConfig';
   import { LoginConfigDTO, LogoModeEnums } from '@/views/uedModule/login/types';
   import * as config from './index';
   import type { FormUploadType } from './index';

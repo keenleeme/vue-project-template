@@ -41,7 +41,7 @@
 <script setup lang="ts">
   import { ref } from 'vue';
   import Icon, { HomeOutlined } from '@ant-design/icons-vue';
-  import SqlTipTree from '@/components/sql/sql-tip-tree.vue';
+  import SqlTipTree from '@/components/uedModule/sql/sql-tip-tree.vue';
   import { DataSource, InputTipExplanation } from '../options';
 
   const tabPosition = ref('1');

@@ -63,9 +63,9 @@
 
 <script setup lang="ts">
   import { ref } from 'vue';
-  import BlockCard from '@/components/blockCard/index.vue';
-  import LineChartComponent from '@/components/charts/lineChart.vue';
-  import PieChartComponent from '@/components/charts/pieChart.vue';
+  import BlockCard from '@/components/uedModule/blockCard/index.vue';
+  import LineChartComponent from '@/components/uedModule/charts/lineChart.vue';
+  import PieChartComponent from '@/components/uedModule/charts/pieChart.vue';
 </script>
 
 <style lang="less" scoped>

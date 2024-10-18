@@ -10,8 +10,8 @@
 
 <script setup lang="ts">
   import { defineComponent, watch, defineEmits } from 'vue';
-  import { defaultConfig } from '@/store/modules/app/defaultConfig';
-  import { themeDefaultConfig } from '@/store/modules/theme/defaultConfig';
+  import { defaultConfig } from '@/store/uedModule/app/defaultConfig';
+  import { themeDefaultConfig } from '@/store/uedModule/theme/defaultConfig';
 
   let language = 'zh';
   const emit = defineEmits(['handleLogin']);

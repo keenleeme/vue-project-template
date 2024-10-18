@@ -85,7 +85,7 @@
   import { UedSideMenu, UedUserMenu } from '@ued-material/menu';
   import { LoginConfigDTO } from '@/views/uedModule/login/types';
   import { changeLocale } from '@international/vue3-i18n';
-  import UserMenu from '@/components/menu/userMenu.vue'
+  import UserMenu from '@/components/uedModule/menu/userMenu.vue'
 
   const props = defineProps({
     menuData: {

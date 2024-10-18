@@ -103,7 +103,7 @@
   import { DeleteOutlined } from '@ant-design/icons-vue';
   import { Button as AButton } from 'ant-design-vue';
   import { ELEMENT_AND_OBJECT_SUPPORT_TYPE } from '../../keytype-op-comtype.js';
-  import { setCurrentOperatorList } from '../../mixins';
+  import { setCurrentOperatorList } from '../../mixins.js';
   import DynContent from '../dyn-content/index.vue';
   import FieldContent from '../field-content/index.vue';
   import OperatorContent from '../operator-content/index.vue';

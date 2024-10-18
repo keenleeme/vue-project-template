@@ -38,7 +38,7 @@
   import { Row as ARow } from 'ant-design-vue';
   import { cloneDeep } from 'lodash';
   import { ELEMENT_AND_OBJECT_SUPPORT_TYPE } from '../keytype-op-comtype.js';
-  import { setCurrentOperatorList } from '../mixins';
+  import { setCurrentOperatorList } from '../mixins.js';
   import FieldContent from './field-content/index.vue';
   import OperatorContent from './operator-content/index.vue';
   import ValueContent from './value-content/index.vue';

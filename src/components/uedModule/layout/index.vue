@@ -25,7 +25,7 @@
   import { useRoute } from 'vue-router';
   import { storeToRefs } from 'pinia';
   import { useAppStore, useMenusStore, useThemeStore } from '@/store';
-  import type { RouteItemType } from '@/store/modules/menus/types';
+  import type { RouteItemType } from '@/store/uedModule/menus/types';
   import HeaderMenus from './comps/HeaderMenus.vue';
   import LayoutContent from './comps/LayoutContent.vue';
   import SiderMenus from './comps/SiderMenus.vue';
