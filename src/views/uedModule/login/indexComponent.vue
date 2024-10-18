@@ -1,5 +1,5 @@
 <template>
-  <ued-login-layout :forms="forms" :theme="mode" :style="background" @u-submit="handleLogin">
+  <ued-login-layout :forms="forms" :theme="themeMode" :style="background" :system="systemTitle" @u-submit="handleLogin">
     <ued-logo slot="logo" :src="logo" :width="logoWidth" :height="logoHeight"></ued-logo>
     <ued-select slot="language" v-model="language" :clearable="false" :options="languageOptions"></ued-select>
     <template slot="copyright">
@@ -21,6 +21,14 @@
   });
   console.log(defaultConfig,123,themeDefaultConfig)
   const props = defineProps({
+    loadingText: {
+      type: String,
+      default: '正在加载...'
+    },
+    systemTitle: {
+      type: String,
+      default: ''
+    },
     logoWidth: {
       type: String || Number,
       default: '180px'
@@ -159,7 +167,7 @@
         ];
       }
     },
-    mode: {
+    themeMode: {
       type: String,
       default: () => {
         return themeDefaultConfig.mode;
