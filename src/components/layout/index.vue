@@ -69,7 +69,7 @@
         submenu: [
           {
             id: 'workBench',
-            name: '工作台',
+            name: I18N.layout.gongZuoTai,
             hideChildren: true,
             icon: 'menu-icon-desktop',
             url: '/workBench',

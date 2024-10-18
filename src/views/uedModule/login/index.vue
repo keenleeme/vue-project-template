@@ -8,7 +8,7 @@
       poster: loginConfig.bgPoster
     }"
     @u-submit="handleLogin"
-    :class="loginConfig.language === 'EN'?'loginEnglish':''"
+    :class="loginConfig.language === 'en'?'loginEnglish':''"
   >
     <ued-logo
       slot="logo"
@@ -187,8 +187,8 @@
     }
   ]);
   const options = ref([
-    { label: '中文', value: 'ZH' },
-    { label: 'English', value: 'EN' }
+    { label: '中文', value: 'zh' },
+    { label: 'English', value: 'en' }
   ]);
 
   const handleLogin = (e: CustomEvent) => {
@@ -198,7 +198,7 @@
   };
 
   const handleLocaleChangeA = (value: string)=>{
-    let locale = value === 'EN'?'en':'zh';
+    let locale = value === 'en'?'en':'zh';
     changeLocale(locale);
     window.location.reload();
   }
@@ -207,7 +207,8 @@
     appConfig.value.loginConfig,
     (v) => {
       loginConfig.value = Object.assign(loginConfig.value, v);
-      loginConfig.value.language = themeConfig.value.lang
+      // loginConfig.value.language = themeConfig.value.lang;
+      loginConfig.value.language = window.localStorage.getItem('das-intl-locale') || 'zh';
       console.log('appConfig-changes:', loginConfig.value);
     },
     { deep: true, immediate: true }
