@@ -66,7 +66,7 @@
         v-if="config.lightDarkSwitch"
         class="icon-button menuicon"
         :class="config.mode === 'light' ? 'menu-icon-light' : 'menu-icon-black'"
-        @click="themeConfig.mode = config.mode === 'light' ? 'dark' : 'light'"
+        @click="handleChangeMode"
       />
       <i
         v-if="config.languageSwitch"
@@ -395,6 +395,12 @@
     changeLocale(locale);
     window.location.reload();
   };
+  const handleChangeMode = () => {
+    themeStore.setThemeConfig({
+      ...themeConfig.value,
+      mode: config.value.mode === 'light' ? 'dark' : 'light',
+    })
+  }
 </script>
 
 <style lang="less" scoped>
