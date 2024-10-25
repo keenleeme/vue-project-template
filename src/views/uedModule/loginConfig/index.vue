@@ -3,185 +3,189 @@
     <div class="page-content">
       <div class="setting">
         <a-form :colon="false" label-align="right" v-bind="formItemLayout" :label-col="{style:{'width': '33.3%', 'white-space':'normal'}}">
-          <a-form-item :label="$t('I18N.layout.zhuTiFengGe')">
-            <a-radio-group v-model:value="loginConfig.mode">
-              <a-radio value="dark">{{ $t('I18N.layout.shenSe') }}</a-radio>
-              <a-radio value="light">{{ $t('I18N.layout.qianSe') }}</a-radio>
-            </a-radio-group>
-          </a-form-item>
-          <a-form-item :label="$t('I18N.layout.dengLuYeBeiJing')">
-            <a-radio-group v-model:value="loginConfig.bgMode">
-              <a-radio value="image">{{ $t('I18N.layout.tuPian') }}</a-radio>
-              <a-radio value="video">{{ $t('I18N.layout.shiPin') }}</a-radio>
-            </a-radio-group>
-          </a-form-item>
-          <a-form-item v-if="loginConfig.bgMode === 'image'" :label="$t('I18N.layout.tuPian')">
-            <div class="uploader">
-              <a-image
-                :src="loginConfig.bgImage"
-                :preview="false"
-                :fallback="config.fallbackImg"
-                style="width: 142px; height: 100px"
-              />
-              <div>
-                <a-upload
-                  name="bgImage"
-                  :max-count="1"
-                  :accept="config.format.join(',')"
-                  :show-upload-list="false"
-                  :before-upload="(v: UploadFile) => beforeUpload(v, 'bgImage')"
-                  :custom-request="(v) => customRequest(v, 'bgImage')"
-                >
-                  <a-button type="text">{{ $t('I18N.layout.shangChuan') }}</a-button>
-                </a-upload>
-                <a-button type="text" @click="handleReset('bgImage')">{{ $t('I18N.layout.huiFuChuChangTuPian') }}</a-button>
-              </div>
-              <p>
-                {{ $t('I18N.layout.zhiNengShangChuan') }}{{ config.format.join('/').replace(/\./g, '') }}{{ $t('I18N.layout.wenJian') }}，{{ $t('I18N.layout.qieBuChaoGuo') }}{{
-                  config.bgSizeText
-                }}，{{ $t('I18N.layout.jianYiTuPianBiLi') }}16:9
-              </p>
+          <div class="group basic">
+            <div class="group-header">
+              基础配置
             </div>
-          </a-form-item>
-          <template v-else>
-            <a-form-item :label="$t('I18N.layout.fengMian')">
-              <div class="uploader">
-                <a-image
-                  :src="loginConfig.bgPoster"
-                  :preview="false"
-                  :fallback="config.fallbackImg"
-                  style="width: 142px; height: 100px"
-                />
-                <div>
-                  <a-upload
-                    name="bgPoster"
-                    action=""
-                    :max-count="1"
-                    :accept="config.format.join(',')"
-                    :show-upload-list="false"
-                    :before-upload="(v: UploadFile) => beforeUpload(v, 'bgPoster')"
-                    :custom-request="(v) => customRequest(v, 'bgPoster')"
-                  >
-                    <a-button type="text">{{ $t('I18N.layout.shangChuan') }}</a-button>
-                  </a-upload>
-                  <a-button type="text" @click="handleReset('bgPoster')">{{ $t('I18N.layout.huiFuChuChangTuPian') }}</a-button>
-                </div>
-                <p>
-                  {{ $t('I18N.layout.zhiNengShangChuan') }}{{ config.format.join('/').replace(/\./g, '') }}{{ $t('I18N.layout.wenJian') }}，{{ $t('I18N.layout.qieBuChaoGuo') }}{{
-                    config.bgSizeText
-                  }}，{{ $t('I18N.layout.shiPinHeTuPianYiZhi') }}，{{ $t('I18N.layout.jianYiBiLi') }}16:9
-                </p>
-              </div>
-            </a-form-item>
-            <a-form-item :label="$t('I18N.layout.shiPin')">
-              <div class="uploader">
-                <video v-if="loginConfig.bgVideo" width="142">
-                  <source :src="loginConfig.bgVideo" />
-                </video>
-                <a-image
-                  v-else
-                  :preview="false"
-                  src=""
-                  :fallback="config.fallbackImg"
-                  style="width: 142px; height: 100px"
-                />
-                <div>
-                  <a-upload
-                    name="bgVideo"
-                    action=""
-                    :max-count="1"
-                    :accept="config.videoFormat.join(',')"
-                    :show-upload-list="false"
-                    :before-upload="(v: UploadFile) => beforeUpload(v, 'bgVideo')"
-                    :custom-request="(v) => customRequest(v, 'bgVideo')"
-                  >
-                    <a-button type="text">{{ $t('I18N.layout.shangChuan') }}</a-button>
-                  </a-upload>
-                  <a-button type="text" @click="handleReset('bgVideo')">{{ $t('I18N.layout.huiFuChuChangShiPin') }}</a-button>
-                </div>
-                <p>
-                  {{ $t('I18N.layout.zhiNengShangChuan') }}{{ config.videoFormat.join('/').replace(/\./g, '') }}{{ $t('I18N.layout.wenJian') }}，{{ $t('I18N.layout.qieBuChaoGuo') }}{{
-                    config.videoSizeText
-                  }}，{{ $t('I18N.layout.shiPinHeTuPianYiZhi') }}，{{ $t('I18N.layout.jianYiBiLi') }}16:9
-                </p>
-              </div>
-            </a-form-item>
-          </template>
-          <a-form-item :label="$t('I18N.layout.chanPin')+'LOGO'">
-            <a-radio-group v-model:value="loginConfig.logoMode">
-              <a-radio :value="LogoModeEnums.IMAGE">{{ $t('I18N.layout.tuPian') }}</a-radio>
-              <a-radio :value="LogoModeEnums.TEXT">{{ $t('I18N.layout.wenzi') }}</a-radio>
-              <a-radio :value="LogoModeEnums.IMAGE_TEXT">{{ $t('I18N.layout.tuPian') }}+{{ $t('I18N.layout.wenzi') }}</a-radio>
-            </a-radio-group>
-          </a-form-item>
-          <a-form-item :label="$t('I18N.layout.chanPin')+$t('I18N.base_form.name')">
-            <a-input
-              v-model:value="loginConfig.logoName"
-              :disabled="[LogoModeEnums.IMAGE].includes(loginConfig.logoMode!)"
-              :placeholder="$t('I18N.base_form.pleaseEnter')+'LOGO'+$t('I18N.base_form.name')"
-            />
-            <a-form-item style="margin-top: 24px">
-              <div class="uploader">
-                <a-image
-                  :src="loginConfig.logoUrl"
-                  :preview="false"
-                  :fallback="config.fallbackImg"
-                  style="width: 80px; height: 80px"
-                />
-                <div>
-                  <a-upload
-                    name="logoUrl"
-                    action=""
-                    :disabled="[LogoModeEnums.TEXT].includes(loginConfig.logoMode!)"
-                    :max-count="1"
-                    :accept="config.format.join(',')"
-                    :show-upload-list="false"
-                    :before-upload="(v: UploadFile) => beforeUpload(v, 'logoUrl')"
-                    :custom-request="(v) => customRequest(v, 'logoUrl')"
-                  >
-                    <a-button type="text" :disabled="[LogoModeEnums.TEXT].includes(loginConfig.logoMode!)"
-                      >{{ $t('I18N.layout.shangChuan') }}</a-button
+            <div class="group-content">
+              <a-form-item :label="$t('I18N.layout.zhuTiFengGe')">
+                <a-radio-group v-model:value="loginConfig.mode">
+                  <a-radio value="dark">{{ $t('I18N.layout.shenSe') }}</a-radio>
+                  <a-radio value="light">{{ $t('I18N.layout.qianSe') }}</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <a-form-item :label="$t('I18N.layout.dengLuYeBeiJing')">
+                <a-radio-group v-model:value="loginConfig.bgMode">
+                  <a-radio value="image">{{ $t('I18N.layout.tuPian') }}</a-radio>
+                  <a-radio value="video">{{ $t('I18N.layout.shiPin') }}</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <a-form-item v-if="loginConfig.bgMode === 'image'" :label="$t('I18N.layout.tuPian')">
+                <div class="uploader">
+                  <a-image
+                    :src="loginConfig.bgImage"
+                    :preview="false"
+                    :fallback="config.fallbackImg"
+                    style="width: 142px; height: 100px"
+                  />
+                  <div>
+                    <a-upload
+                      name="bgImage"
+                      :max-count="1"
+                      :accept="config.format.join(',')"
+                      :show-upload-list="false"
+                      :before-upload="(v: UploadFile) => beforeUpload(v, 'bgImage')"
+                      :custom-request="(v) => customRequest(v, 'bgImage')"
                     >
-                  </a-upload>
-                  <a-button
-                    type="text"
-                    :disabled="[LogoModeEnums.TEXT].includes(loginConfig.logoMode!)"
-                    @click="handleReset('logoUrl')"
-                    >{{ $t('I18N.layout.huiFuChuChangTuPian') }}</a-button
-                  >
+                      <a-button type="text">{{ $t('I18N.layout.shangChuan') }}</a-button>
+                    </a-upload>
+                    <a-button type="text" @click="handleReset('bgImage')">{{ $t('I18N.layout.huiFuChuChangTuPian') }}</a-button>
+                  </div>
+                  <p>
+                    {{ $t('I18N.layout.zhiNengShangChuan') }}{{ config.format.join('/').replace(/\./g, '') }}{{ $t('I18N.layout.wenJian') }}，{{ $t('I18N.layout.qieBuChaoGuo') }}{{
+                      config.bgSizeText
+                    }}，{{ $t('I18N.layout.jianYiTuPianBiLi') }}16:9
+                  </p>
                 </div>
-                <p>
-                  {{ $t('I18N.layout.zhiNengShangChuan') }}{{ config.format.join('/').replace(/\./g, '') }}{{ $t('I18N.layout.wenJian') }}，{{ $t('I18N.layout.qieBuChaoGuo') }}{{
-                    config.logoSizeText
-                  }}，{{ $t('I18N.layout.shenSeBeiJingJianYiShiYong') }}
-                </p>
-              </div>
-            </a-form-item>
-          </a-form-item>
-          <a-form-item :label="$t('I18N.layout.xianShiDuoYuYanQieHuan')">
-            <a-switch v-model:checked="loginConfig.showLanguage"></a-switch>
-          </a-form-item>
-          <a-form-item :label="$t('I18N.layout.xuanChuanBiaoYu')">
-            <a-input v-model:value="loginConfig.slogan" :placeholder="$t('I18N.base_form.pleaseEnter')+$t('I18N.layout.xuanChuanBiaoYu')"></a-input>
-          </a-form-item>
-          <a-form-item :label="$t('I18N.layout.gongSiMingCheng')">
-            <a-input v-model:value="loginConfig.companyName" :placeholder="$t('I18N.base_form.pleaseEnter')+$t('I18N.layout.gongSiMingCheng')"></a-input>
-          </a-form-item>
-          <a-form-item :label="$t('I18N.layout.pingTaiBanQuanXinXi')">
-            <a-input v-model:value="loginConfig.copyright" :placeholder="$t('I18N.base_form.pleaseEnter')+$t('I18N.layout.pingTaiBanQuanXinXi')"></a-input>
-          </a-form-item>
-          <a-form-item :label="$t('I18N.layout.gongAnJiGuanBeiAnXinXi')">
-            <a-input v-model:value="loginConfig.filing" :placeholder="$t('I18N.base_form.pleaseEnter')+$t('I18N.layout.gongAnJiGuanBeiAnXinXi')"></a-input>
-          </a-form-item>
-          <a-form-item :label="$t('I18N.layout.gongAnJiGuanBeiAnChaoLianDiZhi')">
-            <a-input v-model:value="loginConfig.filingUrl" :placeholder="$t('I18N.base_form.pleaseEnter')+$t('I18N.layout.gongAnJiGuanBeiAnChaoLianDiZhi')"></a-input>
-          </a-form-item>
-          <a-form-item :label="$t('I18N.layout.ICPbeiAnXinXi')">
-            <a-input v-model:value="loginConfig.icp" :placeholder="$t('I18N.base_form.pleaseEnter')+$t('I18N.layout.ICPbeiAnXinXi')"></a-input>
-          </a-form-item>
-          <a-form-item :label="$t('I18N.layout.ICPbeiAnChaoLianDiZhi')">
-            <a-input v-model:value="loginConfig.icpUrl" :placeholder="$t('I18N.base_form.pleaseEnter')+$t('I18N.layout.ICPbeiAnChaoLianDiZhi')"></a-input>
-          </a-form-item>
+              </a-form-item>
+              <template v-else>
+                <a-form-item :label="$t('I18N.layout.fengMian')">
+                  <div class="uploader">
+                    <a-image
+                      :src="loginConfig.bgPoster"
+                      :preview="false"
+                      :fallback="config.fallbackImg"
+                      style="width: 142px; height: 100px"
+                    />
+                    <div>
+                      <a-upload
+                        name="bgPoster"
+                        action=""
+                        :max-count="1"
+                        :accept="config.format.join(',')"
+                        :show-upload-list="false"
+                        :before-upload="(v: UploadFile) => beforeUpload(v, 'bgPoster')"
+                        :custom-request="(v) => customRequest(v, 'bgPoster')"
+                      >
+                        <a-button type="text">{{ $t('I18N.layout.shangChuan') }}</a-button>
+                      </a-upload>
+                      <a-button type="text" @click="handleReset('bgPoster')">{{ $t('I18N.layout.huiFuChuChangTuPian') }}</a-button>
+                    </div>
+                    <p>
+                      {{ $t('I18N.layout.zhiNengShangChuan') }}{{ config.format.join('/').replace(/\./g, '') }}{{ $t('I18N.layout.wenJian') }}，{{ $t('I18N.layout.qieBuChaoGuo') }}{{
+                        config.bgSizeText
+                      }}，{{ $t('I18N.layout.shiPinHeTuPianYiZhi') }}，{{ $t('I18N.layout.jianYiBiLi') }}16:9
+                    </p>
+                  </div>
+                </a-form-item>
+                <a-form-item :label="$t('I18N.layout.shiPin')">
+                  <div class="uploader">
+                    <video v-if="loginConfig.bgVideo" width="142">
+                      <source :src="loginConfig.bgVideo" />
+                    </video>
+                    <a-image
+                      v-else
+                      :preview="false"
+                      src=""
+                      :fallback="config.fallbackImg"
+                      style="width: 142px; height: 100px"
+                    />
+                    <div>
+                      <a-upload
+                        name="bgVideo"
+                        action=""
+                        :max-count="1"
+                        :accept="config.videoFormat.join(',')"
+                        :show-upload-list="false"
+                        :before-upload="(v: UploadFile) => beforeUpload(v, 'bgVideo')"
+                        :custom-request="(v) => customRequest(v, 'bgVideo')"
+                      >
+                        <a-button type="text">{{ $t('I18N.layout.shangChuan') }}</a-button>
+                      </a-upload>
+                      <a-button type="text" @click="handleReset('bgVideo')">{{ $t('I18N.layout.huiFuChuChangShiPin') }}</a-button>
+                    </div>
+                    <p>
+                      {{ $t('I18N.layout.zhiNengShangChuan') }}{{ config.videoFormat.join('/').replace(/\./g, '') }}{{ $t('I18N.layout.wenJian') }}，{{ $t('I18N.layout.qieBuChaoGuo') }}{{
+                        config.videoSizeText
+                      }}，{{ $t('I18N.layout.shiPinHeTuPianYiZhi') }}，{{ $t('I18N.layout.jianYiBiLi') }}16:9
+                    </p>
+                  </div>
+                </a-form-item>
+              </template>
+              <a-form-item :label="$t('I18N.layout.chanPin')+'LOGO'">
+                <a-radio-group v-model:value="loginConfig.logoMode">
+                  <a-radio :value="LogoModeEnums.IMAGE">{{ $t('I18N.layout.tuPian') }}</a-radio>
+                  <a-radio :value="LogoModeEnums.TEXT">{{ $t('I18N.layout.wenzi') }}</a-radio>
+                  <a-radio :value="LogoModeEnums.IMAGE_TEXT">{{ $t('I18N.layout.tuPian') }}+{{ $t('I18N.layout.wenzi') }}</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <a-form-item :label="$t('I18N.layout.chanPin')+$t('I18N.base_form.name')">
+                <a-input
+                  v-model:value="loginConfig.logoName"
+                  :disabled="[LogoModeEnums.IMAGE].includes(loginConfig.logoMode!)"
+                  :placeholder="$t('I18N.base_form.pleaseEnter')+'LOGO'+$t('I18N.base_form.name')"
+                />
+                <a-form-item style="margin-top: 24px">
+                  <div class="uploader">
+                    <a-image
+                      :src="loginConfig.logoUrl"
+                      :preview="false"
+                      :fallback="config.fallbackImg"
+                      style="width: 80px; height: 80px"
+                    />
+                    <div>
+                      <a-upload
+                        name="logoUrl"
+                        action=""
+                        :disabled="[LogoModeEnums.TEXT].includes(loginConfig.logoMode!)"
+                        :max-count="1"
+                        :accept="config.format.join(',')"
+                        :show-upload-list="false"
+                        :before-upload="(v: UploadFile) => beforeUpload(v, 'logoUrl')"
+                        :custom-request="(v) => customRequest(v, 'logoUrl')"
+                      >
+                        <a-button type="text" :disabled="[LogoModeEnums.TEXT].includes(loginConfig.logoMode!)"
+                          >{{ $t('I18N.layout.shangChuan') }}</a-button
+                        >
+                      </a-upload>
+                      <a-button
+                        type="text"
+                        :disabled="[LogoModeEnums.TEXT].includes(loginConfig.logoMode!)"
+                        @click="handleReset('logoUrl')"
+                        >{{ $t('I18N.layout.huiFuChuChangTuPian') }}</a-button
+                      >
+                    </div>
+                    <p>
+                      {{ $t('I18N.layout.zhiNengShangChuan') }}{{ config.format.join('/').replace(/\./g, '') }}{{ $t('I18N.layout.wenJian') }}，{{ $t('I18N.layout.qieBuChaoGuo') }}{{
+                        config.logoSizeText
+                      }}，{{ $t('I18N.layout.shenSeBeiJingJianYiShiYong') }}
+                    </p>
+                  </div>
+                </a-form-item>
+              </a-form-item>
+              <a-form-item :label="$t('I18N.layout.xianShiDuoYuYanQieHuan')">
+                <a-switch v-model:checked="loginConfig.showLanguage"></a-switch>
+              </a-form-item>
+            </div>
+          </div>
+          <div class="group copyright need-slider">
+            <div class="group-header">
+              底部自定义配置
+              <span>（没有超链接内容，可以不填写）</span>
+            </div>
+            <div class="group-content">
+              <a-form-item v-for="(item, idx) in loginConfig.copyright" :key="idx">
+                <div class="flex">
+                  <a-input v-model:value="item.text" :placeholder="$t('I18N.base_form.pleaseEnterContent')"></a-input>
+                  <a-input v-model:value="item.link" :placeholder="$t('I18N.base_form.pleaseEnterContent')+$t('I18N.layout.lianJieDiZhi')"></a-input>
+                  <MinusCircleOutlined @click="copyrightHandler('remove', idx)" />
+                </div>
+              </a-form-item>
+              <a-button type="dashed" :icon="h(PlusOutlined)" style="width: 100%;" @click="copyrightHandler('append')">
+                {{ $t('I18N.common.add') }}
+              </a-button>
+            </div>
+          </div>
         </a-form>
       </div>
       <!--  -->
@@ -229,10 +233,12 @@
   import { storeToRefs } from 'pinia';
   import { useAppStore } from '@/store';
   import { defaultConfig } from '@/store/uedModule/app/defaultConfig';
-  import { LoginConfigDTO, LogoModeEnums } from '@/views/uedModule/login/types';
+  import { CopyrightVO, LoginConfigDTO, LogoModeEnums } from '@/views/uedModule/login/types';
   import * as config from './index';
   import type { FormUploadType } from './index';
   import LoginDemo from './login-demo.vue';
+  import { h } from 'vue';
+  import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons-vue';
 
   const appStore = useAppStore();
   const { appConfig } = storeToRefs(appStore);
@@ -244,7 +250,7 @@
     },
     wrapperCol: {
       xs: { span: 24 },
-      sm: { span: 18 }
+      sm: { span: 24 }
     }
   };
 
@@ -309,6 +315,15 @@
     }
   };
 
+  // copyright 自定义增减
+  const copyrightHandler = (name: 'append' | 'remove', idx?: number) => {
+    if (name === 'append') {
+      loginConfig.value.copyright?.push(new CopyrightVO())
+    } else if (idx !== undefined) {
+      loginConfig.value.copyright?.splice(idx, 1)
+    }
+  }
+
   // 提交
   const handleSubmit = () => {
     if (dialogTitle.value === I18N.layout.yingYongDangQianSheZhi) {
@@ -337,12 +352,58 @@
         width: 50%;
         display: flex;
         flex-direction: column;
-        // align-items: center;
         overflow-x: hidden;
       }
       .setting {
         background-color: var(--primary-bg);
-        padding: 31px 31px 31px 20px;
+        .group {
+          position: relative;
+          .group-header {
+            display: flex;
+            align-items: center;
+            font-family: PingFangSC-Semibold;
+            font-size: 16px;
+            color: var(--color-text-title);
+            line-height: 24px;
+            font-weight: 600;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--primary-divider);
+            span {
+              font-size: 12px;
+              color: #adb1bc;
+              margin-left: 8px;
+            }
+          }
+          .group-content {
+            padding: 31px 31px 31px 20px;
+          }
+          &.need-slider {
+            margin-top: 16px;
+            &::before {
+              content: '';
+              position: absolute;
+              top: -16px;
+              left: 0;
+              right: 0;
+              height: 16px;
+              background-color: var(--color-page-bg);
+            }
+          }
+        }
+        .copyright {
+          .flex {
+            .ant-input {
+              width: calc(50% - 24px);
+              margin-right: 12px;
+            }
+            .anticon {
+              cursor: pointer;
+              &:hover {
+                color: var(--primaryColor);
+              }
+            }
+          }
+        }
         .ant-form {
           --primaryColor: var(--um-primary-color-normal);
           width: 100%;

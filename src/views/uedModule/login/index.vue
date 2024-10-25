@@ -29,18 +29,10 @@
       @change="handleLocaleChangeA(loginConfig.language)"
     ></ued-select>
     <div slot="copyright">
-      <div>{{ loginConfig.slogan }}</div>
-      <div>{{ loginConfig.copyright }}</div>
-      <div>
-        <a target="_blank" :src="loginConfig.filingUrl || 'javascript:;'">{{
-          loginConfig.filing
-        }}</a>
-      </div>
-      <div>
-        <a target="_blank" :src="loginConfig.icpUrl || 'javascript:;'">{{
-          loginConfig.icp
-        }}</a>
-      </div>
+      <template v-for="(item, idx) in loginConfig.copyright" :key="idx">
+        <a v-if="item.link" target="_blank" :href="item.link">{{ item.text }}</a>
+        <div v-else>{{ item.text }}</div>
+      </template>
     </div>
   </ued-login-layout>
 </template>

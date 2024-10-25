@@ -12,6 +12,15 @@ export interface LanguagesVO {
   [key: string]: string | number | undefined;
 }
 
+export class CopyrightVO {
+  text: string = ''
+  link?: string = ''
+  constructor(text: string = '', link?: string) {
+    this.text = text
+    this.link = link
+  }
+}
+
 export class LoginConfigDTO {
   mode?: ThemeType = 'light'; // 主题风格
 
@@ -39,15 +48,7 @@ export class LoginConfigDTO {
 
   companyName?: string = ''; // 公司名称
 
-  copyright?: string = ''; // 版权信息
-
-  filing?: string = ''; // 备案信息
-
-  filingUrl?: string = ''; // 备案链接
-
-  icp?: string = ''; // ICP备案号
-
-  icpUrl?: string = ''; // ICP备案链接
+  copyright?: CopyrightVO[] = []; // 版权信息
 
   constructor(v?: LoginConfigDTO) {
     Object.assign(this, { mode: 'light' }, v);
