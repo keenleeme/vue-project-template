@@ -8,15 +8,15 @@ import 'ant-design-vue/dist/reset.css';
 
 /* eslint-disable */
 import 'virtual:uno.css';
-import '@/theme/theme.css'
-import '@/theme/themeAntdReset.css'
+import useDsComponent from '@/libs/hooks/useDsComponent';
+import '@/theme/theme.css';
+import '@/theme/themeAntdReset.css';
 import App from './App.vue';
 import i18n from './locale/index';
 // micro按需生成
 import { startMicro } from './micro';
 import router from './router';
 import pinia from './store';
-
 
 const app = createApp(App);
 app.use(pinia);
@@ -27,6 +27,8 @@ startMicro(router);
 
 i18n(app);
 app.use(Antd);
+// 引用ds-component
+useDsComponent(app);
 app.use(ComponentLibrary);
 // app.use(Soul);
 app.use(router);
