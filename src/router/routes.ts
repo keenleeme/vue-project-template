@@ -74,6 +74,24 @@ const routes: RouteRecordRaw[] = [
     }
   },
   {
+    name: 'custom-workbench',
+    path: '/custom-workbench',
+    component: () => import('@/views/uedTypical/iframe/index.vue'),
+    meta: {
+      title: 'I18N.layout.daPingZiDingYi',
+      permissionId: 'base::workBench:index'
+    }
+  },
+  {
+    name: 'custom-report',
+    path: '/custom-report',
+    component: () => import('@/views/uedTypical/iframe/index.vue'),
+    meta: {
+      title: 'I18N.layout.daPingZiDingYi',
+      permissionId: 'base::workBench:index'
+    }
+  },
+  {
     name: 'base::themeConfig',
     path: '/themeConfig',
     component: () => import('@/views/uedModule/themeConfig/index.vue'),
@@ -179,8 +197,8 @@ const routes: RouteRecordRaw[] = [
     }
   },
   {
-    path:'/custom',
-    name:'custom',
+    path: '/custom',
+    name: 'custom',
     component: () => import(/* webpackChunkName: "multiple" */ '@/views/uedTypical/example/custom.vue'),
     meta: {
       public: true

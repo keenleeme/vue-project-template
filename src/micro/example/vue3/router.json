@@ -1,0 +1,19 @@
+{
+        "data":[
+  {
+    "path": "/home"
+  },
+  {
+    "path": "/",
+    "redirect": "/home"
+  },
+  {
+    "path": "/about"
+  },
+  {
+    "path": "/custom"
+  }
+]
+,
+        "code":0
+      }

@@ -115,14 +115,14 @@
       {
         id: 3,
         name: I18N.layout.gongZuoTaiZiDingYi,
-        url: '/example',
+        url: '/custom-workbench',
         hideChildren: true,
         submenu: []
       },
       {
         id: 4,
         name: I18N.layout.baoBiaoZiDingYi,
-        url: '/example',
+        url: '/custom-report',
         hideChildren: true,
         submenu: []
       },
