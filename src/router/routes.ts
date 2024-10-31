@@ -170,6 +170,22 @@ const routes: RouteRecordRaw[] = [
       }
     ]
   },
+  {
+    path: '/multiple',
+    name: 'multiple',
+    component: () => import(/* webpackChunkName: "multiple" */ '@/micro/example/multiple/index.vue'),
+    meta: {
+      public: true
+    }
+  },
+  {
+    path:'/custom',
+    name:'custom',
+    component: () => import(/* webpackChunkName: "multiple" */ '@/views/uedTypical/example/custom.vue'),
+    meta: {
+      public: true
+    }
+  }
 ];
 
 const wihitetRoutes: RouteRecordRaw[] = [

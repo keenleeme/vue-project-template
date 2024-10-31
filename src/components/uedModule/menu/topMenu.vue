@@ -18,6 +18,8 @@
     import { useMenusStore, useThemeStore } from '@/store';
     import { UedTopMenu} from '@ued-material/menu';
 
+    import { microMenuNavigation } from '@/micro/microApi/helper'
+
     const props = defineProps({
         menuData: {
             type: Array,
@@ -68,7 +70,8 @@
     // 点击菜单
     const router = useRouter();
     const handleMenuClick = (item: any) => {
-        router.push(item.url);
+        // router.push(item.url);
+        microMenuNavigation(item)
     };
 
     // 选中菜单

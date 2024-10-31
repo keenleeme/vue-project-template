@@ -22,14 +22,16 @@ const app = createApp(App);
 app.use(pinia);
 app.config.globalProperties.$tours = {};
 
-// micro按需生成
-startMicro(router);
-
 i18n(app);
 app.use(Antd);
 // 引用ds-component
 useDsComponent(app);
 app.use(ComponentLibrary);
 // app.use(Soul);
-app.use(router);
-app.mount('#app');
+
+(async () => {
+  // micro按需生成
+  await startMicro(router);
+  app.use(router);
+  app.mount('#app');
+})()

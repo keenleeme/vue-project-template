@@ -214,7 +214,100 @@
             ]
           }
         ]
-      }
+      },
+      {
+        id:'micro',
+        name: '微服务应用',
+        submenu: [
+          {
+            id: 'vue2',
+            name: 'vue2应用',
+            url: '',
+            submenu:[
+              {
+              id: 'vue-home',
+              name: 'home页面',
+              url: '/vue2/#/home',
+              module:'vue2'
+            },
+            {
+              id: 'vue-about',
+              name: 'about页面',
+              url: '/vue2/#/about',
+              module:'vue2'
+            }
+          ]
+          },
+          {
+            id: 'vue3',
+            name: 'vue3应用',
+            url: '',
+            submenu:[
+              {
+                id: 'vue3-home',
+                name: 'home页面',
+                url: '/vue3/home',
+                module:'vue3'
+              },
+              {
+                id: 'vue3-about',
+                name: 'about页面',
+                url: '/vue3/about',
+                module:'vue3'
+              }
+            ]
+          },
+          {
+            id: 'react',
+            name: 'react应用',
+            url: '',
+            submenu:[
+              {
+                id: 'react-home',
+                name: 'home页面',
+                url: '/react/home',
+                module:'react'
+              },
+              {
+                id: 'react-about',
+                name: 'about页面',
+                url: '/react/about',
+                module:'react'
+              }
+            ]
+          },
+          {
+            id: 'angular',
+            name: 'angular应用',
+            url: '/angular/home',
+            // submenu:[
+            //   {
+            //     id: 'angular-home',
+            //     name: 'home页面',
+            //     url: '/angular/home',
+            //     module:'angular'
+            //   },
+            //   {
+            //     id: 'angular-material',
+            //     name: 'material页面',
+            //     url: '/angular/material',
+            //     module:'angular'
+            //   },
+            //   {
+            //     id: 'angular-page3',
+            //     name: 'page3页面',
+            //     url: '/angular/page3',
+            //     module:'angular'
+            //   }
+            // ]
+          },
+          {
+            id: 'multiple',
+            name: '多个应用',
+            url: '/multiple'
+          }
+        ]
+      },
     ]
   });
 </script>

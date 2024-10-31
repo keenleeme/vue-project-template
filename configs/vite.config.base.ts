@@ -8,6 +8,10 @@ import { defineConfig } from 'vite';
 import { loadEnv } from './utils';
 import extra from 'fs-extra'
 
+// MF
+// import { federation } from '@module-federation/vite';
+
+import federation from "@originjs/vite-plugin-federation";
 
 const env = loadEnv();
 
@@ -25,6 +29,17 @@ export default defineConfig({
         }
       }
     ),
+    federation({
+      name: 'home',
+      filename: 'remoteEntry.js',
+      // library: { type: 'var', name: 'core' },
+      exposes: {
+        './axios': 'axios',
+        './ant-design-vue': 'ant-design-vue',
+        './dayjs': 'dayjs'
+      },
+      // shared: require('../package.json').dependencies,
+    }),
     UnoCSS(),
     AutoImport({
       imports: [
@@ -49,7 +64,7 @@ export default defineConfig({
     extra.copy(
       resolve(__dirname, '../node_modules/@ued-material/ued-wbc/dist/assets/ued-wbc'),
       resolve(__dirname, '../public/assets/ued-wbc'),
-    )
+    ),
   ],
   resolve: {
     alias: [

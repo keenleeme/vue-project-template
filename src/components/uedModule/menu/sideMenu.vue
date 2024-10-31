@@ -86,7 +86,7 @@
   import { LoginConfigDTO } from '@/views/uedModule/login/types';
   import { changeLocale } from '@international/vue3-i18n';
   import UserMenu from '@/components/uedModule/menu/userMenu.vue'
-
+    import { microMenuNavigation } from '@/micro/microApi/helper'
   const props = defineProps({
     menuData: {
       type: Array,
@@ -164,7 +164,8 @@
   const router = useRouter();
   const handleMenuClick = (e) => {
     console.log('sideMenu click', e);
-    router.push(e.url);
+    // router.push(e.url);
+    microMenuNavigation(e)
   }
 
   // 侧边栏展开收起

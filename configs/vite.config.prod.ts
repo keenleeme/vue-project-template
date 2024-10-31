@@ -14,13 +14,18 @@ export default mergeConfig(
     ],
     build: {
       rollupOptions: {
+        // external: ['dayjs'],
         output: {
           manualChunks: {
             vue: ['vue', 'vue-router', 'pinia']
-          }
+          },
+          // globals: {
+          //   dayjs: 'dayjs'
+          // },
         }
       },
-      chunkSizeWarningLimit: 2000
+      chunkSizeWarningLimit: 2000,
+      // target: "esnext"
     }
   },
   baseConfig
