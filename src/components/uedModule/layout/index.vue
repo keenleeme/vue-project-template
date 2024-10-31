@@ -308,6 +308,12 @@
           }
         ]
       },
+      {
+        id:'custom',
+        
+        name:'定制页面',
+        url:'/custom'
+      }
     ]
   });
 </script>

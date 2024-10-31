@@ -22,7 +22,7 @@ const appData = ref([
     {
       name: 'vue3',
       url: 'http://localhost:8090/vue3/',
-      baseroute: '/vue3'
+      baseroute: '/multiple'
     },
 ])
 </script>

@@ -58,6 +58,7 @@ export function proxySubAppsRouter(baseRouter: Router) {
 
   // 基座的路由变化监听
   router.beforeEach((to, from, next) => {
+    debugger
     console.log('全局前置守卫 beforeEach -基座: ', to, from, next);
     if(from.fullPath ==='/') {
       next()

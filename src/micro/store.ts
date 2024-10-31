@@ -14,6 +14,7 @@ export const useMicroStore = defineStore('micro', () => {
     {
       name: 'vue2',
       url: 'http://localhost:8080/vue2/',
+      custom: true,
       baseroute: '/vue2',
     },
     {
@@ -26,7 +27,6 @@ export const useMicroStore = defineStore('micro', () => {
       name: 'react',
       url: 'http://localhost:3000/react/',
       baseroute: '/react',
-      custom: true,
       routerMode:'history'
     },
     {

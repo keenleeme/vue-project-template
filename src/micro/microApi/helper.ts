@@ -66,7 +66,6 @@ export function decorateLocationPath(fullPath: string, baseurl=''): {
   path: string;
   routerMode?: string
 } {
-  debugger
   fullPath = delPrefix(baseurl, fullPath); // 去除一些特定的前缀
   if (!fullPath) {
     return {
