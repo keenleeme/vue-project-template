@@ -39,7 +39,7 @@
       default: {
         id: 'id',
         label: 'name',
-        children: 'submenu',
+        children: 'children',
         icon: 'icon',
         hide: 'hide',
         html: 'html',

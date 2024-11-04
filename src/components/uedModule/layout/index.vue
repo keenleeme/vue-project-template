@@ -51,9 +51,10 @@
   });
 
   const menuConfig = ref({
+    // 不传按默认配置字段，如要修改请补充对应字段的key/value
     dataProps: {
       label: 'name',
-      children: 'submenu'
+      children: 'children'
     },
     userMenu: [
       {
@@ -66,42 +67,42 @@
         id: 1,
         name: I18N.layout.genericTypicalPage,
         icon: 'menu-icon-desktop',
-        submenu: [
+        children: [
           {
             id: 'workBench',
             name: I18N.layout.gongZuoTai,
             hideChildren: true,
             icon: 'menu-icon-desktop',
             url: '/workBench',
-            submenu: []
+            children: []
           },
           {
             id: 'baseList',
             name: I18N.layout.lieBiaoYe,
             hideChildren: true,
             url: '/base-list',
-            submenu: []
+            children: []
           },
           {
             id: 'baseForm',
             name: I18N.layout.biaoDanYe,
             hideChildren: true,
             url: '/base-form',
-            submenu: []
+            children: []
           },
           {
             id: 'baseDetail',
             name: I18N.layout.xiangQingYe,
             hideChildren: true,
             url: '/base-detail',
-            submenu: []
+            children: []
           },
           {
             id: 'baseConfig',
             name: I18N.layout.peiZhiYe,
             hideChildren: true,
             url: '/base-config',
-            submenu: []
+            children: []
           }
         ]
       },
@@ -110,47 +111,47 @@
         name: I18N.layout.daPingZiDingYi,
         url: '/dasvScreen',
         hideChildren: true,
-        submenu: []
+        children: []
       },
       {
-        id: 3,
+        id: "example",
         name: I18N.layout.gongZuoTaiZiDingYi,
         url: '/example',
         hideChildren: true,
-        submenu: []
+        children: []
       },
       {
-        id: 4,
+        id: "example1",
         name: I18N.layout.baoBiaoZiDingYi,
-        url: '/example',
+        url: '/example1',
         hideChildren: true,
-        submenu: []
+        children: []
       },
       {
         id: 5,
         name: I18N.layout.tuKeShiHuaChengXian,
         url: '/example',
         hideChildren: true,
-        submenu: []
+        children: []
       },
       {
         id: 6,
         name: I18N.layout.tuBianJiQi,
         url: '/example',
         hideChildren: true,
-        submenu: []
+        children: []
       },
       {
         id: 7,
         name: I18N.layout.liuChengBianPai,
         url: '/example',
         hideChildren: true,
-        submenu: []
+        children: []
       },
       {
         id: 8,
         name: I18N.layout.xiTongSheZhi,
-        submenu: [
+        children: [
           {
             id: 'themeConfig',
             name: I18N.layout.zhuTiPeiZhiYe,
@@ -178,7 +179,7 @@
         name: I18N.api.common.duoCengCaiDan,
         url: '/sum-more',
         // hideChildren: true,
-        submenu: [
+        children: [
           {
             id: 90,
             name: I18N.api.common.erJiCaiDan,
@@ -188,7 +189,7 @@
             id: 'sum-more-1',
             name: I18N.api.common.erJiCaiDanFen2,
             url: 'sum-more-1',
-            submenu: [
+            children: [
               {
                 id: 'sum-more-1-0',
                 name: I18N.api.common.sanJiCaiDan,
@@ -205,7 +206,7 @@
             id: 'sum-more-2',
             name: I18N.api.common.erJiCaiDanFen,
             url: '/sum-more-2',
-            submenu: [
+            children: [
               {
                 id: 'sum-more-2-1',
                 name: I18N.api.common.ziDongTianJiaDuo,
