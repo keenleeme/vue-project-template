@@ -9,7 +9,7 @@ export const defaultConfig: AppConfigType = {
   loginConfig: new LoginConfigDTO({
     mode: 'light',
     logoMode: LogoModeEnums.IMAGE,
-    logoName: 'vue3-project-template',
+    logoName: '智启vue3孵化器系统',
     bgMode: 'image',
     bgImage: bgImage,
     logoUrl: '/logo.png'

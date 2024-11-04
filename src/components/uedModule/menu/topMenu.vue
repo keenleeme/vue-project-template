@@ -27,14 +27,14 @@
         dataProps: {
             type: Object,
             default: {
-            id: 'id',
-            label: 'name',
-            children: 'submenu',
-            icon: 'icon',
-            hide: 'hide',
-            html: 'html',
-            hideChildren: 'hideChildren',
-            disabled: 'disabled',
+                id: 'id',
+                label: 'name',
+                children: 'children',
+                icon: 'icon',
+                hide: 'hide',
+                html: 'html',
+                hideChildren: 'hideChildren',
+                disabled: 'disabled',
             },
         },
         // 展示 popover 菜单激活状态

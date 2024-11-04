@@ -3,7 +3,7 @@
     <div class="logo-wrap">
       <!-- <span class="logo"><img src="@/assets/images/logo.svg" /></span> -->
       <span class="logo"><img :src="loginConfig.logoUrl" /></span>
-      <span class="title">{{ $t('I18N.layout.zhiQiFuHuaQi') }}</span>
+      <span class="title">{{ loginConfig.logoName }}</span>
     </div>
     <UedMapMenu
       v-if="config.layout !== 'side' && config.mapMenu"
@@ -43,7 +43,8 @@
 
     <TopMenu
       v-if="config.layout !== 'side'"
-      :menuData="topMenuData" 
+      :menuData="topMenuData"
+      :dataProps="dataProps" 
     ></TopMenu>
 
     <div class="header-operates">
@@ -186,11 +187,6 @@
 
   // 菜单数据
   const topMenuData = ref(props.menuData)
-
-  const dataProps = ref({
-    label: 'name',
-    children: 'submenu'
-  });
 
   // const defaultConfig = {
   //   mode: 'light',
