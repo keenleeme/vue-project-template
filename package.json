@@ -14,7 +14,18 @@
     "i18n:translate": "das-intl --translate",
     "i18n:exportAll": "das-intl --exportAll",
     "i18n:import": "das-intl --import ./export-en-US.csv en-US",
-    "i18n:sync": "das-intl --sync"
+    "i18n:sync": "das-intl --sync",
+    "bootstrap": "yarn && npm-run-all --serial install:*",
+    "start:micro": "npm-run-all --parallel start-child:*",
+    "install:child-react": "cd src/micro/example/child-react && npm install",
+    "install:child-vue2": "cd src/micro/example/vue2 && pnpm install",
+    "install:child-vue3": "cd src/micro/example/vue3 && pnpm install",
+    "install:child-angular": "cd src/micro/example/angular && yarn",
+    "start-child:vue2": "cd src/micro/example/vue2 && pnpm run serve",
+    "start-child:vue3": "cd src/micro/example/vue3 && pnpm run dev",
+    "start-child:react": "cd src/micro/example/child-react && npm start",
+    "start-child:angular": "cd src/micro/example/angular && yarn start",
+    "build:lib": "vite build --config ./configs/vite.config.lib.ts"
   },
   "lint-staged": {
     "*.{js,ts,jsx,tsx}": [
@@ -34,7 +45,8 @@
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",
     "@international/vue3-i18n": "^1.2.0",
-    "@micro-zoe/micro-app": "^1.0.0-rc.2",
+    "@micro-zoe/micro-app": "^1.0.0-rc.11",
+    "@module-federation/vite": "^1.1.3",
     "@types/color": "^3.0.6",
     "@ued-material/menu": "^2.1.13",
     "@ued-material/ued-wbc-vue3": "^0.0.7",
@@ -43,9 +55,12 @@
     "axios": "^1.5.1",
     "codemirror": "^5.57.0",
     "color": "^4.2.3",
+    "dayjs": "^1.11.13",
     "docs-viewer": "^0.0.5",
+    "ds-component": "^1.0.0",
     "echarts": "^5.5.1",
     "lodash": "^4.17.21",
+    "npm-run-all": "^4.1.5",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.0",
     "pinyin-engine": "^1.2.2",
@@ -53,12 +68,14 @@
     "vue": "^3.3.4",
     "vue-echarts": "^7.0.3",
     "vue-router": "^4.2.5",
-    "vue3-tour": "^1.0.2"
+    "vue3-tour": "^1.0.2",
+    "zone.js": "^0.15.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.8.0",
     "@commitlint/config-angular": "^17.8.0",
     "@international/cli": "^1.2.0",
+    "@originjs/vite-plugin-federation": "^1.3.6",
     "@swc/core": "^1.3.93",
     "@swc/helpers": "^0.5.3",
     "@trivago/prettier-plugin-sort-imports": "^4.2.1",
@@ -94,7 +111,9 @@
     "mini-svg-data-uri": "^1.4.4",
     "postcss-loader": "^7.3.3",
     "prettier": "^3.0.3",
+    "sharp": "^0.33.5",
     "speed-measure-webpack-plugin": "^1.5.0",
+    "svgo": "^3.3.2",
     "swc-loader": "^0.2.3",
     "terser-webpack-plugin": "^5.3.9",
     "typescript": "*",
@@ -104,6 +123,7 @@
     "vite": "^4.5.0",
     "vite-plugin-compression": "^0.5.1",
     "vite-plugin-eslint": "^1.8.1",
+    "vite-plugin-image-optimizer": "^1.1.8",
     "vite-plugin-imagemin": "^0.6.1",
     "vite-plugin-vue-devtools": "^7.0.16",
     "vue-eslint-parser": "^9.3.2",
@@ -118,7 +138,8 @@
     "webpackbar": "^5.0.2"
   },
   "resolutions": {
-    "strip-ansi": "6.0.0"
+    "strip-ansi": "6.0.0",
+    "cheerio": "1.0.0-rc.12"
   },
   "license": "MIT"
 }

@@ -3,36 +3,15 @@
  * 图片压缩
  * https://github.com/anncwb/vite-plugin-imagemin
  */
-import viteImagemin from 'vite-plugin-imagemin';
-
+import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 export default function configImageminPlugin() {
-  const imageminPlugin = viteImagemin({
-    // disable: true,
-    gifsicle: {
-      optimizationLevel: 7,
-      interlaced: false,
+  const imageminPlugin = ViteImageOptimizer({
+    jpg: {
+      quality: 90,
     },
-    optipng: {
-      optimizationLevel: 7,
-    },
-    mozjpeg: {
-      quality: 20,
-    },
-    pngquant: {
-      quality: [0.8, 0.9],
-      speed: 4,
-    },
-    svgo: {
-      plugins: [
-        {
-          name: 'removeViewBox',
-        },
-        {
-          name: 'removeEmptyAttrs',
-          active: false,
-        },
-      ],
-    },
-  });
+    png: {
+      quality: 100
+    }
+  })
   return imageminPlugin;
 }

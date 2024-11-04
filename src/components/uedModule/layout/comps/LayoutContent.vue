@@ -21,7 +21,7 @@
       </div>
     </div>
     <a-layout-content>
-      <div class="h-full w-full">
+      <div class="h-full w-full pos-reactive">
         <RouterView />
       </div>
     </a-layout-content>

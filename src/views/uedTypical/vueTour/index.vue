@@ -1,6 +1,9 @@
 <script setup lang="ts">
+  import VueTour from '@/components/uedModule/vueTour/index.vue';
+
   const router = useRouter();
   const route = useRoute();
+
   const steps = ref([
     {
       target: '#v-step-0',
@@ -16,7 +19,7 @@
       },
       labels: {
         // 按钮文字支持配置
-        buttonNext: I18N.layout.ziDingYiXiaYiBuWenZi,
+        buttonNext: I18N.layout.ziDingYiXiaYiBuWenZi
       },
       popover: {
         placement: 'bottom-start',
@@ -40,7 +43,7 @@
       labels: {
         // 按钮文字支持配置
         buttonPrevious: I18N.layout.shangYiBu,
-        buttonNext: I18N.layout.xiaYiBu,
+        buttonNext: I18N.layout.xiaYiBu
       },
       popover: {
         placement: 'bottom-end',
@@ -63,8 +66,8 @@
       labels: {
         // 按钮文字支持配置
         buttonPrevious: I18N.layout.shangYiBu,
-        buttonNext: I18N.layout.xiaYiBu,
-      },
+        buttonNext: I18N.layout.xiaYiBu
+      }
     },
     {
       target: '#v-step-3',
@@ -76,7 +79,7 @@
       labels: {
         // 按钮文字支持配置
         buttonPrevious: I18N.layout.shangYiBuHaHa,
-        buttonStop: I18N.layout.quLingYiGeYeMian,
+        buttonStop: I18N.layout.quLingYiGeYeMian
       }
     }
   ]);
@@ -121,6 +124,7 @@
     <span id="v-step-2" class="logo">{{ $t('I18N.layout.huiXuHuiWanShan') }}</span>
     <span id="v-step-3" class="title">{{ $t('I18N.layout.jingQingQiDai') }}</span>
     <vue-tour name="myTour" :steps="steps" :callbacks="callbacks" class="step_relative"></vue-tour>
+    <!-- <DsCountTo :end="2048" /> -->
   </div>
 </template>
 

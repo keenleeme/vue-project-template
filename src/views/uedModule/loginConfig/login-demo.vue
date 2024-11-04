@@ -14,7 +14,7 @@
         :key="loginConfig.logoMode"
         :src="loginConfig.logoUrl"
         :mode="loginConfig.logoMode"
-        width="110px"
+        width="auto"
         height="60px"
       >
         {{ [LogoModeEnums.IMAGE].includes(loginConfig.logoMode) ? '' : loginConfig.logoName }}

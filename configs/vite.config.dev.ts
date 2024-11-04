@@ -1,6 +1,6 @@
 import { mergeConfig } from 'vite';
 import eslint from 'vite-plugin-eslint';
-import VueDevTools from 'vite-plugin-vue-devtools';
+// import VueDevTools from 'vite-plugin-vue-devtools';
 import baseConfig from './vite.config.base';
 
 export default mergeConfig(
@@ -18,7 +18,7 @@ export default mergeConfig(
         exclude: ['node_modules'],
         emitWarning: false
       }),
-      VueDevTools()
+      // VueDevTools()
     ]
   },
   baseConfig

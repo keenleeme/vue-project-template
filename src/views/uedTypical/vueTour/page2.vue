@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+  import VueTour from '@/components/uedModule/vueTour/index.vue';
+
   const route = useRoute();
   const steps = ref([
     {
@@ -11,7 +13,7 @@
       labels: {
         // 按钮文字支持配置
         buttonPrevious: I18N.layout.shangYiBuHaHa,
-        buttonNext: I18N.layout.xiaYiBu,
+        buttonNext: I18N.layout.xiaYiBu
       }
     },
     {
@@ -24,8 +26,8 @@
       labels: {
         // 按钮文字支持配置
         buttonPrevious: I18N.layout.shangYiBu,
-        buttonStop:I18N.layout.wanCheng,
-      },
+        buttonStop: I18N.layout.wanCheng
+      }
     }
   ]);
   const myCustomPreviousStepCallback = (currentStep) => {
