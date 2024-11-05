@@ -1,4 +1,4 @@
-import { computed, h, PropType, ref, type VNode } from 'vue';
+import { computed, h, ref, type VNode } from 'vue';
 import * as Icons from '@ant-design/icons-vue';
 import type { MenuProps } from 'ant-design-vue';
 import { defineStore } from 'pinia';
@@ -106,9 +106,9 @@ export default defineStore('menus', () => {
   });
 
   const activeId = computed(() => {
-    console.log(22)
+    console.log(22);
     return activeMenus.value.length > 0 ? activeMenus.value[0].id : '';
-  })
+  });
 
   const reset = () => {
     menusData.value = [];
@@ -125,6 +125,6 @@ export default defineStore('menus', () => {
     activeMenus,
     siderMenus,
     findFistSiderMenu,
-    activeId,
+    activeId
   };
 });

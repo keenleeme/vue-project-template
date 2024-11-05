@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 import type { ThemeType } from '@ued-material/ued-wbc/dist/types/types';
 
 export enum LogoModeEnums {
@@ -13,11 +14,13 @@ export interface LanguagesVO {
 }
 
 export class CopyrightVO {
-  text: string = ''
-  link?: string = ''
+  text: string = '';
+
+  link?: string = '';
+
   constructor(text: string = '', link?: string) {
-    this.text = text
-    this.link = link
+    this.text = text;
+    this.link = link;
   }
 }
 

@@ -1,7 +1,7 @@
 <template>
   <div class="base-config-wrap">
     <div v-if="showTabs" class="tabs">
-      <a-tabs v-model:activeKey="activeKey">
+      <a-tabs v-model:active-key="activeKey">
         <a-tab-pane key="1" :tab="$t('I18N.layout.moRenXuanXiang1')"></a-tab-pane>
         <a-tab-pane key="2" :tab="$t('I18N.layout.moRenXuanXiang2')"></a-tab-pane>
         <a-tab-pane key="3" :tab="$t('I18N.layout.moRenXuanXiang3')" disabled></a-tab-pane>
@@ -194,7 +194,8 @@
           span:first-child {
             margin-right: 8px;
           }
-          .ant-radio-wrapper,:deep(.ant-checkbox-wrapper) {
+          .ant-radio-wrapper,
+          :deep(.ant-checkbox-wrapper) {
             font-size: 12px !important;
           }
         }

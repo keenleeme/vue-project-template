@@ -7,8 +7,8 @@
     :bg-attrs="{
       poster: loginConfig.bgPoster
     }"
+    :class="loginConfig.language === 'en' ? 'loginEnglish' : ''"
     @u-submit="handleLogin"
-    :class="loginConfig.language === 'en'?'loginEnglish':''"
   >
     <ued-logo
       slot="logo"
@@ -40,10 +40,10 @@
 <script setup lang="ts">
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
-  import { storeToRefs } from 'pinia';
-  import { useAppStore,useThemeStore } from '@/store';
-  import { LoginConfigDTO, LogoModeEnums } from './types';
   import { changeLocale } from '@international/vue3-i18n';
+  import { storeToRefs } from 'pinia';
+  import { useAppStore, useThemeStore } from '@/store';
+  import { LoginConfigDTO, LogoModeEnums } from './types';
 
   const appStore = useAppStore();
   const router = useRouter();
@@ -93,7 +93,7 @@
           type: 'ued-code-image',
           field: 'verifyCode',
           label: I18N.layout.yanZhengMa,
-          icon: 'code',
+          icon: 'code'
         }
       ]
     },
@@ -142,7 +142,7 @@
         {
           type: 'ued-touch-bar',
           field: 'touchVerify',
-          label: I18N.layout.huaKuaiYanZheng,
+          label: I18N.layout.huaKuaiYanZheng
         }
       ]
     },
@@ -171,11 +171,11 @@
     },
     {
       type: 'qr-ding',
-      name: I18N.layout.dingDingSaoMa,
+      name: I18N.layout.dingDingSaoMa
     },
     {
       type: 'qr-wx',
-      name: I18N.layout.weiXinSaoMa,
+      name: I18N.layout.weiXinSaoMa
     }
   ]);
   const options = ref([
@@ -189,11 +189,11 @@
     router.replace('/');
   };
 
-  const handleLocaleChangeA = (value: string)=>{
-    let locale = value === 'en'?'en':'zh';
+  const handleLocaleChangeA = (value: string) => {
+    const locale = value === 'en' ? 'en' : 'zh';
     changeLocale(locale);
     window.location.reload();
-  }
+  };
 
   watch(
     appConfig.value.loginConfig,

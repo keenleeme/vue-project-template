@@ -128,67 +128,6 @@ const routes: RouteRecordRaw[] = [
     }
   },
   {
-    name: 'sum-more',
-    path: '/sum-more',
-    meta: {
-      title: 'sum-more',
-      permissionId: 'sum-more'
-    },
-    children: [
-      {
-        name: 'sum-more-0',
-        component: () => import('@/views/uedTypical/example/index.vue'),
-        path: '/sum-more-0',
-        meta: {
-          title: 'sum-more-0',
-          permissionId: 'sum-more'
-        }
-      },
-      {
-        name: 'sum-more-1-0',
-        component: () => import('@/views/uedTypical/example/index.vue'),
-        path: '/sum-more-1-0',
-        meta: {
-          title: 'sum-more-1-0',
-          permissionId: 'sum-more'
-        }
-      },
-      {
-        name: 'sum-more-1-1',
-        component: () => import('@/views/uedTypical/example/index.vue'),
-        path: 'sum-more-1-1',
-        meta: {
-          title: 'sum-more-1-1',
-          permissionId: 'sum-more'
-        }
-      },
-      {
-        name: 'sum-more-1-2',
-        component: () => import('@/views/uedTypical/example/index.vue'),
-        path: '/sum-more/sum-more-1-2',
-        meta: {
-          title: 'sum-more-1-2',
-          permissionId: 'sum-more'
-        }
-      },
-      {
-        name: 'sum-more-2',
-        path: 'sum-more-2',
-        children: [
-          {
-            name: 'sum-more-2-1',
-            component: () => import('@/views/uedTypical/example/index.vue'),
-            path: 'sum-more-2-1',
-            meta: {
-              title: 'sum-more-2-1',
-              permissionId: 'sum-more'
-            }
-          }
-        ]
-      }
-    ]
-  },
-  {
     path: '/multiple/:page*',
     name: 'multiple',
     component: () => import(/* webpackChunkName: "multiple" */ '@/micro/example/multiple/index.vue'),
@@ -219,7 +158,7 @@ const wihitetRoutes: RouteRecordRaw[] = [
   {
     name: '404',
     path: '/404',
-    component: () => import('@/views/uedTypical/notFound/index.vue'),
+    component: () => import('@/views/uedTypical/NotFound/index.vue'),
     meta: {
       title: '404',
       fullScreen: true

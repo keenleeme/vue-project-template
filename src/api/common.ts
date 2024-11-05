@@ -99,63 +99,89 @@ export async function getMenus(): Promise<MenuType[]> {
       path: '/vueTour-page2'
     },
     {
-      id: 'sum-one',
-      title: I18N.api.common.yiCengCaiDan,
-      icon: 'AppstoreOutlined',
-      path: '/sum-one'
-    },
-    {
-      id: 'sum-more',
-      title: I18N.api.common.duoCengCaiDan,
-      icon: 'BarsOutlined',
+      id: 'micro',
+      title: '微服务应用',
       children: [
         {
-          id: 'sum-more-0',
-          title: I18N.api.common.erJiCaiDan,
-          path: '/sum-more-0'
-        },
-        {
-          id: 'sum-more-1',
-          title: I18N.api.common.erJiCaiDanFen2,
-          icon: 'BarsOutlined',
+          id: 'vue2',
+          title: 'vue2应用',
+          path: '',
           children: [
             {
-              id: 'sum-more-1-0',
-              title: I18N.api.common.sanJiCaiDan,
-              path: '/sum-more-1-0'
+              id: 'vue-home',
+              title: 'home页面',
+              path: '/vue2/#/home',
+              module: 'vue2'
             },
             {
-              id: 'sum-more-1-1',
-              title: I18N.api.common.ziDongTianJiaQian,
-              path: '/sum-more/sum-more-1-1'
-            },
-            {
-              id: 'sum-more-1-2',
-              title: I18N.api.common.youQianZhuiSanJi,
-              path: '/sum-more/sum-more-1-2'
+              id: 'vue-about',
+              title: 'about页面',
+              path: '/vue2/#/about',
+              module: 'vue2'
             }
           ]
         },
         {
-          id: 'sum-more-2',
-          title: I18N.api.common.erJiCaiDanFen,
-          icon: 'BarsOutlined',
+          id: 'vue3',
+          title: 'vue3应用',
+          path: '',
           children: [
             {
-              id: 'sum-more-2-1',
-              title: I18N.api.common.ziDongTianJiaDuo,
-              path: '/sum-more/sum-more-2/sum-more-2-1'
+              id: 'vue3-home',
+              title: 'home页面',
+              path: '/vue3/home',
+              module: 'vue3'
+            },
+            {
+              id: 'vue3-about',
+              title: 'about页面',
+              path: '/vue3/about',
+              module: 'vue3'
             }
           ]
+        },
+        {
+          id: 'react',
+          title: 'react应用',
+          path: '',
+          children: [
+            {
+              id: 'react-home',
+              title: 'home页面',
+              path: '/react/home',
+              module: 'react'
+            },
+            {
+              id: 'react-about',
+              title: 'about页面',
+              path: '/react/about',
+              module: 'react'
+            }
+          ]
+        },
+        {
+          id: 'angular',
+          title: 'angular应用',
+          path: '/angular/home'
+        },
+        {
+          id: 'multiple',
+          title: '多个应用',
+          path: '/multiple'
         }
       ]
+    },
+    {
+      id: 'custom',
+      title: '定制页面',
+      path: '/custom'
     }
   ];
 }
 
 // 获取权限数据
 export async function getPermissions() {
-  return ['base::example:index', 'base::theme:index', 'base::workBench:index', 'sum-one', 'sum-two', 'sum-more'];
+  return ['base::example:index', 'base::theme:index', 'base::workBench:index'];
 }
 
 // 获取网站配置

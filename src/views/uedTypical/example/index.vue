@@ -7,6 +7,7 @@
 
 <script setup lang="ts">
   import { useRoute } from 'vue-router';
+
   const route = useRoute();
 </script>
 
@@ -15,7 +16,7 @@
     text-align: center;
     padding: 200px 0;
   }
-  h2{
+  h2 {
     text-align: center;
   }
 </style>

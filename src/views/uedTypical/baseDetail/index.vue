@@ -18,7 +18,7 @@
       <a-button size="small" style="float: right">{{ $t('I18N.layout.miaoBianAnNiu') }}</a-button>
     </div>
     <div class="header-form">
-      <a-form class="pd-16" name="basic" autocomplete="off" labelAlign="left">
+      <a-form class="pd-16" name="basic" autocomplete="off" label-align="left">
         <a-row>
           <a-col :span="8">
             <a-form-item :label="$t('I18N.layout.zuJianLeiXing')">
@@ -52,7 +52,7 @@
           </a-col>
           <a-col :span="8">
             <a-form-item :label="$t('I18N.layout.sheBei')">
-              <span><a style="color: var(--primary-color);">192.168.33.188</a></span>
+              <span><a style="color: var(--primary-color)">192.168.33.188</a></span>
             </a-form-item>
           </a-col>
           <a-col :span="8">
@@ -72,7 +72,7 @@
     <div class="more-info">
       <div class="base-detail-title">{{ $t('I18N.layout.gengDuoXinXi') }}</div>
 
-      <a-form class="pd-16" name="basic" autocomplete="off" labelAlign="left">
+      <a-form class="pd-16" name="basic" autocomplete="off" label-align="left">
         <a-row>
           <a-col :span="8">
             <a-form-item :label="$t('I18N.layout.ziChanBianHao')">
@@ -235,7 +235,7 @@
     .ant-timeline .ant-timeline-item-head {
       border-width: 2px;
     }
-    .ant-timeline .ant-timeline-item-tail{
+    .ant-timeline .ant-timeline-item-tail {
       inset-block-start: 17px;
       height: calc(100% - 24px);
     }

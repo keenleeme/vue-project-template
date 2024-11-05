@@ -357,7 +357,6 @@
         const valueList = props.props_singleCondition.value;
         if (success) {
           const list = data.map((item) => ({
-            // eslint-disable-next-line no-nested-ternary
             label: item.label ? (item.label !== item.value ? `${item.label}(${item.value})` : item.value) : item.value,
             value: item.value,
             select: Array.isArray(valueList) ? valueList.includes(item.value) : false
@@ -388,7 +387,6 @@
         });
         if (success) {
           valueData.data_requestOptions = data.map((obj) => ({
-            // eslint-disable-next-line no-nested-ternary
             label: obj.label ? (obj.label !== obj.value ? `${obj.label}(${obj.value})` : obj.value) : obj.value,
             value: obj.value
           }));

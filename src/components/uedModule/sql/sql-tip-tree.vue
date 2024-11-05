@@ -1156,7 +1156,6 @@
               if (isNumberTypeField(type) && !operator.includes('in') && operatorType !== 'dynthreshold') {
                 const num = Number(value);
                 if (typeof num !== 'number' || window.isNaN(num)) {
-                  // eslint-disable-line
                   can = false;
                   setTreeToSqlTip('number类型的字段, 字段值非法');
                 }

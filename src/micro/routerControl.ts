@@ -1,14 +1,14 @@
 import { h } from 'vue';
 import { Router } from 'vue-router';
 import router from '@/router';
+import type { MenuType } from '@/store/uedModule/menus/types';
+import microApp, { monitorChildRouterChange } from './microApi';
+import { decorateLocationPath, isActiveApp, microMenuNavigation } from './microApi/helper';
 import { useMicroStore } from './store';
 import SubApp from './sub-app.vue';
-import  microApp, { monitorChildRouterChange } from './microApi'
-import { decorateLocationPath, isActiveApp,microMenuNavigation } from './microApi/helper'
-import type { MenuType } from '@/store/uedModule/menus/types';
 
 export function setupAddMicroRouter(router: Router) {
-  setupMicroRouterGuards()
+  setupMicroRouterGuards();
   const microStore = useMicroStore();
   microStore.apps.forEach((app) => {
     if (!router.hasRoute(app.name)) {
@@ -42,8 +42,8 @@ export function proxySubAppsRouter(baseRouter: Router) {
   };
 }
 
- // 监听路由变化
- export function setupMicroRouterGuards() {
+// 监听路由变化
+export function setupMicroRouterGuards() {
   // 只能监听注册的子应用的变化
   monitorChildRouterChange((to, from, appName) => {
     console.log('全局前置守卫 beforeEach: ', to, from, appName);
@@ -58,29 +58,29 @@ export function proxySubAppsRouter(baseRouter: Router) {
 
   // 基座的路由变化监听
   router.beforeEach((to, from, next) => {
-    debugger
+    // debugger;
     console.log('全局前置守卫 beforeEach -基座: ', to, from, next);
-    if(from.fullPath ==='/') {
-      next()
-      return
+    if (from.fullPath === '/') {
+      next();
+      return;
     }
     // 第一个参数是基座的公共前缀 没有传空就好了
-    const {module, path ,routerMode} = decorateLocationPath(to.fullPath)
-    if(module) {
-      const newFullPath = `/${module}${routerMode==='hash'?'/#':''}${path}`;
+    const { module, path, routerMode } = decorateLocationPath(to.fullPath);
+    if (module) {
+      const newFullPath = `/${module}${routerMode === 'hash' ? '/#' : ''}${path}`;
       if (newFullPath !== to.fullPath) {
         // 需要判断当前的激活应用在不在这个里面
-        if(isActiveApp(module)) {
+        if (isActiveApp(module)) {
           microApp.router.push({
             name: module,
-            path:newFullPath // 此处需要修改 后续需要判断子应用是hash还是history
+            path: newFullPath // 此处需要修改 后续需要判断子应用是hash还是history
           });
-          return
+          return;
         }
-        next(newFullPath)
-        return
+        next(newFullPath);
+        return;
       }
     }
-    next()
-  })
+    next();
+  });
 }

@@ -4,7 +4,7 @@ import { setupPermissionGuard } from './guard';
 import routes from './routes';
 
 function pruneRoute(route: RouteRecordRaw): RouteRecordRaw {
-  const { children, ...rest } = route;
+  const { ...rest } = route;
   return rest as RouteRecordRaw;
 }
 

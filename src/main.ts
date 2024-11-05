@@ -1,12 +1,8 @@
 import { createApp } from 'vue';
 import { ComponentLibrary } from '@ued-material/ued-wbc-vue3';
-// import Soul from '@ailpha/soul-ui';
-// import '@ailpha/soul-ui/dist/styles/index.css';
 import '@unocss/reset/normalize.css';
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/reset.css';
-
-/* eslint-disable */
 import 'virtual:uno.css';
 import useDsComponent from '@/libs/hooks/useDsComponent';
 import '@/theme/theme.css';
@@ -34,4 +30,4 @@ app.use(ComponentLibrary);
   await startMicro(router);
   app.use(router);
   app.mount('#app');
-})()
+})();

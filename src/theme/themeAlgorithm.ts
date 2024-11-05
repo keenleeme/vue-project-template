@@ -1,13 +1,14 @@
+import { generate } from '@ant-design/colors';
 import Color from 'color';
 import { storeToRefs } from 'pinia';
-import { generate } from '@ant-design/colors';
-import { useThemeStore } from './../store';
+import { useThemeStore } from '../store';
+
 const themeAlgorithm = () => {
   // 物料库组件 主题色设置
   let primaryColors: string[] = [];
   let darkPrimaryColors: string[] = [];
   const themeStore = useThemeStore();
-  const { themeConfig, theme } = storeToRefs(themeStore);
+  const { themeConfig } = storeToRefs(themeStore);
   const config = ref({
     ...themeConfig.value
   });
@@ -53,7 +54,7 @@ const themeAlgorithm = () => {
       const bodyEl = document.body;
       bodyEl.className = val === 'dark' ? 'theme-dark' : '';
     },
-    {immediate: true}
+    { immediate: true }
   );
-}
+};
 export default themeAlgorithm;

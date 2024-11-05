@@ -9,25 +9,24 @@
 <script setup lang="ts">
   import { RouterView } from 'vue-router';
   import zhCN from 'ant-design-vue/es/locale/zh_CN';
+  import { storeToRefs } from 'pinia';
   import { getWebsiteConfig } from './api/common';
   import Layout from './components/uedModule/layout/index.vue';
   import RobotInit from './components/uedModule/robot/index';
-  import { useAppStore } from './store';
+  import { useAppStore, useThemeStore } from './store';
   import { AppConfigType } from './store/uedModule/app/types';
   import themeAlgorithm from './theme/themeAlgorithm';
-import { storeToRefs } from 'pinia';
-import { useThemeStore } from './store';
+
   const appStore = useAppStore();
 
   // 机器人注册
   RobotInit();
   // window.RobotDestory(); 可使用此方法手动销毁机器人
 
-  //修改主题色算法
+  // 修改主题色算法
   themeAlgorithm();
   const themeStore = useThemeStore();
-  const { themeConfig, theme } = storeToRefs(themeStore);
-
+  const { theme } = storeToRefs(themeStore);
 
   getWebsiteConfig()
     .then((data) => {
@@ -38,7 +37,6 @@ import { useThemeStore } from './store';
       console.log(error);
     });
 
-  
   onUnmounted(() => {
     // window.localStorage.clear();
   });
