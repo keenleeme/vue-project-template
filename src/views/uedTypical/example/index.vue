@@ -2,6 +2,7 @@
   <div class="table-wrap">
     <h1>{{ $t('I18N.layout.gongNengKaiFaZhong') }}</h1>
     <h2>{{ route.fullPath }}</h2>
+    <h2>{{ `全局变量: ${$oem.ahText} ${$oem.baasText} ${$oem.ailphaText} ` }}</h2>
   </div>
 </template>
 

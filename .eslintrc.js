@@ -8,7 +8,7 @@ module.exports = {
   },
   parser: 'vue-eslint-parser',
   globals:{
-    "I18N":true 
+    "I18N":true
   },
   extends: [
     'airbnb-base',
