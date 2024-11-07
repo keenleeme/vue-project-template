@@ -24,7 +24,7 @@ app.config.globalProperties.$oem = {
 };
 i18n(app);
 app.use(Antd);
-// 引用ds-component
+// 引用das-component
 useDasComponent(app, true);
 app.use(ComponentLibrary);
 // app.use(Soul);

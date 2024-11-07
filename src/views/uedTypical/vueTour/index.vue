@@ -124,7 +124,7 @@
     <span id="v-step-2" class="logo">{{ $t('I18N.layout.huiXuHuiWanShan') }}</span>
     <span id="v-step-3" class="title">{{ $t('I18N.layout.jingQingQiDai') }}</span>
     <vue-tour name="myTour" :steps="steps" :callbacks="callbacks" class="step_relative"></vue-tour>
-    <!-- <DasCountTo :end="2048" /> -->
+    <DasCountTo :end="2048" />
   </div>
 </template>
 
