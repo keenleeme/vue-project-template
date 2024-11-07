@@ -13,7 +13,7 @@ export const useMicroStore = defineStore('micro', () => {
   const apps = ref<SubApp[]>([
     {
       name: 'vue2',
-      url: '/vue2',
+      url: '/vue2/',
       custom: true,
       baseroute: '/vue2'
     },
