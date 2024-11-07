@@ -11,18 +11,17 @@ const year = today.getFullYear();
   styleUrls: ['./material.component.scss']
 })
 export class MaterialComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   campaignOne = new FormGroup({
     start: new FormControl(new Date(year, month, 13)),
-    end: new FormControl(new Date(year, month, 16)),
+    end: new FormControl(new Date(year, month, 16))
   });
+
   campaignTwo = new FormGroup({
     start: new FormControl(new Date(year, month, 15)),
-    end: new FormControl(new Date(year, month, 19)),
+    end: new FormControl(new Date(year, month, 19))
   });
 }

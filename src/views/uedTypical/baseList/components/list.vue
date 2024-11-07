@@ -99,7 +99,7 @@
       prop: 'dateRange',
       type: 'daterange',
       startPlaceholder: I18N.layout.kaiShiShiJian,
-      endPlaceholder: I18N.layout.jieShuShiJian,
+      endPlaceholder: I18N.layout.jieShuShiJian
     }
   ];
 

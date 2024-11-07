@@ -7,7 +7,11 @@
     <div class="sql-input ml-8">
       <SqlTipTree :props_allFieldList="dataSource"></SqlTipTree>
     </div>
-    <a-range-picker v-model:value="timeValue" class="ml-8" :placeholder="[$t('I18N.layout.kaiShiRiQi'), $t('I18N.layout.jieShuRiQi')]" />
+    <a-range-picker
+      v-model:value="timeValue"
+      class="ml-8"
+      :placeholder="[$t('I18N.layout.kaiShiRiQi'), $t('I18N.layout.jieShuRiQi')]"
+    />
     <a-button class="ml-8">
       <template #icon>
         <Icon :style="{ position: 'relative', top: '2px' }">

@@ -1,16 +1,16 @@
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router';
+  import { ref } from 'vue';
+  import { useRouter } from 'vue-router';
 
-const router = useRouter()
-function goAbout() {
-  router.push('/about')
-}
-defineProps({
-  msg: String,
-})
+  const router = useRouter();
+  function goAbout() {
+    router.push('/about');
+  }
+  defineProps({
+    msg: String
+  });
 
-const count = ref(0)
+  const count = ref(0);
 </script>
 
 <template>
@@ -26,17 +26,12 @@ const count = ref(0)
 
   <p>
     Check out
-    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
-      >create-vue</a
-    >, the official Vue + Vite starter
+    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank">create-vue</a>, the official Vue + Vite
+    starter
   </p>
   <p>
     Learn more about IDE Support for Vue in the
-    <a
-      href="https://vuejs.org/guide/scaling-up/tooling.html#ide-support"
-      target="_blank"
-      >Vue Docs Scaling up Guide</a
-    >.
+    <a href="https://vuejs.org/guide/scaling-up/tooling.html#ide-support" target="_blank">Vue Docs Scaling up Guide</a>.
   </p>
   <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
 
@@ -44,7 +39,7 @@ const count = ref(0)
 </template>
 
 <style scoped>
-.read-the-docs {
-  color: #888;
-}
+  .read-the-docs {
+    color: #888;
+  }
 </style>

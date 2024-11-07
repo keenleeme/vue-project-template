@@ -1,8 +1,6 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-
 import federation from "@originjs/vite-plugin-federation";
-
 import MicroRouterJsonPlugin from 'micro-router-json-plugin'
 import path from 'path'; 
 
@@ -13,13 +11,13 @@ export default defineConfig({
     federation({
       name: 'host_app',
       remotes: {
-        home: "http://localhost:9003/assets/remoteEntry.js",
-      },
-  }),
-  MicroRouterJsonPlugin({
-    routerPath: process.cwd() +'/src/router.js',
-    encrypt:false
-  })
+        home: 'http://localhost:9003/assets/remoteEntry.js'
+      }
+    }),
+    MicroRouterJsonPlugin({
+      routerPath: `${process.cwd()}/src/router.js`,
+      encrypt: false
+    })
   ],
   build:{
     outDir: path.resolve(__dirname, '../../../../dist/vue3'), 
@@ -27,9 +25,9 @@ export default defineConfig({
   server: {
     port: 7002,
     host: true,
-     fs: {
+    fs: {
       strict: false
-    },
+    }
   },
   base: `/vue3`
-})
+});

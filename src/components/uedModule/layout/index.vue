@@ -114,14 +114,14 @@
         children: []
       },
       {
-        id: "example",
+        id: 'example',
         name: I18N.layout.gongZuoTaiZiDingYi,
         url: '/custom-workbench',
         hideChildren: true,
         children: []
       },
       {
-        id: "example1",
+        id: 'example1',
         name: I18N.layout.baoBiaoZiDingYi,
         url: '/custom-report',
         hideChildren: true,
@@ -175,86 +175,44 @@
         ]
       },
       {
-        id: 'sum-more',
-        name: I18N.api.common.duoCengCaiDan,
-        url: '/sum-more',
-        // hideChildren: true,
-        children: [
-          {
-            id: 90,
-            name: I18N.api.common.erJiCaiDan,
-            url: '/sum-more-0'
-          },
-          {
-            id: 'sum-more-1',
-            name: I18N.api.common.erJiCaiDanFen2,
-            url: 'sum-more-1',
-            children: [
-              {
-                id: 'sum-more-1-0',
-                name: I18N.api.common.sanJiCaiDan,
-                url: '/sum-more-1-0'
-              },
-              {
-                id: 'sum-more-1-1',
-                name: I18N.api.common.ziDongTianJiaQian,
-                url: '/sum-more/sum-more-1-1'
-              }
-            ]
-          },
-          {
-            id: 'sum-more-2',
-            name: I18N.api.common.erJiCaiDanFen,
-            url: '/sum-more-2',
-            children: [
-              {
-                id: 'sum-more-2-1',
-                name: I18N.api.common.ziDongTianJiaDuo,
-                url: '/sum-more/sum-more-2/sum-more-2-1'
-              }
-            ]
-          }
-        ]
-      },
-      {
-        id:'micro',
+        id: 'micro',
         name: '微服务应用',
         children: [
           {
             id: 'vue2',
             name: 'vue2应用',
             url: '',
-            children:[
+            children: [
               {
-              id: 'vue-home',
-              name: 'home页面',
-              url: '/vue2/#/home',
-              module:'vue2'
-            },
-            {
-              id: 'vue-about',
-              name: 'about页面',
-              url: '/vue2/#/about',
-              module:'vue2'
-            }
-          ]
+                id: 'vue-home',
+                name: 'home页面',
+                url: '/vue2/#/home',
+                module: 'vue2'
+              },
+              {
+                id: 'vue-about',
+                name: 'about页面',
+                url: '/vue2/#/about',
+                module: 'vue2'
+              }
+            ]
           },
           {
             id: 'vue3',
             name: 'vue3应用',
             url: '',
-            children:[
+            children: [
               {
                 id: 'vue3-home',
                 name: 'home页面',
                 url: '/vue3/home',
-                module:'vue3'
+                module: 'vue3'
               },
               {
                 id: 'vue3-about',
                 name: 'about页面',
                 url: '/vue3/about',
-                module:'vue3'
+                module: 'vue3'
               }
             ]
           },
@@ -262,25 +220,25 @@
             id: 'react',
             name: 'react应用',
             url: '',
-            children:[
+            children: [
               {
                 id: 'react-home',
                 name: 'home页面',
                 url: '/react/home',
-                module:'react'
+                module: 'react'
               },
               {
                 id: 'react-about',
                 name: 'about页面',
                 url: '/react/about',
-                module:'react'
+                module: 'react'
               }
             ]
           },
           {
             id: 'angular',
             name: 'angular应用',
-            url: '/angular/home',
+            url: '/angular/home'
             // children:[
             //   {
             //     id: 'angular-home',
@@ -310,10 +268,9 @@
         ]
       },
       {
-        id:'custom',
-        
-        name:'定制页面',
-        url:'/custom'
+        id: 'custom',
+        name: '定制页面',
+        url: '/custom'
       }
     ]
   });

@@ -1,5 +1,5 @@
 <template>
-  <a-button v-if="appInfo.name ==='vue2'" @click="sendData">动态发送基座数据</a-button>
+  <a-button v-if="appInfo.name === 'vue2'" @click="sendData">动态发送基座数据</a-button>
   <micro-app
     :name="appInfo.name"
     :url="url"
@@ -18,27 +18,28 @@
 </template>
 
 <script setup lang="ts">
-  import 'zone.js'
+  import 'zone.js';
   import { computed } from 'vue';
-  import microApp from '@/micro/microApi'
-  import { SubApp } from './store';
   import { useRouter } from 'vue-router';
+  import microApp from '@/micro/microApi';
   import {getAppRealUrl} from './microApi/helper'
+  
+  import { SubApp } from './store';
 
   const router = useRouter();
   type PushStateFunction = (path: string) => void;
 
   const globaldata = ref<{
     language: 'zh' | 'en';
-    token:string;
-    pushState: PushStateFunction // 子应用跳转基座或者其他子应用使用  也可以使用数据通信，没有唯一，参考https://micro-zoe.github.io/micro-app/0.x/docs.html#/zh-cn/data
+    token: string;
+    pushState: PushStateFunction; // 子应用跳转基座或者其他子应用使用  也可以使用数据通信，没有唯一，参考https://micro-zoe.github.io/micro-app/0.x/docs.html#/zh-cn/data
   }>({
-    language:'zh',
-    token:'11111',
-    pushState: (path:string) => {
-      router.push(path)
+    language: 'zh',
+    token: '11111',
+    pushState: (path: string) => {
+      router.push(path);
     }
-  })
+  });
 
   const props = withDefaults(
     defineProps<{
@@ -46,7 +47,6 @@
     }>(),
     {}
   );
-
 
   const url = computed(() => {
     return getAppRealUrl(props.appInfo.url)
@@ -60,17 +60,16 @@
     // return `${window.location.protocol}//${window.location.host}${props.appInfo.url}`;
   });
 
-
-  const showSpin = ref(false)
+  const showSpin = ref(false);
   function appCreated() {
     showSpin.value = true;
   }
   function appMounted() {
     showSpin.value = false;
   }
- // 更多请参考https://micro-zoe.github.io/micro-app/docs.html#/zh-cn/data
+  // 更多请参考https://micro-zoe.github.io/micro-app/docs.html#/zh-cn/data
   function sendData() {
     // 发送给特定子应用的数据
-    microApp.setData('vue2', { uuid: Math.random()})
+    microApp.setData('vue2', { uuid: Math.random() });
   }
 </script>

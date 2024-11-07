@@ -9,6 +9,7 @@
     @menu-click="userMenuClick"
   />
 </template>
+
 <script setup lang="ts">
   import { UedUserMenu } from '@ued-material/menu';
   import { storeToRefs } from 'pinia';
@@ -18,19 +19,21 @@
     menuData: {
       type: Array,
       required: true,
-      default: () => [],
+      default: () => []
     },
     dataProps: {
       type: Object,
-      default: {
-        id: 'id',
-        label: 'name',
-        children: 'children',
-        icon: 'icon',
-        hide: 'hide',
-        html: 'html',
-        hideChildren: 'hideChildren',
-        disabled: 'disabled'
+      default() {
+        return {
+          id: 'id',
+          label: 'name',
+          children: 'children',
+          icon: 'icon',
+          hide: 'hide',
+          html: 'html',
+          hideChildren: 'hideChildren',
+          disabled: 'disabled'
+        };
       }
     },
     // 展示 popover 菜单激活状态
@@ -46,7 +49,7 @@
     popoverClass: {
       type: String,
       default: 'user-menu-popover'
-    },
+    }
   });
   const menusStore = useMenusStore();
   const appStore = useAppStore();
@@ -59,13 +62,6 @@
   watchEffect(() => {
     config.value = { ...themeConfig.value };
   });
-    // 用户菜单点击
-  const emit = defineEmits(['userMenuClick'])
-  const userMenuClick = (item) => {
-    console.log('>>userMenuClick>>', item)
-    emit('userMenuClick',item)
-    handleLogout();
-  };
 
   // 退出登录
   const router = useRouter();
@@ -74,5 +70,13 @@
     appStore.reset();
     themeStore.reset();
     router.push('/login');
+  };
+
+  // 用户菜单点击
+  const emit = defineEmits(['userMenuClick']);
+  const userMenuClick = (item: any) => {
+    console.log('>>userMenuClick>>', item);
+    emit('userMenuClick', item);
+    handleLogout();
   };
 </script>

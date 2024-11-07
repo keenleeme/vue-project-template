@@ -41,11 +41,7 @@
       </template>
     </UedMapMenu>
 
-    <TopMenu
-      v-if="config.layout !== 'side'"
-      :menuData="topMenuData"
-      :dataProps="dataProps" 
-    ></TopMenu>
+    <TopMenu v-if="config.layout !== 'side'" :menu-data="topMenuData" :data-props="dataProps"></TopMenu>
 
     <div class="header-operates">
       <a-dropdown>
@@ -76,7 +72,7 @@
         @click="handleLocaleChangeA(config.lang)"
       />
       <FullscreenOutlined class="icon-button menuicon" size="24" @click="toggleFullScreen" />
-      <UserMenu :menuData="userMenu" ></UserMenu>
+      <UserMenu :menu-data="userMenu"></UserMenu>
     </div>
   </div>
   <a-modal
@@ -148,35 +144,37 @@
   import docsViewer from 'docs-viewer';
   import 'docs-viewer/dist/lib.css';
   import { storeToRefs } from 'pinia';
+  import TopMenu from '@/components/uedModule/menu/topMenu.vue';
+  import UserMenu from '@/components/uedModule/menu/userMenu.vue';
   import { useAppStore, useThemeStore } from '@/store';
-  import TopMenu from '@/components/uedModule/menu/topMenu.vue'
-  import UserMenu from '@/components/uedModule/menu/userMenu.vue'
   import { LoginConfigDTO } from '@/views/uedModule/login/types';
 
   const props = defineProps({
     menuData: {
       type: Array,
       // required: true
-      default: () => [],
+      default: () => []
     },
     userMenu: {
       type: Array,
       // required: true,
-      default: () => [],
+      default: () => []
     },
     dataProps: {
       type: Object,
-      default: {
-        id: 'id',
-        label: 'name',
-        children: 'children',
-        icon: 'icon',
-        hide: 'hide',
-        html: 'html',
-        hideChildren: 'hideChildren',
-        disabled: 'disabled',
-      },
-    },
+      default() {
+        return {
+          id: 'id',
+          label: 'name',
+          children: 'children',
+          icon: 'icon',
+          hide: 'hide',
+          html: 'html',
+          hideChildren: 'hideChildren',
+          disabled: 'disabled'
+        };
+      }
+    }
   });
 
   const appStore = useAppStore();
@@ -186,7 +184,7 @@
   const loginConfig = ref<LoginConfigDTO>(new LoginConfigDTO(appConfig.value?.loginConfig));
 
   // 菜单数据
-  const topMenuData = ref(props.menuData)
+  const topMenuData = ref(props.menuData);
 
   // const defaultConfig = {
   //   mode: 'light',
@@ -385,7 +383,7 @@
   // 国际化切换
 
   const handleLocaleChangeA = (value: string) => {
-    let locale = value === 'zh' ? 'en' : 'zh';
+    const locale = value === 'zh' ? 'en' : 'zh';
     // setThemeConfig({...config})
     themeConfig.value = { ...themeConfig.value, lang: locale };
     changeLocale(locale);
@@ -394,9 +392,9 @@
   const handleChangeMode = () => {
     themeStore.setThemeConfig({
       ...themeConfig.value,
-      mode: config.value.mode === 'light' ? 'dark' : 'light',
-    })
-  }
+      mode: config.value.mode === 'light' ? 'dark' : 'light'
+    });
+  };
 </script>
 
 <style lang="less" scoped>

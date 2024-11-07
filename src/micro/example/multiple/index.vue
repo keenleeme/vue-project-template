@@ -9,12 +9,13 @@
       disable-memory-router
       iframe
       fiber
-  ></micro-app>
+    ></micro-app>
   </div>
 </template>
+
 <script setup lang="ts">
-const appData = ref([
-  {
+  const appData = ref([
+    {
       name: 'vue2',
       url: 'http://localhost:7001/vue2/',
       baseroute: '/vue2'
@@ -23,6 +24,6 @@ const appData = ref([
       name: 'vue3',
       url: 'http://localhost:7002/vue3/',
       baseroute: '/multiple'
-    },
-])
+    }
+  ]);
 </script>

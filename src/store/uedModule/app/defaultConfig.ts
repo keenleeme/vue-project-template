@@ -1,6 +1,6 @@
 import { LoginConfigDTO, LogoModeEnums } from '@/views/uedModule/login/types';
+import bgImage from '@/views/uedModule/loginConfig/login.png';
 import { AppConfigType } from './types';
-import bgImage from '@/views/uedModule/loginConfig/login.png'
 
 export const defaultConfig: AppConfigType = {
   title: '智启vue3孵化器系统',
@@ -11,7 +11,7 @@ export const defaultConfig: AppConfigType = {
     logoMode: LogoModeEnums.IMAGE,
     logoName: '智启vue3孵化器系统',
     bgMode: 'image',
-    bgImage: bgImage,
+    bgImage,
     logoUrl: '/logo.png'
   })
   // logo: '/logo.png',

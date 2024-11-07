@@ -12,7 +12,6 @@
     },
     callbacks: {
       type: Object,
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
       default: () => {}
     },
     options: {
@@ -58,10 +57,10 @@
                 <a-button v-if="!tour.isFirst && tour.enabledButtons.buttonPrevious" @click="tour.previousStep">{{
                   tour.steps[index].labels ? tour.steps[index].labels.buttonPrevious : tour.labels.buttonPrevious
                 }}</a-button>
-                <a-button v-if="!tour.isLast && tour.enabledButtons.buttonNext" @click="tour.nextStep" type="primary">{{
+                <a-button v-if="!tour.isLast && tour.enabledButtons.buttonNext" type="primary" @click="tour.nextStep">{{
                   tour.steps[index].labels ? tour.steps[index].labels.buttonNext : tour.labels.buttonNext
                 }}</a-button>
-                <a-button v-if="tour.isLast && tour.enabledButtons.buttonStop" @click="tour.finish" type="primary">{{
+                <a-button v-if="tour.isLast && tour.enabledButtons.buttonStop" type="primary" @click="tour.finish">{{
                   tour.steps[index].labels ? tour.steps[index].labels.buttonStop : tour.labels.buttonStop
                 }}</a-button>
               </slot>

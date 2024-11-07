@@ -1,9 +1,8 @@
-import microApp, {getMicroAppActiveApps, setData } from './index';
 import router from '@/router';
 import type { MenuType } from '@/store/uedModule/menus/types';
-import {SubApp} from '../store'
-import { routeCenter } from '../index'
-
+import { routeCenter } from '../index';
+import { SubApp } from '../store';
+import microApp, { getMicroAppActiveApps, setData } from './index';
 
 export function menuNavigationRewrite(menu: MenuType) {
   if (!menu.url) {
@@ -28,12 +27,11 @@ export function microMenuNavigation(menu: MenuType) {
   menuNavigationRewrite(menu);
 }
 
-
-export function getCustomApps(apps: SubApp[]):SubApp[] {
-  return apps.filter(item => item.custom)
+export function getCustomApps(apps: SubApp[]): SubApp[] {
+  return apps.filter((item) => item.custom);
 }
 
-export function delPrefix (prefix:string, path: string) {
+export function delPrefix(prefix: string, path: string) {
   const escapedPrefix = prefix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const regex = new RegExp(`^/?${escapedPrefix}(?:/|#/?)?(.*)$`);
   const match = path.match(regex);
@@ -42,7 +40,7 @@ export function delPrefix (prefix:string, path: string) {
     return remaining ? `/${remaining}` : '/';
   }
   return path;
-};
+}
 
 /**
  * @description 匹配 hash 值中的路径部分和参数部分，并将它们分别捕获到一个分组中。分离路径和参数
@@ -61,15 +59,18 @@ export function getPathAndQuery(hash: string) {
   };
 }
 
-export function decorateLocationPath(fullPath: string, baseurl=''): {
+export function decorateLocationPath(
+  fullPath: string,
+  baseurl = ''
+): {
   module?: string;
   path: string;
-  routerMode?: string
+  routerMode?: string;
 } {
   fullPath = delPrefix(baseurl, fullPath); // 去除一些特定的前缀
   if (!fullPath) {
     return {
-      path: '/404' 
+      path: '/404'
     };
   }
   const { path: _path, query: _query } = getPathAndQuery(fullPath);
@@ -77,30 +78,28 @@ export function decorateLocationPath(fullPath: string, baseurl=''): {
     return { path: _path };
   }
 
-
   const { module } = routeCenter.get(_path) || {};
   return {
     module: module || '',
     path: `${_path}${_query}`,
-    routerMode:module ? routeCenter.getModuleRouterMode(module):''
+    routerMode: module ? routeCenter.getModuleRouterMode(module) : ''
   };
 }
 
 /**
  * @description 判断当前应用是不是激活的子应用
  * @param appName 当前路由的app名称
- * @returns true/false 
+ * @returns true/false
  */
 export function isActiveApp(appName: string) {
   const activeApps = getMicroAppActiveApps();
-  return activeApps.includes(appName)
+  return activeApps.includes(appName);
 }
 
-
- /**
+/**
  * @description 获取子应用的路由前缀
  * @param appName 当前路由的app名称
- * @returns true/false 
+ * @returns true/false
  */
 //  export function getAppPrefix(url: string) {
 //   const activeApps = getMicroAppActiveApps();

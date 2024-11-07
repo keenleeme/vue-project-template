@@ -6,7 +6,10 @@ div
         <a-col v-for="item in showFormItems" :key="item.label" :span="span">
           <a-form-item :label="item.label">
             <template v-if="item.type === 'input'">
-              <a-input v-model:value="formData[item.prop]" :placeholder="item.placeholder || $t('I18N.base_form.pleaseEnter')" />
+              <a-input
+                v-model:value="formData[item.prop]"
+                :placeholder="item.placeholder || $t('I18N.base_form.pleaseEnter')"
+              />
             </template>
             <template v-else-if="item.type === 'select'">
               <a-select
@@ -31,7 +34,10 @@ div
               <a-range-picker
                 v-model:value="formData[item.prop]"
                 :picker="item.type || ''"
-                :placeholder="[item.startPlaceholder || $t('I18N.layout.qingXuanZeKaiShiShiJian'), item.endPlaceholder || $t('I18N.layout.qingXuanZeJieShuShiJian')]"
+                :placeholder="[
+                  item.startPlaceholder || $t('I18N.layout.qingXuanZeKaiShiShiJian'),
+                  item.endPlaceholder || $t('I18N.layout.qingXuanZeJieShuShiJian')
+                ]"
               />
             </template>
           </a-form-item>
@@ -42,8 +48,12 @@ div
               <UpSquareOutlined v-if="expand" />
               <DownSquareOutlined v-if="expand" />
             </div>
-            <a-button v-if="isReset" type="default" class="search reset mr-8" @click="handleReset">{{ $t('I18N.common.reset') }}</a-button>
-            <a-button type="primary" class="search confirm" @click="handleSearch">{{ $t('I18N.common.search') }}</a-button>
+            <a-button v-if="isReset" type="default" class="search reset mr-8" @click="handleReset">{{
+              $t('I18N.common.reset')
+            }}</a-button>
+            <a-button type="primary" class="search confirm" @click="handleSearch">{{
+              $t('I18N.common.search')
+            }}</a-button>
           </div>
         </a-col>
       </a-row>
@@ -147,6 +157,7 @@ div
 
   let formData = reactive(props.initialValues);
   const handleReset = () => {
+    // eslint-disable-next-line guard-for-in
     for (const key in initialValues) {
       formData[key] = initialValues[key];
     }
@@ -178,7 +189,7 @@ div
     :deep(.ant-form-item .ant-form-item-label > label) {
       font-size: 12px;
     }
-    :deep(.ant-col-14){
+    :deep(.ant-col-14) {
       max-width: calc(100% - 104px);
     }
   }

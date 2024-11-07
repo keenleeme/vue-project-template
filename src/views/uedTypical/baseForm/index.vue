@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/no-parsing-error -->
 <template>
   <div class="base-form-box">
     <div class="base-form-wrapper">

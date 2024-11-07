@@ -1,12 +1,8 @@
 import { createApp } from 'vue';
 import { ComponentLibrary } from '@ued-material/ued-wbc-vue3';
-// import Soul from '@ailpha/soul-ui';
-// import '@ailpha/soul-ui/dist/styles/index.css';
 import '@unocss/reset/normalize.css';
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/reset.css';
-
-/* eslint-disable */
 import 'virtual:uno.css';
 import useDsComponent from '@/libs/hooks/useDsComponent';
 import '@/theme/theme.css';
@@ -21,7 +17,11 @@ import pinia from './store';
 const app = createApp(App);
 app.use(pinia);
 app.config.globalProperties.$tours = {};
-
+app.config.globalProperties.$oem = {
+  ahText: '安恒',
+  baasText: 'BAAS',
+  ailphaText: 'AILPHA'
+};
 i18n(app);
 app.use(Antd);
 // 引用ds-component
@@ -34,4 +34,4 @@ app.use(ComponentLibrary);
   await startMicro(router);
   app.use(router);
   app.mount('#app');
-})()
+})();

@@ -7,7 +7,6 @@ node_modules
 .idea
 dist
 /public
-/src
 /docs
 .husky
 .local
@@ -16,3 +15,6 @@ dist
 .prettierrc
 /*.json
 /*.js
+/src/components/sql-tip-tree
+/src/components/uedModule/sql
+/src/micro

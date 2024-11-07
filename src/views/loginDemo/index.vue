@@ -1,13 +1,13 @@
 <template>
-  <UedLogin languageValue="en" :forms="from" @handleLogin="handleLogin" systemTitle="123" :logo="logoUrl"></UedLogin>
+  <UedLogin language-value="en" :forms="from" system-title="123" :logo="logoUrl" @handle-login="handleLogin"></UedLogin>
 </template>
 
 <script setup lang="ts">
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
+  import logoUrl from '@/assets/images/demo/logo.svg';
   import { useAppStore } from '@/store';
   import UedLogin from '../uedModule/login/indexComponent.vue';
-  import logoUrl from '@/assets/images/demo/logo-d0293ac3.svg';
 
   const router = useRouter();
   const appStore = useAppStore();

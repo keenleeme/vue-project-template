@@ -4,7 +4,7 @@ export interface MenuType {
   path?: string; // 路由路径
   url?: string; // 路由路径
   icon?: string;
-  module?:string;
+  module?: string;
   children?: MenuType[];
 }
 

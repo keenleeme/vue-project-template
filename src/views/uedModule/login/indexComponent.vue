@@ -19,7 +19,7 @@
   defineComponent({
     name: 'UedLogin' // 给组件命名
   });
-  console.log(defaultConfig,123,themeDefaultConfig)
+  console.log(defaultConfig, 123, themeDefaultConfig);
   const props = defineProps({
     loadingText: {
       type: String,
@@ -190,6 +190,7 @@
     languageOptions: {
       type: Object,
       default: () => {
+        // eslint-disable-next-line vue/require-valid-default-prop
         return [
           { label: '中文', value: 'zh' },
           { label: '英文', value: 'en' }

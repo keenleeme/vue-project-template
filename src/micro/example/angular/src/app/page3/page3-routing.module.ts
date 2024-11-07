@@ -8,4 +8,4 @@ const routes: Routes = [{ path: '', component: Page3Component }];
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class Page3RoutingModule { }
+export class Page3RoutingModule {}

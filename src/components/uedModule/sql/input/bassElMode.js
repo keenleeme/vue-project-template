@@ -38,14 +38,14 @@ export default function customizeMode(_CodeMirror, fieldList = [], eventName) {
         let escaped = false;
         let next;
         if (parserConfig.jsonld && stream.peek() === '@' && stream.match(isJsonldKeyword)) {
-          state.tokenize = tokenBase; // eslint-disable-line
+          state.tokenize = tokenBase; 
           return 'meta';
         }
         while ((next = stream.next()) != null) {
           if (next === quote && !escaped) break;
           escaped = !escaped && next === '\\';
         }
-        if (!escaped) state.tokenize = tokenBase; // eslint-disable-line
+        if (!escaped) state.tokenize = tokenBase; 
         return 'ql-string';
       };
     }

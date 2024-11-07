@@ -2,11 +2,14 @@
   <div class="setting-wrapper">
     <div class="page-content">
       <div class="setting">
-        <a-form :colon="false" label-align="right" v-bind="formItemLayout" :label-col="{style:{'width': '33.3%', 'white-space':'normal'}}">
+        <a-form
+          :colon="false"
+          label-align="right"
+          v-bind="formItemLayout"
+          :label-col="{ style: { width: '33.3%', 'white-space': 'normal' } }"
+        >
           <div class="group basic">
-            <div class="group-header">
-              基础配置
-            </div>
+            <div class="group-header">基础配置</div>
             <div class="group-content">
               <a-form-item :label="$t('I18N.layout.zhuTiFengGe')">
                 <a-radio-group v-model:value="loginConfig.mode">
@@ -39,12 +42,15 @@
                     >
                       <a-button type="text">{{ $t('I18N.layout.shangChuan') }}</a-button>
                     </a-upload>
-                    <a-button type="text" @click="handleReset('bgImage')">{{ $t('I18N.layout.huiFuChuChangTuPian') }}</a-button>
+                    <a-button type="text" @click="handleReset('bgImage')">{{
+                      $t('I18N.layout.huiFuChuChangTuPian')
+                    }}</a-button>
                   </div>
                   <p>
-                    {{ $t('I18N.layout.zhiNengShangChuan') }}{{ config.format.join('/').replace(/\./g, '') }}{{ $t('I18N.layout.wenJian') }}，{{ $t('I18N.layout.qieBuChaoGuo') }}{{
-                      config.bgSizeText
-                    }}，{{ $t('I18N.layout.jianYiTuPianBiLi') }}16:9
+                    {{ $t('I18N.layout.zhiNengShangChuan') }}{{ config.format.join('/').replace(/\./g, '')
+                    }}{{ $t('I18N.layout.wenJian') }}，{{ $t('I18N.layout.qieBuChaoGuo') }}{{ config.bgSizeText }}，{{
+                      $t('I18N.layout.jianYiTuPianBiLi')
+                    }}16:9
                   </p>
                 </div>
               </a-form-item>
@@ -69,12 +75,15 @@
                       >
                         <a-button type="text">{{ $t('I18N.layout.shangChuan') }}</a-button>
                       </a-upload>
-                      <a-button type="text" @click="handleReset('bgPoster')">{{ $t('I18N.layout.huiFuChuChangTuPian') }}</a-button>
+                      <a-button type="text" @click="handleReset('bgPoster')">{{
+                        $t('I18N.layout.huiFuChuChangTuPian')
+                      }}</a-button>
                     </div>
                     <p>
-                      {{ $t('I18N.layout.zhiNengShangChuan') }}{{ config.format.join('/').replace(/\./g, '') }}{{ $t('I18N.layout.wenJian') }}，{{ $t('I18N.layout.qieBuChaoGuo') }}{{
-                        config.bgSizeText
-                      }}，{{ $t('I18N.layout.shiPinHeTuPianYiZhi') }}，{{ $t('I18N.layout.jianYiBiLi') }}16:9
+                      {{ $t('I18N.layout.zhiNengShangChuan') }}{{ config.format.join('/').replace(/\./g, '')
+                      }}{{ $t('I18N.layout.wenJian') }}，{{ $t('I18N.layout.qieBuChaoGuo') }}{{ config.bgSizeText }}，{{
+                        $t('I18N.layout.shiPinHeTuPianYiZhi')
+                      }}，{{ $t('I18N.layout.jianYiBiLi') }}16:9
                     </p>
                   </div>
                 </a-form-item>
@@ -102,28 +111,34 @@
                       >
                         <a-button type="text">{{ $t('I18N.layout.shangChuan') }}</a-button>
                       </a-upload>
-                      <a-button type="text" @click="handleReset('bgVideo')">{{ $t('I18N.layout.huiFuChuChangShiPin') }}</a-button>
+                      <a-button type="text" @click="handleReset('bgVideo')">{{
+                        $t('I18N.layout.huiFuChuChangShiPin')
+                      }}</a-button>
                     </div>
                     <p>
-                      {{ $t('I18N.layout.zhiNengShangChuan') }}{{ config.videoFormat.join('/').replace(/\./g, '') }}{{ $t('I18N.layout.wenJian') }}，{{ $t('I18N.layout.qieBuChaoGuo') }}{{
-                        config.videoSizeText
-                      }}，{{ $t('I18N.layout.shiPinHeTuPianYiZhi') }}，{{ $t('I18N.layout.jianYiBiLi') }}16:9
+                      {{ $t('I18N.layout.zhiNengShangChuan') }}{{ config.videoFormat.join('/').replace(/\./g, '')
+                      }}{{ $t('I18N.layout.wenJian') }}，{{ $t('I18N.layout.qieBuChaoGuo')
+                      }}{{ config.videoSizeText }}，{{ $t('I18N.layout.shiPinHeTuPianYiZhi') }}，{{
+                        $t('I18N.layout.jianYiBiLi')
+                      }}16:9
                     </p>
                   </div>
                 </a-form-item>
               </template>
-              <a-form-item :label="$t('I18N.layout.chanPin')+'LOGO'">
+              <a-form-item :label="$t('I18N.layout.chanPin') + 'LOGO'">
                 <a-radio-group v-model:value="loginConfig.logoMode">
                   <a-radio :value="LogoModeEnums.IMAGE">{{ $t('I18N.layout.tuPian') }}</a-radio>
                   <a-radio :value="LogoModeEnums.TEXT">{{ $t('I18N.layout.wenzi') }}</a-radio>
-                  <a-radio :value="LogoModeEnums.IMAGE_TEXT">{{ $t('I18N.layout.tuPian') }}+{{ $t('I18N.layout.wenzi') }}</a-radio>
+                  <a-radio :value="LogoModeEnums.IMAGE_TEXT"
+                    >{{ $t('I18N.layout.tuPian') }}+{{ $t('I18N.layout.wenzi') }}</a-radio
+                  >
                 </a-radio-group>
               </a-form-item>
-              <a-form-item :label="$t('I18N.layout.chanPin')+$t('I18N.base_form.name')">
+              <a-form-item :label="$t('I18N.layout.chanPin') + $t('I18N.base_form.name')">
                 <a-input
                   v-model:value="loginConfig.logoName"
                   :disabled="[LogoModeEnums.IMAGE].includes(loginConfig.logoMode!)"
-                  :placeholder="$t('I18N.base_form.pleaseEnter')+'LOGO'+$t('I18N.base_form.name')"
+                  :placeholder="$t('I18N.base_form.pleaseEnter') + 'LOGO' + $t('I18N.base_form.name')"
                 />
                 <a-form-item style="margin-top: 24px">
                   <div class="uploader">
@@ -144,9 +159,9 @@
                         :before-upload="(v: UploadFile) => beforeUpload(v, 'logoUrl')"
                         :custom-request="(v) => customRequest(v, 'logoUrl')"
                       >
-                        <a-button type="text" :disabled="[LogoModeEnums.TEXT].includes(loginConfig.logoMode!)"
-                          >{{ $t('I18N.layout.shangChuan') }}</a-button
-                        >
+                        <a-button type="text" :disabled="[LogoModeEnums.TEXT].includes(loginConfig.logoMode!)">{{
+                          $t('I18N.layout.shangChuan')
+                        }}</a-button>
                       </a-upload>
                       <a-button
                         type="text"
@@ -156,9 +171,9 @@
                       >
                     </div>
                     <p>
-                      {{ $t('I18N.layout.zhiNengShangChuan') }}{{ config.format.join('/').replace(/\./g, '') }}{{ $t('I18N.layout.wenJian') }}，{{ $t('I18N.layout.qieBuChaoGuo') }}{{
-                        config.logoSizeText
-                      }}，{{ $t('I18N.layout.shenSeBeiJingJianYiShiYong') }}
+                      {{ $t('I18N.layout.zhiNengShangChuan') }}{{ config.format.join('/').replace(/\./g, '')
+                      }}{{ $t('I18N.layout.wenJian') }}，{{ $t('I18N.layout.qieBuChaoGuo')
+                      }}{{ config.logoSizeText }}，{{ $t('I18N.layout.shenSeBeiJingJianYiShiYong') }}
                     </p>
                   </div>
                 </a-form-item>
@@ -177,11 +192,14 @@
               <a-form-item v-for="(item, idx) in loginConfig.copyright" :key="idx">
                 <div class="flex">
                   <a-input v-model:value="item.text" :placeholder="$t('I18N.base_form.pleaseEnterContent')"></a-input>
-                  <a-input v-model:value="item.link" :placeholder="$t('I18N.base_form.pleaseEnterContent')+$t('I18N.layout.lianJieDiZhi')"></a-input>
+                  <a-input
+                    v-model:value="item.link"
+                    :placeholder="$t('I18N.base_form.pleaseEnterContent') + $t('I18N.layout.lianJieDiZhi')"
+                  ></a-input>
                   <MinusCircleOutlined @click="copyrightHandler('remove', idx)" />
                 </div>
               </a-form-item>
-              <a-button type="dashed" :icon="h(PlusOutlined)" style="width: 100%;" @click="copyrightHandler('append')">
+              <a-button type="dashed" :icon="h(PlusOutlined)" style="width: 100%" @click="copyrightHandler('append')">
                 {{ $t('I18N.common.add') }}
               </a-button>
             </div>
@@ -211,13 +229,7 @@
       </template>
     </a-modal>
 
-    <a-modal
-      v-model:open="fullscreen"
-      title=""
-      width="100%"
-      wrap-class-name="full-modal"
-      :closable="false"
-    >
+    <a-modal v-model:open="fullscreen" title="" width="100%" wrap-class-name="full-modal" :closable="false">
       <LoginDemo :key="previewKey" fullscreen :forms="forms" :login-config="loginConfig"></LoginDemo>
 
       <template #footer>
@@ -228,6 +240,8 @@
 </template>
 
 <script setup lang="ts">
+  import { h } from 'vue';
+  import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons-vue';
   import type { FormDto } from '@ued-material/ued-wbc/dist/types/types';
   import { UploadFile, message } from 'ant-design-vue';
   import { storeToRefs } from 'pinia';
@@ -237,8 +251,6 @@
   import * as config from './index';
   import type { FormUploadType } from './index';
   import LoginDemo from './login-demo.vue';
-  import { h } from 'vue';
-  import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons-vue';
 
   const appStore = useAppStore();
   const { appConfig } = storeToRefs(appStore);
@@ -265,8 +277,20 @@
       type: 'login-password',
       btnText: I18N.common.login,
       items: [
-        { type: 'ued-input', label: I18N.common.username, field: 'username', placeholder: I18N.login.qingShuRuYongHu, icon: 'user' },
-        { type: 'ued-password', label: I18N.common.password, field: 'username', placeholder: I18N.login.qingShuRuMiMa, icon: 'password' },
+        {
+          type: 'ued-input',
+          label: I18N.common.username,
+          field: 'username',
+          placeholder: I18N.login.qingShuRuYongHu,
+          icon: 'user'
+        },
+        {
+          type: 'ued-password',
+          label: I18N.common.password,
+          field: 'username',
+          placeholder: I18N.login.qingShuRuMiMa,
+          icon: 'password'
+        },
         { type: 'ued-touch-bar', label: I18N.layout.yanZheng, field: 'valide', icon: 'touch' }
       ]
     }
@@ -318,11 +342,11 @@
   // copyright 自定义增减
   const copyrightHandler = (name: 'append' | 'remove', idx?: number) => {
     if (name === 'append') {
-      loginConfig.value.copyright?.push(new CopyrightVO())
+      loginConfig.value.copyright?.push(new CopyrightVO());
     } else if (idx !== undefined) {
-      loginConfig.value.copyright?.splice(idx, 1)
+      loginConfig.value.copyright?.splice(idx, 1);
     }
-  }
+  };
 
   // 提交
   const handleSubmit = () => {

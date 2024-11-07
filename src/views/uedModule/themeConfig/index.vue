@@ -66,7 +66,12 @@
       <a-button type="primary" @click="useTheme">{{ $t('I18N.layout.yingYongDangQianZhuTi') }}</a-button>
     </div>
 
-    <a-modal v-model:open="dialogVisiable" :title="$t('I18N.layout.shengChengYeMianQianTaoCanShu')" centered="true" :closable="false">
+    <a-modal
+      v-model:open="dialogVisiable"
+      :title="$t('I18N.layout.shengChengYeMianQianTaoCanShu')"
+      centered="true"
+      :closable="false"
+    >
       <div>
         <p>{{ $t('I18N.layout.shengChengYeMianQianTaoCanShuTanChuangWenAn') }}</p>
         <div class="params-content">

@@ -1,4 +1,5 @@
 import type { Router, RouteRecordRaw, RouteMeta } from 'vue-router';
+
 // import { rsaPrivateKeyPem } from '@/libs/const/index';
 // import decryptJsonField from '@/libs/utils/aes';
 
@@ -30,8 +31,8 @@ export default class RouterCenter {
   private excludePath: string[];
 
   private routerMode: {
-    [key: string]: RouterMode
-  }
+    [key: string]: RouterMode;
+  };
 
   defaultPage: {
     url: string;
@@ -45,7 +46,7 @@ export default class RouterCenter {
     this.excludePath = ['/404', '/403', '/500', 'Login', 'NotFound', 'NotAccess', 'Error'];
     this.specialUrl = [];
     this.defaultPage = [];
-    this.routerMode = {}
+    this.routerMode = {};
   }
 
   getRoutes() {
@@ -90,9 +91,10 @@ export default class RouterCenter {
     return this.routes.get(key);
   }
 
-  getModuleRouterMode(module:string) {
-    return this.routerMode[module]
+  getModuleRouterMode(module: string) {
+    return this.routerMode[module];
   }
+
   getMeta(path: string) {
     if (this.has(path)) {
       return this.get(path)?.meta;
@@ -118,13 +120,9 @@ export default class RouterCenter {
     return this.routes.has(key);
   }
 
-  setModuleRoutes(
-    routerData:RouteRecordRaw[],
-    module: string,
-    routerMode?:RouterMode
-  ) {
+  setModuleRoutes(routerData: RouteRecordRaw[], module: string, routerMode?: RouterMode) {
     if (routerData) {
-      this.routerMode[module] = routerMode || 'hash'
+      this.routerMode[module] = routerMode || 'hash';
       // const routes = decryptJsonField(config, rsaPrivateKeyPem); // 目前是没有加密的
       this.traverseRoutes(routerData, module);
     }
@@ -133,7 +131,6 @@ export default class RouterCenter {
   // 将路由中心的所有路由添加到proxyKeys
   initRegExpKeyToKey() {
     // for (const key of this.routes.keys()) {
-    // eslint-disable-next-line no-restricted-syntax
     for (const [key] of this.routes) {
       const regexpKey = key.replace(/:\w+/, '\\w+');
       this.proxyKeys.push([new RegExp(`^${regexpKey}$`), key]);
@@ -148,7 +145,7 @@ export default class RouterCenter {
   ) {
     if (Array.isArray(routes)) {
       routes.forEach((route) => {
-        if (route.path === '*' || route.path ==='/') {
+        if (route.path === '*' || route.path === '/') {
           return;
         }
         let breadcrumb = null;

@@ -1,4 +1,4 @@
-import login from './login.png'
+import login from './login.png';
 
 export type FormUploadType = 'bgImage' | 'logoUrl' | 'bgVideo' | 'bgPoster';
 
@@ -41,4 +41,4 @@ export const limitText: Record<FormUploadType, string> = {
 };
 
 /** 空图片 */
-export const fallbackImg = login
+export const fallbackImg = login;

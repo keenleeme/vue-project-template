@@ -1,4 +1,4 @@
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 // import { theme } from 'ant-design-vue';
 import { defineStore } from 'pinia';
 import { LoginConfigDTO } from '@/views/uedModule/login/types';
@@ -36,7 +36,7 @@ export default defineStore(
     const themePanelVisible = ref<boolean>(false);
     const setThemePanelVisible = (show: boolean) => {
       themePanelVisible.value = show;
-    }
+    };
     // // 主题
     // const themeType = ref<ThemeTypes>(ThemeTypes.Light);
     // const setThemeType = (theme: ThemeTypes) => {

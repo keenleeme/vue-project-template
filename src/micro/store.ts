@@ -6,7 +6,7 @@ export interface SubApp {
   url: string;
   baseroute: string;
   custom?: boolean;
-  routerMode?: 'hash' | 'history'
+  routerMode?: 'hash' | 'history';
 }
 
 export const useMicroStore = defineStore('micro', () => {
@@ -15,19 +15,19 @@ export const useMicroStore = defineStore('micro', () => {
       name: 'vue2',
       url: '/vue2',
       custom: true,
-      baseroute: '/vue2',
+      baseroute: '/vue2'
     },
     {
       name: 'vue3',
       url: '/vue3/',
       baseroute: '/vue3',
-      routerMode:'history'
+      routerMode: 'history'
     },
     {
       name: 'react',
       url: '/react/',
       baseroute: '/react',
-      routerMode:'history'
+      routerMode: 'history'
     },
     {
       name: 'angular',

@@ -1,17 +1,16 @@
+import { VERSION as CDK_VERSION } from '@angular/cdk';
 import { enableProdMode, NgModuleRef } from '@angular/core';
+import { VERSION as MAT_VERSION } from '@angular/material/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import {VERSION as CDK_VERSION} from '@angular/cdk';
-import {VERSION as MAT_VERSION} from '@angular/material/core';
-
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 
 declare global {
   interface Window {
-    microApp: any
-    mount: CallableFunction
-    unmount: CallableFunction
-    __MICRO_APP_ENVIRONMENT__: string
+    microApp: any;
+    mount: CallableFunction;
+    unmount: CallableFunction;
+    __MICRO_APP_ENVIRONMENT__: string;
   }
 }
 
@@ -19,19 +18,17 @@ if (environment.production) {
   enableProdMode();
 }
 
-/* eslint-disable no-console */
 console.info('Angular CDK version', CDK_VERSION.full);
 console.info('Angular Material version', MAT_VERSION.full);
 
 // ----------分割线---默认模式------两种模式任选其一-----放开注释即可运行------- //
-let app: void | NgModuleRef<AppModule>
+let app: void | NgModuleRef<AppModule>;
 platformBrowserDynamic()
   .bootstrapModule(AppModule)
   .then((res: NgModuleRef<AppModule>) => {
-    app = res
+    app = res;
   })
-  .catch(err => console.error(err));
-
+  .catch((err) => console.error(err));
 
 console.log('微应用child-angular14渲染了 -- 默认模式');
 
@@ -40,7 +37,7 @@ window.unmount = () => {
   app?.destroy();
   app = undefined;
   console.log('微应用child-angular14卸载了 --- 默认模式');
-}
+};
 
 // ----------分割线---umd模式------两种模式任选其一-------------- //
 // let app: void | NgModuleRef<AppModule>
