@@ -4,7 +4,7 @@ import '@unocss/reset/normalize.css';
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/reset.css';
 import 'virtual:uno.css';
-import useDsComponent from '@/libs/hooks/useDsComponent';
+import useDasComponent from '@/libs/hooks/useDasComponent';
 import '@/theme/theme.css';
 import '@/theme/themeAntdReset.css';
 import App from './App.vue';
@@ -24,8 +24,8 @@ app.config.globalProperties.$oem = {
 };
 i18n(app);
 app.use(Antd);
-// 引用ds-component
-useDsComponent(app);
+// 引用das-component
+useDasComponent(app, true);
 app.use(ComponentLibrary);
 // app.use(Soul);
 
