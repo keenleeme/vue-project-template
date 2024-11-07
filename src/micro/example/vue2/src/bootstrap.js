@@ -14,8 +14,6 @@ const router = new VueRouter({
 })
 
 
-
-
 // console.log(2222)
 new Vue({
   router,

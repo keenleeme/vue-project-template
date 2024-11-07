@@ -1,6 +1,6 @@
 <template>
 <UedTopMenu
-    v-model:active-id="activeId"
+    :active-id="activeId"
     :props="dataProps"
     :data="menuData"
     :pop-active="popActive"

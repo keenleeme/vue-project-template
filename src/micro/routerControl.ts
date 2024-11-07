@@ -15,7 +15,7 @@ export function setupAddMicroRouter(router: Router) {
       router.addRoute({
         path: `${app.baseroute}/:page*`,
         name: app.name,
-        component: () => h(SubApp, { appInfo: app }),
+        component: () => Promise.resolve(h(SubApp, { appInfo: app })),
         meta: {
           title: app.name,
           public: true
@@ -57,8 +57,7 @@ export function proxySubAppsRouter(baseRouter: Router) {
   });
 
   // 基座的路由变化监听
-  router.beforeEach((to, from, next) => {
-    debugger
+  router.beforeEach((to, from, next) => {  
     console.log('全局前置守卫 beforeEach -基座: ', to, from, next);
     if(from.fullPath ==='/') {
       next()

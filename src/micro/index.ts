@@ -5,7 +5,7 @@ import { setupAddMicroRouter } from './routerControl';
 import { useMicroStore } from './store';
 import { SubApp } from './store';
 import RouterCenter from './routerCenter/index'
-import { getCustomApps } from './microApi/helper'
+import { getCustomApps,getAppRealUrl } from './microApi/helper'
 
 export let routeCenter:RouterCenter;
 // 获取定制的路由文件信息
@@ -15,16 +15,21 @@ async function registerRouterCenter(router: Router, apps:SubApp[]) {
   routeCenter = new RouterCenter(router);
   const res = await Promise.allSettled([
     ...customApps.map((app: SubApp) =>
-      axios.get(`${app.url}${app.url.endsWith('/') ? '' : '/'}router.json`, {
+    {
+      const realUrl = getAppRealUrl(app.url)
+      return  axios.get(`${realUrl}${realUrl.endsWith('/') ? '' : '/'}router.json`, {
         timeout: 500
       })
+    }
     )
   ]);
   
   Array.from(res).forEach((item, index) => {
     if (item.status === 'fulfilled' && item.value.data) {
-      const {baseroute, routerMode} = customApps[index]
-      routeCenter.setModuleRoutes(item.value.data.data, baseroute.slice(1),routerMode);
+      if(customApps[index]) {
+        const {baseroute, routerMode} = customApps[index]
+        routeCenter.setModuleRoutes(item.value.data.data, baseroute.slice(1),routerMode);
+      }
     }
   });
   

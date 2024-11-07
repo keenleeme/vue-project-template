@@ -13,25 +13,25 @@ export const useMicroStore = defineStore('micro', () => {
   const apps = ref<SubApp[]>([
     {
       name: 'vue2',
-      url: 'http://localhost:8080/vue2/',
+      url: '/vue2',
       custom: true,
       baseroute: '/vue2',
     },
     {
       name: 'vue3',
-      url: 'http://localhost:8090/vue3/',
+      url: '/vue3/',
       baseroute: '/vue3',
       routerMode:'history'
     },
     {
       name: 'react',
-      url: 'http://localhost:3000/react/',
+      url: '/react/',
       baseroute: '/react',
       routerMode:'history'
     },
     {
       name: 'angular',
-      url: 'http://localhost:6002/angular/',
+      url: '/angular/',
       baseroute: '/angular'
     }
   ]);

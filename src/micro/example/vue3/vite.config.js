@@ -4,6 +4,7 @@ import vue from '@vitejs/plugin-vue'
 import federation from "@originjs/vite-plugin-federation";
 
 import MicroRouterJsonPlugin from 'micro-router-json-plugin'
+import path from 'path'; 
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -20,8 +21,11 @@ export default defineConfig({
     encrypt:false
   })
   ],
+  build:{
+    outDir: path.resolve(__dirname, '../../../../dist/vue3'), 
+  },
   server: {
-    port: 8090,
+    port: 7002,
     host: true,
      fs: {
       strict: false

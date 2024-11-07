@@ -106,3 +106,19 @@ export function isActiveApp(appName: string) {
 //   const activeApps = getMicroAppActiveApps();
 //   return activeApps.includes(appName)
 //  }
+
+ /**
+* @description 获取子应用的完成的路径
+* @param url 当前app应用的url地址
+* @returns realurl 
+*/
+export function getAppRealUrl(url:string):string {
+  if (url.startsWith('http')) return url;
+  if (url.startsWith('//')) {
+    return window.location.protocol + url;
+  }
+  if (url.startsWith(':')) {
+    return `${window.location.protocol}//${window.location.hostname}${url}`;
+  }
+  return `${window.location.protocol}//${window.location.host}${url}`;
+}

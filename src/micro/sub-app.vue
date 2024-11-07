@@ -23,6 +23,7 @@
   import microApp from '@/micro/microApi'
   import { SubApp } from './store';
   import { useRouter } from 'vue-router';
+  import {getAppRealUrl} from './microApi/helper'
 
   const router = useRouter();
   type PushStateFunction = (path: string) => void;
@@ -48,11 +49,15 @@
 
 
   const url = computed(() => {
-    if (props.appInfo.url.startsWith('http')) return props.appInfo.url;
-    if (props.appInfo.url.startsWith('//')) {
-      return window.location.protocol + props.appInfo.url;
-    }
-    return `${window.location.protocol}//${window.location.host}${props.appInfo.url}`;
+    return getAppRealUrl(props.appInfo.url)
+    // if (props.appInfo.url.startsWith('http')) return props.appInfo.url;
+    // if (props.appInfo.url.startsWith('//')) {
+    //   return window.location.protocol + props.appInfo.url;
+    // }
+    // if (props.appInfo.url.startsWith(':')) {
+    //   return `${window.location.protocol}//${window.location.hostname}${props.appInfo.url}`;
+    // }
+    // return `${window.location.protocol}//${window.location.host}${props.appInfo.url}`;
   });
 
 

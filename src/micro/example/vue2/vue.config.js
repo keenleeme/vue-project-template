@@ -1,7 +1,7 @@
 const { defineConfig } = require('@vue/cli-service')
 const ModuleFederationPlugin = require('webpack').container.ModuleFederationPlugin;
 const MicroRouterJsonPlugin = require('micro-router-json-plugin')
-
+const path = require('path');
 console.log(process.cwd() +'/src/router.js')
 module.exports = defineConfig({
   publicPath: '/vue2/',
@@ -21,9 +21,10 @@ module.exports = defineConfig({
       })
     ],
   },
+  outputDir: path.resolve(__dirname, '../../../../dist/vue2'), 
   devServer: {
     hot: true,
-    port: 8080,
+    port: 7001,
     headers: {
       'Access-Control-Allow-Origin': '*',
     },
