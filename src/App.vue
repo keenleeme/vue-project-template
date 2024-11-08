@@ -18,7 +18,10 @@
   import themeAlgorithm from './theme/themeAlgorithm';
 
   const appStore = useAppStore();
-
+  const loadingWrapper: any = document.getElementById('loader');
+  if (loadingWrapper) {
+    loadingWrapper.parentNode.removeChild(loadingWrapper);
+  }
   // 机器人注册
   RobotInit();
   // window.RobotDestory(); 可使用此方法手动销毁机器人

@@ -1,10 +1,12 @@
 import path from 'path';
 import dotenv from 'dotenv';
+import fs from 'fs';
 function getPath(_path) {
   return path.join(process.cwd(), _path);
 }
 function packageInfo() {
-  return require(getPath('package.json'));
+  const buf = fs.readFileSync(getPath('package.json'));
+  return JSON.parse(buf.toString());
 }
 function outFileName(pathData) {
   const info = packageInfo();
