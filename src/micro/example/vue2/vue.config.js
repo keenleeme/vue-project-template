@@ -4,7 +4,7 @@ const MicroRouterJsonPlugin = require('micro-router-json-plugin')
 const path = require('path');
 console.log(process.cwd() +'/src/router.js')
 module.exports = defineConfig({
-  publicPath: '/vue2/',
+  publicPath: '/subapp/vue2/',
   transpileDependencies: true,
   configureWebpack: {
     plugins: [
@@ -21,7 +21,7 @@ module.exports = defineConfig({
       })
     ],
   },
-  outputDir: path.resolve(__dirname, '../../../../dist/vue2'), 
+  outputDir: path.resolve(__dirname, '../../../../dist/subapp/vue2'), 
   devServer: {
     hot: true,
     port: 7001,

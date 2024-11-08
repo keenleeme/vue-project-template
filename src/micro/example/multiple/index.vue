@@ -14,15 +14,16 @@
 </template>
 
 <script setup lang="ts">
+ import { getAppRealUrl} from '../../microApi/helper'
   const appData = ref([
     {
       name: 'vue2',
-      url: 'http://localhost:7001/vue2/',
+      url: getAppRealUrl('/subapp/vue2'),
       baseroute: '/vue2'
     },
     {
       name: 'vue3',
-      url: 'http://localhost:7002/vue3/',
+      url: getAppRealUrl('/subapp/vue3'),
       baseroute: '/multiple'
     }
   ]);
