@@ -1,6 +1,6 @@
 import { mergeConfig } from 'vite';
 import eslint from 'vite-plugin-eslint';
-// import VueDevTools from 'vite-plugin-vue-devtools';
+import devEnv from '../dev.env.js';
 import baseConfig from './vite.config.base';
 
 export default mergeConfig(
@@ -9,7 +9,10 @@ export default mergeConfig(
     server: {
       fs: {
         strict: true
-      }
+      },
+      host: '0.0.0.0',
+      port: 3000,
+      proxy: devEnv.proxy
     },
     plugins: [
       eslint({
@@ -17,8 +20,7 @@ export default mergeConfig(
         include: ['src/**/*.ts', 'src/**/*.tsx', 'src/**/*.vue'],
         exclude: ['node_modules'],
         emitWarning: false
-      }),
-      // VueDevTools()
+      })
     ]
   },
   baseConfig

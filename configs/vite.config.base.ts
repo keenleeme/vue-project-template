@@ -1,17 +1,14 @@
+import federation from '@originjs/vite-plugin-federation';
 import vue from '@vitejs/plugin-vue';
+import vueJsx from '@vitejs/plugin-vue-jsx';
+import extra from 'fs-extra';
 import { resolve } from 'path';
 import UnoCSS from 'unocss/vite';
+import AutoImport from 'unplugin-auto-import/vite';
 import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
 import Components from 'unplugin-vue-components/vite';
-import AutoImport from 'unplugin-auto-import/vite'
 import { defineConfig } from 'vite';
 import { loadEnv } from './utils';
-import extra from 'fs-extra'
-
-// MF
-// import { federation } from '@module-federation/vite';
-
-import federation from "@originjs/vite-plugin-federation";
 
 const env = loadEnv();
 
@@ -29,6 +26,7 @@ export default defineConfig({
         }
       }
     ),
+    vueJsx(),
     federation({
       name: 'home',
       filename: 'remoteEntry.js',
@@ -37,24 +35,22 @@ export default defineConfig({
         './axios': 'axios',
         './ant-design-vue': 'ant-design-vue',
         './dayjs': 'dayjs'
-      },
+      }
       // shared: require('../package.json').dependencies,
     }),
     UnoCSS(),
     AutoImport({
-      imports: [
-        'vue',
-        'vue-router',
-      ],
+      imports: ['vue', 'vue-router'],
       dts: './auto-imports.d.ts',
       eslintrc: {
         enabled: false,
         filepath: './.eslintrc-auto-import.json',
-        globalsPropValue: true,
+        globalsPropValue: true
       },
-      vueTemplate: false,
+      vueTemplate: false
     }),
     Components({
+      directoryAsNamespace: true,
       resolvers: [
         AntDesignVueResolver({
           importStyle: false // css in js
@@ -63,8 +59,8 @@ export default defineConfig({
     }),
     extra.copy(
       resolve(__dirname, '../node_modules/@ued-material/ued-wbc/dist/assets/ued-wbc'),
-      resolve(__dirname, '../public/assets/ued-wbc'),
-    ),
+      resolve(__dirname, '../public/assets/ued-wbc')
+    )
   ],
   resolve: {
     alias: [
@@ -82,27 +78,12 @@ export default defineConfig({
   define: {
     'process.env': JSON.stringify(env)
   },
-  build: {
-    // rollupOptions: {
-    //   plugins: [
-    //     copy(
-    //       {
-    //         targets: [{
-    //           src: resolve(__dirname, '../node_modules/@ued-material/ued-wbc/dist/components/assets'),
-    //           dest: resolve(__dirname, '../dist/components/assets'),
-    //         }]
-    //       }
-    //     )
-    //   ]
-    // }
-    // copyPublicDir: true,
-
-    // onEnd() {  
-    //   // 根据环境变量判断是否在生产环境下复制文件  
-    //   if (process.env.NODE_ENV === 'production') {  
-    //     copy('source/static', 'dist/static').catch(err => console.error('复制静态文件失败:', err));  
-    //   }  
-    // }  
-  },
-  css: {}
+  build: {},
+  css: {
+    preprocessorOptions: {
+      less: {
+        javascriptEnabled: true // 启用JavaScript表达式
+      }
+    }
+  }
 });

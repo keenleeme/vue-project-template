@@ -3,14 +3,14 @@ const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const path = require('path');
 
 module.exports = function override(config, env) {
-  config.output.publicPath = '/react/';
+  config.output.publicPath = '/subapp/react/';
 
   if (config.devServer) {
     config.devServer.publicPath = '/react/';
   }
   
   if (env === 'production') {
-    config.output.path =path.resolve(__dirname, '../../../../dist/react')   // 设置输出目录
+    config.output.path = path.resolve(__dirname, '../../../../dist/subapp/react')   // 设置输出目录
 }
   
   // 添加你的插件new InterpolateHtmlPlugin(env.raw),

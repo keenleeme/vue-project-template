@@ -1,7 +1,7 @@
 import { mergeConfig } from 'vite';
-import baseConfig from './vite.config.base';
 import compressPlugin from 'vite-plugin-compression';
 import configImageminPlugin from './plugin/imagemin';
+import baseConfig from './vite.config.base';
 
 export default mergeConfig(
   {
@@ -14,18 +14,13 @@ export default mergeConfig(
     ],
     build: {
       rollupOptions: {
-        // external: ['dayjs'],
         output: {
           manualChunks: {
             vue: ['vue', 'vue-router', 'pinia']
-          },
-          // globals: {
-          //   dayjs: 'dayjs'
-          // },
+          }
         }
       },
-      chunkSizeWarningLimit: 2000,
-      // target: "esnext"
+      chunkSizeWarningLimit: 2000
     }
   },
   baseConfig

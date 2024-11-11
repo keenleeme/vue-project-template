@@ -11,7 +11,8 @@ module.exports = {
   arrowParens: 'always', // 在唯一的箭头函数参数周围始终包含括号。
   importOrderParserPlugins: ['typescript', 'jsx', 'decorators-legacy'],
   plugins: ['@trivago/prettier-plugin-sort-imports'],
-  importOrder: ['^vue', '<THIRD_PARTY_MODULES>', '@/(.*)', '^[./]']
+  importOrder: ['^vue', '<THIRD_PARTY_MODULES>', '@/(.*)', '^[./]'],
+  camelcase: false
   // importOrderSeparation: true,
   // importOrderSortSpecifiers: true,
 };

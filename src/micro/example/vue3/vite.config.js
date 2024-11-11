@@ -20,7 +20,7 @@ export default defineConfig({
     })
   ],
   build:{
-    outDir: path.resolve(__dirname, '../../../../dist/vue3'), 
+    outDir: path.resolve(__dirname, '../../../../dist/subapp/vue3'), 
   },
   server: {
     port: 7002,
@@ -29,5 +29,5 @@ export default defineConfig({
       strict: false
     }
   },
-  base: `/vue3`
+  base: `/subapp/vue3`
 });

@@ -321,7 +321,7 @@
     "@babel/helper-plugin-utils" "^7.25.9"
     "@babel/helper-simple-access" "^7.25.9"
 
-"@babel/plugin-transform-typescript@^7.22.15", "@babel/plugin-transform-typescript@^7.25.9":
+"@babel/plugin-transform-typescript@^7.22.15", "@babel/plugin-transform-typescript@^7.23.3", "@babel/plugin-transform-typescript@^7.25.9":
   version "7.25.9"
   resolved "https://ci.das-security.cn/repository/ah_npm/@babel/plugin-transform-typescript/-/plugin-transform-typescript-7.25.9.tgz"
   integrity sha512-7PbZQZP50tzv2KGGnhh82GSyMB01yKY9scIjf1a+GfZCtInOWqUH5+1EBU4t9fyR5Oykkkc9vFTs4OHrhHXljQ==
@@ -803,7 +803,7 @@
   resolved "https://ci.das-security.cn/repository/ah_npm/@leichtgewicht/ip-codec/-/ip-codec-2.0.5.tgz"
   integrity sha512-Vo+PSpZG2/fmgmiNzYK9qWRh8h/CHrwD0mo1h1DzL4yzHNSfWYujGTYsWGreD000gcgmZ7K4Ys6Tx9TxtsKdDw==
 
-"@micro-zoe/micro-app@^1.0.0-rc.11":
+"@micro-zoe/micro-app@^1.0.0-rc.13":
   version "1.0.0-rc.13"
   resolved "https://ci.das-security.cn/repository/ah_npm/@micro-zoe/micro-app/-/micro-app-1.0.0-rc.13.tgz"
   integrity sha512-2FA2dpYFAIKwoNtDABrGB3TpVWkqfi3wxxbtfRPkomEhiWLZyth7mocY1TjpUCIcNNiIxdfz42ebZA0tK+6dkw==
@@ -1250,7 +1250,7 @@
   dependencies:
     "@types/node" "*"
 
-"@typescript-eslint/eslint-plugin@^6.4.0":
+"@typescript-eslint/eslint-plugin@^6.21.0", "@typescript-eslint/eslint-plugin@^6.4.0":
   version "6.21.0"
   resolved "https://ci.das-security.cn/repository/ah_npm/@typescript-eslint/eslint-plugin/-/eslint-plugin-6.21.0.tgz"
   integrity sha512-oy9+hTPCUFpngkEZUSzbf9MxI65wbKFoQYsgPdILTfbUldp5ovUuphZVe4i30emU9M/kP+T64Di0mxl7dSw3MA==
@@ -1613,6 +1613,15 @@
     magic-string "^0.30.5"
     unplugin "^1.5.1"
     webpack-sources "^3.2.3"
+
+"@vitejs/plugin-vue-jsx@^3.1.0":
+  version "3.1.0"
+  resolved "https://ci.das-security.cn/repository/ah_npm/@vitejs/plugin-vue-jsx/-/plugin-vue-jsx-3.1.0.tgz"
+  integrity sha512-w9M6F3LSEU5kszVb9An2/MmXNxocAnUb3WhRr8bHlimhDrXNt6n6D2nJQR3UXpGlZHh/EsgouOHCsM8V3Ln+WA==
+  dependencies:
+    "@babel/core" "^7.23.3"
+    "@babel/plugin-transform-typescript" "^7.23.3"
+    "@vue/babel-plugin-jsx" "^1.1.5"
 
 "@vitejs/plugin-vue@^4.4.0":
   version "4.6.2"
@@ -3167,6 +3176,11 @@ dargs@^7.0.0:
   resolved "https://ci.das-security.cn/repository/ah_npm/dargs/-/dargs-7.0.0.tgz"
   integrity sha512-2iy1EkLdlBzQGvbweYRFxmFath8+K7+AKB0TlhHWkNuH+TmovaMH/Wp7V7R4u7f4SnX3OgLsU9t1NI9ioDnUpg==
 
+das-component@^1.0.0:
+  version "1.0.0"
+  resolved "https://ci.das-security.cn/repository/ah_npm/das-component/-/das-component-1.0.0.tgz"
+  integrity sha512-CsAzB2A2phD47WhQq+AIsJMixHpsHtnepTaW0cohX5FlMQHYPz1R55U/9ZlTBhHD/9FxzlUrvvyRIlfyvL1u8w==
+
 dashdash@^1.12.0:
   version "1.14.1"
   resolved "https://ci.das-security.cn/repository/ah_npm/dashdash/-/dashdash-1.14.1.tgz"
@@ -3523,11 +3537,6 @@ dotenv@^16.3.1:
   version "16.4.5"
   resolved "https://ci.das-security.cn/repository/ah_npm/dotenv/-/dotenv-16.4.5.tgz"
   integrity sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==
-
-ds-component@^1.0.0:
-  version "1.0.0"
-  resolved "https://ci.das-security.cn/repository/ah_npm/ds-component/-/ds-component-1.0.0.tgz"
-  integrity sha512-H1loha6+8nmAF+eGaEb5G0g0WzYbwFqxKIdJME01NQ75GW5nCLj+c1CdTQ2hpKdu1R9stmktfWow9qyDCp2HiQ==
 
 duplexer@^0.1.2:
   version "0.1.2"
@@ -5575,7 +5584,12 @@ launch-editor@^2.6.0:
     picocolors "^1.0.0"
     shell-quote "^1.8.1"
 
-less@*, less@^4.2.0:
+less-loader@^12.2.0:
+  version "12.2.0"
+  resolved "https://ci.das-security.cn/repository/ah_npm/less-loader/-/less-loader-12.2.0.tgz"
+  integrity sha512-MYUxjSQSBUQmowc0l5nPieOYwMzGPUaTzB6inNW/bdPEG9zOL3eAAD1Qw5ZxSPk7we5dMojHwNODYMV1hq4EVg==
+
+less@*, "less@^3.5.0 || ^4.0.0", less@^4.2.0:
   version "4.2.0"
   resolved "https://ci.das-security.cn/repository/ah_npm/less/-/less-4.2.0.tgz"
   integrity sha512-P3b3HJDBtSzsXUl0im2L7gTO5Ubg8mEN6G8qoTS77iXxXX4Hvu4Qj540PZDvQ8V6DmX6iXo98k7Md0Cm1PrLaA==
@@ -5689,7 +5703,7 @@ locate-path@^6.0.0:
   dependencies:
     p-locate "^5.0.0"
 
-lodash-es@^4.17.15:
+lodash-es@^4.17.15, lodash-es@^4.17.21:
   version "4.17.21"
   resolved "https://ci.das-security.cn/repository/ah_npm/lodash-es/-/lodash-es-4.17.21.tgz"
   integrity sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==
