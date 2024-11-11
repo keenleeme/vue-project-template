@@ -1,7 +1,7 @@
 import { createApp } from 'vue';
 import { ComponentLibrary } from '@ued-material/ued-wbc-vue3';
 import '@unocss/reset/normalize.css';
-import Antd from 'ant-design-vue';
+// import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/reset.css';
 import 'virtual:uno.css';
 import useDasComponent from '@/libs/hooks/useDasComponent';
@@ -23,9 +23,9 @@ app.config.globalProperties.$oem = {
   ailphaText: 'AILPHA'
 };
 i18n(app);
-app.use(Antd);
+// app.use(Antd);
 // 引用das-component
-useDasComponent(app, true);
+useDasComponent(app);
 app.use(ComponentLibrary);
 // app.use(Soul);
 

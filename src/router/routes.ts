@@ -112,7 +112,7 @@ const routes: RouteRecordRaw[] = [
   {
     name: 'base::vueTour',
     path: '/vueTour',
-    component: () => import('@/views/uedTypical/vueTour/index.vue'),
+    component: () => import(/* webpackChunkName: "vueTour" */ '@/views/uedTypical/vueTour/index.vue'),
     meta: {
       title: 'I18N.api.common.yinDaoYe',
       permissionId: 'base::workBench:index'
@@ -121,7 +121,7 @@ const routes: RouteRecordRaw[] = [
   {
     name: 'base::vueTour2',
     path: '/vueTour-page2',
-    component: () => import('@/views/uedTypical/vueTour/page2.vue'),
+    component: () => import(/* webpackChunkName: "vueTour" */ '@/views/uedTypical/vueTour/page2.vue'),
     meta: {
       title: 'I18N.api.common.yinDaoYe2',
       permissionId: 'base::workBench:index'
