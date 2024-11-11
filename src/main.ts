@@ -8,6 +8,7 @@ import useDasComponent from '@/libs/hooks/useDasComponent';
 import '@/theme/theme.css';
 import '@/theme/themeAntdReset.css';
 import App from './App.vue';
+import './assets/font/iconfont.css';
 import i18n from './locale/index';
 // micro按需生成
 import { startMicro } from './micro';

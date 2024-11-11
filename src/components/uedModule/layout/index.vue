@@ -66,13 +66,13 @@
       {
         id: 1,
         name: I18N.layout.genericTypicalPage,
-        icon: 'menu-icon-desktop',
+        icon: 'zq-icon zq-icon-zhihuitiaodu',
         children: [
           {
             id: 'workBench',
             name: I18N.layout.gongZuoTai,
             hideChildren: true,
-            icon: 'menu-icon-desktop',
+            icon: 'zq-icon zq-icon-zhihuitiaodu',
             url: '/workBench',
             children: []
           },
@@ -109,6 +109,7 @@
       {
         id: 'dasvScreen',
         name: I18N.layout.daPingZiDingYi,
+        icon: 'zq-icon zq-icon-shebeiguanli',
         url: '/dasvScreen',
         hideChildren: true,
         children: []
@@ -116,6 +117,7 @@
       {
         id: 'example',
         name: I18N.layout.gongZuoTaiZiDingYi,
+        icon: 'zq-icon zq-icon-jiancerenwuzhongxin',
         url: '/custom-workbench',
         hideChildren: true,
         children: []
@@ -123,6 +125,7 @@
       {
         id: 'example1',
         name: I18N.layout.baoBiaoZiDingYi,
+        icon: 'zq-icon zq-icon-jiankangzhishucesuan',
         url: '/custom-report',
         hideChildren: true,
         children: []
@@ -130,6 +133,7 @@
       {
         id: 5,
         name: I18N.layout.tuKeShiHuaChengXian,
+        icon: 'zq-icon zq-icon-image',
         url: '/example',
         hideChildren: true,
         children: []
@@ -137,6 +141,7 @@
       {
         id: 6,
         name: I18N.layout.tuBianJiQi,
+        icon: 'zq-icon zq-icon-chart',
         url: '/example',
         hideChildren: true,
         children: []
@@ -144,6 +149,7 @@
       {
         id: 7,
         name: I18N.layout.liuChengBianPai,
+        icon: 'zq-icon zq-icon-share',
         url: '/example',
         hideChildren: true,
         children: []
@@ -151,10 +157,12 @@
       {
         id: 8,
         name: I18N.layout.xiTongSheZhi,
+        icon: 'zq-icon zq-icon-setting',
         children: [
           {
             id: 'themeConfig',
             name: I18N.layout.zhuTiPeiZhiYe,
+            icon: 'zq-icon zq-icon-setting',
             url: '/themeConfig'
           },
           {
@@ -177,10 +185,12 @@
       {
         id: 'micro',
         name: '微服务应用',
+        icon: 'zq-icon zq-icon-liuliangdaili',
         children: [
           {
             id: 'vue2',
             name: 'vue2应用',
+            icon: 'zq-icon zq-icon-liuliangdaili',
             url: '',
             children: [
               {
@@ -270,6 +280,7 @@
       {
         id: 'custom',
         name: '定制页面',
+        icon: 'zq-icon zq-icon-yewudingyi',
         url: '/custom'
       }
     ]

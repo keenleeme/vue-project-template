@@ -30,6 +30,18 @@
 [项目开发文档](https://wiki.das-security.cn/pages/viewpage.action?pageId=72484136)
 [项目Q&A](https://wiki.das-security.cn/pages/viewpage.action?pageId=88318914)
 [项目工程结构说明](https://wiki.das-security.cn/pages/viewpage.action?pageId=88319752)
+
+## UI KIT图标
+### iconfont地址：
+ https://www.iconfont.cn/manage/index?spm=a313x.icontype_collection.i1.db775f1f3.7e4f3a81MkDzdN&manage_type=myprojects&projectId=4482924
+
+该地址包含所有UI规范的图标，如有新图标，让ui更新后，重新下载替换文件。
+然后将iconfont.css文件里的类名和font-family改成 "zq-icon"
+
+```html
+<Icon class="zq-icon zq-icon-icon-black"></Icon>
+```
+
 ### 主题使用方式
 - 引入组件样式
 ```jsx
