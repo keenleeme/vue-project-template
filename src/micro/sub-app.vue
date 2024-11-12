@@ -18,12 +18,11 @@
 </template>
 
 <script setup lang="ts">
-  import 'zone.js';
   import { computed } from 'vue';
   import { useRouter } from 'vue-router';
+  import 'zone.js';
   import microApp from '@/micro/microApi';
-  import {getAppRealUrl} from './microApi/helper'
-  
+  import { getAppRealUrl } from './microApi/helper';
   import { SubApp } from './store';
 
   const router = useRouter();
@@ -49,7 +48,7 @@
   );
 
   const url = computed(() => {
-    return getAppRealUrl(props.appInfo.url)
+    return getAppRealUrl(props.appInfo.url);
     // if (props.appInfo.url.startsWith('http')) return props.appInfo.url;
     // if (props.appInfo.url.startsWith('//')) {
     //   return window.location.protocol + props.appInfo.url;

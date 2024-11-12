@@ -93,7 +93,7 @@ export function decorateLocationPath(
  */
 export function isActiveApp(appName: string) {
   const activeApps = getMicroAppActiveApps();
-  return activeApps.includes(appName);
+  return activeApps.length === 1 && activeApps[0] === appName;
 }
 
 /**
@@ -106,12 +106,12 @@ export function isActiveApp(appName: string) {
 //   return activeApps.includes(appName)
 //  }
 
- /**
-* @description 获取子应用的完成的路径
-* @param url 当前app应用的url地址
-* @returns realurl 
-*/
-export function getAppRealUrl(url:string):string {
+/**
+ * @description 获取子应用的完成的路径
+ * @param url 当前app应用的url地址
+ * @returns realurl
+ */
+export function getAppRealUrl(url: string): string {
   if (url.startsWith('http')) return url;
   if (url.startsWith('//')) {
     return window.location.protocol + url;
@@ -120,4 +120,14 @@ export function getAppRealUrl(url:string):string {
     return `${window.location.protocol}//${window.location.hostname}${url}`;
   }
   return `${window.location.protocol}//${window.location.host}${url}`;
+}
+
+/**
+ * @description 根据环境判断获取线上或者本地url
+ * @param url 当前app应用的url地址
+ * @returns url
+ */
+export function getRegistryUrl(appName: string, port: string) {
+  const isLocal = window.location.origin.startsWith('http://localhost');
+  return `${isLocal ? `:${port}` : ''}/subapp/${appName}/`;
 }

@@ -1,12 +1,12 @@
 import { Router } from 'vue-router';
 import microApp from '@micro-zoe/micro-app';
 import axios from 'axios';
+import { getCustomApps, getAppRealUrl } from './microApi/helper';
+import RouterCenter from './routerCenter/index';
 import { setupAddMicroRouter } from './routerControl';
-import { useMicroStore } from './store';
-import { SubApp } from './store';
-import RouterCenter from './routerCenter/index'
-import { getCustomApps,getAppRealUrl } from './microApi/helper'
+import { useMicroStore, SubApp } from './store';
 
+// eslint-disable-next-line import/no-mutable-exports
 export let routeCenter: RouterCenter;
 // 获取定制的路由文件信息
 async function registerRouterCenter(router: Router, apps: SubApp[]) {
@@ -14,21 +14,19 @@ async function registerRouterCenter(router: Router, apps: SubApp[]) {
   const customApps = getCustomApps(apps);
   routeCenter = new RouterCenter(router);
   const res = await Promise.allSettled([
-    ...customApps.map((app: SubApp) =>
-    {
-      const realUrl = getAppRealUrl(app.url)
-      return  axios.get(`${realUrl}${realUrl.endsWith('/') ? '' : '/'}router.json`, {
+    ...customApps.map((app: SubApp) => {
+      const realUrl = getAppRealUrl(app.url);
+      return axios.get(`${realUrl}${realUrl.endsWith('/') ? '' : '/'}router.json`, {
         timeout: 500
-      })
-    }
-    )
+      });
+    })
   ]);
 
   Array.from(res).forEach((item, index) => {
     if (item.status === 'fulfilled' && item.value.data) {
-      if(customApps[index]) {
-        const {baseroute, routerMode} = customApps[index]
-        routeCenter.setModuleRoutes(item.value.data.data, baseroute.slice(1),routerMode);
+      if (customApps[index]) {
+        const { baseroute, routerMode } = customApps[index];
+        routeCenter.setModuleRoutes(item.value.data.data, baseroute.slice(1), routerMode);
       }
     }
   });

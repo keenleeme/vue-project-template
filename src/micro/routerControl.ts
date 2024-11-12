@@ -57,7 +57,7 @@ export function setupMicroRouterGuards() {
   });
 
   // 基座的路由变化监听
-  router.beforeEach((to, from, next) => {  
+  router.beforeEach((to, from, next) => {
     console.log('全局前置守卫 beforeEach -基座: ', to, from, next);
     if (from.fullPath === '/') {
       next();

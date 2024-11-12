@@ -5,13 +5,9 @@ const path = require('path');
 module.exports = function override(config, env) {
   config.output.publicPath = '/subapp/react/';
 
-  if (config.devServer) {
-    config.devServer.publicPath = '/react/';
-  }
+  // config.devServer.publicPath = '/subapp/react/';
   
-  if (env === 'production') {
-    config.output.path = path.resolve(__dirname, '../../../../dist/subapp/react')   // 设置输出目录
-}
+  config.output.path = path.resolve(__dirname, '../../../../dist/subapp/react')   
   
   // 添加你的插件new InterpolateHtmlPlugin(env.raw),
   config.plugins.push(new MicroRouterJsonPlugin(
