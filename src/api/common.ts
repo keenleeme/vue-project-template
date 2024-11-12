@@ -5,6 +5,18 @@ import type { MenuType } from '@/store/uedModule/menus/types';
 export async function getMenus(): Promise<MenuType[]> {
   return [
     {
+      id: 'example',
+      title: I18N.layout.gongZuoTaiZiDingYi,
+      icon: 'zq-icon zq-icon-jiancerenwuzhongxin',
+      path: '/custom-workbench'
+    },
+    {
+      id: 'example',
+      title: I18N.layout.baoBiaoZiDingYi,
+      icon: 'AppstoreOutlined',
+      path: '/custom-report'
+    },
+    {
       id: 'workBench',
       title: I18N.layout.genericTypicalPage,
       icon: 'AppstoreOutlined',
@@ -100,22 +112,22 @@ export async function getMenus(): Promise<MenuType[]> {
     },
     {
       id: 'micro',
-      title: '微服务应用',
+      title: 'micro-app',
       children: [
         {
           id: 'vue2',
-          title: 'vue2应用',
+          title: 'vue-app',
           path: '',
           children: [
             {
               id: 'vue-home',
-              title: 'home页面',
+              title: 'home-page',
               path: '/vue2/#/home',
               module: 'vue2'
             },
             {
               id: 'vue-about',
-              title: 'about页面',
+              title: 'about-page',
               path: '/vue2/#/about',
               module: 'vue2'
             }
@@ -123,18 +135,18 @@ export async function getMenus(): Promise<MenuType[]> {
         },
         {
           id: 'vue3',
-          title: 'vue3应用',
+          title: 'vue3-app',
           path: '',
           children: [
             {
               id: 'vue3-home',
-              title: 'home页面',
+              title: 'home-page',
               path: '/vue3/home',
               module: 'vue3'
             },
             {
               id: 'vue3-about',
-              title: 'about页面',
+              title: 'about-page',
               path: '/vue3/about',
               module: 'vue3'
             }
@@ -142,18 +154,18 @@ export async function getMenus(): Promise<MenuType[]> {
         },
         {
           id: 'react',
-          title: 'react应用',
+          title: 'react-app',
           path: '',
           children: [
             {
               id: 'react-home',
-              title: 'home页面',
+              title: 'home-app',
               path: '/react/home',
               module: 'react'
             },
             {
               id: 'react-about',
-              title: 'about页面',
+              title: 'about-app',
               path: '/react/about',
               module: 'react'
             }
@@ -161,20 +173,20 @@ export async function getMenus(): Promise<MenuType[]> {
         },
         {
           id: 'angular',
-          title: 'angular应用',
+          title: 'angular-app',
           path: '/angular/home'
         },
         {
           id: 'multiple',
-          title: '多个应用',
+          title: 'multiple-app',
           path: '/multiple'
+        },
+        {
+          id: 'custom',
+          title: 'custom-page',
+          path: '/custom'
         }
       ]
-    },
-    {
-      id: 'custom',
-      title: '定制页面',
-      path: '/custom'
     }
   ];
 }

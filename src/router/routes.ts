@@ -78,7 +78,7 @@ const routes: RouteRecordRaw[] = [
     path: '/custom-workbench',
     component: () => import('@/views/uedTypical/iframe/index.vue'),
     meta: {
-      title: 'I18N.layout.daPingZiDingYi',
+      title: 'I18N.layout.gongZuoTaiZiDingYi',
       permissionId: 'base::workBench:index'
     }
   },
@@ -87,7 +87,7 @@ const routes: RouteRecordRaw[] = [
     path: '/custom-report',
     component: () => import('@/views/uedTypical/iframe/index.vue'),
     meta: {
-      title: 'I18N.layout.daPingZiDingYi',
+      title: 'I18N.layout.baoBiaoZiDingYi',
       permissionId: 'base::workBench:index'
     }
   },

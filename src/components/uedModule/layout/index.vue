@@ -64,61 +64,18 @@
     ],
     menuData: [
       {
-        id: 1,
-        name: I18N.layout.genericTypicalPage,
-        icon: 'zq-icon zq-icon-zhihuitiaodu',
-        children: [
-          {
-            id: 'workBench',
-            name: I18N.layout.gongZuoTai,
-            hideChildren: true,
-            icon: 'zq-icon zq-icon-zhihuitiaodu',
-            url: '/workBench',
-            children: []
-          },
-          {
-            id: 'baseList',
-            name: I18N.layout.lieBiaoYe,
-            hideChildren: true,
-            url: '/base-list',
-            children: []
-          },
-          {
-            id: 'baseForm',
-            name: I18N.layout.biaoDanYe,
-            hideChildren: true,
-            url: '/base-form',
-            children: []
-          },
-          {
-            id: 'baseDetail',
-            name: I18N.layout.xiangQingYe,
-            hideChildren: true,
-            url: '/base-detail',
-            children: []
-          },
-          {
-            id: 'baseConfig',
-            name: I18N.layout.peiZhiYe,
-            hideChildren: true,
-            url: '/base-config',
-            children: []
-          }
-        ]
+        id: 'example',
+        name: I18N.layout.gongZuoTaiZiDingYi,
+        icon: 'zq-icon zq-icon-jiancerenwuzhongxin',
+        url: '/custom-workbench',
+        hideChildren: true,
+        children: []
       },
       {
         id: 'dasvScreen',
         name: I18N.layout.daPingZiDingYi,
         icon: 'zq-icon zq-icon-shebeiguanli',
         url: '/dasvScreen',
-        hideChildren: true,
-        children: []
-      },
-      {
-        id: 'example',
-        name: I18N.layout.gongZuoTaiZiDingYi,
-        icon: 'zq-icon zq-icon-jiancerenwuzhongxin',
-        url: '/custom-workbench',
         hideChildren: true,
         children: []
       },
@@ -174,34 +131,34 @@
             id: 'dasUpgrade',
             name: I18N.layout.zaiXianShengJi,
             url: '/dasUpgrade'
-          },
-          {
-            id: 'vueTour',
-            name: I18N.layout.yongHuYinDao,
-            url: '/vueTour'
           }
+          // {
+          //   id: 'vueTour',
+          //   name: I18N.layout.yongHuYinDao,
+          //   url: '/vueTour'
+          // }
         ]
       },
       {
         id: 'micro',
-        name: '微服务应用',
+        name: I18N.layout.MicroApp,
         icon: 'zq-icon zq-icon-liuliangdaili',
         children: [
           {
             id: 'vue2',
-            name: 'vue2应用',
+            name: `vue2${I18N.layout.App}`,
             icon: 'zq-icon zq-icon-liuliangdaili',
             url: '',
             children: [
               {
                 id: 'vue-home',
-                name: 'home页面',
+                name: `home${I18N.layout.Page}`,
                 url: '/vue2/#/home',
                 module: 'vue2'
               },
               {
                 id: 'vue-about',
-                name: 'about页面',
+                name: `about${I18N.layout.Page}`,
                 url: '/vue2/#/about',
                 module: 'vue2'
               }
@@ -209,18 +166,18 @@
           },
           {
             id: 'vue3',
-            name: 'vue3应用',
+            name: `vue3${I18N.layout.App}`,
             url: '',
             children: [
               {
                 id: 'vue3-home',
-                name: 'home页面',
+                name: `home${I18N.layout.Page}`,
                 url: '/vue3/home',
                 module: 'vue3'
               },
               {
                 id: 'vue3-about',
-                name: 'about页面',
+                name: `about${I18N.layout.Page}`,
                 url: '/vue3/about',
                 module: 'vue3'
               }
@@ -228,18 +185,18 @@
           },
           {
             id: 'react',
-            name: 'react应用',
+            name: `react${I18N.layout.App}`,
             url: '',
             children: [
               {
                 id: 'react-home',
-                name: 'home页面',
+                name: `home${I18N.layout.Page}`,
                 url: '/react/home',
                 module: 'react'
               },
               {
                 id: 'react-about',
-                name: 'about页面',
+                name: `about${I18N.layout.Page}`,
                 url: '/react/about',
                 module: 'react'
               }
@@ -247,41 +204,64 @@
           },
           {
             id: 'angular',
-            name: 'angular应用',
+            name: `angular${I18N.layout.App}`,
             url: '/angular/home'
-            // children:[
-            //   {
-            //     id: 'angular-home',
-            //     name: 'home页面',
-            //     url: '/angular/home',
-            //     module:'angular'
-            //   },
-            //   {
-            //     id: 'angular-material',
-            //     name: 'material页面',
-            //     url: '/angular/material',
-            //     module:'angular'
-            //   },
-            //   {
-            //     id: 'angular-page3',
-            //     name: 'page3页面',
-            //     url: '/angular/page3',
-            //     module:'angular'
-            //   }
-            // ]
           },
           {
             id: 'multiple',
-            name: '多个应用',
+            name: `multiple${I18N.layout.App}`,
             url: '/multiple'
+          },
+          {
+            id: 'custom',
+            name: `${I18N.layout.Custom}${I18N.layout.Page}`,
+            icon: 'zq-icon zq-icon-yewudingyi',
+            url: '/custom'
           }
         ]
       },
       {
-        id: 'custom',
-        name: '定制页面',
-        icon: 'zq-icon zq-icon-yewudingyi',
-        url: '/custom'
+        id: 1,
+        name: I18N.layout.genericTypicalPage,
+        icon: 'zq-icon zq-icon-zhihuitiaodu',
+        children: [
+          {
+            id: 'workBench',
+            name: I18N.layout.gongZuoTai,
+            hideChildren: true,
+            icon: 'zq-icon zq-icon-zhihuitiaodu',
+            url: '/workBench',
+            children: []
+          },
+          {
+            id: 'baseList',
+            name: I18N.layout.lieBiaoYe,
+            hideChildren: true,
+            url: '/base-list',
+            children: []
+          },
+          {
+            id: 'baseForm',
+            name: I18N.layout.biaoDanYe,
+            hideChildren: true,
+            url: '/base-form',
+            children: []
+          },
+          {
+            id: 'baseDetail',
+            name: I18N.layout.xiangQingYe,
+            hideChildren: true,
+            url: '/base-detail',
+            children: []
+          },
+          {
+            id: 'baseConfig',
+            name: I18N.layout.peiZhiYe,
+            hideChildren: true,
+            url: '/base-config',
+            children: []
+          }
+        ]
       }
     ]
   });

@@ -1,4 +1,21 @@
 /* 项目中需要全局覆盖的样式 */
+/* 滚动条样式规范 */
+::-webkit-scrollbar{
+  height: 10px !important;
+  width: 10px !important;
+}
+::-webkit-scrollbar-thumb{
+  background:#c0c0c0!important;
+  border: 2px solid transparent !important;
+  border-radius:20px !important;
+  background-clip:padding-box !important;
+}
+::-webkit-scrollbar-thumb:hover{
+  background-clip: border-box !important;
+  border:2px solid #7c7c7c !important;
+  background:#7c7c7c !important;
+}
+/* 其余样式覆盖 */
 .ant-form-item{
     margin-bottom: 16px;
 }

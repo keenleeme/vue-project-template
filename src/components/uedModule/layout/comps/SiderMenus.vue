@@ -2,7 +2,7 @@
   <a-layout-sider
     v-model:collapsed="collapsed"
     :style="{ background: token.colorBgBase }"
-    width="176"
+    width="232"
     collapsed-width="48"
     :trigger="null"
     collapsible

@@ -19,8 +19,10 @@
     } else if (currentUrl === '/dasvScreen') {
       inline.value =
         'https://dasv.das-security.cn/?dasvAuthToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsInVzZXJuYW1lIjoiVUVEU2NyZWVuIiwib3JpZ2luIjoibG9jYWwiLCJvcmlnaW5JZCI6bnVsbCwicm9sZSI6WyJtZW1iZXIiXSwic2lkIjoic2Vzc2lvbjo6ZTQxZjEwZGRhZWEyNDEwMjhkZWRhNTdjNDlhNTZkMjkiLCJpYXQiOjE3MjMwODM1NTAsImV4cCI6MTg3ODYwMzU1MH0.bGBmTANqMRximqr4dING1X-UWW2GKHxMRDOdskDFA3Y';
-    } else if (currentUrl === '/custom-workbench' || currentUrl === '/custom-report') {
+    } else if (currentUrl === '/custom-report') {
       inline.value = 'http://10.20.114.19:8083/home/project';
+    } else if (currentUrl === '/custom-workbench') {
+      inline.value = 'http://10.20.114.19:8083/preview/4';
     }
   });
 </script>
