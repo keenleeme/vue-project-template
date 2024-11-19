@@ -17,4 +17,6 @@ export default {
   qiTaDengLuFang: '其他登录方式',
   saoMaDengLu: '扫码登录',
   zhangHaoDengLu: '账号登录',
+  diBuZiDingYiPeiZhi: '底部自定义配置',
+  meiYouLianJie: '没有超链接内容，可以不填写',
 };

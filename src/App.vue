@@ -15,8 +15,9 @@
   import { useAppStore } from './store';
   import { AppConfigType } from './store/uedModule/app/types';
   import themeAlgorithm from './theme/themeAlgorithm';
-import { storeToRefs } from 'pinia';
-import { useThemeStore } from './store';
+  import { storeToRefs } from 'pinia';
+  import { useThemeStore } from './store';
+  import { setI18n } from '@ued-material/ued-wbc/api'
   const appStore = useAppStore();
 
   // 机器人注册
@@ -37,6 +38,11 @@ import { useThemeStore } from './store';
     .catch((error) => {
       console.log(error);
     });
+
+    onMounted(() => {
+      const local = localStorage.getItem('das-intl-locale')
+      setI18n(local || 'zh')
+    })
 
   
   onUnmounted(() => {

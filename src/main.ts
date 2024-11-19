@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import { ComponentLibrary } from '@ued-material/ued-wbc-vue3';
+import '@ued-material/ued-wbc/css';
 // import Soul from '@ailpha/soul-ui';
 // import '@ailpha/soul-ui/dist/styles/index.css';
 import '@unocss/reset/normalize.css';
