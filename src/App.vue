@@ -8,6 +8,7 @@
 
 <script setup lang="ts">
   import { RouterView } from 'vue-router';
+  import { setI18n } from '@ued-material/ued-wbc/api';
   import zhCN from 'ant-design-vue/es/locale/zh_CN';
   import { storeToRefs } from 'pinia';
   import { getWebsiteConfig } from './api/common';
@@ -39,6 +40,11 @@
     .catch((error) => {
       console.log(error);
     });
+
+  onMounted(() => {
+    const local = localStorage.getItem('das-intl-locale');
+    setI18n(local || 'zh');
+  });
 
   onUnmounted(() => {
     // window.localStorage.clear();
