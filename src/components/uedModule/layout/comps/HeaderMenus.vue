@@ -21,6 +21,7 @@
       :edit-actions="['add', 'reset', 'edit', 'move']"
       @menu-open="log('menu-open')"
       @menu-close="log('menu-close')"
+      @menu-click="handleMenuClick"
       @clear-recently="recentlyKeys = []"
       @add-menu="openAddMenuDialog"
       @edit-item="editItem"
@@ -82,39 +83,49 @@
     width="480px"
   >
     <a-form ref="ruleForm" :model="form" label-position="right" :inline="true" label-width="110px">
-      <a-form-item :label="$t('I18N.layout.caiDanMingCheng')" prop="name" :rules="rules.name">
-        <a-input v-model="form.name" :placeholder="$t('I18N.layout.qingShuRuCaiDanMingCheng')" auto-complete="off" />
+      <a-form-item :label="$t('I18N.layout.caiDanMingCheng')" name="name" :rules="rules.name">
+        <a-input
+          v-model:value="form.name"
+          :placeholder="$t('I18N.layout.qingShuRuCaiDanMingCheng')"
+          auto-complete="off"
+        />
       </a-form-item>
-      <a-form-item v-if="dialogType === 'add'" :label="$t('I18N.layout.caiDanTiXi')" prop="level" :rules="rules.level">
-        <a-select v-model="form.level" :placeholder="$t('I18N.layout.qingShuRuCaiDanTiXi')">
+      <a-form-item v-if="dialogType === 'add'" :label="$t('I18N.layout.caiDanTiXi')" name="level" :rules="rules.level">
+        <a-select v-model:value="form.level" :placeholder="$t('I18N.layout.qingShuRuCaiDanTiXi')">
           <a-select-option v-for="item in levelOptions" :key="item.value" :label="item.label" :value="item.value" />
         </a-select>
       </a-form-item>
       <a-form-item
         v-if="dialogType === 'add' && form.level === 2"
         :label="$t('I18N.layout.suoShuYiJiCaiDan')"
-        prop="parentId"
+        name="parentId"
         :rules="rules.parentId"
       >
-        <a-select v-model="form.parentId" :placeholder="$t('I18N.layout.qingXuanZeSuoShuYiJiCaiDan')">
-          <a-select-option v-for="item in level2Menus" :key="item.id" :label="item.name" :value="item.id" />
+        <a-select v-model:value="form.parentId" :placeholder="$t('I18N.layout.qingXuanZeSuoShuYiJiCaiDan')">
+          <a-select-option v-for="item in level2Menus" :key="item.id" :value="item.id">
+            {{ item.name }}
+          </a-select-option>
         </a-select>
       </a-form-item>
       <template v-if="dialogType === 'add' || editingItem.accessType">
-        <a-form-item :label="$t('I18N.layout.fangWenFangShi')" prop="accessType">
-          <a-radio-group v-model="form.accessType">
-            <a-radio label="new">{{ $t('I18N.layout.xinKaiYeMian') }}</a-radio>
-            <a-radio label="iframe">{{ $t('I18N.layout.neiQianYeMian') }}</a-radio>
+        <a-form-item :label="$t('I18N.layout.fangWenFangShi')" name="accessType">
+          <a-radio-group v-model:value="form.accessType">
+            <a-radio value="new">{{ $t('I18N.layout.xinKaiYeMian') }}</a-radio>
+            <a-radio value="iframe">{{ $t('I18N.layout.neiQianYeMian') }}</a-radio>
           </a-radio-group>
         </a-form-item>
-        <a-form-item class="form-item origin-menu" :label="$t('I18N.layout.baoLiuYuanCaiDan')" prop="originMenu">
-          <a-switch v-model="form.originMenu" />
+        <a-form-item class="form-item origin-menu" :label="$t('I18N.layout.baoLiuYuanCaiDan')" name="originMenu">
+          <a-switch v-model:checked="form.originMenu" />
         </a-form-item>
-        <a-form-item :label="$t('I18N.layout.guanLianURL')" prop="url" :rules="rules.url">
-          <a-input v-model="form.url" :placeholder="$t('I18N.layout.qingShuRuYeMianDiZhi')" auto-complete="off" />
+        <a-form-item :label="$t('I18N.layout.guanLianURL')" name="url" :rules="rules.url">
+          <a-input v-model:value="form.url" :placeholder="$t('I18N.layout.qingShuRuYeMianDiZhi')" auto-complete="off" />
         </a-form-item>
         <a-form-item class="form-item page-params" :label="$t('I18N.layout.yeMianCanShu')">
-          <a-input v-model="form.params" :placeholder="$t('I18N.layout.caiDanXianYinCanShu')" auto-complete="off" />
+          <a-input
+            v-model:value="form.params"
+            :placeholder="$t('I18N.layout.caiDanXianYinCanShu')"
+            auto-complete="off"
+          />
         </a-form-item>
       </template>
     </a-form>
@@ -250,7 +261,7 @@
 
   const level2Menus = ref<any[]>([]);
   const updateLevel2Menus = () => {
-    level2Menus.value = topMenuData.value.filter((item) => item.submenu && item.submenu.length > 0);
+    level2Menus.value = topMenuData.value.filter((item: any) => item.children && item.children.length > 0);
   };
 
   const openAddMenuDialog = () => {
@@ -309,41 +320,53 @@
 
   const dialogConfirm = () => {
     if (!ruleForm.value) return;
-    ruleForm.value.validate((valid: boolean) => {
-      if (!valid) return;
-      if (dialogType.value === 'add') {
-        const { name, level, parentId, accessType, originMenu, url, params } = form.value;
-        const menuInfo = {
-          id: newId + 1,
-          name,
-          accessType,
-          originMenu,
-          url,
-          params
-        };
-        if (level === 1) {
-          topMenuData.value.push(menuInfo);
+    ruleForm.value
+      .validate()
+      .then(() => {
+        if (dialogType.value === 'add') {
+          const { name, level, parentId, accessType, originMenu, url, params } = form.value;
+          const menuInfo = {
+            id: newId + 1,
+            name,
+            accessType,
+            originMenu,
+            url,
+            params
+          };
+          if (level === 1) {
+            topMenuData.value.push(menuInfo);
+          } else {
+            const parent = topMenuData.value.find((item: any) => item.id === parentId) as any;
+            if (!parent.submenu) parent.submenu = [];
+            parent.submenu.push(menuInfo);
+          }
         } else {
-          const parent = topMenuData.value.find((item: any) => item.id === parentId) as any;
-          if (!parent.submenu) parent.submenu = [];
-          parent.submenu.push(menuInfo);
+          const { name, accessType, originMenu, url, params } = form.value;
+          editingItem.value.name = name;
+          if (editingItem.value.accessType) {
+            editingItem.value.accessType = accessType;
+            editingItem.value.originMenu = originMenu;
+            editingItem.value.url = url;
+            editingItem.value.params = params;
+          }
         }
-      } else {
-        const { name, accessType, originMenu, url, params } = form.value;
-        editingItem.value.name = name;
-        if (editingItem.value.accessType) {
-          editingItem.value.accessType = accessType;
-          editingItem.value.originMenu = originMenu;
-          editingItem.value.url = url;
-          editingItem.value.params = params;
-        }
-      }
-      dialogVisible.value = false;
-    });
+        dialogVisible.value = false;
+        ruleForm.value.clearValidate();
+        ruleForm.value.resetFields();
+      })
+      .catch((error) => {
+        console.log('error', error);
+      });
   };
 
   const log = (val: any) => {
     console.log(val);
+  };
+
+  const router = useRouter();
+  const handleMenuClick = (val: any) => {
+    console.log(val);
+    router.push(val.url);
   };
 
   const changeConfig = (newConfig?: any) => {
