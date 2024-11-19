@@ -11,23 +11,23 @@ function renderIcon(name?: string): VNode {
   return () => h(Icons[name], { style: { 'font-size': '16px' } });
 }
 
-function dataToMenuIems(data: MenuType[], type: 'header' | 'all' = 'all'): MenuProps['items'] {
-  return data.map((itme) => {
-    if (itme.children && itme.children.length > 0 && type === 'all') {
+function dataToMenuItems(data: MenuType[], type: 'header' | 'all' = 'all'): MenuProps['items'] {
+  return data.map((item) => {
+    if (item.children && item.children.length > 0 && type === 'all') {
       return {
-        key: itme.id,
-        title: itme.title,
-        label: itme.title,
-        icon: renderIcon(itme.icon),
-        children: dataToMenuIems(itme.children)
+        key: item.id,
+        title: item.title,
+        label: item.title,
+        icon: renderIcon(item.icon),
+        children: dataToMenuItems(item.children)
       };
     }
     return {
-      key: itme.id,
-      title: itme.title,
-      label: itme.title,
-      path: itme.path,
-      icon: renderIcon(itme.icon)
+      key: item.id,
+      title: item.title,
+      label: item.title,
+      path: item.path,
+      icon: renderIcon(item.icon)
     };
   });
 }
@@ -78,7 +78,7 @@ export default defineStore('menus', () => {
   };
   // 过滤并转换第一层大菜单数据
   const headerMenus = computed(() => {
-    return dataToMenuIems(menusData.value, 'header');
+    return dataToMenuItems(menusData.value, 'header');
   });
   // 激活路由的层级关系
   const activeRoutes = ref<RouteItemType[]>([]);
@@ -98,7 +98,7 @@ export default defineStore('menus', () => {
     if (!headerMenu) return [];
     const activeMenu = menusData.value.find((item) => item.id === headerMenu.id);
     if (!activeMenu || !activeMenu.children) return [];
-    return dataToMenuIems(activeMenu.children, 'all');
+    return dataToMenuItems(activeMenu.children, 'all');
   });
   // 路由层级+菜单层级 = 面包屑
   const activeBreadcrumb = computed(() => {
