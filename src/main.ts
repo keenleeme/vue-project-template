@@ -20,6 +20,7 @@ import pinia from './store';
 
 const app = createApp(App);
 app.use(pinia);
+
 app.config.globalProperties.$tours = {};
 app.config.globalProperties.$oem = {
   ahText: '安恒',

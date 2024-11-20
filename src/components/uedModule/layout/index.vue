@@ -41,7 +41,7 @@
       routes = [
         {
           path: route.fullPath,
-          title: route.meta.title,
+          title: route.meta.title as string,
           component: true
         }
       ];

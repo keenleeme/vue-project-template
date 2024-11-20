@@ -165,9 +165,18 @@
   // )
 
   // 侧边栏菜单点击
-  const router = useRouter();
   const handleMenuClick = (e) => {
     console.log('sideMenu click', e);
+    // 如果点击的是微应用菜单，则设置侧边栏激活路由，不清楚微应用是否都设置了module参数，微应用得有个单独标识
+    if (e.module && config.value.layout !== 'top') {
+      menusStore.setActiveRoutes([
+        {
+          path: e.url,
+          title: e.name,
+          component: true
+        }
+      ]);
+    }
     // router.push(e.url);
     microMenuNavigation(e);
   };
