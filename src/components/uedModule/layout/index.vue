@@ -36,7 +36,16 @@
   const { siderMenus } = storeToRefs(menusStore);
   const route = useRoute();
   watchEffect(() => {
-    const routes = route.meta.parentRoutes as RouteItemType[];
+    let routes = route.meta.parentRoutes as RouteItemType[];
+    if (!routes || routes.length === 0) {
+      routes = [
+        {
+          path: route.fullPath,
+          title: route.meta.title as string,
+          component: true
+        }
+      ];
+    }
     menusStore.setActiveRoutes(routes);
   });
 
