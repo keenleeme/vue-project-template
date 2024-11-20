@@ -41,16 +41,17 @@
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
   import { changeLocale } from '@international/vue3-i18n';
-  import { setI18n } from '@ued-material/ued-wbc/api';
+  import { setI18n } from '@ued-material/ued-wbc/store';
   import { storeToRefs } from 'pinia';
-  import { useAppStore, useThemeStore } from '@/store';
+  import { useAppStore, useLoginStore } from '@/store';
   import { LoginConfigDTO, LogoModeEnums } from './types';
 
   const appStore = useAppStore();
+  const loginStore = useLoginStore();
   const router = useRouter();
   const { appConfig } = storeToRefs(appStore);
-  const themeStore = useThemeStore();
-  const { themeConfig } = storeToRefs(themeStore);
+  // const themeStore = useThemeStore();
+  // const { themeConfig } = storeToRefs(themeStore);
 
   const loginConfig = ref<LoginConfigDTO>(new LoginConfigDTO(appConfig.value.loginConfig));
   const language = ref();
@@ -193,6 +194,7 @@
   const handleLocaleChangeA = (e: CustomEvent<{ data: string }>) => {
     const locale = e.detail.data === 'en' ? 'en' : 'zh';
     changeLocale(locale);
+    loginStore.set({ language: locale });
     window.location.reload();
   };
 

@@ -1,7 +1,7 @@
 import federation from '@originjs/vite-plugin-federation';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
-import extra from 'fs-extra';
+// import extra from 'fs-extra';
 import { resolve } from 'path';
 import UnoCSS from 'unocss/vite';
 import AutoImport from 'unplugin-auto-import/vite';
@@ -9,8 +9,6 @@ import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
 import Components from 'unplugin-vue-components/vite';
 import { defineConfig } from 'vite';
 import { loadEnv } from './utils';
-// import extra from 'fs-extra'
-
 
 const env = loadEnv();
 

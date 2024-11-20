@@ -1328,6 +1328,11 @@
   resolved "https://ci.das-security.cn/repository/ah_npm/@stencil/core/-/core-4.22.2.tgz#5fb00b85b5e3e595341f2b5d91960533a9736bc5"
   integrity sha512-eq2pYrrnzcLyBRANk0X/VVOfCtD0nCxWnEZ0AVdscuqfDkOjxa6SSZOfEhR9FAvrmESHp8y5jRCVPnf4n5CC4A==
 
+"@stencil/store@^2.0.16":
+  version "2.0.16"
+  resolved "https://ci.das-security.cn/repository/ah_npm/@stencil/store/-/store-2.0.16.tgz#9a035bd56e66e73531af2803c3d30f4177ebe4a9"
+  integrity sha512-ET3EByKlmNyTA8O+tcp5YWePOiVnPIiuoiIaxTrf3zFFVo7JWVsVoak9IE0UTn3MkIM0ubR9lgxvi70uN588/A==
+
 "@swc/core-darwin-arm64@1.9.2":
   version "1.9.2"
   resolved "https://ci.das-security.cn/repository/ah_npm/@swc/core-darwin-arm64/-/core-darwin-arm64-1.9.2.tgz#98b60a56229c4341c1263723f985e04f3f82d499"
@@ -1829,11 +1834,12 @@
 
 "@ued-material/ued-wbc@^0.1.0":
   version "0.1.0"
-  resolved "https://ci.das-security.cn/repository/ah_npm/@ued-material/ued-wbc/-/ued-wbc-0.1.0.tgz#59ae842ec7aa54f277ff2c4772db4d3b6e76ec4c"
-  integrity sha512-fbgQGaHowgMHApIq8QBKBV0eTQOSgf71IfiQ2LvXeGWI/vqrlAE01obX4aqT1kYFy6fqJmnXrVtl9Wq6GTBGgw==
+  resolved "https://ci.das-security.cn/repository/ah_npm/@ued-material/ued-wbc/-/ued-wbc-0.1.0.tgz#e1f8b98573dcf753275a99be2a5a306631690d29"
+  integrity sha512-Z/NI+pF8H11KoVnwXmH5MF0RQ3vvwHZ5sTM/03jDrLleMvi2RvpaVCv4T77Yhj/6Qtieu8j7wG2HWrhP0DXitA==
   dependencies:
     "@stencil-community/less" "^2.0.0"
     "@stencil/core" "^4.21.0"
+    "@stencil/store" "^2.0.16"
     async-validator "^4.2.5"
     inquirer "8"
     qrcode "^1.5.4"

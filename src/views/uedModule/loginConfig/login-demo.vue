@@ -15,7 +15,7 @@
         :src="loginConfig.logoUrl"
         :mode="loginConfig.logoMode"
         width="auto"
-        height="60px"
+        height="48px"
       >
         {{ [LogoModeEnums.IMAGE].includes(loginConfig.logoMode) ? '' : loginConfig.logoName }}
       </ued-logo>
@@ -58,8 +58,7 @@
     --ued-login-form-width: 400px;
     --ued-login-form-height-min: 400px;
     --ued-login-form-right: 0;
-    --ued-logo-top: 16px;
-    --ued-logo-left: 16px;
+    --ued-login-logo-top: 16px;
     --ued-language-top: 0;
     --ued-language-right: 0;
     position: relative;

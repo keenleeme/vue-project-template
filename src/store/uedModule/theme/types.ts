@@ -1,3 +1,6 @@
+/* eslint-disable max-classes-per-file */
+import type { ThemeType } from '@ued-material/ued-wbc/dist/types/types';
+
 export interface ThemeConfigType {
   // type: string; // 配置项类型 'mode'/'primaryColor'/'layout'/'others'
   title: string;
@@ -15,4 +18,6 @@ export interface ThemeConfigType {
   accordion: boolean; // 侧边导航手风琴模式
   languageSwitch: boolean; // 语言切换
   helpCenter: boolean; // 帮助中心
+
+  loginMode?: ThemeType;
 }

@@ -14,7 +14,7 @@
             </div>
             <div class="group-content">
               <a-form-item :label="$t('I18N.layout.zhuTiFengGe')">
-                <a-radio-group v-model:value="loginConfig.mode">
+                <a-radio-group v-model:value="loginConfig.mode" @change="changeMode">
                   <a-radio value="dark">{{ $t('I18N.layout.shenSe') }}</a-radio>
                   <a-radio value="light">{{ $t('I18N.layout.qianSe') }}</a-radio>
                 </a-radio-group>
@@ -245,17 +245,18 @@
   import { h } from 'vue';
   import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons-vue';
   import type { FormDto } from '@ued-material/ued-wbc/dist/types/types';
+  import { setTheme } from '@ued-material/ued-wbc/store';
   import { UploadFile, message } from 'ant-design-vue';
   import { storeToRefs } from 'pinia';
-  import { useAppStore } from '@/store';
+  import { useLoginStore } from '@/store';
   import { defaultConfig } from '@/store/uedModule/app/defaultConfig';
   import { CopyrightVO, LoginConfigDTO, LogoModeEnums } from '@/views/uedModule/login/types';
   import * as config from './index';
   import type { FormUploadType } from './index';
   import LoginDemo from './login-demo.vue';
 
-  const appStore = useAppStore();
-  const { appConfig } = storeToRefs(appStore);
+  const loginStore = useLoginStore();
+  const { loginConfig: loginConfigStore } = storeToRefs(loginStore);
 
   const formItemLayout = {
     labelCol: {
@@ -268,7 +269,7 @@
     }
   };
 
-  const loginConfig = ref<LoginConfigDTO>(new LoginConfigDTO(appConfig.value?.loginConfig));
+  const loginConfig = ref<LoginConfigDTO>(new LoginConfigDTO(loginConfigStore.value));
   const dialogVisible = ref(false);
   const dialogTitle = ref('');
   const previewKey = ref(0);
@@ -309,6 +310,10 @@
     loginConfig.value[key] = defaultConfig.loginConfig[key];
   };
 
+  const changeMode = () => {
+    setTheme(loginConfig.value.mode);
+  };
+
   // 预览侧 按钮处理
   const handlePreviewControl = (name: 'reload' | 'fullscreen') => {
     if (name === 'reload') {
@@ -341,10 +346,10 @@
   // 提交
   const handleSubmit = () => {
     if (dialogTitle.value === I18N.layout.yingYongDangQianSheZhi) {
-      loginConfig.value = new LoginConfigDTO(appConfig.value?.loginConfig);
+      loginStore.set(loginConfig.value);
       dialogVisible.value = false;
     } else {
-      appStore.setLoginConfig(loginConfig.value);
+      loginConfig.value = new LoginConfigDTO(defaultConfig.loginConfig);
       dialogVisible.value = false;
     }
   };

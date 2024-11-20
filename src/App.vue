@@ -8,17 +8,17 @@
 
 <script setup lang="ts">
   import { RouterView } from 'vue-router';
-  import { setI18n } from '@ued-material/ued-wbc/api';
   import zhCN from 'ant-design-vue/es/locale/zh_CN';
   import { storeToRefs } from 'pinia';
   import { getWebsiteConfig } from './api/common';
   import Layout from './components/uedModule/layout/index.vue';
   import RobotInit from './components/uedModule/robot/index';
-  import { useAppStore, useThemeStore } from './store';
+  import { useAppStore, useLoginStore, useThemeStore } from './store';
   import { AppConfigType } from './store/uedModule/app/types';
   import themeAlgorithm from './theme/themeAlgorithm';
 
   const appStore = useAppStore();
+  const loginStore = useLoginStore();
   const loadingWrapper: any = document.getElementById('loader');
   if (loadingWrapper) {
     loadingWrapper.parentNode.removeChild(loadingWrapper);
@@ -35,16 +35,11 @@
   getWebsiteConfig()
     .then((data) => {
       appStore.setAppConfig(data as AppConfigType);
-      appStore.setLoginConfig(data.loginConfig);
+      loginStore.set(data.loginConfig);
     })
     .catch((error) => {
       console.log(error);
     });
-
-  onMounted(() => {
-    const local = localStorage.getItem('das-intl-locale');
-    setI18n(local || 'zh');
-  });
 
   onUnmounted(() => {
     // window.localStorage.clear();

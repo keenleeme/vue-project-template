@@ -17,5 +17,6 @@ export const themeDefaultConfig: ThemeConfigType = {
   header: true,
   breadcrumb: true,
   mapMenu: true,
-  accordion: true
+  accordion: true,
+  loginMode: 'light'
 };

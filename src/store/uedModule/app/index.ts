@@ -1,6 +1,7 @@
 import { ref } from 'vue';
 // import { theme } from 'ant-design-vue';
 import { defineStore } from 'pinia';
+import { useThemeStore } from '@/store';
 import { LoginConfigDTO } from '@/views/uedModule/login/types';
 // import { themeTokens, ThemeTypes } from '@/theme';
 import { defaultConfig } from './defaultConfig';
@@ -11,6 +12,8 @@ import { AppConfigType } from './types';
 export default defineStore(
   'app',
   () => {
+    const themeStore = useThemeStore();
+
     // token
     const token = ref<string>();
     const setToken = (tokenStr: string) => {
@@ -29,8 +32,9 @@ export default defineStore(
     };
     const setLoginConfig = (config: LoginConfigDTO) => {
       appConfig.value.loginConfig = new LoginConfigDTO(
-        Object.assign(defaultConfig.loginConfig, appConfig.value.loginConfig, defaultConfig.loginConfig, config)
+        Object.assign(defaultConfig.loginConfig, appConfig.value.loginConfig, config)
       );
+      themeStore.setThemeConfig({ ...themeStore.themeConfig, loginMode: appConfig.value.loginConfig.mode });
     };
     // 主题控制面板
     const themePanelVisible = ref<boolean>(false);

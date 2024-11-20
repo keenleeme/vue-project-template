@@ -1,4 +1,5 @@
 import { AppConfigType } from '@/store/uedModule/app/types';
+import { defaultLoginConfig } from '@/store/uedModule/login/defaultConfig';
 import type { MenuType } from '@/store/uedModule/menus/types';
 
 // 获取菜单数据
@@ -200,9 +201,11 @@ export async function getPermissions() {
 export async function getWebsiteConfig(): Promise<
   Omit<AppConfigType, Extract<keyof AppConfigType, keyof { title?: string; subtitle?: string }>>
 > {
+  const ZQ_LOGIN_CONFIG = JSON.parse(localStorage.getItem('ZQ_LOGIN_CONFIG') || '{}');
   return {
     loginConfig: {
-      //
+      ...defaultLoginConfig,
+      ...ZQ_LOGIN_CONFIG
     }
   };
 }
