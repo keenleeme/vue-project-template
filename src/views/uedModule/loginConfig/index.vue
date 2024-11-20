@@ -9,7 +9,9 @@
           :label-col="{ style: { width: '33.3%', 'white-space': 'normal' } }"
         >
           <div class="group basic">
-            <div class="group-header">基础配置</div>
+            <div class="group-header">
+              {{ $t('I18N.layout.jiChuPeiZhi') }}
+            </div>
             <div class="group-content">
               <a-form-item :label="$t('I18N.layout.zhuTiFengGe')">
                 <a-radio-group v-model:value="loginConfig.mode">
@@ -185,8 +187,8 @@
           </div>
           <div class="group copyright need-slider">
             <div class="group-header">
-              底部自定义配置
-              <span>（没有超链接内容，可以不填写）</span>
+              {{ $t('I18N.login.diBuZiDingYiPeiZhi') }}
+              <span>（{{ $t('I18N.login.meiYouLianJie') }}）</span>
             </div>
             <div class="group-content">
               <a-form-item v-for="(item, idx) in loginConfig.copyright" :key="idx">
@@ -277,20 +279,8 @@
       type: 'login-password',
       btnText: I18N.common.login,
       items: [
-        {
-          type: 'ued-input',
-          label: I18N.common.username,
-          field: 'username',
-          placeholder: I18N.login.qingShuRuYongHu,
-          icon: 'user'
-        },
-        {
-          type: 'ued-password',
-          label: I18N.common.password,
-          field: 'username',
-          placeholder: I18N.login.qingShuRuMiMa,
-          icon: 'password'
-        },
+        { type: 'ued-input', label: I18N.common.username, field: 'username', icon: 'user' },
+        { type: 'ued-password', label: I18N.common.password, field: 'username', icon: 'password' },
         { type: 'ued-touch-bar', label: I18N.layout.yanZheng, field: 'valide', icon: 'touch' }
       ]
     }

@@ -2,7 +2,7 @@
   <ued-login-layout
     :forms="forms"
     :theme="loginConfig.mode"
-    :bg-image="loginConfig.bgImage"
+    :bgImage="loginConfig.bgImage"
     :bg-video="loginConfig.bgVideo"
     :bg-attrs="{
       poster: loginConfig.bgPoster
@@ -23,10 +23,10 @@
     <ued-select
       v-if="loginConfig.showLanguage"
       slot="language"
-      v-model="loginConfig.language"
+      v-model="language"
       :clearable="false"
       :options="options"
-      @change="handleLocaleChangeA(loginConfig.language)"
+      @u-change="handleLocaleChangeA"
     ></ued-select>
     <div slot="copyright">
       <template v-for="(item, idx) in loginConfig.copyright" :key="idx">
@@ -41,6 +41,7 @@
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
   import { changeLocale } from '@international/vue3-i18n';
+  import { setI18n } from '@ued-material/ued-wbc/api';
   import { storeToRefs } from 'pinia';
   import { useAppStore, useThemeStore } from '@/store';
   import { LoginConfigDTO, LogoModeEnums } from './types';
@@ -52,7 +53,7 @@
   const { themeConfig } = storeToRefs(themeStore);
 
   const loginConfig = ref<LoginConfigDTO>(new LoginConfigDTO(appConfig.value.loginConfig));
-
+  const language = ref();
   const forms = ref([
     {
       type: 'login-password',
@@ -62,7 +63,7 @@
         {
           type: 'ued-input',
           field: 'username',
-          label: I18N.common.username,
+          label: `${I18N.common.username}`,
           icon: 'user',
           rules: [
             {
@@ -189,8 +190,8 @@
     router.replace('/');
   };
 
-  const handleLocaleChangeA = (value: string) => {
-    const locale = value === 'en' ? 'en' : 'zh';
+  const handleLocaleChangeA = (e: CustomEvent<{ data: string }>) => {
+    const locale = e.detail.data === 'en' ? 'en' : 'zh';
     changeLocale(locale);
     window.location.reload();
   };
@@ -201,7 +202,8 @@
       loginConfig.value = Object.assign(loginConfig.value, v);
       // loginConfig.value.language = themeConfig.value.lang;
       loginConfig.value.language = window.localStorage.getItem('das-intl-locale') || 'zh';
-      console.log('appConfig-changes:', loginConfig.value);
+      language.value = loginConfig.value.language;
+      console.log('appConfig-changes:', loginConfig.value, loginConfig.value.language);
     },
     { deep: true, immediate: true }
   );
@@ -209,10 +211,14 @@
     loginConfig,
     (v) => {
       console.log('loginConfig-changes:', v);
-      handleLocaleChangeA(v.language);
+      // handleLocaleChangeA(v.language);
     },
     { deep: true }
   );
+
+  onMounted(() => {
+    setI18n(loginConfig.value.language);
+  });
 </script>
 
 <style lang="less" scoped>

@@ -18,12 +18,11 @@
   >
     <template #header>
       <div v-if="config.layout === 'side' && !config.header" class="side-menu-header">
-        <!-- <span class="logo"><img style="height: 30px;" src="@/assets/images/logo.svg" /></span> -->
         <span class="logo"><img style="height: 24px" :src="loginConfig.logoUrl" /></span>
       </div>
     </template>
     <template #footer>
-      <div class="side-menu-footer">
+      <div class="side-menu-footer" v-if="config.layout === 'side' && !config.header">
         <div v-if="config.helpCenter" class="side-menu-footer-item">
           <i class="menuicon menu-icon-help" />
           <span>帮助</span>

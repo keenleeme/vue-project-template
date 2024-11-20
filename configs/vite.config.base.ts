@@ -9,6 +9,8 @@ import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
 import Components from 'unplugin-vue-components/vite';
 import { defineConfig } from 'vite';
 import { loadEnv } from './utils';
+// import extra from 'fs-extra'
+
 
 const env = loadEnv();
 
@@ -56,11 +58,11 @@ export default defineConfig({
           importStyle: false // css in js
         })
       ]
-    }),
-    extra.copy(
-      resolve(__dirname, '../node_modules/@ued-material/ued-wbc/dist/assets/ued-wbc'),
-      resolve(__dirname, '../public/assets/ued-wbc')
-    )
+    })
+    // extra.copy(
+    //   resolve(__dirname, '../node_modules/@ued-material/ued-wbc/dist/assets/ued-wbc'),
+    //   resolve(__dirname, '../public/assets/ued-wbc'),
+    // )
   ],
   resolve: {
     alias: [

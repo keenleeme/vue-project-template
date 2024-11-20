@@ -80,5 +80,11 @@
         right: 0 !important;
       }
     }
+
+    &[data-ued-i18n='en'] {
+      :deep(.login-form-title) {
+        font-size: 26px;
+      }
+    }
   }
 </style>

@@ -16,5 +16,7 @@ export default {
   anHengNeiBuYan: 'Internal demonstration account login',
   qiTaDengLuFang: 'Other login methods',
   saoMaDengLu: 'Scan Login',
-  zhangHaoDengLu: 'Account Login'
+  zhangHaoDengLu: 'Account Login',
+  diBuZiDingYiPeiZhi: 'Bottom custom configuration',
+  meiYouLianJie: 'No hyperlink content, can be left blank',
 };
