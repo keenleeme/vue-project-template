@@ -1,7 +1,7 @@
 <template>
   <UedSideMenu
     v-if="config.layout !== 'top'"
-    v-model:active-id="activeId"
+    v-model:active-id="menuActiveId"
     v-model:fold="fold"
     :props="dataProps"
     :data="menuData"
@@ -146,9 +146,12 @@
   const config = ref({
     ...themeConfig.value
   });
+  const menusStore = useMenusStore();
+  const menuActiveId = ref('');
   // 监听主题配置
   watchEffect(() => {
     config.value = { ...themeConfig.value };
+    menuActiveId.value = menusStore.activeId;
   });
   // 修改主题配置
   const changeConfig = (key: string, newConfig: any) => {
@@ -161,9 +164,6 @@
   //     console.log('config', config.value)
   //   }
   // )
-
-  const menusStore = useMenusStore();
-  const { activeId } = storeToRefs(menusStore);
 
   // 侧边栏菜单点击
   const router = useRouter();
@@ -202,5 +202,8 @@
 <style>
   .side-menu-wrapper.is-fold .side-menu-header .logo {
     transform: unset !important;
+  }
+  .side-menu-wrapper .side-menu-content {
+    z-index: 1;
   }
 </style>
