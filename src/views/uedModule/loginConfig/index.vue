@@ -349,10 +349,15 @@
       loginStore.set(loginConfig.value);
       dialogVisible.value = false;
     } else {
+      loginStore.set(defaultConfig.loginConfig);
       loginConfig.value = new LoginConfigDTO(defaultConfig.loginConfig);
       dialogVisible.value = false;
     }
   };
+
+  onBeforeRouteLeave(() => {
+    loginStore.set(loginConfigStore.value);
+  });
 </script>
 
 <style lang="less" scoped>
