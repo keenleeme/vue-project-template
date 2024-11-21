@@ -1353,9 +1353,15 @@
     "@ued-material/ued-wbc" "^0.1.0"
 
 "@ued-material/ued-wbc@^0.1.0":
+<<<<<<< HEAD
   version "0.1.0"
   resolved "https://ci.das-security.cn/repository/ah_npm/@ued-material/ued-wbc/-/ued-wbc-0.1.0.tgz"
   integrity sha512-fbgQGaHowgMHApIq8QBKBV0eTQOSgf71IfiQ2LvXeGWI/vqrlAE01obX4aqT1kYFy6fqJmnXrVtl9Wq6GTBGgw==
+=======
+  version "0.1.1"
+  resolved "https://ci.das-security.cn/repository/ah_npm/@ued-material/ued-wbc/-/ued-wbc-0.1.1.tgz#11489efd6f066c5a0d75464a2b5a6f3961f64d4c"
+  integrity sha512-OGlmxPbEvc66eS19nkbsPnG217u5MJUJMPvr8nIuxEgTn8GRn3HB8lcSOTxYr1NvGQy/TF4kfuCopRdyjGi4/A==
+>>>>>>> feature/template-login
   dependencies:
     "@stencil-community/less" "^2.0.0"
     "@stencil/core" "^4.21.0"
