@@ -1833,9 +1833,9 @@
     "@ued-material/ued-wbc" "^0.1.0"
 
 "@ued-material/ued-wbc@^0.1.0":
-  version "0.1.0"
-  resolved "https://ci.das-security.cn/repository/ah_npm/@ued-material/ued-wbc/-/ued-wbc-0.1.0.tgz#e1f8b98573dcf753275a99be2a5a306631690d29"
-  integrity sha512-Z/NI+pF8H11KoVnwXmH5MF0RQ3vvwHZ5sTM/03jDrLleMvi2RvpaVCv4T77Yhj/6Qtieu8j7wG2HWrhP0DXitA==
+  version "0.1.1"
+  resolved "https://ci.das-security.cn/repository/ah_npm/@ued-material/ued-wbc/-/ued-wbc-0.1.1.tgz#11489efd6f066c5a0d75464a2b5a6f3961f64d4c"
+  integrity sha512-OGlmxPbEvc66eS19nkbsPnG217u5MJUJMPvr8nIuxEgTn8GRn3HB8lcSOTxYr1NvGQy/TF4kfuCopRdyjGi4/A==
   dependencies:
     "@stencil-community/less" "^2.0.0"
     "@stencil/core" "^4.21.0"
