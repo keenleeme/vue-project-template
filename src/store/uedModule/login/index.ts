@@ -1,5 +1,5 @@
 import { ref } from 'vue';
-import { setI18n, setTheme } from '@ued-material/ued-wbc/api';
+import { setI18n, setTheme } from '@ued-material/ued-wbc/store';
 import { defineStore } from 'pinia';
 import { LoginConfigDTO } from '@/views/uedModule/login/types';
 import { defaultLoginConfig } from './defaultConfig';
