@@ -7,7 +7,7 @@ export default {
   biaoDanYe: '表单页',
   xiangQingYe: '详情页',
   peiZhiYe: '配置页',
-  MicroApp: '微应用',
+  MicroApp: '微应用技术方案',
   App: '应用',
   Page: '页面',
   Custom: '定制',

@@ -132,6 +132,7 @@ const routes: RouteRecordRaw[] = [
     name: 'multiple',
     component: () => import(/* webpackChunkName: "multiple" */ '@/micro/example/multiple/index.vue'),
     meta: {
+      title: 'I18N.layout.App',
       public: true
     }
   },

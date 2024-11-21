@@ -1,17 +1,19 @@
 <template>
-  <a-button v-if="appInfo.name === 'vue2'" @click="sendData">动态发送基座数据</a-button>
-  <micro-app
-    :name="appInfo.name"
-    :url="url"
-    :baseroute="props.appInfo.baseroute"
-    :data="globaldata"
-    disable-memory-router
-    iframe
-    fiber
-    @created="appCreated"
-    @beforemount="appCreated"
-    @mounted="appMounted"
-  ></micro-app>
+  <div class="micro-content">
+    <a-button v-if="appInfo.name === 'vue2'" @click="sendData">动态发送基座数据</a-button>
+    <micro-app
+      :name="appInfo.name"
+      :url="url"
+      :baseroute="props.appInfo.baseroute"
+      :data="globaldata"
+      disable-memory-router
+      iframe
+      fiber
+      @created="appCreated"
+      @beforemount="appCreated"
+      @mounted="appMounted"
+    ></micro-app>
+  </div>
   <div v-if="showSpin" pos-absolute inset-0 f-c-c z-1 style="background-color: rgba(55, 55, 55, 0.6)">
     <a-spin class="" tip="资源加载中..."> </a-spin>
   </div>
@@ -49,14 +51,6 @@
 
   const url = computed(() => {
     return getAppRealUrl(props.appInfo.url);
-    // if (props.appInfo.url.startsWith('http')) return props.appInfo.url;
-    // if (props.appInfo.url.startsWith('//')) {
-    //   return window.location.protocol + props.appInfo.url;
-    // }
-    // if (props.appInfo.url.startsWith(':')) {
-    //   return `${window.location.protocol}//${window.location.hostname}${props.appInfo.url}`;
-    // }
-    // return `${window.location.protocol}//${window.location.host}${props.appInfo.url}`;
   });
 
   const showSpin = ref(false);
@@ -72,3 +66,11 @@
     microApp.setData('vue2', { uuid: Math.random() });
   }
 </script>
+<style lang="less">
+  .micro-content {
+    padding: 16px;
+    height:calc(100vh- 132px);
+    overflow: auto;
+  }
+</style>
+  

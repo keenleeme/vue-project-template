@@ -6,7 +6,6 @@ export const themeDefaultConfig: ThemeConfigType = {
   mode: 'light',
   lang: localStorage.getItem('das-intl-locale') === 'zh' ? 'zh' : 'en',
   primaryColor: '#134BEA',
-  // primaryColor: '#3b71ee',
   // darkPrimaryColor: '#3B71EE',
   lightDarkSwitch: true,
   languageSwitch: true,

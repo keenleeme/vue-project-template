@@ -208,6 +208,9 @@
 </script>
 
 <style>
+  .side-menu-wrapper {
+    width: 233px !important;
+  }
   .side-menu-wrapper.is-fold .side-menu-header .logo {
     transform: unset !important;
   }

@@ -1,11 +1,7 @@
 <template>
   <a-layout>
     <div class="p2 pl-16 page-top">
-      <!-- :style="{ 'background-color': token.colorBgBase, borderLeft: `1px solid ${token.colorBorder}` }" -->
       <a-breadcrumb v-if="themeConfig.breadcrumb" class="breadcrumb">
-        <!-- <template #separator>
-          <RightOutlined style="vertical-align: revert-layer; font-size: 14px" />
-        </template> -->
         <a-breadcrumb-item v-for="item in activeBreadcrumb" :key="item.title">
           <template v-if="!item.path">
             {{ item.title }}
@@ -16,6 +12,7 @@
         </a-breadcrumb-item>
       </a-breadcrumb>
       <div class="page-title">
+        <i class="zq-icon zq-icon-arrow-left"></i>
         <LeftSquareOutlined size="14" class="page-icon" />
         <div class="page-title-text">{{ $t(`${$route.meta.title}`) }}</div>
       </div>
@@ -30,16 +27,9 @@
 
 <script setup lang="ts">
   import { RouterView } from 'vue-router';
-  // import { useRouter } from 'vue-router';
-  import { LeftSquareOutlined, RightOutlined } from '@ant-design/icons-vue';
-  // import { theme } from 'ant-design-vue';
   import { storeToRefs } from 'pinia';
   import { useMenusStore, useThemeStore } from '@/store';
 
-  // const { useToken } = theme;
-  // const { token } = useToken();
-
-  // const router = useRouter();
   const menusStore = useMenusStore();
   const themeStore = useThemeStore();
   const { activeBreadcrumb } = storeToRefs(menusStore);

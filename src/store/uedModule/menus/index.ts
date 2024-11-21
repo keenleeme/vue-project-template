@@ -34,6 +34,9 @@ function dataToMenuItems(data: MenuType[], type: 'header' | 'all' = 'all'): Menu
 
 function dataToMenuMap(menus: MenuType[], map: Map<string, MenuType[]>, parents: MenuType[] = []) {
   menus.forEach((item) => {
+    if (item.icon) {
+      item.icon = `zq-icon ${item.icon}`;
+    }
     if (item.path) {
       map.set(item.path, [item, ...parents]);
     }

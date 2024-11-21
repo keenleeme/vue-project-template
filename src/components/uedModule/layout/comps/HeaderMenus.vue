@@ -197,22 +197,6 @@
   // 菜单数据
   const topMenuData = ref(props.menuData);
 
-  // const defaultConfig = {
-  //   mode: 'light',
-  //   lang: 'ZH',
-  //   primaryColor: '#134BEA',
-  //   darkPrimaryColor: '#3B71EE',
-  //   lightDarkSwitch: true,
-  //   languageSwitch: true,
-  //   helpCenter: true,
-  //   layout: 'top',
-  //   topStyle: 'dark',
-  //   sideStyle: 'light',
-  //   header: true,
-  //   breadcrumb: true,
-  //   mapMenu: true,
-  //   accordion: true
-  // };
   const { themeConfig } = storeToRefs(themeStore);
   const config = ref({
     ...themeConfig.value
@@ -455,25 +439,6 @@
       width: 50%;
     }
   }
-  // .content {
-  //   flex-grow: 1;
-  //   width: 0;
-  //   color: #505968;
-  //   .menu-setting {
-  //     font-size: 14px;
-  //     margin-bottom: 32px;
-  //     .title {
-  //       font-size: 18px;
-  //       margin-bottom: 16px;
-  //       color: #1e2128;
-  //     }
-  //     .setting-item {
-  //       margin-bottom: 16px;
-  //       display: flex;
-  //       align-items: center;
-  //     }
-  //   }
-  // }
   .cut-form .cut-input {
     width: 310px;
   }
