@@ -453,7 +453,7 @@
   }
   .header-dark {
     .header {
-      background-color: #172034;
+      background-color: var(--color-header-bg);
       color: #fff;
     }
     .header-operates {
