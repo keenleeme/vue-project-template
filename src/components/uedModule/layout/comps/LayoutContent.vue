@@ -14,7 +14,9 @@
       <div class="page-title">
         <i class="zq-icon zq-icon-arrow-left"></i>
         <LeftSquareOutlined size="14" class="page-icon" />
-        <div class="page-title-text">{{ $t(`${$route.meta.title}`) }}</div>
+        <!-- <div class="page-title-text">{{ $t(`${$route.meta.title}`) }}</div> -->
+        <!-- 改成获取面包屑的以后一级 -->
+        <div class="page-title-text">{{ pageTitle }}</div>
       </div>
     </div>
     <a-layout-content>
@@ -46,6 +48,10 @@
       console.log('activeBreadcrumb changed:', newValue);
     }
   );
+
+  const pageTitle = computed(() => {
+    return activeBreadcrumb.value[activeBreadcrumb.value.length - 1]?.title;
+  });
 </script>
 
 <style lang="less" scoped>

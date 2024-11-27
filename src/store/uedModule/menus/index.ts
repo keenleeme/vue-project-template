@@ -92,7 +92,11 @@ export default defineStore('menus', () => {
   const activeMenus = computed(() => {
     if (activeRoutes.value.length === 0) return [];
     const lastRoute = activeRoutes.value[activeRoutes.value.length - 1];
-    const menusArr = menusMap.get(lastRoute.path);
+    let lastRoutePath = lastRoute.path;
+    if (lastRoute.path.endsWith('/:page*')) {
+      lastRoutePath = lastRoutePath.replace('/:page*', '');
+    }
+    const menusArr = menusMap.get(lastRoutePath);
     return menusArr ?? [];
   });
   // 通过激活菜单的第一层数据筛选出二层及以下的菜单数据进行计算转换
@@ -128,6 +132,7 @@ export default defineStore('menus', () => {
     activeMenus,
     siderMenus,
     findFistSiderMenu,
-    activeId
+    activeId,
+    menusMap
   };
 });

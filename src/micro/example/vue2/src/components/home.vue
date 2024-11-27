@@ -5,6 +5,8 @@
     <button @click="goTo">跳转about页面</button>
     <button @click="goToVue3">跳转子应用vue3的home页面</button>
     <button @click="goToBase">跳转基座的列表页面</button>
+    <button @click="goToAdd">新增</button>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -26,6 +28,9 @@ export default {
     goToBase() {
       window.microApp.getData().pushState('/base-list')
       // base-list
+    },
+    goToAdd(){
+      this.$router.push('/home/add')
     }
   },
 }
