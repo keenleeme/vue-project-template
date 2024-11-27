@@ -1,6 +1,7 @@
 <template>
   <div>
     <h2>about页面</h2>
+    <h2>子应用全屏页面</h2>
     <button @click="goBack">返回home</button>
   </div>
 </template>

@@ -61,6 +61,11 @@ export default defineStore(
     const setWatermark = (watermarkStr: string) => {
       watermark.value = watermarkStr;
     };
+
+    const fullScreen = ref(false);
+    const setFullScreen = (isFull: boolean) => {
+      fullScreen.value = isFull;
+    };
     // 重置数据
     const reset = () => {
       token.value = '';
@@ -83,7 +88,9 @@ export default defineStore(
       // themeTokenType,
       // setThemeTokenType
       themePanelVisible,
-      setThemePanelVisible
+      setThemePanelVisible,
+      fullScreen,
+      setFullScreen
     };
   },
   {

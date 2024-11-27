@@ -113,22 +113,22 @@ export async function getMenus(): Promise<MenuType[]> {
     },
     {
       id: 'micro',
-      title: 'micro-app',
+      title: I18N.layout.MicroApp,
       children: [
         {
           id: 'vue2',
-          title: 'vue-app',
+          title: `vue2${I18N.layout.App}`,
           path: '',
           children: [
             {
               id: 'vue-home',
-              title: 'home-page',
+              title: `home${I18N.layout.Page}`,
               path: '/vue2/#/home',
               module: 'vue2'
             },
             {
               id: 'vue-about',
-              title: 'about-page',
+              title: `about${I18N.layout.Page}`,
               path: '/vue2/#/about',
               module: 'vue2'
             }
@@ -136,18 +136,18 @@ export async function getMenus(): Promise<MenuType[]> {
         },
         {
           id: 'vue3',
-          title: 'vue3-app',
+          title: `vue3${I18N.layout.App}`,
           path: '',
           children: [
             {
               id: 'vue3-home',
-              title: 'home-page',
+              title: `home${I18N.layout.Page}`,
               path: '/vue3/home',
               module: 'vue3'
             },
             {
               id: 'vue3-about',
-              title: 'about-page',
+              title: `about${I18N.layout.Page}`,
               path: '/vue3/about',
               module: 'vue3'
             }
@@ -155,18 +155,18 @@ export async function getMenus(): Promise<MenuType[]> {
         },
         {
           id: 'react',
-          title: 'react-app',
+          title: `react${I18N.layout.App}`,
           path: '',
           children: [
             {
               id: 'react-home',
-              title: 'home-app',
+              title: `home${I18N.layout.Page}`,
               path: '/react/home',
               module: 'react'
             },
             {
               id: 'react-about',
-              title: 'about-app',
+              title: `about${I18N.layout.Page}`,
               path: '/react/about',
               module: 'react'
             }
@@ -174,17 +174,17 @@ export async function getMenus(): Promise<MenuType[]> {
         },
         {
           id: 'angular',
-          title: 'angular-app',
+          title: `angular${I18N.layout.App}`,
           path: '/angular/home'
         },
         {
           id: 'multiple',
-          title: 'multiple-app',
+          title: `multiple${I18N.layout.App}`,
           path: '/multiple'
         },
         {
           id: 'custom',
-          title: 'custom-page',
+          title: `${I18N.layout.Custom}${I18N.layout.Page}`,
           path: '/custom'
         }
       ]

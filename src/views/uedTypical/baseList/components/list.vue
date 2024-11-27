@@ -3,7 +3,7 @@
     <SearchComponent :is-reset="true" :initial-values="initialValues" :form-items="formItems"></SearchComponent>
     <div class="operation-wrap">
       <div class="left">
-        <a-button type="primary" class="mr-8">
+        <a-button @click="add" type="primary" class="mr-8">
           <template #icon>
             <PlusOutlined />
           </template>
@@ -60,6 +60,8 @@
     age: string;
     tags: string[];
   };
+
+  const router = useRouter();
 
   const initialValues = {
     name: '',
@@ -153,6 +155,12 @@
   const onChange: TableProps<TableDataType>['onChange'] = (pagination, filters, sorter) => {
     console.log('params', pagination, filters, sorter);
   };
+
+  function add() {
+    router.push({
+      path: '/base-list/add'
+    });
+  }
 </script>
 
 <style lang="less" scoped>

@@ -24,6 +24,7 @@
   import { computed, watchEffect } from 'vue';
   import { useRoute } from 'vue-router';
   import { storeToRefs } from 'pinia';
+  import { routeCenter } from '@/micro';
   import { useAppStore, useMenusStore, useThemeStore } from '@/store';
   import type { RouteItemType } from '@/store/uedModule/menus/types';
   import HeaderMenus from './comps/HeaderMenus.vue';
@@ -31,21 +32,21 @@
   import SiderMenus from './comps/SiderMenus.vue';
 
   const appStore = useAppStore();
-  const { watermark } = storeToRefs(appStore);
+  const { watermark, fullScreen } = storeToRefs(appStore);
   const menusStore = useMenusStore();
   const { siderMenus } = storeToRefs(menusStore);
   const route = useRoute();
   watchEffect(() => {
-    let routes = route.meta.parentRoutes as RouteItemType[];
-    if (!routes || routes.length === 0) {
-      routes = [
-        {
-          path: route.fullPath,
-          title: route.meta.title as string,
-          component: true
-        }
-      ];
-    }
+    const routes = (route.meta.parentRoutes as RouteItemType[]) || [];
+    // if (!routes || routes.length === 0) {
+    //   routes = [
+    //     {
+    //       path: route.fullPath,
+    //       title: route.meta.title as string,
+    //       component: true
+    //     }
+    //   ];
+    // }
     menusStore.setActiveRoutes(routes);
   });
 
@@ -55,9 +56,21 @@
   //   const { layout, topStyle } = themeConfig.value;
   // });
 
-  const fullScreen = computed(() => {
-    return route.meta.fullScreen;
+  watch(route, () => {
+    if (route.meta.fullScreen) {
+      appStore.setFullScreen(true);
+      return true;
+    }
+    const customMeta = routeCenter.getMeta(route.fullPath, route.name as string, route.hash);
+    appStore.setFullScreen(!!customMeta?.fullScreen);
   });
+  // const fullScreen = computed(() => {
+  //   if (route.meta.fullScreen) {
+  //     return true;
+  //   }
+  //   const customMeta = routeCenter.getMeta(route.fullPath, route.name as string, route.hash);
+  //   return customMeta?.fullScreen || false;
+  // });
 
   const menuConfig = ref({
     // 不传按默认配置字段，如要修改请补充对应字段的key/value

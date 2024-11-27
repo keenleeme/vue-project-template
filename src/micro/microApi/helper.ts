@@ -1,8 +1,9 @@
+import type { RouteMeta } from 'vue-router';
 import router from '@/router';
 import type { MenuType } from '@/store/uedModule/menus/types';
 import { routeCenter } from '../index';
 import { SubApp } from '../store';
-import microApp, { getMicroAppActiveApps, setData } from './index';
+import microApp, { getMicroAppActiveApps } from './index';
 
 export function menuNavigationRewrite(menu: MenuType) {
   if (!menu.url) {
@@ -78,7 +79,8 @@ export function decorateLocationPath(
     return { path: _path };
   }
 
-  const { module } = routeCenter.get(_path) || {};
+  const customName = routeCenter.getCustomName();
+  const { module } = routeCenter.get(customName, _path) || {};
   return {
     module: module || '',
     path: `${_path}${_query}`,
@@ -130,4 +132,40 @@ export function getAppRealUrl(url: string): string {
 export function getRegistryUrl(appName: string, port: string) {
   const isLocal = window.location.origin.startsWith('http://localhost');
   return `${isLocal ? `:${port}` : ''}/subapp/${appName}/`;
+}
+
+export function getRouteMeta(path: string, name: string, hash: string) {
+  return routeCenter.getMeta(path, name, hash);
+}
+
+export function getRoute(module: string, pathOrName: string) {
+  return routeCenter.get(module, pathOrName);
+}
+
+export function getParentRoutes(module: string, meta: RouteMeta, path: string) {
+  const routes: {
+    path: string;
+    title: string;
+    component: boolean;
+  }[] = [
+    {
+      path,
+      title: meta?.title as string,
+      component: true
+    }
+  ];
+  while (meta.parentName) {
+    const routerInfo = routeCenter.get(module, meta.parentName as string);
+    if (routerInfo) {
+      const routerMode = routeCenter.getModuleRouterMode(module);
+      routes.push({
+        path: `/${module}${routerMode === 'hash' ? '/#' : ''}${routerInfo.path}`,
+        title: routerInfo.meta?.title as string,
+        component: true
+      });
+    }
+    meta = routerInfo?.meta || ({} as RouteMeta);
+  }
+
+  return [...routes.slice(0, -1).reverse(), routes[routes.length - 1]];
 }
