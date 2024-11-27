@@ -92,8 +92,8 @@
   --color-bg-component: #080D18;/*组件（例如输入框）背景，主要容器之上组件背景*/
   --color-bg-component-disabled: #1D2330;/*组件（例如输入框）背景disabled，主要容器之上组件背景disabled*/
   --color-bg-component2:  #222937;/*二级组件（例如下拉、气泡）背景，主要容器之上组件背景*****新增*/
-  --color-bg-container-hover: #1D2330;/*二级组件（例如下拉、气泡）背景hover，主要容器之上组件背景hover*****新增*/
-  --color-bg-container-active: #32394A;/*二级组件（例如下拉、气泡）背景active，主要容器之上组件背景active*****新增*/
+  --color-bg-component2-hover: #1D2330;/*二级组件（例如下拉、气泡）背景hover，主要容器之上组件背景hover*****新增*/
+  --color-bg-component2-active: #32394A;/*二级组件（例如下拉、气泡）背景active，主要容器之上组件背景active*****新增*/
   --color-component-stroke: #32394A;/*默认组件分割线*/
   --color-component-border:  #444C5D;/*默认边框*/
   /* 中性色彩交互 暗色规范中没提供这三个变量*/
