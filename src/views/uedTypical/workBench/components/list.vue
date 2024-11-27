@@ -160,7 +160,7 @@
 
 <style lang="less" scoped>
   .table-wrap {
-    background: var(--primary-bg);
+    background: var(--color-bg-container);
     padding: 16px;
     margin: 16px;
     .link {

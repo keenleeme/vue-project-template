@@ -157,7 +157,7 @@
 
 <style lang="less" scoped>
   .table-wrap {
-    background: var(--primary-bg);
+    background: var(--color-bg-container);
     margin: 16px;
     // padding: 24px 16px;
     .link {

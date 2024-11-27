@@ -174,9 +174,9 @@ div
     align-items: flex-start;
     margin: 0 16px;
     padding-top: 16px;
-    background: var(--primary-bg);
+    background: var(--color-bg-container);
     &.divider {
-      border-bottom: 1px solid var(--primary-divider);
+      border-bottom: 1px solid var(--color-component-stroke);
     }
     .form-wrap {
       flex: 1;

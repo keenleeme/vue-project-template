@@ -57,27 +57,27 @@
     }
   }
   .page-top {
-    background-color: var(--primary-bg);
-    border-left: 1px solid var(--primary-divider);
+    background-color: var(--color-bg-container);
+    border-left: 1px solid var(--color-component-stroke);
     .page-title {
       display: flex;
       height: 40px;
       justify-content: flex-start;
       align-items: center;
       font-size: 16px;
-      background-color: var(--primary-bg);
+      background-color: var(--color-bg-container);
       .page-icon {
         color: var(--color-text-placeholder);
       }
       .page-title-text {
-        color: var(--color-text-title);
+        color: var(--color-text-primarys);
         margin-left: 8px;
       }
     }
   }
 
   .w-full {
-    background-color: var(--color-page-bg);
-    border-left: 1px solid var(--primary-bg);
+    background-color: var(--color-bg-page);
+    border-left: 1px solid var(--color-bg-container);
   }
 </style>

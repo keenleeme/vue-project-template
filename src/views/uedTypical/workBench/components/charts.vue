@@ -79,7 +79,7 @@
       margin-right: 16px;
       div {
         flex: 1;
-        background: var(--primary-bg);
+        background: var(--color-bg-container);
         &:first-child {
           margin-right: 16px;
         }
@@ -88,7 +88,7 @@
     .right {
       flex: 1;
       div {
-        background: var(--primary-bg);
+        background: var(--color-bg-container);
       }
     }
   }

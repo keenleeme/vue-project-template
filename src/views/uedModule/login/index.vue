@@ -50,8 +50,6 @@
   const loginStore = useLoginStore();
   const router = useRouter();
   const { appConfig } = storeToRefs(appStore);
-  // const themeStore = useThemeStore();
-  // const { themeConfig } = storeToRefs(themeStore);
 
   const loginConfig = ref<LoginConfigDTO>(new LoginConfigDTO(appConfig.value.loginConfig));
   const language = ref();

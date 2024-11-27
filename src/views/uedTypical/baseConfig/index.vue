@@ -152,7 +152,7 @@
     flex-direction: column;
     .tabs {
       padding: 0 16px;
-      background-color: var(--primary-bg);
+      background-color: var(--color-bg-container);
       :deep(.ant-tabs) {
         .ant-tabs-nav {
           margin-bottom: 0;
@@ -205,7 +205,7 @@
         font-family: PingFangSC-Regular;
         font-size: 12px;
         // color: #FFFFFF;
-        color: var(--color-text-title);
+        color: var(--color-text-primarys);
         letter-spacing: 0;
         line-height: 20px;
         font-weight: 400;
@@ -217,10 +217,10 @@
       padding: 16px;
       text-align: right;
       // border-top: 1px solid #e9eaf0;
-      border-top: 1px solid var(--primary-divider);
+      border-top: 1px solid var(--color-component-stroke);
       button {
         margin-left: 8px;
-        // color: var(--color-text-content);
+        // color: var(--color-text-primarys);
       }
     }
   }

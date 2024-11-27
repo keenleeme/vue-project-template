@@ -469,7 +469,7 @@
       cursor: pointer;
       position: relative;
       top: 4px;
-      fill: var(--color-text-sub-title);
+      fill: var(--color-text-secondary);
     }
   }
 </style>
