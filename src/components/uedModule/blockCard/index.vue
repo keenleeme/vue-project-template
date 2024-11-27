@@ -32,7 +32,7 @@
 
 <style lang="less" scoped>
   .block-card {
-    background: var(--primary-bg);
+    background: var(--color-bg-container);
     .block-card-header {
       display: flex;
       justify-content: space-between;
@@ -42,13 +42,13 @@
       padding: 0 16px;
       font-weight: bold;
       &.title-border {
-        border-bottom: 1px solid var(--primary-divider);
+        border-bottom: 1px solid var(--color-component-stroke);
       }
     }
     h2 {
       font-size: 14px;
       line-height: 26px;
-      color: var(--color-text-title);
+      color: var(--color-text-primarys);
     }
   }
 </style>

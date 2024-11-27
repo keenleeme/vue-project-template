@@ -220,10 +220,10 @@
     height: 64px;
     align-items: center;
     padding: 0 16px;
-    background: var(--primary-bg);
+    background: var(--color-bg-container);
     &.divider {
-      border-left: 1px solid var(--primary-divider);
-      border-bottom: 1px solid var(--primary-divider);
+      border-left: 1px solid var(--color-component-stroke);
+      border-bottom: 1px solid var(--color-component-stroke);
     }
   }
   .sql-input {

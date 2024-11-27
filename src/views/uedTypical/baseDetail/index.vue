@@ -52,7 +52,7 @@
           </a-col>
           <a-col :span="8">
             <a-form-item :label="$t('I18N.layout.sheBei')">
-              <span><a style="color: var(--primary-color)">192.168.33.188</a></span>
+              <span><a style="color: var(--color-brand-normal)">192.168.33.188</a></span>
             </a-form-item>
           </a-col>
           <a-col :span="8">
@@ -139,8 +139,8 @@
       height: 112px;
       width: 100%;
       padding: 24px 16px;
-      background: var(--primary-bg);
-      border-bottom: 1px solid var(--color-divider);
+      background: var(--color-bg-container);
+      border-bottom: 1px solid var(--color-component-stroke);
       .header-info-avator {
         width: 64px;
         height: 64px;
@@ -154,11 +154,11 @@
         .header-info-text {
           font-size: 12px;
           margin-bottom: 16px;
-          color: var(--color-text-title);
+          color: var(--color-text-primarys);
         }
         .header-info-status {
           font-size: 12px;
-          color: var(--color-text-title);
+          color: var(--color-text-primarys);
           .circle-status {
             display: inline-block;
             width: 8px;
@@ -172,11 +172,11 @@
     }
     .header-form {
       padding: 16px 0;
-      background: var(--primary-bg);
+      background: var(--color-bg-container);
     }
     .more-info {
       margin: 16px 0;
-      background: var(--primary-bg);
+      background: var(--color-bg-container);
     }
     .base-detail-title {
       height: 46px;
@@ -184,12 +184,12 @@
       text-indent: 16px;
       font-size: 14px;
       font-weight: 600;
-      color: var(--color-text-title);
-      border-bottom: 1px solid var(--color-divider);
+      color: var(--color-text-primarys);
+      border-bottom: 1px solid var(--color-component-stroke);
     }
 
     .task-list {
-      background: var(--primary-bg);
+      background: var(--color-bg-container);
       .timeline-title {
         font-size: 14px;
         font-weight: 400;
@@ -197,7 +197,7 @@
       .timeline-date {
         font-size: 12px;
         font-weight: 400;
-        color: var(--color-text-sub-title);
+        color: var(--color-text-secondary);
       }
     }
   }

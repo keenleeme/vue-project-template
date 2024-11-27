@@ -52,7 +52,7 @@
 
   /* 应用变量 */
   :is(body) {
-    background-color: var(--primary-bg);
+    background-color: var(--color-bg-container);
   }
   .layout-overflow-x {
     overflow-x: hidden;

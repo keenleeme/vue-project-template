@@ -165,7 +165,7 @@
     display: flex;
     align-items: center;
     margin: 16px;
-    background: var(--primary-bg);
+    background: var(--color-bg-container);
     .left {
       flex: 1;
       margin-right: 16px;

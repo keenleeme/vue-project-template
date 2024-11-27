@@ -69,8 +69,7 @@
 <style lang="less">
   .micro-content {
     padding: 16px;
-    height:calc(100vh- 132px);
+    height: calc(100vh- 132px);
     overflow: auto;
   }
 </style>
-  

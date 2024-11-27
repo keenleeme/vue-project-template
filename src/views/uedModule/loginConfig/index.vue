@@ -367,7 +367,7 @@
     .page-content {
       display: flex;
       height: calc(100% - 65px);
-      background-color: var(--color-page-bg);
+      background-color: var(--color-bg-page);
       padding: 16px;
       color: #1e2435;
 
@@ -379,7 +379,7 @@
         overflow-x: hidden;
       }
       .setting {
-        background-color: var(--primary-bg);
+        background-color: var(--color-bg-container);
         .group {
           position: relative;
           .group-header {
@@ -387,11 +387,11 @@
             align-items: center;
             font-family: PingFangSC-Semibold;
             font-size: 16px;
-            color: var(--color-text-title);
+            color: var(--color-text-primarys);
             line-height: 24px;
             font-weight: 600;
             padding: 12px 16px;
-            border-bottom: 1px solid var(--primary-divider);
+            border-bottom: 1px solid var(--color-component-stroke);
             span {
               font-size: 12px;
               color: #adb1bc;
@@ -410,7 +410,7 @@
               left: 0;
               right: 0;
               height: 16px;
-              background-color: var(--color-page-bg);
+              background-color: var(--color-bg-page);
             }
           }
         }
@@ -499,8 +499,8 @@
       bottom: 0;
       padding: 16px;
       text-align: right;
-      border-top: 1px solid var(--primary-divider);
-      background-color: var(--primary-bg);
+      border-top: 1px solid var(--color-component-stroke);
+      background-color: var(--color-bg-container);
       button {
         margin-left: 8px;
       }

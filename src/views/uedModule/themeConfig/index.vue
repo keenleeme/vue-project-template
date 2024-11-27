@@ -180,7 +180,7 @@
 <style lang="less" scoped>
   .setting-wrapper {
     // background-color: #fff;
-    background-color: var(--primary-bg);
+    background-color: var(--color-bg-container);
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -188,12 +188,12 @@
     .page-content {
       flex-grow: 1;
       // background-color: #f7f8fc;
-      background-color: var(--color-page-bg);
+      background-color: var(--color-bg-page);
       padding: 16px;
       height: 0;
       overflow-x: hidden;
       // color: #1e2435;
-      color: var(--color-text-content);
+      color: var(--color-text-primarys);
       :deep(.page-item-title) {
         font-size: 16px;
       }
@@ -219,10 +219,10 @@
       padding: 16px;
       text-align: right;
       // border-top: 1px solid #e9eaf0;
-      border-top: 1px solid var(--primary-divider);
+      border-top: 1px solid var(--color-component-stroke);
       button {
         margin-left: 8px;
-        // color: var(--color-text-content);
+        // color: var(--color-text-primarys);
       }
     }
   }

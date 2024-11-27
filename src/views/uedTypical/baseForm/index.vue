@@ -119,7 +119,7 @@
     height: 100%;
     .base-form-wrapper {
       height: 100%;
-      background: var(--primary-bg);
+      background: var(--color-bg-container);
     }
     .base-form-header {
       text-indent: 16px;
@@ -127,8 +127,8 @@
       line-height: 46px;
       font-size: 14px;
       font-weight: 600;
-      color: var(--color-text-title);
-      border-bottom: 1px solid var(--color-divider);
+      color: var(--color-text-primarys);
+      border-bottom: 1px solid var(--color-component-stroke);
     }
     .base-form-content {
       width: 50%;

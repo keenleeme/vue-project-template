@@ -1,9 +1,10 @@
 import { h } from 'vue';
 import { Router } from 'vue-router';
 import router from '@/router';
-import type { MenuType } from '@/store/uedModule/menus/types';
-import microApp, { monitorChildRouterChange } from './microApi';
-import { decorateLocationPath, isActiveApp, microMenuNavigation } from './microApi/helper';
+import { useAppStore, useMenusStore } from '@/store';
+// import type { MenuType } from '@/store/uedModule/menus/types';
+import microApp, { monitorChildRouterChange, getMicroAppActiveApps } from './microApi';
+import { decorateLocationPath, isActiveApp, getRouteMeta, getParentRoutes } from './microApi/helper';
 import { useMicroStore } from './store';
 import SubApp from './sub-app.vue';
 
@@ -44,10 +45,17 @@ export function proxySubAppsRouter(baseRouter: Router) {
 
 // 监听路由变化
 export function setupMicroRouterGuards() {
+  const appStore = useAppStore();
+  const menusStore = useMenusStore();
   // 只能监听注册的子应用的变化
   monitorChildRouterChange((to, from, appName) => {
     console.log('全局前置守卫 beforeEach: ', to, from, appName);
-    if (to.fullPath) {
+    const activeApps = getMicroAppActiveApps();
+    if (to.fullPath && activeApps.length === 1) {
+      const meta = getRouteMeta(to.fullPath, appName, to.hash);
+      appStore.setFullScreen(!!meta?.fullScreen);
+      const microRoutes = getParentRoutes(appName, meta, to.fullPath);
+      menusStore.setActiveRoutes(microRoutes);
       // const {module, path,routerMode} = decorateLocationPath(to.fullPath,appName)
       // if(module && module !== appName) {
       //   const newFullPath = `/${module}/${routerMode==='hash'?'#':''}${path}`;

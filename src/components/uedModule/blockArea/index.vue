@@ -18,27 +18,24 @@
 
 <style lang="less" scoped>
   .page-item {
-    // background-color: #fff;
-    background-color: var(--primary-bg);
+    background-color: var(--color-bg-container);
     margin-bottom: 16px;
     &-title {
       display: flex;
       font-family: PingFangSC-Semibold;
       font-size: 14px;
-      // color: #1e2345;
-      color: var(--color-text-title);
+      color: var(--color-text-primarys);
       line-height: 24px;
       font-weight: 600;
       padding: 12px 16px;
-      // border-bottom: 1px solid #e9eaf0;
-      border-bottom: 1px solid var(--primary-divider);
+      border-bottom: 1px solid var(--color-component-stroke);
     }
 
     &-content {
       padding: 24px;
       display: flex;
       flex-direction: row;
-      color: var(--color-text-title);
+      color: var(--color-text-primarys);
 
       & > div {
         width: 50%;

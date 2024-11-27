@@ -10,7 +10,7 @@ type BreadcrumbList = {
   title: RouteRecordRaw['name'];
 };
 
-type RoutersValue = {
+export type RoutersValue = {
   path: string;
   module: string;
   name: RouteRecordRaw['name'];
@@ -22,7 +22,7 @@ type RouterMode = 'hash' | 'history';
 export default class RouterCenter {
   private router: Router;
 
-  private routes: Map<string, RoutersValue>;
+  private routes: Map<string, Map<string, RoutersValue>>;
 
   private proxyKeys: Array<[RegExp, string]>;
 
@@ -33,6 +33,8 @@ export default class RouterCenter {
   private routerMode: {
     [key: string]: RouterMode;
   };
+
+  private customAppName: string;
 
   defaultPage: {
     url: string;
@@ -47,6 +49,15 @@ export default class RouterCenter {
     this.specialUrl = [];
     this.defaultPage = [];
     this.routerMode = {};
+    this.customAppName = '';
+  }
+
+  setCustomAppName(name: string) {
+    this.customAppName = name;
+  }
+
+  getCustomName() {
+    return this.customAppName;
   }
 
   getRoutes() {
@@ -74,10 +85,14 @@ export default class RouterCenter {
       }
       this.specialUrl.push(key);
     }
-    this.routes.set(key, { module, path, meta, name, breadcrumb });
+    let routersMap = this.routes.get(module);
+    if (!routersMap) {
+      this.routes.set(module, (routersMap = new Map()));
+    }
+    routersMap.set(key, { module, path, meta, name, breadcrumb });
   }
 
-  get(key: string): RoutersValue | undefined {
+  get(module: string, key: string): RoutersValue | undefined {
     // const newKey: string = key;
     // 判断在不在里面，在的话取真实的key
     this.proxyKeys.every((item) => {
@@ -88,26 +103,32 @@ export default class RouterCenter {
       }
       return true;
     });
-    return this.routes.get(key);
+    return this.routes.get(module)?.get(key);
   }
 
   getModuleRouterMode(module: string) {
     return this.routerMode[module];
   }
 
-  getMeta(path: string) {
-    if (this.has(path)) {
-      return this.get(path)?.meta;
+  getMeta(path: string, name: string, hash: string) {
+    if (this.get(name, path)) {
+      return this.get(name, path)?.meta || {};
     }
-    return undefined;
+    let [noQueryPath] = path.split('?');
+    if (hash) {
+      noQueryPath = noQueryPath.replace(`/${name}/#`, '');
+    } else {
+      noQueryPath = noQueryPath.replace(`/${name}`, '');
+    }
+    return this.get(name, noQueryPath)?.meta || {};
   }
 
-  getThisPageMeta() {
-    const { hash } = window.location;
-    if (!hash) return {};
-    const [path] = hash.split('?');
-    return this.get(path.replace('#', ''));
-  }
+  // getThisPageMeta() {
+  //   const { hash } = window.location;
+  //   if (!hash) return {};
+  //   const [path] = hash.split('?');
+  //   return this.get(path.replace('#', ''));
+  // }
 
   has(key: string) {
     this.proxyKeys.every((item) => {
@@ -148,7 +169,7 @@ export default class RouterCenter {
         if (route.path === '*' || route.path === '/') {
           return;
         }
-        let breadcrumb = null;
+        let breadcrumb: BreadcrumbList[] = [];
         if (route.path) {
           if (!/^\//.test(route.path) && !['*'].includes(route.path)) {
             const fullPath = RouterCenter.getFullPath(parentPath, route.path);

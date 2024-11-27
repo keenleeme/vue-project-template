@@ -8,7 +8,18 @@ const routes: RouteRecordRaw[] = [
     meta: {
       title: 'I18N.layout.lieBiaoYe',
       permissionId: 'base::workBench:index'
-    }
+    },
+    children: [
+      {
+        name: 'base::base-list-add',
+        path: 'add',
+        component: () => import('@/views/uedTypical/baseList/components/Add.vue'),
+        meta: {
+          title: '新增',
+          permissionId: 'base::workBench:index'
+        }
+      }
+    ]
   },
   {
     name: 'base::example',

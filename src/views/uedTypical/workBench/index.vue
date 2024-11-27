@@ -89,7 +89,7 @@
       padding: 16px;
       margin-right: 16px;
       border-radius: 6px;
-      background: var(--primary-bg);
+      background: var(--color-bg-container);
       &:last-child {
         margin-right: 0;
       }
@@ -100,12 +100,12 @@
       }
       .title {
         font-size: 12px;
-        color: var(--color-text-sub-title);
+        color: var(--color-text-secondary);
         line-height: 20px;
       }
       .data {
         font-size: 24px;
-        color: var(--color-text-content);
+        color: var(--color-text-primarys);
         line-height: 32px;
         font-weight: 600;
         display: flex;

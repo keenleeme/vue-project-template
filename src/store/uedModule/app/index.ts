@@ -1,13 +1,9 @@
 import { ref } from 'vue';
-// import { theme } from 'ant-design-vue';
 import { defineStore } from 'pinia';
 import { useThemeStore } from '@/store';
 import { LoginConfigDTO } from '@/views/uedModule/login/types';
-// import { themeTokens, ThemeTypes } from '@/theme';
 import { defaultConfig } from './defaultConfig';
 import { AppConfigType } from './types';
-
-// const { darkAlgorithm, defaultAlgorithm } = theme;
 
 export default defineStore(
   'app',
@@ -41,25 +37,15 @@ export default defineStore(
     const setThemePanelVisible = (show: boolean) => {
       themePanelVisible.value = show;
     };
-    // // 主题
-    // const themeType = ref<ThemeTypes>(ThemeTypes.Light);
-    // const setThemeType = (theme: ThemeTypes) => {
-    //   themeType.value = theme;
-    // };
-    // const themeTokenType = ref('blue');
-    // const setThemeTokenType = (theme: string) => {
-    //   themeTokenType.value = theme;
-    // };
-    // const theme = computed(() => {
-    //   return {
-    //     // token: themeTokenType.value === 'red' ? themeTokens.red : themeTokens.blue,
-    //     algorithm: themeType.value === ThemeTypes.Dark ? darkAlgorithm : defaultAlgorithm
-    //   };
-    // });
     // 水印
     const watermark = ref<string>('');
     const setWatermark = (watermarkStr: string) => {
       watermark.value = watermarkStr;
+    };
+
+    const fullScreen = ref(false);
+    const setFullScreen = (isFull: boolean) => {
+      fullScreen.value = isFull;
     };
     // 重置数据
     const reset = () => {
@@ -75,15 +61,12 @@ export default defineStore(
       appConfig,
       setAppConfig,
       setLoginConfig,
-      // themeType,
-      // setThemeType,
-      // theme,
       watermark,
       setWatermark,
-      // themeTokenType,
-      // setThemeTokenType
       themePanelVisible,
-      setThemePanelVisible
+      setThemePanelVisible,
+      fullScreen,
+      setFullScreen
     };
   },
   {
