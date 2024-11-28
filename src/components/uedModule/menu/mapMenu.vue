@@ -1,89 +1,43 @@
 <template>
-  <div v-if="!(themeConfig.layout === 'side' && !themeConfig.header)" class="header">
-    <div class="logo-wrap">
-      <span class="logo"><img :src="loginConfig.logoUrl" /></span>
-      <span class="title">{{ loginConfig.logoName }}</span>
-    </div>
-    <UedMapMenu
-      v-if="config.layout !== 'side' && config.mapMenu"
-      v-model:star-keys="starKeys"
-      :props="dataProps"
-      :data="topMenuData"
-      :dark="config.mode === 'dark' || (config.mode === 'light' && config.topStyle === 'dark')"
-      :pop-dark="config.mode === 'dark' || (config.mode === 'light' && config.topStyle === 'dark')"
-      :star="true"
-      :recently-keys="recentlyKeys"
-      popover-class="map-menu-popover"
-      trigger="click"
-      :close-delay="300"
-      :edit="true"
-      :edit-actions="['add', 'reset', 'edit', 'move']"
-      @menu-open="log('menu-open')"
-      @menu-close="log('menu-close')"
-      @menu-click="handleMenuClick"
-      @clear-recently="recentlyKeys = []"
-      @add-menu="openAddMenuDialog"
-      @edit-item="editItem"
-      @reset-menu="resetMenu"
-      @start-edit="startEdit"
-      @cancel-edit="cancelEdit"
-      @save-edit="saveEdit"
-      @drag-menu="dragMenu"
-    >
-      <template #addBtn>
-        <a-button type="primary">{{ $t('I18N.common.add') }}{{ $t('I18N.common.menu') }}</a-button>
-      </template>
-      <template #saveBtn>
-        <a-button type="primary">{{ $t('I18N.common.save') }}</a-button>
-      </template>
-      <template #cancelBtn>
-        <a-button>{{ $t('I18N.common.cancel') }}</a-button>
-      </template>
-    </UedMapMenu>
+  <UedMapMenu
+    :left="fold ? '48px' : '232px'"
+    :top="config.header ? '48px' : 0"
+    :props="dataProps"
+    :data="topMenuData"
+    :dark="config.mode === 'dark' || (config.mode === 'light' && config.sideStyle === 'dark')"
+    :popDark="config.mode === 'dark' || (config.mode === 'light' && config.sideStyle === 'dark')"
+    :star="true"
+    v-model:starKeys="starKeys"
+    :recentlyKeys="recentlyKeys"
+    popoverClass="map-menu-popover"
+    trigger="click"
+    :closeDelay="300"
+    :edit="true"
+    :edit-actions="['add', 'reset', 'edit', 'move']"
+    :langs="langs[config.lang]"
+    @menu-click="handleMenuClick"
+    @menu-open="log('menu-open')"
+    @menu-close="log('menu-close')"
+    @clear-recently="recentlyKeys = []"
+    @addMenu="openAddMenuDialog"
+    @editItem="editItem"
+    @resetMenu="resetMenu"
+    @startEdit="startEdit"
+    @cancelEdit="cancelEdit"
+    @saveEdit="saveEdit"
+    @dragMenu="dragMenu"
+  >
+    <template #addBtn>
+      <a-button type="primary">{{ $t('I18N.common.add') }}{{ $t('I18N.common.menu') }}</a-button>
+    </template>
+    <template #saveBtn>
+      <a-button type="primary">{{ $t('I18N.common.save') }}</a-button>
+    </template>
+    <template #cancelBtn>
+      <a-button>{{ $t('I18N.common.cancel') }}</a-button>
+    </template>
+  </UedMapMenu>
 
-    <TopMenu v-if="config.layout !== 'side'" :menu-data="topMenuData" :data-props="dataProps"></TopMenu>
-
-    <div class="header-operates">
-      <a-dropdown>
-        <i class="icon-button menuicon menu-icon-help" />
-        <template #overlay>
-          <a-menu>
-            <a-menu-item v-if="config.helpCenter">
-              <span @click="showHelpDocument">{{ $t('I18N.layout.bangZhuWenDang') }}</span>
-            </a-menu-item>
-            <a-menu-item>
-              <span @click="$router.push('/vueTour')">{{ $t('I18N.layout.ruMenYinDao') }}</span>
-            </a-menu-item>
-          </a-menu>
-        </template>
-      </a-dropdown>
-      <!-- <i class="icon-button menuicon menu-icon-bell" /> -->
-      <!-- <i
-        v-if="config.languageSwitch"
-        class="icon-button menuicon"
-        :class="config.lang === 'zh' ? 'menu-icon-chinese' : 'menu-icon-english'"
-        @click="handleLocaleChangeA(config.lang)"
-      /> -->
-      <a-dropdown class="side-menu-footer-item" placement="bottom">
-        <i class="icon-button menuicon menu-icon-multilingual"></i>
-        <template #overlay>
-          <a-menu @click="handleLocaleChangeA">
-            <a-menu-item key="zh">简体中文</a-menu-item>
-            <a-menu-item key="en">English</a-menu-item>
-          </a-menu>
-        </template>
-      </a-dropdown>
-      <i
-        v-if="config.lightDarkSwitch"
-        class="icon-button menuicon"
-        :class="config.mode === 'light' ? 'menu-icon-light' : 'menu-icon-black'"
-        @click="handleChangeMode"
-      />
-      <i class="icon-button menuicon menu-icon-theme" @click="themePanelVisible = true" />
-      <!-- <FullscreenOutlined class="icon-button menuicon" size="24" @click="toggleFullScreen" /> -->
-      <UserMenu :menu-data="userMenu"></UserMenu>
-    </div>
-  </div>
   <a-modal
     v-model:open="dialogVisible"
     :title="`${dialogType === 'add' ? $t('I18N.common.add') : $t('I18N.common.edit')}`"
@@ -142,42 +96,17 @@
       <a-button type="primary" @click="dialogConfirm">{{ $t('I18N.common.confirm') }}</a-button>
     </template>
   </a-modal>
-
-  <!-- 帮助文档 -->
-  <div ref="helpDocument" class="help-document"></div>
-
-  <!-- <ThemePanel
-    v-model:visible="themePanelVisible"
-    v-model:config="config"
-    @change="changeConfig"
-    @reset-primary-color="resetPrimaryColor"
-    @reset-theme="resetTheme"
-  /> -->
 </template>
 
-<script setup lang="ts">
-  import { ref, watchEffect, watch, computed } from 'vue';
-  import { FullscreenOutlined } from '@ant-design/icons-vue';
-  import { changeLocale } from '@international/vue3-i18n';
-  import { UedMapMenu, ThemePanel, findNodeInTree } from '@ued-material/menu';
-  import docsViewer from 'docs-viewer';
-  import 'docs-viewer/dist/lib.css';
+<script lang="ts" setup>
+  import { UedMapMenu, findNodeInTree } from '@ued-material/menu';
   import { storeToRefs } from 'pinia';
-  import TopMenu from '@/components/uedModule/menu/topMenu.vue';
-  import UserMenu from '@/components/uedModule/menu/userMenu.vue';
-  import microApp from '@/micro/microApi';
-  import { useAppStore, useThemeStore } from '@/store';
-  import { LoginConfigDTO } from '@/views/uedModule/login/types';
+  import { useThemeStore } from '@/store';
 
   const props = defineProps({
     menuData: {
       type: Array,
-      // required: true
-      default: () => []
-    },
-    userMenu: {
-      type: Array,
-      // required: true,
+      required: true,
       default: () => []
     },
     dataProps: {
@@ -194,26 +123,39 @@
           disabled: 'disabled'
         };
       }
+    },
+    // 展示 popover 菜单激活状态
+    popActive: {
+      type: Boolean,
+      default: true
+    },
+    // tooltip暗色主题
+    tooltipDark: {
+      type: Boolean,
+      default: true
+    },
+    popoverClass: {
+      type: String,
+      default: 'side-menu-popover'
+    },
+    popoverClassUser: {
+      type: String,
+      default: 'user-menu-popover'
+    },
+    fold: {
+      type: Boolean,
+      default: false
     }
   });
 
-  const appStore = useAppStore();
   const themeStore = useThemeStore();
-
-  const { themePanelVisible, appConfig } = storeToRefs(appStore);
-  const loginConfig = ref<LoginConfigDTO>(new LoginConfigDTO(appConfig.value?.loginConfig));
-
-  // 菜单数据
-  const topMenuData = ref(props.menuData);
-
   const { themeConfig } = storeToRefs(themeStore);
   const config = ref({
     ...themeConfig.value
   });
 
-  watchEffect(() => {
-    config.value = { ...themeConfig.value };
-  });
+  // 菜单数据
+  const topMenuData = ref(props.menuData);
 
   const recentlyKeys = ref([]);
   const starKeys = ref([]);
@@ -310,7 +252,6 @@
   };
 
   const newId = 999;
-
   const dialogConfirm = () => {
     if (!ruleForm.value) return;
     ruleForm.value
@@ -362,125 +303,43 @@
     router.push(val.url);
   };
 
-  // const changeConfig = (newConfig?: any) => {
-  //   console.log(config.value, newConfig);
-  //   if (newConfig.type === 'change') {
-  //     return;
-  //   }
-  //   themeStore.themeConfig = { ...newConfig };
-  // };
-
-  // 重置主题色
-  // const resetPrimaryColor = () => {
-  //   themeStore.resetThemePrimaryColor();
-  // };
-  // const resetTheme = () => {
-  //   themeStore.reset();
-  // };
-
-  // 帮助手册
-  const helpDocument = ref(null);
-
-  const showHelpDocument = () => {
-    docsViewer.open({
-      container: helpDocument.value,
-      src: 'http://10.20.114.19:8089/docs/' // 即你上个步骤部署的文档的静态资源地址
-    });
-  };
-
-  const toggleFullScreen = () => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen();
-    } else {
-      document.exitFullscreen();
+  // 国际化
+  const langs = ref<any>({
+    zh: {},
+    en: {
+      reset: 'Reset',
+      edit: 'Edit',
+      clear: 'Clear',
+      usedRecently: 'Commonly used recently',
+      addMenu: 'Add menu',
+      save: 'Save',
+      cancel: 'Cancel',
+      myStar: 'My collection',
+      searchMenuPlaceholder: 'Please enter a menu name to find the menu quickly',
+      themeSetting: 'Theme setting',
+      themeMode: 'Theme mode',
+      themeColor: 'Theme color',
+      themeStyle: 'Theme style',
+      defaultTheme: 'Default theme',
+      defaultThemeColor: 'Default theme color',
+      navSetting: 'Navigation settings',
+      navLayout: 'Navigation layout',
+      otherSetting: 'Other settings',
+      topNavStyle: 'Top bar setting',
+      topMenuLayout: 'Top menu layout',
+      sideMenuLayout: 'Side menu layout',
+      mixMenuLayout: 'Mixed menu layout',
+      dark: 'Dark',
+      light: 'Light',
+      sideNavStyle: 'Sidebar setting',
+      showTopNav: 'Show top bar',
+      showBreadcrumbs: 'Show breadcrumbs',
+      showMapMenu: 'Show map navigation',
+      sideAccordionMode: 'Sidebar accordion mode',
+      showLightDarkSwitch: 'Show light and dark toggle',
+      showLangsSwitch: 'Show multilingual switching',
+      showHelpCenter: 'Show help',
+      resetDefaultTheme: 'Restore the default theme'
     }
-  };
-
-  // 国际化切换
-
-  const handleLocaleChangeA = (value: string) => {
-    const locale = value === 'zh' ? 'en' : 'zh';
-    // setThemeConfig({...config})
-    themeConfig.value = { ...themeConfig.value, lang: locale };
-    changeLocale(locale);
-    window.location.reload();
-  };
-  const handleChangeMode = () => {
-    const mode = config.value.mode === 'light' ? 'dark' : 'light';
-    themeStore.setThemeConfig({
-      ...themeConfig.value,
-      mode
-    });
-    microApp.setGlobalData({ themeMode: mode });
-  };
+  });
 </script>
-
-<style lang="less" scoped>
-  .header {
-    height: 48px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    color: #1e2435;
-    box-shadow:
-      0px 2px 4px rgba(0, 0, 0, 0.12),
-      0 0 6px rgba(0, 0, 0, 0.04);
-    z-index: 99;
-    position: relative;
-    background: #fff;
-    .logo-wrap {
-      display: flex;
-      align-items: center;
-    }
-    .logo {
-      margin-left: 16px;
-      margin-right: 8px;
-      img {
-        width: 30px;
-      }
-    }
-
-    .title {
-      font-size: 16px;
-      margin: 0 32px 0 8px;
-      font-weight: 500;
-    }
-
-    .top-menu-wrapper {
-      width: 50%;
-    }
-  }
-  .cut-form .cut-input {
-    width: 310px;
-  }
-  .form-item.origin-menu {
-    margin-top: -12px;
-  }
-  .form-item.page-params {
-    margin-top: -4px;
-    .cut-form-item__label {
-      opacity: 0;
-    }
-  }
-  .header-dark {
-    .header {
-      background-color: #222937;
-      color: #fff;
-    }
-    .header-operates {
-      .icon-button:hover {
-        background: #353c51;
-      }
-    }
-  }
-  .custom-class {
-    .icon-export {
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
-      position: relative;
-      top: 4px;
-      fill: var(--color-text-secondary);
-    }
-  }
-</style>

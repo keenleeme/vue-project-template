@@ -2,6 +2,7 @@
   <a-layout-sider
     v-model:collapsed="collapsed"
     :style="{ background: token.colorBgBase }"
+    class="side-menu-box"
     width="232"
     collapsed-width="48"
     :trigger="null"
@@ -73,3 +74,8 @@
     // console.log('>>userMenuClick>>', menuData)
   };
 </script>
+<style lang="less" scoped>
+  .side-menu-box {
+    z-index: 1;
+  }
+</style>

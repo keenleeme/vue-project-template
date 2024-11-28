@@ -248,5 +248,8 @@ export default {
   kaiShiRiQi: '开始日期',
   jieShuRiQi: '结束日期',
   chanPin: '产品',
-
+  duoYuYanSheZhi: '多语言设置',
+  yuYan: '语言',
+  zhuTi: '主题',
+  jieMianPeiZhi: '界面配置',
 };

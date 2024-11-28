@@ -2,9 +2,10 @@
   <UedUserMenu
     :props="dataProps"
     :data="menuData"
+    :placement="placement"
     :dark="config.mode === 'dark' || (config.mode === 'light' && config.topStyle === 'dark')"
     :pop-dark="config.mode === 'dark' || (config.mode === 'light' && config.topStyle === 'dark')"
-    name="Admin"
+    :name="currentUserName"
     :popover-class="popoverClass"
     @menu-click="userMenuClick"
   />
@@ -49,6 +50,14 @@
     popoverClass: {
       type: String,
       default: 'user-menu-popover'
+    },
+    placement: {
+      type: String,
+      default: 'bottom'
+    },
+    currentUserName: {
+      type: String,
+      default: 'Admin'
     }
   });
   const menusStore = useMenusStore();

@@ -37,6 +37,11 @@ export default defineStore(
     const setThemePanelVisible = (show: boolean) => {
       themePanelVisible.value = show;
     };
+    // 主题控制面板-锚点
+    const activeModuleId = ref<string>('language');
+    const changeActiveModuleId = (id: string) => {
+      activeModuleId.value = id;
+    };
     // 水印
     const watermark = ref<string>('');
     const setWatermark = (watermarkStr: string) => {
@@ -65,6 +70,8 @@ export default defineStore(
       setWatermark,
       themePanelVisible,
       setThemePanelVisible,
+      activeModuleId,
+      changeActiveModuleId,
       fullScreen,
       setFullScreen
     };

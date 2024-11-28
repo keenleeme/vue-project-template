@@ -1,8 +1,18 @@
 <template>
   <div class="setting-wrapper">
     <div class="page-content">
+      <BlockArea :title="$t('I18N.layout.duoYuYanSheZhi')" class="block-area" id="language">
+        <!-- <div class="page-item-title">{{ $t('I18N.layout.duoYuYanSheZhi') }}</div> -->
+        <div>
+          <div class="page-item-title">{{ $t('I18N.layout.yuYan') }}</div>
+          <a-select v-model:value="config.lang" @onChange="handleLocaleChangeA">
+            <a-select-option value="zh">简体中文</a-select-option>
+            <a-select-option value="en">English</a-select-option>
+          </a-select>
+        </div>
+      </BlockArea>
       <!-- <h1>主题配置页themeConfig</h1> -->
-      <BlockArea :title="$t('I18N.layout.zhuTiFengGe')" class="block-area">
+      <BlockArea :title="$t('I18N.layout.zhuTiFengGe')" class="block-area" id="theme">
         <ThemePanelItem
           type="mode"
           :title="$t('I18N.layout.moRenZhuTi')"
@@ -24,7 +34,7 @@
         <!-- @update:primary-color="changePrimaryColor" -->
       </BlockArea>
 
-      <BlockArea :title="$t('I18N.layout.daoHangSheZhi')" class="block-area">
+      <BlockArea :title="$t('I18N.layout.daoHangSheZhi')" class="block-area" id="nav">
         <ThemePanelItem
           type="layout"
           :title="$t('I18N.layout.daoHangBuJu')"
@@ -91,6 +101,7 @@
 
 <script lang="ts" setup>
   import { ref, watchEffect } from 'vue';
+  import { changeLocale } from '@international/vue3-i18n';
   import { ThemePanelItem } from '@ued-material/menu';
   import { Modal, message } from 'ant-design-vue';
   import { storeToRefs } from 'pinia';
@@ -175,6 +186,13 @@
     message.success(I18N.layout.fuZhiChengGongWenAn);
     dialogVisiable.value = false;
   };
+
+  const handleLocaleChangeA = (key: string) => {
+    const locale = key === 'zh' ? 'zh' : 'en';
+    changeConfig('lang', locale);
+    changeLocale(locale);
+    window.location.reload();
+  };
 </script>
 
 <style lang="less" scoped>
@@ -196,6 +214,11 @@
       color: var(--color-text-primarys);
       :deep(.page-item-title) {
         font-size: 16px;
+      }
+      .page-item-title {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 12px;
       }
 
       .block-area {
