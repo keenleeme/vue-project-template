@@ -4,9 +4,17 @@ import router from '@/router';
 import { useAppStore, useMenusStore } from '@/store';
 // import type { MenuType } from '@/store/uedModule/menus/types';
 import microApp, { monitorChildRouterChange, getMicroAppActiveApps } from './microApi';
-import { decorateLocationPath, isActiveApp, getRouteMeta, getParentRoutes } from './microApi/helper';
+import {
+  decorateLocationPath,
+  isActiveApp,
+  getRouteMeta,
+  getParentRoutes,
+  getCustomParentRoute
+} from './microApi/helper';
 import { useMicroStore } from './store';
 import SubApp from './sub-app.vue';
+
+let customPath;
 
 export function setupAddMicroRouter(router: Router) {
   setupMicroRouterGuards();
@@ -51,10 +59,26 @@ export function setupMicroRouterGuards() {
   monitorChildRouterChange((to, from, appName) => {
     console.log('全局前置守卫 beforeEach: ', to, from, appName);
     const activeApps = getMicroAppActiveApps();
+    if (customPath && customPath[to.fullPath]) {
+      menusStore.setActiveRoutes([
+        {
+          path: customPath[to.fullPath],
+          title: '',
+          component: true
+        }
+      ]);
+      customPath = null;
+      return;
+    }
     if (to.fullPath && activeApps.length === 1) {
       const meta = getRouteMeta(to.fullPath, appName, to.hash);
       appStore.setFullScreen(!!meta?.fullScreen);
-      const microRoutes = getParentRoutes(appName, meta, to.fullPath);
+      let microRoutes = getParentRoutes(appName, meta, to.fullPath);
+      if (!microRoutes.length) {
+        // 正常的定制页面走菜单进来，必然会存在，不存在的话 说明主线的定制页面，走到了子应用
+        // 需要去掉子应用的前缀，后面部分就是主线的路由
+        microRoutes = getCustomParentRoute(appName, to.fullPath);
+      }
       menusStore.setActiveRoutes(microRoutes);
       // const {module, path,routerMode} = decorateLocationPath(to.fullPath,appName)
       // if(module && module !== appName) {
@@ -74,7 +98,11 @@ export function setupMicroRouterGuards() {
     // 第一个参数是基座的公共前缀 没有传空就好了
     const { module, path, routerMode } = decorateLocationPath(to.fullPath);
     if (module) {
+      // 走的定制模块的内容
       const newFullPath = `/${module}${routerMode === 'hash' ? '/#' : ''}${path}`;
+      customPath = {
+        [newFullPath]: to.fullPath
+      };
       if (newFullPath !== to.fullPath) {
         // 需要判断当前的激活应用在不在这个里面
         if (isActiveApp(module)) {

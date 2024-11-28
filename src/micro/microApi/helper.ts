@@ -93,7 +93,7 @@ export function decorateLocationPath(
  * @param appName 当前路由的app名称
  * @returns true/false
  */
-export function isActiveApp(appName: string) {
+export function isActiveApp(appName: string): boolean {
   const activeApps = getMicroAppActiveApps();
   return activeApps.length === 1 && activeApps[0] === appName;
 }
@@ -129,7 +129,7 @@ export function getAppRealUrl(url: string): string {
  * @param url 当前app应用的url地址
  * @returns url
  */
-export function getRegistryUrl(appName: string, port: string) {
+export function getRegistryUrl(appName: string, port: string): string {
   const isLocal = window.location.origin.startsWith('http://localhost');
   return `${isLocal ? `:${port}` : ''}/subapp/${appName}/`;
 }
@@ -168,4 +168,17 @@ export function getParentRoutes(module: string, meta: RouteMeta, path: string) {
   }
 
   return [...routes.slice(0, -1).reverse(), routes[routes.length - 1]];
+}
+
+// 根据子应用的路由 获取主线的原始路由，从而获取菜单的面包屑内容
+export function getCustomParentRoute(module: string, path: string) {
+  const mode = routeCenter.getModuleRouterMode(module);
+  const url = path.replace(`/${module}${mode === 'history' ? '' : '/#'}`, '');
+  return [
+    {
+      path: url,
+      title: '',
+      component: true
+    }
+  ];
 }

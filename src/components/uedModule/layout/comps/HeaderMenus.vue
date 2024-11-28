@@ -157,6 +157,7 @@
   import { storeToRefs } from 'pinia';
   import TopMenu from '@/components/uedModule/menu/topMenu.vue';
   import UserMenu from '@/components/uedModule/menu/userMenu.vue';
+  import microApp from '@/micro/microApi';
   import { useAppStore, useThemeStore } from '@/store';
   import { LoginConfigDTO } from '@/views/uedModule/login/types';
 
@@ -397,10 +398,12 @@
     window.location.reload();
   };
   const handleChangeMode = () => {
+    const mode = config.value.mode === 'light' ? 'dark' : 'light';
     themeStore.setThemeConfig({
       ...themeConfig.value,
-      mode: config.value.mode === 'light' ? 'dark' : 'light'
+      mode
     });
+    microApp.setGlobalData({ themeMode: mode });
   };
 </script>
 

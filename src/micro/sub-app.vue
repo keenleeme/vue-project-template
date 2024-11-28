@@ -24,6 +24,7 @@
   import { useRouter } from 'vue-router';
   import 'zone.js';
   import microApp from '@/micro/microApi';
+  import { useThemeStore } from '@/store';
   import { getAppRealUrl } from './microApi/helper';
   import { SubApp } from './store';
 
@@ -34,9 +35,11 @@
     language: 'zh' | 'en';
     token: string;
     pushState: PushStateFunction; // 子应用跳转基座或者其他子应用使用  也可以使用数据通信，没有唯一，参考https://micro-zoe.github.io/micro-app/0.x/docs.html#/zh-cn/data
+    themeMode: string;
   }>({
     language: 'zh',
     token: '11111',
+    themeMode: useThemeStore().themeConfig.mode,
     pushState: (path: string) => {
       router.push(path);
     }
@@ -69,7 +72,7 @@
 <style lang="less">
   .micro-content {
     padding: 16px;
-    height: calc(100vh- 132px);
+    height: calc(100vh - 132px);
     overflow: auto;
   }
 </style>
