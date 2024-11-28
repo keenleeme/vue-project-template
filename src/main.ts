@@ -27,7 +27,8 @@ app.config.globalProperties.$oem = {
 };
 i18n(app);
 // app.use(Antd);
-// 引用das-component
+
+// 引用das-component, 没有全局引入所有组件，到 useDasComponent 下引入所需组件
 useDasComponent(app);
 app.use(ComponentLibrary);
 

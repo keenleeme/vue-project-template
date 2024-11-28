@@ -60,7 +60,7 @@
     "axios": "^1.5.1",
     "codemirror": "^5.57.0",
     "color": "^4.2.3",
-    "das-component": "^1.0.0",
+    "das-component": "^1.0.1",
     "dayjs": "^1.11.13",
     "docs-viewer": "^0.0.5",
     "echarts": "^5.5.1",
