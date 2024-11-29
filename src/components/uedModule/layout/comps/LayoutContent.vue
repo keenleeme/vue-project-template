@@ -2,7 +2,7 @@
   <div class="setting-nav" :class="{ expand: themePanelVisible }">
     <div class="expand-switch-button">
       <i
-        :class="`menuicon ${config.mode === 'dark' ? 'menu-icon-chevron-left-black' : 'menu-icon-chevron-left-light'}`"
+        :class="`setting-btn menuicon ${config.mode === 'dark' ? 'menu-icon-chevron-left-black' : 'menu-icon-chevron-left-light'}`"
         @click="handleThemePanelChange"
       />
     </div>
@@ -161,6 +161,32 @@
         font-size: 16px;
         transform: rotate(180deg);
         transform-origin: center center;
+      }
+      &:hover {
+        animation: 1.5s ease-in-out 0s infinite normal both running heartbeat;
+      }
+      @keyframes heartbeat {
+        0% {
+          transform: translateX(50%) scale(1);
+          transform-origin: center center;
+          animation-timing-function: ease-out;
+        }
+        10% {
+          transform: translateX(50%) scale(1.2);
+          animation-timing-function: ease-in;
+        }
+        17% {
+          transform: translateX(50%) scale(1.02);
+          animation-timing-function: ease-out;
+        }
+        33% {
+          transform: translateX(50%) scale(1.24);
+          animation-timing-function: ease-in;
+        }
+        45% {
+          transform: translateX(50%) scale(1);
+          animation-timing-function: ease-out;
+        }
       }
     }
     .setting-nav-content {
