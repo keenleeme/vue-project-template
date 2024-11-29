@@ -153,6 +153,10 @@
   const config = ref({
     ...themeConfig.value
   });
+  // 监听主题配置
+  watchEffect(() => {
+    config.value = { ...themeConfig.value };
+  });
 
   // 菜单数据
   const topMenuData = ref(props.menuData);

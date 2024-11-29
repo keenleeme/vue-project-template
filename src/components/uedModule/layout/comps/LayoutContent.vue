@@ -51,7 +51,6 @@
       </a-breadcrumb>
       <div class="page-title">
         <i class="zq-icon zq-icon-arrow-left"></i>
-        <LeftSquareOutlined size="14" class="page-icon" />
         <!-- <div class="page-title-text">{{ $t(`${$route.meta.title}`) }}</div> -->
         <!-- 改成获取面包屑的以后一级 -->
         <div class="page-title-text">{{ pageTitle }}</div>
@@ -135,7 +134,7 @@
 
     &.expand {
       width: 198px;
-      border-right: 1px solid var(--color-component-border);
+      border-right: 1px solid var(--color-component-stroke);
 
       .expand-switch-button i {
         transform: rotate(0);
@@ -227,7 +226,7 @@
   }
   .page-top {
     background-color: var(--color-bg-container);
-    border-left: 1px solid var(--color-component-stroke);
+    // border-left: 1px solid var(--color-component-stroke);
     .page-title {
       display: flex;
       height: 40px;
