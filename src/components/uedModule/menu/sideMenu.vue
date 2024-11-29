@@ -195,9 +195,8 @@
 
   // 中英文切换
   const handleLocaleChangeA: MenuProps['onClick'] = ({ key }) => {
-    const locale = key === 'zh' ? 'zh' : 'en';
-    changeConfig('lang', locale);
-    changeLocale(locale);
+    changeConfig('lang', key);
+    changeLocale(key);
     window.location.reload();
   };
 

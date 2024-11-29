@@ -188,9 +188,8 @@
   };
 
   const handleLocaleChangeA = (key: string) => {
-    const locale = key === 'zh' ? 'zh' : 'en';
-    changeConfig('lang', locale);
-    changeLocale(locale);
+    changeConfig('lang', key);
+    changeLocale(key);
     window.location.reload();
   };
 </script>

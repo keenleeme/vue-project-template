@@ -57,7 +57,6 @@
           </a-menu>
         </template>
       </a-dropdown>
-      <!-- <i class="icon-button menuicon menu-icon-bell" /> -->
       <!-- <i
         v-if="config.languageSwitch"
         class="icon-button menuicon"
@@ -79,8 +78,7 @@
         :class="config.mode === 'light' ? 'menu-icon-light' : 'menu-icon-black'"
         @click="handleChangeMode"
       />
-      <i class="icon-button menuicon menu-icon-theme" @click="themePanelVisible = true" />
-      <!-- <FullscreenOutlined class="icon-button menuicon" size="24" @click="toggleFullScreen" /> -->
+      <i class="icon-button menuicon menu-icon-theme" @click="handleThemePanelChange" />
       <UserMenu :menu-data="userMenu"></UserMenu>
     </div>
   </div>
@@ -145,21 +143,12 @@
 
   <!-- 帮助文档 -->
   <div ref="helpDocument" class="help-document"></div>
-
-  <!-- <ThemePanel
-    v-model:visible="themePanelVisible"
-    v-model:config="config"
-    @change="changeConfig"
-    @reset-primary-color="resetPrimaryColor"
-    @reset-theme="resetTheme"
-  /> -->
 </template>
 
 <script setup lang="ts">
   import { ref, watchEffect, watch, computed } from 'vue';
-  import { FullscreenOutlined } from '@ant-design/icons-vue';
   import { changeLocale } from '@international/vue3-i18n';
-  import { UedMapMenu, ThemePanel, findNodeInTree } from '@ued-material/menu';
+  import { UedMapMenu, findNodeInTree } from '@ued-material/menu';
   import docsViewer from 'docs-viewer';
   import 'docs-viewer/dist/lib.css';
   import { storeToRefs } from 'pinia';
@@ -362,22 +351,6 @@
     router.push(val.url);
   };
 
-  // const changeConfig = (newConfig?: any) => {
-  //   console.log(config.value, newConfig);
-  //   if (newConfig.type === 'change') {
-  //     return;
-  //   }
-  //   themeStore.themeConfig = { ...newConfig };
-  // };
-
-  // 重置主题色
-  // const resetPrimaryColor = () => {
-  //   themeStore.resetThemePrimaryColor();
-  // };
-  // const resetTheme = () => {
-  //   themeStore.reset();
-  // };
-
   // 帮助手册
   const helpDocument = ref(null);
 
@@ -388,21 +361,11 @@
     });
   };
 
-  const toggleFullScreen = () => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen();
-    } else {
-      document.exitFullscreen();
-    }
-  };
-
   // 国际化切换
-
-  const handleLocaleChangeA = (value: string) => {
-    const locale = value === 'zh' ? 'en' : 'zh';
-    // setThemeConfig({...config})
-    themeConfig.value = { ...themeConfig.value, lang: locale };
-    changeLocale(locale);
+  const handleLocaleChangeA = ({ key }) => {
+    console.log(key.value);
+    themeConfig.value = { ...themeConfig.value, lang: key };
+    changeLocale(key);
     window.location.reload();
   };
   const handleChangeMode = () => {
@@ -412,6 +375,11 @@
       mode
     });
     microApp.setGlobalData({ themeMode: mode });
+  };
+
+  // 打开主题设置面板
+  const handleThemePanelChange = () => {
+    appStore.setThemePanelVisible(!themePanelVisible.value);
   };
 </script>
 
