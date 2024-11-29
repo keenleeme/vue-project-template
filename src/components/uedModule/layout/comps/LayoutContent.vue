@@ -1,5 +1,5 @@
 <template>
-  <div v-if="themeConfig.layout !== 'top'" class="setting-nav" :class="{ expand: themePanelVisible }">
+  <div class="setting-nav" :class="{ expand: themePanelVisible }">
     <div class="expand-switch-button">
       <i
         :class="`menuicon ${config.mode === 'dark' ? 'menu-icon-chevron-left-black' : 'menu-icon-chevron-left-light'}`"
@@ -103,7 +103,12 @@
   const appStore = useAppStore();
   const { appConfig, themePanelVisible, activeModuleId } = storeToRefs(appStore);
   // 打开主题设置面板
+  const router = useRouter();
   const handleThemePanelChange = () => {
+    console.log(router.currentRoute.value.path);
+    if (router.currentRoute.value.path !== '/themeConfig') {
+      router.push('/themeConfig');
+    }
     appStore.setThemePanelVisible(!themePanelVisible.value);
   };
   // 更改锚点id

@@ -190,7 +190,9 @@
   // 打开主题设置面板
   const router = useRouter();
   const handleThemePanelChange = () => {
-    router.push('/themeConfig');
+    if (router.currentRoute.value.path !== '/themeConfig') {
+      router.push('/themeConfig');
+    }
     appStore.setThemePanelVisible(!themePanelVisible.value);
   };
 

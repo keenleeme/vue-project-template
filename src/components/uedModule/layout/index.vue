@@ -8,7 +8,7 @@
       }"
     >
       <HeaderMenus v-if="!fullScreen" v-bind="menuConfig"></HeaderMenus>
-      <a-layout v-if="!fullScreen">
+      <a-layout v-if="!fullScreen" class="ant-layout-has-sider">
         <SiderMenus
           v-if="themeConfig.layout === 'side' || (siderMenus && siderMenus.length > 0 && themeConfig.layout === 'mix')"
           v-bind="menuConfig"
