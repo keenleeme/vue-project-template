@@ -8,6 +8,9 @@ export function setupPermissionGuard(router: Router) {
   router.beforeEach(async (to, from, next) => {
     const appStore = useAppStore();
     const menusStore = useMenusStore();
+    if (to.path !== '/themeConfig') {
+      appStore.setThemePanelVisible(false);
+    }
     if (WHITE_LIST.includes(to.path)) {
       if (to.path === '/login' && appStore.token) {
         next({ path: '/' });

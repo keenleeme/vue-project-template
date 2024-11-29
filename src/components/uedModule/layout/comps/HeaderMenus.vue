@@ -363,7 +363,6 @@
 
   // 国际化切换
   const handleLocaleChangeA = ({ key }) => {
-    console.log(key.value);
     themeConfig.value = { ...themeConfig.value, lang: key };
     changeLocale(key);
     window.location.reload();
@@ -379,6 +378,7 @@
 
   // 打开主题设置面板
   const handleThemePanelChange = () => {
+    router.push('/themeConfig');
     appStore.setThemePanelVisible(!themePanelVisible.value);
   };
 </script>

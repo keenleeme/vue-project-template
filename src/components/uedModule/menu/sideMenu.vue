@@ -188,8 +188,9 @@
     emit('menuCollapse', fold);
   };
   // 打开主题设置面板
-  // const appStore = useAppStore();
+  const router = useRouter();
   const handleThemePanelChange = () => {
+    router.push('/themeConfig');
     appStore.setThemePanelVisible(!themePanelVisible.value);
   };
 
@@ -206,8 +207,6 @@
       mode: config.value.mode === 'light' ? 'dark' : 'light'
     });
   };
-
-  // const showPageSettingNav = ref(false);
 </script>
 
 <style>
