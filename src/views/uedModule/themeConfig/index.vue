@@ -5,7 +5,7 @@
         <!-- <div class="page-item-title">{{ $t('I18N.layout.duoYuYanSheZhi') }}</div> -->
         <div>
           <div class="page-item-title">{{ $t('I18N.layout.yuYan') }}</div>
-          <a-select v-model:value="config.lang" @onChange="handleLocaleChangeA">
+          <a-select v-model:value="config.lang" @change="handleLocaleChangeA">
             <a-select-option value="zh">简体中文</a-select-option>
             <a-select-option value="en">English</a-select-option>
           </a-select>
