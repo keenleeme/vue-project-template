@@ -1,4 +1,5 @@
 import { ref } from 'vue';
+// @ts-ignore
 import { setI18n, setTheme } from '@ued-material/ued-wbc/store';
 import { defineStore } from 'pinia';
 import { LoginConfigDTO } from '@/views/uedModule/login/types';
