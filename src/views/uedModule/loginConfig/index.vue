@@ -245,6 +245,7 @@
   import { h } from 'vue';
   import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons-vue';
   import type { FormDto } from '@ued-material/ued-wbc/dist/types/types';
+  // @ts-ignore
   import { setTheme } from '@ued-material/ued-wbc/store';
   import { UploadFile, message } from 'ant-design-vue';
   import { storeToRefs } from 'pinia';

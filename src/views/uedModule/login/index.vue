@@ -41,6 +41,7 @@
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
   import { changeLocale } from '@international/vue3-i18n';
+  // @ts-ignore
   import { setI18n } from '@ued-material/ued-wbc/store';
   import { storeToRefs } from 'pinia';
   import { useAppStore, useLoginStore } from '@/store';
