@@ -1,6 +1,6 @@
 <template>
   <div v-if="!(themeConfig.layout === 'side' && !themeConfig.header)" class="header">
-    <div class="logo-wrap">
+    <div class="logo-wrap" @click="handleLogoClick('/custom-workbench')">
       <span class="logo"><img :src="loginConfig.logoUrl" /></span>
       <span class="title">{{ loginConfig.logoName }}</span>
     </div>
@@ -383,6 +383,11 @@
     }
     appStore.setThemePanelVisible(!themePanelVisible.value);
   };
+
+  // 点击logo跳转-》工作台自定义
+  const handleLogoClick = (url) => {
+    router.push(url);
+  };
 </script>
 
 <style lang="less" scoped>
@@ -407,6 +412,7 @@
       margin-right: 8px;
       img {
         width: 30px;
+        cursor: pointer;
       }
     }
 
