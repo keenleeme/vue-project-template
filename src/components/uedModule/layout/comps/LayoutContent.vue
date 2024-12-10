@@ -1,6 +1,6 @@
 <template>
   <div class="setting-nav" :class="{ expand: themePanelVisible }">
-    <div class="expand-switch-button">
+    <div class="expand-switch-button" v-if="isInThemeConfig">
       <i
         :class="`setting-btn menuicon ${config.mode === 'dark' ? 'menu-icon-chevron-left-black' : 'menu-icon-chevron-left-light'}`"
         @click="handleThemePanelChange"
@@ -66,7 +66,7 @@
 </template>
 
 <script setup lang="ts">
-  import { RouterView } from 'vue-router';
+  import { RouterView, useRoute, useRouter } from 'vue-router';
   import { storeToRefs } from 'pinia';
   import { useAppStore, useMenusStore, useThemeStore } from '@/store';
 
@@ -88,6 +88,21 @@
   // title: 'string',
   // component:true,
   // })
+  const isInThemeConfig = ref(false);
+  // 监听路由
+  const route = useRoute();
+  watch(
+    () => route.path,
+    (newPath, oldPath) => {
+      if (newPath !== oldPath) {
+        console.log('route path changed1:', newPath);
+        // 在这里可以添加路由变化后需要执行的逻辑
+        isInThemeConfig.value = newPath === '/themeConfig';
+      }
+    },
+    { immediate: true, deep: true }
+  );
+
   watch(
     () => activeBreadcrumb.value,
     (newValue) => {
