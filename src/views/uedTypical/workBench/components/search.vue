@@ -222,7 +222,7 @@
     padding: 0 16px;
     background: var(--color-bg-container);
     &.divider {
-      border-left: 1px solid var(--color-component-stroke);
+      // border-left: 1px solid var(--color-component-stroke);
       border-bottom: 1px solid var(--color-component-stroke);
     }
   }

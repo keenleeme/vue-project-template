@@ -266,6 +266,8 @@
   .page-top {
     background-color: var(--color-bg-container);
     // border-left: 1px solid var(--color-component-stroke);
+    border-bottom: 1px solid var(--color-component-stroke);
+
     .page-title {
       display: flex;
       height: 40px;
