@@ -50,7 +50,7 @@
         </a-breadcrumb-item>
       </a-breadcrumb>
       <div class="page-title">
-        <i class="zq-icon zq-icon-arrow-left"></i>
+        <i class="zq-icon zq-icon-arrow-left" v-if="activeBreadcrumb && activeBreadcrumb.length > 1"></i>
         <!-- <div class="page-title-text">{{ $t(`${$route.meta.title}`) }}</div> -->
         <!-- 改成获取面包屑的以后一级 -->
         <div class="page-title-text">{{ pageTitle }}</div>
@@ -95,8 +95,6 @@
     () => route.path,
     (newPath, oldPath) => {
       if (newPath !== oldPath) {
-        console.log('route path changed1:', newPath);
-        // 在这里可以添加路由变化后需要执行的逻辑
         isInThemeConfig.value = newPath === '/themeConfig';
       }
     },
