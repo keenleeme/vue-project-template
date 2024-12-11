@@ -1,10 +1,16 @@
-:root {
+:root,.theme-light{
+  /*************ZQ字号规则**************/
+  --font-size-base: 12px;                              /* 12规范基准 ｜｜  14规范基准   正文，【加粗】小标题*/
+  --font-size-small: calc(var(--font-size-base) - 0px);/* 12        ｜｜ 12          说明文字*/ 
+  --font-size-large: calc(var(--font-size-base) + 2px);/* 14        ｜｜ 16         【加粗】中标题*/
+  --font-size-xl: calc(var(--font-size-base) + 4px);   /* 16        ｜｜ 20         【加粗】大标题*/
   /*************ZQ色彩规则**************/
   /* 中性色彩——浅色模式默认全局中性色彩配置 */
   --color-bg-page: #F6F7FB;/*默认页面底层背景*/
   --color-bg-container: #FFFFFF;/*主要容器（例如卡片）的背景颜色，次要层级页面（例如内容区）背景颜色*/
   --color-bg-secondarycontainer: #F6F7FB;/*次要容器（例如二级卡片）背景*/
   --color-bg-component: #FFFFFF;/*组件（例如输入框）背景，主要容器之上组件背景*/
+  --color-bg-component2:#FFFFFF;/*组件（例如输入框）背景，主要容器之上组件背景*/
   --color-component-stroke: #E9EAF0;/*默认组件分割线*/
   --color-component-border:  #CBD0DB;/*默认边框*/
   /* 中性色彩交互 */
@@ -20,15 +26,15 @@
   --color-text-placeholder: #7E8494;/*占位符文字色彩，次要图标色彩*/
   --color-text-disabled: #ADB1BC;/*禁用文字色彩，禁用图标色彩*/
   --color-text-anti: #FFFFFF;/*文字反色色彩*/
-  --color-text-brand:  #134BEA;/*主题色文字色彩*/
-  --color-text-link: #134BEA;/*链接文字*/
+  --color-text-brand:  var(--um-primary-color-normal);/*主题色文字色彩*/
+  --color-text-link: var(--um-primary-color-normal);/*链接文字*/
 
   /* 主题色&功能色——主题相关配置 */
-  --color-brand-normal: #134BEA;/*品牌色*/
-  --color-brand-hover: #3B71EE;/*品牌色hover*/
-  --color-brand-active: #0639C3;/*品牌色active*/
-  --color-brand-disabled: #98BEFF;/*品牌色disabled*/
-  --color-brand-light: #E8F2FF;/*品牌色浅色背景（例如下拉菜单选中交互背景、告警背景、标签背景等）*/
+  --color-brand-normal: var(--um-primary-color-normal);/*品牌色*/
+  --color-brand-hover: var(--um-primary-color-hover);/*品牌色hover*/
+  --color-brand-active: var(--c-color-primary-7);/*品牌色active*/
+  --color-brand-disabled: var(--c-color-primary-2);/*品牌色disabled*/
+  --color-brand-light: var(--um-primary-color-light);/*品牌色浅色背景（例如下拉菜单选中交互背景、告警背景、标签背景等）*/
 
   --color-error-normal: #F53C3C;/*错误色*/
   --color-error-hover: #FF6560;/*错误色hover*/
@@ -107,15 +113,15 @@
   --color-text-placeholder: #878EA0;/*占位符文字色彩，次要图标色彩9096A5*/
   --color-text-disabled: #60687B;/*禁用文字色彩，禁用图标色彩6A7285*/
   --color-text-anti: #FFFFFF;/*文字反色色彩*/
-  --color-text-brand:  #3B71EE;/*主题色文字色彩*/
-  --color-text-link:  #3B71EE;/*链接文字*/
+  --color-text-brand:  var(--um-dark-primary-color-normal);/*主题色文字色彩*/
+  --color-text-link:  var(--um-dark-primary-color-normal);/*链接文字*/
 
   /* 主题色&功能色——主题相关配置 */
-  --color-brand-normal:  #3B71EE;/*品牌色*/
-  --color-brand-hover: #2E55AD;/*品牌色hover*/
-  --color-brand-active: #6E9EFD;/*品牌色active*/
-  --color-brand-disabled: #22386C;/*品牌色disabled****#274488;*/
-  --color-brand-light: #172444;/*品牌色浅色背景（例如下拉菜单选中交互背景、告警背景、标签背景等）*/
+  --color-brand-normal:  var(--um-dark-primary-color-normal);/*品牌色*/
+  --color-brand-hover: var(--um-dark-primary-color-hover);/*品牌色hover*/
+  --color-brand-active: var(--d-color-primary-7);/*品牌色active*/
+  --color-brand-disabled: var(--d-color-primary-2);/*品牌色disabled****#274488;*/
+  --color-brand-light: var(--um-dark-primary-color-light);/*品牌色浅色背景（例如下拉菜单选中交互背景、告警背景、标签背景等）*/
 
   --color-error-normal: #F53C3C;/*错误色0*/
   --color-error-hover: #A73239;/*错误色hover*/

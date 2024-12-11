@@ -6,6 +6,7 @@
         <div>
           <div class="page-item-title">{{ $t('I18N.layout.yuYan') }}</div>
           <a-select v-model:value="config.lang" @change="handleLocaleChangeA">
+            <template #suffixIcon><i class="zq-icon zq-icon-chevron-down ant-select-suffix-new"></i></template>
             <a-select-option value="zh">简体中文</a-select-option>
             <a-select-option value="en">English</a-select-option>
           </a-select>
@@ -212,10 +213,10 @@
       // color: #1e2435;
       color: var(--color-text-primarys);
       :deep(.page-item-title) {
-        font-size: 16px;
+        font-size: var(--font-size-large);
       }
       .page-item-title {
-        font-size: 14px;
+        font-size: var(--font-size-base);
         font-weight: 600;
         margin-bottom: 12px;
       }

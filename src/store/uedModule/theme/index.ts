@@ -63,12 +63,34 @@ export default defineStore('theme', () => {
       ...token,
       colorPrimary: themeConfig.value.primaryColor,
       colorPrimaryActive: isDark ? darkPrimaryColors[5] : primaryColors[5],
-      colorPrimaryHover: isDark ? darkPrimaryColors[4] : primaryColors[4]
+      colorPrimaryHover: isDark ? darkPrimaryColors[4] : primaryColors[4],
+      fontSize: parseInt(window.getComputedStyle(document.documentElement).getPropertyValue('--font-size-base'), 10)
     };
     return {
       token,
       // algorithm: themeType.value === ThemeTypes.Dark ? darkAlgorithm : defaultAlgorithm
-      algorithm: themeTokenType.value === ThemeTypes.Dark ? darkAlgorithm : defaultAlgorithm
+      algorithm: themeTokenType.value === ThemeTypes.Dark ? darkAlgorithm : defaultAlgorithm,
+      components: {
+        Slider: {
+          colorPrimaryBorder: token.colorPrimary
+        },
+        Table: {
+          colorTextHeading: token.colorTextBase,
+          fontWeightStrong: 400,
+          colorBgContainer: token.colorBgElevated,
+          padding: 24,
+          paddingContentVerticalLG: 12,
+          controlHeight: 24
+        },
+        Select: {
+          colorBgElevated: token.colorBgSelect,
+          colorFillSecondary: token.colorBgSelect,
+          colorSplit: token.colorBgSelect
+        },
+        Tabs: {
+          colorText: token.colorTextSecondary
+        }
+      }
     };
   });
 

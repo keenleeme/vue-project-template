@@ -151,11 +151,11 @@
     display: flex;
     flex-direction: column;
     .tabs {
-      padding: 0 16px;
       background-color: var(--color-bg-container);
       :deep(.ant-tabs) {
         .ant-tabs-nav {
           margin-bottom: 0;
+          padding: 0 16px;
         }
       }
     }
@@ -168,7 +168,7 @@
 
       .head-description {
         font-family: PingFangSC-Regular;
-        font-size: 12px;
+        font-size: var(--font-size-base);
         color: var(--color-text-placeholder);
         letter-spacing: 0;
         line-height: 20px;
@@ -178,7 +178,7 @@
       .content {
         &-row {
           font-family: PingFangSC-Regular;
-          font-size: 12px;
+          font-size: var(--font-size-base);
           letter-spacing: 0;
           line-height: 20px;
           font-weight: 400;
@@ -203,7 +203,7 @@
 
       .area-head {
         font-family: PingFangSC-Regular;
-        font-size: 12px;
+        font-size: var(--font-size-base);
         // color: #FFFFFF;
         color: var(--color-text-primarys);
         letter-spacing: 0;
@@ -216,11 +216,10 @@
     .page-footer {
       padding: 16px;
       text-align: right;
-      // border-top: 1px solid #e9eaf0;
       border-top: 1px solid var(--color-component-stroke);
+      background-color: var(--color-bg-container);
       button {
         margin-left: 8px;
-        // color: var(--color-text-primarys);
       }
     }
   }

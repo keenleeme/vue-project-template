@@ -171,7 +171,7 @@
       cursor: pointer;
       box-sizing: border-box;
       i {
-        font-size: 16px;
+        font-size: var(--font-size-large);
         transform: rotate(180deg);
         transform-origin: center center;
       }
@@ -212,7 +212,7 @@
       }
 
       .setting-nav-title {
-        font-size: 16px;
+        font-size: var(--font-size-large);
         color: var(--color-text-primarys);
         font-weight: 600;
         line-height: 24px;
@@ -221,7 +221,7 @@
 
       .setting-nav-item {
         line-height: 20px;
-        font-size: 12px;
+        font-size: var(--font-size-base);
 
         & > div:first-child {
           color: var(--color-text-placeholder);
@@ -273,7 +273,8 @@
       height: 40px;
       justify-content: flex-start;
       align-items: center;
-      font-size: 16px;
+      font-weight: 600;
+      font-size: var(--font-size-xl);
       background-color: var(--color-bg-container);
       .page-icon {
         color: var(--color-text-placeholder);

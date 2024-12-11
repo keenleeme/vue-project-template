@@ -39,7 +39,8 @@
               v-model:value="formState.scene"
               :options="[]"
               :placeholder="`${$t('I18N.base_form.pleaseEnter')}${$t('I18N.base_form.scene')}`"
-            />
+              ><template #suffixIcon><i class="zq-icon zq-icon-chevron-down ant-select-suffix-new"></i></template>
+            </a-select>
           </a-form-item>
           <a-form-item :label="$t('I18N.base_form.action')" name="action">
             <a-radio-group v-model:value="formState.action" :options="actionOptions" />
@@ -50,7 +51,9 @@
                 v-model:value="formState.address"
                 class="address-select"
                 :options="[{ label: $t('I18N.layout.diZhi'), value: 'location' }]"
-              />
+              >
+                <template #suffixIcon><i class="zq-icon zq-icon-chevron-down"></i></template>
+              </a-select>
               <a-input v-model:value="formState.ip" :placeholder="$t('I18N.base_form.pleaseEnterContent')" />
             </div>
           </a-form-item>
@@ -58,7 +61,7 @@
             <a-upload v-model="formState.attachment" name="file" action="">
               <a-button>
                 <template #icon>
-                  <UploadOutlined />
+                  <i class="zq-icon zq-icon-upload up-form-icon"></i>
                 </template>
                 {{ $t('I18N.base_form.uplaodFile') }}
               </a-button>
@@ -78,7 +81,6 @@
 
 <script setup lang="ts">
   import { reactive } from 'vue';
-  import { UploadOutlined } from '@ant-design/icons-vue';
 
   interface FormState {
     name: string;
@@ -125,7 +127,7 @@
       text-indent: 16px;
       height: 46px;
       line-height: 46px;
-      font-size: 14px;
+      font-size: var(--font-size-large);
       font-weight: 600;
       color: var(--color-text-primarys);
       border-bottom: 1px solid var(--color-component-stroke);
@@ -141,12 +143,17 @@
         }
       }
       .upload-tip {
-        font-size: 12px;
+        font-size: var(--font-size-base);
         color: #9096a5;
         letter-spacing: 0;
         line-height: 20px;
         font-weight: 400;
-        font-size: 12px;
+        font-size: var(--font-size-base);
+      }
+      .up-form-icon {
+        margin-right: 8px;
+        position: relative;
+        top: 1px;
       }
     }
     .base-form-footer {
