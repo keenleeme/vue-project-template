@@ -45,7 +45,10 @@
             {{ item.title }}
           </template>
           <template v-else>
-            <RouterLink :to="item.path">{{ item.title }}</RouterLink>
+            <!-- <RouterLink :to="item.path">{{ item.title }}</RouterLink> -->
+            <RouterLink :to="item.path" custom v-slot="{ isActive }">
+              <a :class="{ active: isActive }" @click="navigate(item)">{{ item.title }}</a>
+            </RouterLink>
           </template>
         </a-breadcrumb-item>
       </a-breadcrumb>
@@ -68,6 +71,7 @@
 <script setup lang="ts">
   import { RouterView, useRoute, useRouter } from 'vue-router';
   import { storeToRefs } from 'pinia';
+  import { microMenuNavigation } from '@/micro/microApi/helper';
   import { useAppStore, useMenusStore, useThemeStore } from '@/store';
 
   const menusStore = useMenusStore();
@@ -134,6 +138,10 @@
       if (themePanelVisible.value) window.location.hash = activeModuleId.value;
     }
   );
+
+  const navigate = (item) => {
+    microMenuNavigation(item);
+  };
 </script>
 
 <style lang="less" scoped>

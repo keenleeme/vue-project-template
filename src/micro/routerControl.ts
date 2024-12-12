@@ -59,21 +59,23 @@ export function setupMicroRouterGuards() {
   monitorChildRouterChange((to, from, appName) => {
     console.log('全局前置守卫 beforeEach: ', to, from, appName);
     const activeApps = getMicroAppActiveApps();
-    if (customPath && customPath[to.fullPath]) {
-      menusStore.setActiveRoutes([
-        {
-          path: customPath[to.fullPath],
-          title: '',
-          component: true
-        }
-      ]);
-      customPath = null;
-      return;
-    }
     if (to.fullPath && activeApps.length === 1) {
       const meta = getRouteMeta(to.fullPath, appName, to.hash);
       appStore.setFullScreen(!!meta?.fullScreen);
-      let microRoutes = getParentRoutes(appName, meta, to.fullPath);
+      if (customPath && customPath[to.fullPath]) {
+        menusStore.setActiveRoutes([
+          {
+            path: customPath[to.fullPath],
+            title: '',
+            component: true
+          }
+        ]);
+        customPath = null;
+        return;
+      }
+
+      const fullPath = to.fullPath.split('?')[0];
+      let microRoutes = getParentRoutes(appName, meta, fullPath);
       if (!microRoutes.length) {
         // 正常的定制页面走菜单进来，必然会存在，不存在的话 说明主线的定制页面，走到了子应用
         // 需要去掉子应用的前缀，后面部分就是主线的路由
