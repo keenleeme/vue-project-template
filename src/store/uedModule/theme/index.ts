@@ -43,10 +43,10 @@ export default defineStore('theme', () => {
     const color = Color(themeConfig.value.primaryColor);
     const darkOriginColor = color
       .saturate(15 / 85)
-      .lighten(0.25)
+      .lighten(0.3)
       .hex();
     primaryColors = generate(themeConfig.value.primaryColor);
-    darkPrimaryColors = generate(darkOriginColor, { theme: 'dark', backgroundColor: '#020C1E' });
+    darkPrimaryColors = generate(darkOriginColor, { theme: 'dark', backgroundColor: '#131924' });
     return { primaryColors, darkPrimaryColors };
   }
 
@@ -61,8 +61,8 @@ export default defineStore('theme', () => {
     const isDark = themeTokenType.value === 'dark';
     token = {
       ...token,
-      colorPrimary: themeConfig.value.primaryColor,
-      colorPrimaryActive: isDark ? darkPrimaryColors[5] : primaryColors[5],
+      colorPrimary: isDark ? primaryColors[4] : primaryColors[5],
+      colorPrimaryActive: isDark ? primaryColors[4] : primaryColors[5],
       colorPrimaryHover: isDark ? darkPrimaryColors[4] : primaryColors[4],
       fontSize: parseInt(window.getComputedStyle(document.documentElement).getPropertyValue('--font-size-base'), 10)
     };
@@ -72,7 +72,7 @@ export default defineStore('theme', () => {
       algorithm: themeTokenType.value === ThemeTypes.Dark ? darkAlgorithm : defaultAlgorithm,
       components: {
         Slider: {
-          colorPrimaryBorder: token.colorPrimary
+          colorPrimaryBorder: isDark ? darkPrimaryColors[5] : primaryColors[5]
         },
         Table: {
           colorTextHeading: token.colorTextBase,
@@ -87,8 +87,16 @@ export default defineStore('theme', () => {
           colorFillSecondary: token.colorBgSelect,
           colorSplit: token.colorBgSelect
         },
+        Dropdown: {
+          colorBgElevated: token.colorBgSelect
+        },
         Tabs: {
           colorText: token.colorTextSecondary
+        },
+        Button: {
+          colorLink: isDark ? darkPrimaryColors[5] : primaryColors[5],
+          colorLinkActive: isDark ? darkPrimaryColors[5] : primaryColors[5],
+          colorLinkHover: isDark ? darkPrimaryColors[4] : primaryColors[4]
         }
       }
     };

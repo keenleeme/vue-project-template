@@ -430,7 +430,7 @@
           }
         }
         .ant-form {
-          --primaryColor: var(--um-primary-color-normal);
+          --primaryColor: var(--color-text-brand);
           width: 100%;
         }
         .uploader {

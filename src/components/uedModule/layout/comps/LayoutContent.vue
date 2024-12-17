@@ -254,10 +254,10 @@
           }
 
           &.active {
-            color: var(--um-primary-color-normal);
+            color: var(--color-text-brand);
 
             &::before {
-              background: var(--um-primary-color-normal);
+              background: var(--color-text-brand);
             }
           }
         }

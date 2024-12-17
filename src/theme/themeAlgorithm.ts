@@ -22,10 +22,10 @@ const themeAlgorithm = () => {
       const color = Color(config.value.primaryColor);
       const darkOriginColor = color
         .saturate(15 / 85)
-        .lighten(0.25)
+        .lighten(0.3)
         .hex();
       primaryColors = generate(config.value.primaryColor);
-      darkPrimaryColors = generate(darkOriginColor, { theme: 'dark', backgroundColor: '#020C1E' });
+      darkPrimaryColors = generate(darkOriginColor, { theme: 'dark', backgroundColor: '#131924' });
       nextTick(() => {
         const bodyEl = document.body;
         // bodyEl.className = config.value.mode === 'dark' || config.value.dark === true ? 'thmee-dark' : '';

@@ -6,15 +6,8 @@
 .ant-btn-primary,.ant-btn-default{
   box-shadow:none;
 }
-.ant-btn.ant-btn-link{
-  color: var(--color-brand-normal);
-}
 .ant-btn.ant-btn-link:not(.ant-btn-background-ghost):not(:disabled):hover span:not(.anticon) {
   text-decoration: underline;
-  color: var(--color-brand-normal);
-}
-.ant-btn-link:not(:disabled):active{
-  color: var(--color-brand-normal);
 }
 .ant-btn-default.ant-btn-background-ghost{
   color: var(--color-brand-normal);
@@ -886,7 +879,9 @@
 .ant-upload-select-text .ant-btn {
   border: 0 !important;
 }
-
+.side-menu-wrapper .side-menu-footer .side-menu-footer-item:hover, .side-menu-wrapper .side-menu-footer .side-menu-footer-item.active{
+  color: var(--color-text-brand) !important;
+}
 /* 滚动条样式规范 */
 ::-webkit-scrollbar{
   height: 10px !important;
