@@ -772,6 +772,11 @@
 .ant-modal .ant-modal-content .anticon {
   font-size: 21px;
 }
+
+.group-modal-wrap .anticon {
+  font-size: 12px !important;
+}
+anticon-more
 .ant-modal .ant-modal-content .ant-modal-title {
   font-family: PingFangSC-Semibold;
   font-size: 16px;
@@ -1179,3 +1184,20 @@
 .ant-picker-disabled:hover {
   border-color: #cbd0db !important;
 } */
+.surely-table-bordered .surely-table-cell:not(.surely-table-body-cell-range-single-cell):not( .surely-table-body-cell-range-selected) {
+  border-right: none !important;
+}
+
+.surely-table {
+
+}
+
+.surely-table .surely-table-horizontal-scroll + div {
+  visibility: hidden !important;
+}
+.surely-table .surely-table-unselectable .surely-table-body-viewport-container + div {
+  clip: rect(0, 0, 0, 0);
+}
+.surely-table .surely-table-unselectable + div {
+  visibility: hidden !important;
+}

@@ -40,6 +40,24 @@ const routes: RouteRecordRaw[] = [
     }
   },
   {
+    name: 'base::workBench-list',
+    path: '/workBench-list',
+    component: () => import('@/views/uedTypical/dashboardManage/index.vue'),
+    meta: {
+      title: 'I18N.layout.yiBiaoPanGuanLi',
+      permissionId: 'base::workBench:index'
+    }
+  },
+  {
+    name: 'base::dashboard',
+    path: '/dashboard',
+    component: () => import('@/views/uedTypical/dashboardManage/index.vue'),
+    meta: {
+      title: 'I18N.layout.yiBiaopan',
+      permissionId: 'base::dashboardManage:index'
+    }
+  },
+  {
     name: 'base-form',
     path: '/base-form',
     component: () => import('@/views/uedTypical/baseForm/index.vue'),
