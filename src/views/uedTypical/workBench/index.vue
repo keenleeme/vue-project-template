@@ -99,7 +99,7 @@
         margin-right: 16px;
       }
       .title {
-        font-size: 12px;
+        font-size: var(--font-size-base);
         color: var(--color-text-secondary);
         line-height: 20px;
       }
@@ -111,7 +111,7 @@
         display: flex;
         align-items: flex-end;
         span {
-          font-size: 12px;
+          font-size: var(--font-size-base);
           color: var(--color-text-placeholder);
           margin: 0 4px;
         }

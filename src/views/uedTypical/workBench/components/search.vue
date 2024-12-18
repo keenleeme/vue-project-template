@@ -284,7 +284,7 @@
       }
     }
     &.divider {
-      border-left: 1px solid var(--color-component-stroke);
+      // border-left: 1px solid var(--color-component-stroke);
       border-bottom: 1px solid var(--color-component-stroke);
     }
     .date-picker {

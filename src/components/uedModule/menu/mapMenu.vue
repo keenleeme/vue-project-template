@@ -54,6 +54,7 @@
       </a-form-item>
       <a-form-item v-if="dialogType === 'add'" :label="$t('I18N.layout.caiDanTiXi')" name="level" :rules="rules.level">
         <a-select v-model:value="form.level" :placeholder="$t('I18N.layout.qingShuRuCaiDanTiXi')">
+          <template #suffixIcon><i class="zq-icon zq-icon-chevron-down ant-select-suffix-new"></i></template>
           <a-select-option v-for="item in levelOptions" :key="item.value" :label="item.label" :value="item.value" />
         </a-select>
       </a-form-item>
@@ -64,6 +65,7 @@
         :rules="rules.parentId"
       >
         <a-select v-model:value="form.parentId" :placeholder="$t('I18N.layout.qingXuanZeSuoShuYiJiCaiDan')">
+          <template #suffixIcon><i class="zq-icon zq-icon-chevron-down"></i></template>
           <a-select-option v-for="item in level2Menus" :key="item.id" :value="item.id">
             {{ item.name }}
           </a-select-option>

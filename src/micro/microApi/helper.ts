@@ -6,6 +6,7 @@ import { SubApp } from '../store';
 import microApp, { getMicroAppActiveApps } from './index';
 
 export function menuNavigationRewrite(menu: MenuType) {
+  menu.url = menu.url || menu.path;
   if (!menu.url) {
     return;
   }

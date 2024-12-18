@@ -11,14 +11,19 @@
         </a-button>
         <a-button class="mr-8"> {{ $t('I18N.layout.daoChu') }} </a-button>
         <a-button class="mr-8"> {{ $t('I18N.layout.zhongDianGuanZhu') }} </a-button>
-        <a-button> {{ $t('I18N.layout.quXiaoGuanZhu') }} </a-button>
+        <a-button class="mr-8"> {{ $t('I18N.layout.quXiaoGuanZhu') }} </a-button>
+        <!-- <a-button ghost>Ghost</a-button> -->
       </div>
       <div class="right">
         <a-button class="mr-8">
-          <template #icon><SettingOutlined /></template>
+          <template #icon>
+            <i class="zq-icon zq-icon-setting"></i>
+          </template>
         </a-button>
         <a-button>
-          <template #icon><FullscreenOutlined /></template>
+          <template #icon>
+            <i class="zq-icon zq-icon-fullsreen"></i>
+          </template>
         </a-button>
       </div>
     </div>
@@ -50,7 +55,7 @@
 </template>
 
 <script setup lang="ts">
-  import { PlusOutlined, SettingOutlined, FullscreenOutlined } from '@ant-design/icons-vue';
+  import { PlusOutlined } from '@ant-design/icons-vue';
   import type { TableColumnType, TableProps } from 'ant-design-vue';
   import SearchComponent from './search.vue';
 

@@ -22,10 +22,10 @@ const themeAlgorithm = () => {
       const color = Color(config.value.primaryColor);
       const darkOriginColor = color
         .saturate(15 / 85)
-        .lighten(0.25)
+        .lighten(0.3)
         .hex();
       primaryColors = generate(config.value.primaryColor);
-      darkPrimaryColors = generate(darkOriginColor, { theme: 'dark', backgroundColor: '#020C1E' });
+      darkPrimaryColors = generate(darkOriginColor, { theme: 'dark', backgroundColor: '#131924' });
       nextTick(() => {
         const bodyEl = document.body;
         // bodyEl.className = config.value.mode === 'dark' || config.value.dark === true ? 'thmee-dark' : '';
@@ -39,7 +39,15 @@ const themeAlgorithm = () => {
         bodyEl.style.setProperty('--c-color-primary-5', primaryColors[4]);
         bodyEl.style.setProperty('--c-color-primary-6', primaryColors[5]);
         bodyEl.style.setProperty('--c-color-primary-2', primaryColors[1]);
+        bodyEl.style.setProperty('--d-color-primary-7', darkPrimaryColors[7]);
+        bodyEl.style.setProperty('--d-color-primary-5', darkPrimaryColors[4]);
+        bodyEl.style.setProperty('--d-color-primary-6', darkPrimaryColors[5]);
+        bodyEl.style.setProperty('--d-color-primary-2', darkPrimaryColors[1]);
         bodyEl.style.setProperty('colorPrimary', primaryColors[0]);
+        bodyEl.style.setProperty(
+          '--um-font-size',
+          window.getComputedStyle(document.documentElement).getPropertyValue('--font-size-base')
+        );
       });
     },
     {
@@ -52,7 +60,7 @@ const themeAlgorithm = () => {
     () => config.value.mode,
     (val) => {
       const bodyEl = document.body;
-      bodyEl.className = val === 'dark' ? 'theme-dark' : '';
+      bodyEl.className = val === 'dark' ? 'theme-dark' : 'theme-light';
     },
     { immediate: true }
   );

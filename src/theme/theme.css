@@ -1,10 +1,16 @@
-:root {
+:root,.theme-light{
+  /*************ZQ字号规则**************/
+  --font-size-base: 12px;                              /* 12规范基准 ｜｜  14规范基准   正文，【加粗】小标题*/
+  --font-size-small: calc(var(--font-size-base) - 0px);/* 12        ｜｜ 12          说明文字*/ 
+  --font-size-large: calc(var(--font-size-base) + 2px);/* 14        ｜｜ 16         【加粗】中标题*/
+  --font-size-xl: calc(var(--font-size-base) + 4px);   /* 16        ｜｜ 20         【加粗】大标题*/
   /*************ZQ色彩规则**************/
   /* 中性色彩——浅色模式默认全局中性色彩配置 */
   --color-bg-page: #F6F7FB;/*默认页面底层背景*/
   --color-bg-container: #FFFFFF;/*主要容器（例如卡片）的背景颜色，次要层级页面（例如内容区）背景颜色*/
   --color-bg-secondarycontainer: #F6F7FB;/*次要容器（例如二级卡片）背景*/
   --color-bg-component: #FFFFFF;/*组件（例如输入框）背景，主要容器之上组件背景*/
+  --color-bg-component2:#FFFFFF;/*组件（例如输入框）背景，主要容器之上组件背景*/
   --color-component-stroke: #E9EAF0;/*默认组件分割线*/
   --color-component-border:  #CBD0DB;/*默认边框*/
   /* 中性色彩交互 */
@@ -20,15 +26,15 @@
   --color-text-placeholder: #7E8494;/*占位符文字色彩，次要图标色彩*/
   --color-text-disabled: #ADB1BC;/*禁用文字色彩，禁用图标色彩*/
   --color-text-anti: #FFFFFF;/*文字反色色彩*/
-  --color-text-brand:  #134BEA;/*主题色文字色彩*/
-  --color-text-link: #134BEA;/*链接文字*/
+  --color-text-brand:  var(--um-primary-color-normal);/*主题色文字色彩*/
+  --color-text-link: var(--um-primary-color-normal);/*链接文字*/
 
   /* 主题色&功能色——主题相关配置 */
-  --color-brand-normal: #134BEA;/*品牌色*/
-  --color-brand-hover: #3B71EE;/*品牌色hover*/
-  --color-brand-active: #0639C3;/*品牌色active*/
-  --color-brand-disabled: #98BEFF;/*品牌色disabled*/
-  --color-brand-light: #E8F2FF;/*品牌色浅色背景（例如下拉菜单选中交互背景、告警背景、标签背景等）*/
+  --color-brand-normal: var(--um-primary-color-normal);/*品牌色*/
+  --color-brand-hover: var(--um-primary-color-hover);/*品牌色hover*/
+  --color-brand-active: var(--c-color-primary-7);/*品牌色active*/
+  --color-brand-disabled: var(--c-color-primary-2);/*品牌色disabled*/
+  --color-brand-light: var(--um-primary-color-light);/*品牌色浅色背景（例如下拉菜单选中交互背景、告警背景、标签背景等）*/
 
   --color-error-normal: #F53C3C;/*错误色*/
   --color-error-hover: #FF6560;/*错误色hover*/
@@ -87,13 +93,13 @@
   /* 中性色彩——浅色模式默认全局中性色彩配置 */
   --color-bg-page: #080D18;/*默认页面底层背景*/
   --color-bg-container: #131924;/*主要容器（例如卡片）的背景颜色，次要层级页面（例如内容区）背景颜色*/
-  --color-bg-secondarycontainer: #080D18;/*次要容器（例如二级卡片）背景*/
+  --color-bg-secondarycontainer: #1D2330;/*次要容器（例如二级卡片）背景*/
   --color-bg-secondarycontainer-hover: #222937;/*次要容器（例如二级卡片）背景hover*/
   --color-bg-component: #080D18;/*组件（例如输入框）背景，主要容器之上组件背景*/
   --color-bg-component-disabled: #1D2330;/*组件（例如输入框）背景disabled，主要容器之上组件背景disabled*/
   --color-bg-component2:  #222937;/*二级组件（例如下拉、气泡）背景，主要容器之上组件背景*****新增*/
-  --color-bg-component2-hover: #1D2330;/*二级组件（例如下拉、气泡）背景hover，主要容器之上组件背景hover*****新增*/
-  --color-bg-component2-active: #32394A;/*二级组件（例如下拉、气泡）背景active，主要容器之上组件背景active*****新增*/
+  --color-bg-component2-hover: #32394A;/*二级组件（例如下拉、气泡）背景hover，主要容器之上组件背景hover*****新增*/
+  --color-bg-component2-active: #1D2330;/*二级组件（例如下拉、气泡）背景active，主要容器之上组件背景active*****新增*/
   --color-component-stroke: #32394A;/*默认组件分割线*/
   --color-component-border:  #444C5D;/*默认边框*/
   /* 中性色彩交互 暗色规范中没提供这三个变量*/
@@ -107,63 +113,63 @@
   --color-text-placeholder: #878EA0;/*占位符文字色彩，次要图标色彩9096A5*/
   --color-text-disabled: #60687B;/*禁用文字色彩，禁用图标色彩6A7285*/
   --color-text-anti: #FFFFFF;/*文字反色色彩*/
-  --color-text-brand:  #3B71EE;/*主题色文字色彩*/
-  --color-text-link:  #3B71EE;/*链接文字*/
+  --color-text-brand:  var(--um-dark-primary-color-normal);/*主题色文字色彩*/
+  --color-text-link:  var(--um-dark-primary-color-normal);/*链接文字*/
 
   /* 主题色&功能色——主题相关配置 */
-  --color-brand-normal:  #3B71EE;/*品牌色*/
-  --color-brand-hover: #2E55AD;/*品牌色hover*/
-  --color-brand-active: #6E9EFD;/*品牌色active*/
-  --color-brand-disabled: #22386C;/*品牌色disabled****#274488;*/
-  --color-brand-light: #172444;/*品牌色浅色背景（例如下拉菜单选中交互背景、告警背景、标签背景等）*/
+  --color-brand-normal:  var(--um-dark-primary-color-normal);/*品牌色*/
+  --color-brand-hover: var(--um-dark-primary-color-hover);/*品牌色hover*/
+  --color-brand-active: var(--d-color-primary-7);/*品牌色active*/
+  --color-brand-disabled: var(--d-color-primary-2);/*品牌色disabled****#274488;*/
+  --color-brand-light: var(--um-dark-primary-color-light);/*品牌色浅色背景（例如下拉菜单选中交互背景、告警背景、标签背景等）*/
 
   --color-error-normal: #F53C3C;/*错误色0*/
   --color-error-hover: #A73239;/*错误色hover*/
   --color-error-active: #F87C79;/*错误色active*/
   --color-error-disabled: #5A2836;/*错误色disabled****#7B2D38;*/
-  --color-error-light: #2D1F31;/*错误色浅色背景（例如告警背景、标签背景等）*/
+  --color-error-light: #452232;/*错误色浅色背景（例如告警背景、标签背景等）*/
 
   --color-warning-normal: #FF7F29;/*警示色0*/
   --color-warning-hover: #AE5E2D;/*警示色hover*/
   --color-warning-active: #FEA562;/*警示色active*/
   --color-warning-disabled: #5D3D31;/*警示色disabled*****#7F4B2F;*/
-  --color-warning-light: #2E252E;/*警示色浅色背景（例如告警背景、标签背景等）*/
+  --color-warning-light: #48302d;/*警示色浅色背景（例如告警背景、标签背景等）*/
 
   --color-success-normal: #1DB969;/*成功色0*/
   --color-success-hover: #1B8356;/*成功色hover*/
   --color-success-active: #4CD284;/*成功色active*/
   --color-success-disabled: #194E44;/*成功色disabled*****#1A654C;*/
-  --color-success-light: #152C36;/*成功色浅色背景（例如告警背景、标签背景等）*/
+  --color-success-light: #153d3c;/*成功色浅色背景（例如告警背景、标签背景等）*/
 
   --color-risk-fall-normal: #B63154;/*失陷色*/
   --color-risk-fall-hover: #7D273E;/*失陷色hover*/
   --color-risk-fall-active: #B14D64;/*失陷色active*/
   --color-risk-fall-disabled: #451D27;/*失陷色disabled****#5D2131;*/
-  --color-risk-fall-light: #211418;/*失陷色浅色背景（例如标签背景等）*/
+  --color-risk-fall-light: #33171f;/*失陷色浅色背景（例如标签背景等）*/
 
   --color-risk-high-normal: #F53C3C;/*高危色0*/
   --color-risk-high-hover: #A73239;/*高危色hover*/
   --color-risk-high-active: #F87C79;/*高危色active*/
   --color-risk-high-disabled: #5A2836;/*高危色disabled*****#7B2D38;*/
-  --color-risk-high-light: #2D1F31;/*高危色浅色背景（例如标签背景等）*/
+  --color-risk-high-light: #452232;/*高危色浅色背景（例如标签背景等）*/
 
   --color-risk-medium-normal: #FF7F29;/*中危色0*/
   --color-risk-medium-hover: #AE5E2D;/*中危色hover*/
   --color-risk-medium-active: #FEA562;/*中危色active*/
   --color-risk-medium-disabled: #5D3D31;/*中危色disabled****#7F4B2F;*/
-  --color-risk-medium-light: #2E252E;/*中危色浅色背景（例如标签背景等）*/
+  --color-risk-medium-light: #48302d;/*中危色浅色背景（例如标签背景等）*/
 
   --color-risk-low-normal: #FFB005;/*低危色0*/
   --color-risk-low-hover: #AE7E15;/*低危色hover*/
   --color-risk-low-active: #FFC532;/*低危色active*/
   --color-risk-low-disabled: #5D4B26;/*低危色disabled***** #7F611F;*/
-  --color-risk-low-light: #2E2C2C;/*低危色浅色背景（例如标签背景等）*/
+  --color-risk-low-light: #483b27;/*低危色浅色背景（例如标签背景等）*/
 
   --color-risk-no-normal: #60687B;/*无风险色*/
   --color-risk-no-hover: #444C5D;/*无风险色hover*/
   --color-risk-no-active: #878EA0;/*无风险色active*/
   --color-risk-no-disabled: #1D2330;/*无风险色disabled****#2D374E;*/
-  --color-risk-no-light: #080D18;/*无风险色浅色背景（例如标签背景等）*/
+  --color-risk-no-light: #32394a;/*无风险色浅色背景（例如标签背景等）*/
   
   
   /*************业务需要色彩配置**************/

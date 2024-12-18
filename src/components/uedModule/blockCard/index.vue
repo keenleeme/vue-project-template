@@ -46,7 +46,7 @@
       }
     }
     h2 {
-      font-size: 14px;
+      font-size: var(--font-size-base);
       line-height: 26px;
       color: var(--color-text-primarys);
     }

@@ -90,7 +90,7 @@
             </a-form-item>
           </a-col>
           <a-col :span="16">
-            <a-form-item :label="$t('I18N.layout.miaoShuXinXi')">
+            <a-form-item :label="$t('I18N.layout.miaoShuXinXi')" class="mr-8">
               <span>
                 资产描述‘process_open’函数存在安全漏洞，该漏洞源于程序在只读模式下没有正确的阻止写入操作。支持对所有的持对所有的持对…
               </span>
@@ -102,7 +102,7 @@
             </a-form-item>
           </a-col>
           <a-col :span="16">
-            <a-form-item :label="$t('I18N.layout.gengDuoXinXi')">
+            <a-form-item :label="$t('I18N.layout.gengDuoXinXi')" class="mr-8">
               <span>
                 这是服务于浙江省的涉疫系统的重要组成部分，服务于杭州市的数字化这是服务于浙江省的涉疫系统的重要组成部分，这是服务于浙江省的涉疫系统的重要组成部分。
               </span>
@@ -152,12 +152,13 @@
         flex: 1;
         margin-left: 8px;
         .header-info-text {
-          font-size: 12px;
+          font-size: var(--font-size-large);
+          font-weight: 600;
           margin-bottom: 16px;
           color: var(--color-text-primarys);
         }
         .header-info-status {
-          font-size: 12px;
+          font-size: var(--font-size-base);
           color: var(--color-text-primarys);
           .circle-status {
             display: inline-block;
@@ -182,7 +183,7 @@
       height: 46px;
       line-height: 46px;
       text-indent: 16px;
-      font-size: 14px;
+      font-size: var(--font-size-large);
       font-weight: 600;
       color: var(--color-text-primarys);
       border-bottom: 1px solid var(--color-component-stroke);
@@ -191,11 +192,11 @@
     .task-list {
       background: var(--color-bg-container);
       .timeline-title {
-        font-size: 14px;
+        font-size: var(--font-size-base);
         font-weight: 400;
       }
       .timeline-date {
-        font-size: 12px;
+        font-size: var(--font-size-base);
         font-weight: 400;
         color: var(--color-text-secondary);
       }
@@ -221,23 +222,14 @@
     }
     .ant-form-item-label {
       label {
-        font-size: 12px;
+        font-size: var(--font-size-base);
         font-weight: 400;
         color: var(--color-text-placeholder);
       }
     }
     .ant-form-item-control {
-      font-size: 12px;
+      font-size: var(--font-size-base);
       font-weight: 400;
-    }
-  }
-  .base-detail-box {
-    .ant-timeline .ant-timeline-item-head {
-      border-width: 2px;
-    }
-    .ant-timeline .ant-timeline-item-tail {
-      inset-block-start: 17px;
-      height: calc(100% - 24px);
     }
   }
 </style>

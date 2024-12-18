@@ -21,7 +21,11 @@
       <MapMenu :fold="fold" :menuData="menuData" />
     </template>
     <template #header>
-      <div v-if="config.layout === 'side' && !config.header" class="side-menu-header">
+      <div
+        v-if="config.layout === 'side' && !config.header"
+        class="side-menu-header"
+        @click="handleLogoClick('/custom-workbench')"
+      >
         <img class="logo" :src="loginConfig.logoUrl" />
         <span v-if="!fold" class="title">{{
           config.lang === 'zh' ? loginConfig.logoName : 'security management system'
@@ -209,6 +213,11 @@
       mode: config.value.mode === 'light' ? 'dark' : 'light'
     });
   };
+
+  // 点击logo跳转-》工作台自定义
+  const handleLogoClick = (url) => {
+    router.push(url);
+  };
 </script>
 
 <style>
@@ -218,6 +227,7 @@
 
   .side-menu-wrapper.is-fold .side-menu-header .logo {
     transform: unset !important;
+    cursor: pointer;
   }
 
   .side-menu-wrapper .side-menu-content {
