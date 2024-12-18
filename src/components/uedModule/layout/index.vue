@@ -264,13 +264,6 @@
             children: []
           },
           {
-            id: 'workBenchList',
-            name: I18N.layout.yiBiaoPanGuanLi,
-            hideChildren: true,
-            url: '/workBench-list',
-            children: []
-          },
-          {
             id: 'workList',
             name: I18N.layout.lieBiaoYe,
             hideChildren: true,

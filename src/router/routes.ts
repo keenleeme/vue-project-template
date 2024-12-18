@@ -2,8 +2,8 @@ import type { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
   {
-    name: 'base::base-list',
-    path: '/base-list',
+    name: 'base::work-list',
+    path: '/work-list',
     component: () => import('@/views/uedTypical/baseList/index.vue'),
     meta: {
       title: 'I18N.layout.lieBiaoYe',
@@ -11,7 +11,7 @@ const routes: RouteRecordRaw[] = [
     },
     children: [
       {
-        name: 'base::base-list-add',
+        name: 'base::work-list-add',
         path: 'add',
         component: () => import('@/views/uedTypical/baseList/components/Add.vue'),
         meta: {
@@ -39,22 +39,22 @@ const routes: RouteRecordRaw[] = [
       permissionId: 'base::workBench:index'
     }
   },
-  {
-    name: 'base::workBench-list',
-    path: '/workBench-list',
-    component: () => import('@/views/uedTypical/dashboardManage/index.vue'),
-    meta: {
-      title: 'I18N.layout.yiBiaoPanGuanLi',
-      permissionId: 'base::workBench:index'
-    }
-  },
+  // {
+  //   name: 'base::workBench-list',
+  //   path: '/workBench-list',
+  //   component: () => import('@/views/uedTypical/dashboardManage/index.vue'),
+  //   meta: {
+  //     title: 'I18N.layout.yiBiaoPanGuanLi',
+  //     permissionId: 'base::workBench:index'
+  //   }
+  // },
   {
     name: 'base::dashboard',
     path: '/dashboard',
     component: () => import('@/views/uedTypical/dashboardManage/index.vue'),
     meta: {
       title: 'I18N.layout.yiBiaopan',
-      permissionId: 'base::dashboardManage:index'
+      permissionId: 'base::workBench:index'
     }
   },
   {

@@ -163,7 +163,7 @@
 
   function add() {
     router.push({
-      path: '/base-list/add'
+      path: '/work-list/add'
     });
   }
 </script>

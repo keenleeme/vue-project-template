@@ -26,8 +26,8 @@ export default {
       window.microApp.getData().pushState('/vue3/about')
     },
     goToBase() {
-      window.microApp.getData().pushState('/base-list')
-      // base-list
+      window.microApp.getData().pushState('/work-list')
+      // work-list
     },
     goToAdd(){
       this.$router.push('/home/add')
