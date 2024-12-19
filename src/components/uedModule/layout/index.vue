@@ -137,6 +137,7 @@
         id: 8,
         name: I18N.layout.xiTongSheZhi,
         icon: 'zq-icon zq-icon-setting',
+        url: '/themeConfig',
         children: [
           {
             id: 'themeConfig',
@@ -165,6 +166,7 @@
         id: 'micro',
         name: I18N.layout.MicroApp,
         icon: 'zq-icon zq-icon-liuliangdaili',
+        url: '/vue2/#/home',
         children: [
           {
             id: 'vue2',
@@ -246,6 +248,7 @@
         id: 1,
         name: I18N.layout.genericTypicalPage,
         icon: 'zq-icon zq-icon-zhihuitiaodu',
+        url: '/workBench',
         children: [
           {
             id: 'workBench',

@@ -41,7 +41,7 @@
       </template>
     </UedMapMenu>
 
-    <TopMenu v-if="config.layout !== 'side'" :menu-data="topMenuData" :data-props="dataProps"></TopMenu>
+    <TopMenu v-if="config.layout !== 'side'" :menu-data="topMenuShowData" :data-props="dataProps"></TopMenu>
 
     <div class="header-operates">
       <a-dropdown>
@@ -158,10 +158,14 @@
   import { useAppStore, useThemeStore } from '@/store';
   import { LoginConfigDTO } from '@/views/uedModule/login/types';
 
+  interface MenuItem {
+    children?: MenuItem[];
+    [key: string]: any;
+  }
+
   const props = defineProps({
     menuData: {
-      type: Array,
-      // required: true
+      type: Array as PropType<MenuItem[]>,
       default: () => []
     },
     userMenu: {
@@ -193,7 +197,7 @@
   const loginConfig = ref<LoginConfigDTO>(new LoginConfigDTO(appConfig.value?.loginConfig));
 
   // 菜单数据
-  const topMenuData = ref(props.menuData);
+  const topMenuData = ref<MenuItem[]>(props.menuData);
 
   const { themeConfig } = storeToRefs(themeStore);
   const config = ref({
@@ -203,6 +207,22 @@
   watchEffect(() => {
     config.value = { ...themeConfig.value };
   });
+
+  const topMenuShowData = ref<MenuItem[]>([]);
+  watch(
+    () => themeConfig.value.layout,
+    (newLayout) => {
+      if (newLayout === 'mix') {
+        topMenuShowData.value = props.menuData.map((item: MenuItem) => {
+          const { children, ...rest } = item;
+          return { ...rest, children: [] };
+        });
+      } else {
+        topMenuShowData.value = props.menuData;
+      }
+    },
+    { immediate: true }
+  );
 
   const recentlyKeys = ref([]);
   const starKeys = ref([]);
