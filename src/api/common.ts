@@ -30,10 +30,16 @@ export async function getMenus(): Promise<MenuType[]> {
           path: '/workBench'
         },
         {
-          id: 'baseList',
+          id: 'dashboard',
+          title: I18N.layout.yiBiaoPan,
+          icon: 'AppstoreOutlined',
+          path: '/dashboard'
+        },
+        {
+          id: 'workList',
           title: I18N.layout.lieBiaoYe,
           icon: 'AppstoreOutlined',
-          path: '/base-list'
+          path: '/work-list'
         },
         {
           id: 'baseForm',

@@ -54,7 +54,7 @@
   @import './../login/index.less';
 
   ued-login-layout.is-small {
-    --ued-login-primary-color: var(--um-primary-color-normal);
+    --ued-login-primary-color: var(--color-text-brand);
     --ued-login-form-width: 400px;
     --ued-login-form-height-min: 400px;
     --ued-login-form-right: 0;

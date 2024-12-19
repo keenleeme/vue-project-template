@@ -1,4 +1,5 @@
 import { createApp } from 'vue';
+import '@surely-vue/table/dist/index.less';
 import { ComponentLibrary } from '@ued-material/ued-wbc-vue3';
 import '@ued-material/ued-wbc/css';
 import '@unocss/reset/normalize.css';

@@ -1,84 +1,73 @@
 const darkToken = {
-  // seed token
-  colorPrimary: '#3b71ee', // 主色
-  colorSuccess: '#1DB969', // 成功色
-  colorWarning: '#FF7F29', // 警戒色
-  colorError: '#F53C3C', // 错误色
-  colorInfo: '#134bea', // 信息色
-  colorTextBase: '#7e8494', // 中性色
-
-  // colorPrimaryBg: '#3B71EE',
-  colorPrimaryBg: '#172034',
+  colorPrimary: '#3B71EE',
+  colorSuccess: '#1DB969',
+  colorWarning: '#FF7F29',
+  colorError: '#F53C3C',
+  colorInfo: '#60687b',
+  colorTextBase: '#878ea0',
+  colorPrimaryBg: 'rgba(59, 113, 238, 0.12)',
   borderRadius: 3,
-  // wireframe: false,
-
-  // // map token
+  wireframe: false,
   colorPrimaryActive: '#6E9EFD',
   colorPrimaryBorder: '#3B71EE',
   colorPrimaryBorderHover: '#2E55AD',
   colorPrimaryHover: '#2E55AD',
-  colorPrimaryTextActive: '#3B71EE',
+  colorPrimaryTextActive: '#6E9EFD',
   colorPrimaryTextHover: '#2E55AD',
-  // colorPrimaryBgHover: '#FFCEC6',
-
-  // colorSuccessBg: '#E8FFEF',
-  // colorSuccessBgHover: '#B7F1CB',
-  // colorSuccessBorder: '#8AE3AC',
-  // colorSuccessBorderHover: '#62D592',
-  // colorSuccessActive: '#3DC77B',
-  // colorSuccessTextHover: '#66d493',
-  // colorSuccessTextActive: '#139E5B',
-  // colorSuccessHover: '#139E5B',
-
-  // colorWarningBg: '#FFF5E8',
-  // colorWarningBgHover: '#FFE2C2',
-  // colorWarningBorder: '#FFCD9C',
-  // colorWarningBorderHover: '#FFB675',
-  // colorWarningHover: '#D25D18',
-  // colorWarningActive: '#FF9B4F',
-  // colorWarningTextHover: '#FFB675',
-  // colorWarningTextActive: '#D25D18',
-
-  // colorErrorBg: '#FFE8E8',
-  // colorErrorBgHover: '#A73239',
-  // colorErrorBorder: '#FFADA4',
-  // colorErrorBorderHover: '#FF8A82',
+  colorPrimaryBgHover: '#C0D9FF',
+  colorSuccessBg: '#153D3C',
+  colorSuccessBgHover: '#152C36',
+  colorSuccessBorder: '#1DB969',
+  colorSuccessBorderHover: '#1B8356',
+  colorSuccessActive: '#4CD284',
+  colorSuccessTextHover: '#1B8356',
+  colorSuccessTextActive: '#4CD284',
+  colorSuccessHover: '#1B8356',
+  colorWarningBg: '#48302D',
+  colorWarningBgHover: '#2E252E',
+  colorWarningBorder: '#FF7F29',
+  colorWarningBorderHover: '#AE5E2D',
+  colorWarningHover: '#AE5E2D',
+  colorWarningActive: '#FEA562',
+  colorWarningTextHover: '#AE5E2D',
+  colorWarningTextActive: '#FEA562',
+  colorErrorBg: '#452232',
+  colorErrorBgHover: '#2D1F31',
+  colorErrorBorder: '#F53C3C',
+  colorErrorBorderHover: '#A73239',
   colorErrorHover: '#A73239',
   colorErrorActive: '#F87C79',
-  // colorErrorTextHover: '#FF8A82',
-  // colorErrorTextActive: '#C41424',
-
-  // colorInfoBg: '#E8F2FF',
-  // colorInfoBgHover: '#C0D9FF',
-  // colorInfoBorder: '#98BEFF',
-  // colorInfoBorderHover: '#6E9EFD',
-  // colorInfoHover: '#0639C3',
-  // colorInfoActive: '#134bea',
-  // colorInfoTextHover: '#6E9EFD',
-  // colorInfoTextActive: '#0639C3',
-
-  // colorTextQuaternary: '#ADB1BC',
-  colorBorder: '#4D576E', // 按钮这类的border
-  // colorBorderSecondary: '#E9EAF0',
-  // colorFill: 'rgba(126, 132, 148, 0.16)',
-  // colorFillSecondary: 'rgba(126, 132, 148, 0.06)',
-  // colorText: '#1E2435',
-  colorText: '#ffffff', // 组件内文字
-  // colorTextSecondary: '#353C51',
-  // colorTextTertiary: '#7E8494',
-
-  // colorBgContainer: '#172034',
-  // colorBgContainer: '#0D172A',// 表格 表单项（输入框 选择框。。。）  按钮 内容区域底色
-  colorBgContainer: '#020C1E',
-  colorBgElevated: '#172034', // 高于colorBgBase，选择框选项区域底框 选择区域 时间组件弹区域
-  // colorBgSpotlight: '#353C51',
-  colorBgLayout: '#020C1E', // layout 布局背景。默认页面底层背景
-  // colorPrimaryText: '#c41424',
-  // colorInfoText: '#3B71EE',
-
-  colorBgBase: '#172034'
-  // colorBgBase: '#4D576E', // 表格底色（border） 弹窗 选择框选项区域底框 时间轴底色 dropdown 选择区域 时间组件弹区域
-  // colorFillTertiary: 'rgba(126, 132, 148, 0.04)' //  选择框-选项底色 upload展示list hover色
+  colorErrorTextHover: '#A73239',
+  colorErrorTextActive: '#F87C79',
+  colorInfoBg: '#32394A',
+  colorInfoBgHover: '#1D2330',
+  colorInfoBorder: '#60687b',
+  colorInfoBorderHover: '#444C5D',
+  colorInfoHover: '#444C5D',
+  colorInfoActive: '#878EA0',
+  colorInfoText: '#60687B',
+  colorInfoTextHover: '#444C5D',
+  colorInfoTextActive: '#878EA0',
+  colorTextQuaternary: '#60687B',
+  colorBorder: '#444C5D',
+  colorBorderSecondary: '#32394A',
+  colorFill: '#222937',
+  colorFillSecondary: '#1D2330',
+  colorText: '#ffffff',
+  colorTextSecondary: '#B0B8C8',
+  colorTextTertiary: '#878EA0',
+  colorBgContainer: '#080D18',
+  colorBgElevated: '#131924',
+  colorBgSpotlight: '#222937',
+  colorPrimaryText: '#3B71EE',
+  colorBgBase: '#222937',
+  colorFillTertiary: '#131924',
+  colorFillQuaternary: '#080D18',
+  colorBgMask: 'rgba(0, 0, 0, 0.40)',
+  colorBgLayout: '#080D18',
+  colorWarningText: '#FF7F29',
+  colorErrorText: '#F53C3C',
+  colorBgSelect: '#222937'
 };
 
 export default darkToken;

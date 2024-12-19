@@ -45,7 +45,10 @@
             {{ item.title }}
           </template>
           <template v-else>
-            <RouterLink :to="item.path">{{ item.title }}</RouterLink>
+            <!-- <RouterLink :to="item.path">{{ item.title }}</RouterLink> -->
+            <RouterLink :to="item.path" custom v-slot="{ isActive }">
+              <a :class="{ active: isActive }" @click="navigate(item)">{{ item.title }}</a>
+            </RouterLink>
           </template>
         </a-breadcrumb-item>
       </a-breadcrumb>
@@ -68,6 +71,7 @@
 <script setup lang="ts">
   import { RouterView, useRoute, useRouter } from 'vue-router';
   import { storeToRefs } from 'pinia';
+  import { microMenuNavigation } from '@/micro/microApi/helper';
   import { useAppStore, useMenusStore, useThemeStore } from '@/store';
 
   const menusStore = useMenusStore();
@@ -134,6 +138,10 @@
       if (themePanelVisible.value) window.location.hash = activeModuleId.value;
     }
   );
+
+  const navigate = (item) => {
+    microMenuNavigation(item);
+  };
 </script>
 
 <style lang="less" scoped>
@@ -171,7 +179,7 @@
       cursor: pointer;
       box-sizing: border-box;
       i {
-        font-size: 16px;
+        font-size: var(--font-size-large);
         transform: rotate(180deg);
         transform-origin: center center;
       }
@@ -212,7 +220,7 @@
       }
 
       .setting-nav-title {
-        font-size: 16px;
+        font-size: var(--font-size-large);
         color: var(--color-text-primarys);
         font-weight: 600;
         line-height: 24px;
@@ -221,7 +229,7 @@
 
       .setting-nav-item {
         line-height: 20px;
-        font-size: 12px;
+        font-size: var(--font-size-base);
 
         & > div:first-child {
           color: var(--color-text-placeholder);
@@ -246,10 +254,10 @@
           }
 
           &.active {
-            color: var(--um-primary-color-normal);
+            color: var(--color-text-brand);
 
             &::before {
-              background: var(--um-primary-color-normal);
+              background: var(--color-text-brand);
             }
           }
         }
@@ -273,7 +281,8 @@
       height: 40px;
       justify-content: flex-start;
       align-items: center;
-      font-size: 16px;
+      font-weight: 600;
+      font-size: var(--font-size-xl);
       background-color: var(--color-bg-container);
       .page-icon {
         color: var(--color-text-placeholder);

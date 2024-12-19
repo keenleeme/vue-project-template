@@ -3,6 +3,8 @@ import type { RouteItemType } from '@/store/uedModule/menus/types';
 import { setupPermissionGuard } from './guard';
 import routes from './routes';
 
+console.log(routes);
+
 function pruneRoute(route: RouteRecordRaw): RouteRecordRaw {
   const { ...rest } = route;
   return rest as RouteRecordRaw;

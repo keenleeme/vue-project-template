@@ -259,10 +259,18 @@
             children: []
           },
           {
-            id: 'baseList',
+            id: 'dashboard',
+            name: I18N.layout.yiBiaoPan,
+            hideChildren: true,
+            icon: 'zq-icon zq-icon-zhihuitiaodu',
+            url: '/dashboard',
+            children: []
+          },
+          {
+            id: 'workList',
             name: I18N.layout.lieBiaoYe,
             hideChildren: true,
-            url: '/base-list',
+            url: '/work-list',
             children: []
           },
           {

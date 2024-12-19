@@ -23,7 +23,7 @@
     &-title {
       display: flex;
       font-family: PingFangSC-Semibold;
-      font-size: 14px;
+      font-size: var(--font-size-base);
       color: var(--color-text-primarys);
       line-height: 24px;
       font-weight: 600;

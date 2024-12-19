@@ -79,7 +79,7 @@
       top: '6%',
       left: '3%',
       right: '4%',
-      bottom: '3%',
+      bottom: '10%',
       containLabel: true
     },
     xAxis: {
@@ -88,27 +88,30 @@
       data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
       splitLine: {
         lineStyle: {
-          color: '#E9EAF0',
+          color: config.value.mode === 'dark' ? '#32394A' : '#E9EAF0',
           type: 'dashed'
         }
       },
       axisLine: {
         lineStyle: {
-          color: '#1E2435'
+          color: config.value.mode === 'dark' ? '#32394A' : '#E9EAF0'
         }
+      },
+      axisLabel: {
+        color: config.value.mode === 'dark' ? '#ffffff' : '#1E2435'
       }
     },
     yAxis: {
       type: 'value',
       splitLine: {
         lineStyle: {
-          color: '#E9EAF0',
+          color: config.value.mode === 'dark' ? '#32394A' : '#E9EAF0',
           type: 'dashed'
         }
       },
       axisLine: {
         lineStyle: {
-          color: '#1E2435'
+          color: config.value.mode === 'dark' ? '#ffffff' : '#1E2435'
         }
       }
     },
@@ -146,12 +149,21 @@
       lineOption.value.color = color.value;
       lineOption.value.xAxis.axisLine = {
         lineStyle: {
-          color: val === 'dark' ? '#ffffff' : '#1E2435'
+          color: val === 'dark' ? '#32394A' : '#E9EAF0'
         }
+      };
+      lineOption.value.xAxis.axisLabel = {
+        color: val === 'dark' ? '#ffffff' : '#1E2435'
       };
       lineOption.value.yAxis.axisLine = {
         lineStyle: {
           color: val === 'dark' ? '#ffffff' : '#1E2435'
+        }
+      };
+      lineOption.value.yAxis.splitLine = {
+        lineStyle: {
+          color: val === 'dark' ? '#32394A' : '#E9EAF0',
+          type: 'dashed'
         }
       };
     }

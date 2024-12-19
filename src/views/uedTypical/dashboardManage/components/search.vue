@@ -18,7 +18,6 @@ div
                 :multiple="item.multiple"
                 :collapse-tags="item.collapseTags"
               >
-                <template #suffixIcon><i class="zq-icon zq-icon-chevron-down ant-select-suffix-new"></i></template>
                 <a-select-option
                   v-for="option in toGetOptions(item)"
                   :key="option[item.valueKey || 'value']"
@@ -188,7 +187,7 @@ div
       align-items: center;
     }
     :deep(.ant-form-item .ant-form-item-label > label) {
-      font-size: var(--font-size-base);
+      font-size: 12px;
     }
     :deep(.ant-col-14) {
       max-width: calc(100% - 104px);

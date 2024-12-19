@@ -387,14 +387,14 @@
             display: flex;
             align-items: center;
             font-family: PingFangSC-Semibold;
-            font-size: 16px;
+            font-size: var(--font-size-large);
             color: var(--color-text-primarys);
             line-height: 24px;
             font-weight: 600;
             padding: 12px 16px;
             border-bottom: 1px solid var(--color-component-stroke);
             span {
-              font-size: 12px;
+              font-size: var(--font-size-base);
               color: #adb1bc;
               margin-left: 8px;
             }
@@ -430,7 +430,7 @@
           }
         }
         .ant-form {
-          --primaryColor: var(--um-primary-color-normal);
+          --primaryColor: var(--color-text-brand);
           width: 100%;
         }
         .uploader {
@@ -443,7 +443,7 @@
           }
           > p {
             font-family: PingFangSC-Regular;
-            font-size: 12px;
+            font-size: var(--font-size-base);
             color: #adb1bc;
             line-height: 20px;
           }

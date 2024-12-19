@@ -42,6 +42,13 @@
 <Icon class="zq-icon zq-icon-icon-black"></Icon>
 ```
 
+### select组件的下拉箭头图标需替换：
+```html
+<a-select>
+<template #suffixIcon><i class="zq-icon zq-icon-chevron-down ant-select-suffix-new"></i></template>
+</a-select>
+```
+
 ### 主题使用方式
 - 引入组件样式
 ```jsx
