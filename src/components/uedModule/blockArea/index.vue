@@ -22,7 +22,6 @@
     margin-bottom: 16px;
     &-title {
       display: flex;
-      font-family: PingFangSC-Semibold;
       font-size: var(--font-size-base);
       color: var(--color-text-primarys);
       line-height: 24px;

@@ -25,7 +25,7 @@ const themeAlgorithm = () => {
         .lighten(0.3)
         .hex();
       primaryColors = generate(config.value.primaryColor);
-      darkPrimaryColors = generate(darkOriginColor, { theme: 'dark', backgroundColor: '#131924' });
+      darkPrimaryColors = generate(darkOriginColor, { theme: 'dark', backgroundColor: '#1c222e' });
       nextTick(() => {
         const bodyEl = document.body;
         // bodyEl.className = config.value.mode === 'dark' || config.value.dark === true ? 'thmee-dark' : '';

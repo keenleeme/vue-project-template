@@ -167,7 +167,6 @@
       overflow-x: hidden;
 
       .head-description {
-        font-family: PingFangSC-Regular;
         font-size: var(--font-size-base);
         color: var(--color-text-placeholder);
         letter-spacing: 0;
@@ -177,7 +176,6 @@
 
       .content {
         &-row {
-          font-family: PingFangSC-Regular;
           font-size: var(--font-size-base);
           letter-spacing: 0;
           line-height: 20px;
@@ -202,7 +200,6 @@
       }
 
       .area-head {
-        font-family: PingFangSC-Regular;
         font-size: var(--font-size-base);
         // color: #FFFFFF;
         color: var(--color-text-primarys);

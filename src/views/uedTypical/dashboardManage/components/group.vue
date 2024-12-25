@@ -47,7 +47,6 @@
       justify-content: flex-start;
       align-items: center;
       height: 46px;
-      font-size: 14px;
       color: var(--color-text-primarys);
       line-height: 22px;
       font-weight: 600;
@@ -63,7 +62,6 @@
         align-items: center;
         width: 176px;
         height: 34px;
-        font-size: 14px;
         padding: 0 8px;
         cursor: pointer;
         &.active {

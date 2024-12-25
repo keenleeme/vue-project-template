@@ -65,7 +65,8 @@ const lightToken = {
   colorFillTertiary: '#f9f9f9',
   colorFillQuaternary: '#FAFAFB',
   colorBgMask: '#1f253673',
-  colorBgSelect: '#fff'
+  colorBgSelect: '#fff',
+  colorBgSelectHover: '#F1F2F5'
 };
 
 export default lightToken;

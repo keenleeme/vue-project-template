@@ -84,6 +84,16 @@
   --color-risk-no-disabled: #E9EAF0;/*无风险色disabled*/
   --color-risk-no-light: #F6F7FB;/*无风险色浅色背景（例如标签背景等）*/
 
+  /* 覆盖导航色值 */
+  --um-dark-color-font-placeholder: var(--color-text-placeholder);
+  --um-dark-color-disabled: var(--color-text-disabled);
+  --um-dark-color-divide: var(--color-component-stroke);
+  --um-dark-color-border: var(--color-component-border);
+  --um-dark-color-bg-0: #2E3545;
+  --um-dark-color-bg-1: #141821;
+  --um-dark-color-bg-2: #1c222e;
+  --um-dark-color-bg-3: #272e3d;
+
   /*************业务需要色彩配置**************/
 
 }
@@ -91,16 +101,16 @@
 .theme-dark {
   /*************ZQ色彩规则**************/
   /* 中性色彩——浅色模式默认全局中性色彩配置 */
-  --color-bg-page: #080D18;/*默认页面底层背景*/
-  --color-bg-container: #131924;/*主要容器（例如卡片）的背景颜色，次要层级页面（例如内容区）背景颜色*/
-  --color-bg-secondarycontainer: #1D2330;/*次要容器（例如二级卡片）背景*/
-  --color-bg-secondarycontainer-hover: #222937;/*次要容器（例如二级卡片）背景hover*/
-  --color-bg-component: #080D18;/*组件（例如输入框）背景，主要容器之上组件背景*/
-  --color-bg-component-disabled: #1D2330;/*组件（例如输入框）背景disabled，主要容器之上组件背景disabled*/
-  --color-bg-component2:  #222937;/*二级组件（例如下拉、气泡）背景，主要容器之上组件背景*****新增*/
-  --color-bg-component2-hover: #32394A;/*二级组件（例如下拉、气泡）背景hover，主要容器之上组件背景hover*****新增*/
-  --color-bg-component2-active: #1D2330;/*二级组件（例如下拉、气泡）背景active，主要容器之上组件背景active*****新增*/
-  --color-component-stroke: #32394A;/*默认组件分割线*/
+  --color-bg-page: #141821;/*默认页面底层背景*/
+  --color-bg-container: #1c222e;/*主要容器（例如卡片）的背景颜色，次要层级页面（例如内容区）背景颜色*/
+  --color-bg-secondarycontainer: #272e3d;/*次要容器（例如二级卡片）背景*/
+  --color-bg-secondarycontainer-hover: #2E3545;/*次要容器（例如二级卡片）背景hover*/
+  --color-bg-component: #141821;/*组件（例如输入框）背景，主要容器之上组件背景*/
+  --color-bg-component-disabled: #272e3d;/*组件（例如输入框）背景disabled，主要容器之上组件背景disabled*/
+  --color-bg-component2:  #2E3545;/*二级组件（例如下拉、气泡）背景，主要容器之上组件背景*****新增*/
+  --color-bg-component2-hover: #394052;/*二级组件（例如下拉、气泡）背景hover，主要容器之上组件背景hover*****新增*/
+  --color-bg-component2-active: #272e3d;/*二级组件（例如下拉、气泡）背景active，主要容器之上组件背景active*****新增*/
+  --color-component-stroke: #394052;/*默认组件分割线*/
   --color-component-border:  #444C5D;/*默认边框*/
   /* 中性色彩交互 暗色规范中没提供这三个变量*/
   /*--color-bg-secondarycontainer-active: #CBD0DB;次要容器（例如二级卡片）背景Active*/
@@ -168,9 +178,18 @@
   --color-risk-no-normal: #60687B;/*无风险色*/
   --color-risk-no-hover: #444C5D;/*无风险色hover*/
   --color-risk-no-active: #878EA0;/*无风险色active*/
-  --color-risk-no-disabled: #1D2330;/*无风险色disabled****#2D374E;*/
-  --color-risk-no-light: #32394a;/*无风险色浅色背景（例如标签背景等）*/
-  
+  --color-risk-no-disabled: #272e3d;/*无风险色disabled****#2D374E;*/
+  --color-risk-no-light: #394052;/*无风险色浅色背景（例如标签背景等）*/
+
+    /* 覆盖导航色值 */
+    --um-dark-color-font-placeholder: var(--color-text-placeholder);
+    --um-dark-color-disabled: var(--color-text-disabled);
+    --um-dark-color-divide: var(--color-component-stroke);
+    --um-dark-color-border: var(--color-component-border);
+    --um-dark-color-bg-0: #2E3545;
+    --um-dark-color-bg-1: #141821;
+    --um-dark-color-bg-2: #1c222e;
+    --um-dark-color-bg-3: #272e3d;
   
   /*************业务需要色彩配置**************/
 

@@ -27,7 +27,7 @@
         </a-button>
       </div>
     </div>
-    <a-table class="table-box" :columns="columns" :data-source="data" bordered @change="onChange">
+    <a-table class="table-box" :columns="columns" :data-source="data" @change="onChange">
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'name'">
           <a>

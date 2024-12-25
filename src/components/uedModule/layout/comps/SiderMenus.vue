@@ -76,6 +76,6 @@
 </script>
 <style lang="less" scoped>
   .side-menu-box {
-    z-index: 1;
+    // z-index: 1;
   }
 </style>

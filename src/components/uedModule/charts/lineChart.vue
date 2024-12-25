@@ -88,13 +88,13 @@
       data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
       splitLine: {
         lineStyle: {
-          color: config.value.mode === 'dark' ? '#32394A' : '#E9EAF0',
+          color: config.value.mode === 'dark' ? '#394052' : '#E9EAF0',
           type: 'dashed'
         }
       },
       axisLine: {
         lineStyle: {
-          color: config.value.mode === 'dark' ? '#32394A' : '#E9EAF0'
+          color: config.value.mode === 'dark' ? '#394052' : '#E9EAF0'
         }
       },
       axisLabel: {
@@ -105,7 +105,7 @@
       type: 'value',
       splitLine: {
         lineStyle: {
-          color: config.value.mode === 'dark' ? '#32394A' : '#E9EAF0',
+          color: config.value.mode === 'dark' ? '#394052' : '#E9EAF0',
           type: 'dashed'
         }
       },
@@ -149,7 +149,7 @@
       lineOption.value.color = color.value;
       lineOption.value.xAxis.axisLine = {
         lineStyle: {
-          color: val === 'dark' ? '#32394A' : '#E9EAF0'
+          color: val === 'dark' ? '#394052' : '#E9EAF0'
         }
       };
       lineOption.value.xAxis.axisLabel = {
@@ -162,7 +162,7 @@
       };
       lineOption.value.yAxis.splitLine = {
         lineStyle: {
-          color: val === 'dark' ? '#32394A' : '#E9EAF0',
+          color: val === 'dark' ? '#394052' : '#E9EAF0',
           type: 'dashed'
         }
       };

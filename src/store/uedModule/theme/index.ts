@@ -46,7 +46,7 @@ export default defineStore('theme', () => {
       .lighten(0.3)
       .hex();
     primaryColors = generate(themeConfig.value.primaryColor);
-    darkPrimaryColors = generate(darkOriginColor, { theme: 'dark', backgroundColor: '#131924' });
+    darkPrimaryColors = generate(darkOriginColor, { theme: 'dark', backgroundColor: '#1c222e' });
     return { primaryColors, darkPrimaryColors };
   }
 
@@ -64,6 +64,8 @@ export default defineStore('theme', () => {
       colorPrimary: isDark ? primaryColors[4] : primaryColors[5],
       colorPrimaryActive: isDark ? primaryColors[4] : primaryColors[5],
       colorPrimaryHover: isDark ? darkPrimaryColors[4] : primaryColors[4],
+      fontFamily:
+        'PingFangSC-Regular, PingFangSC-Semibold,-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji',
       fontSize: parseInt(window.getComputedStyle(document.documentElement).getPropertyValue('--font-size-base'), 10)
     };
     return {
@@ -80,15 +82,25 @@ export default defineStore('theme', () => {
           colorBgContainer: token.colorBgElevated,
           padding: 24,
           paddingContentVerticalLG: 12,
-          controlHeight: 24
+          controlHeight: 24,
+          colorFillAlter: token.colorFill,
+          controlItemBgActive: token.colorBgElevated,
+          controlItemBgActiveHover: token.colorFill
         },
         Select: {
           colorBgElevated: token.colorBgSelect,
-          colorFillSecondary: token.colorBgSelect,
-          colorSplit: token.colorBgSelect
+          colorFillSecondary: token.colorFill,
+          colorSplit: token.colorBgSelect,
+          controlItemBgHover: token.colorBgSelectHover,
+          controlItemBgActive: isDark ? darkPrimaryColors[0] : primaryColors[0]
         },
         Dropdown: {
-          colorBgElevated: token.colorBgSelect
+          colorBgElevated: token.colorBgSelect,
+          controlItemBgHover: token.colorBgSelectHover,
+          controlItemBgActive: isDark ? darkPrimaryColors[0] : primaryColors[0]
+        },
+        Cascader: {
+          fontWeightStrong: 400
         },
         Tabs: {
           colorText: token.colorTextSecondary
@@ -97,6 +109,13 @@ export default defineStore('theme', () => {
           colorLink: isDark ? darkPrimaryColors[5] : primaryColors[5],
           colorLinkActive: isDark ? darkPrimaryColors[5] : primaryColors[5],
           colorLinkHover: isDark ? darkPrimaryColors[4] : primaryColors[4]
+        },
+        Modal: {
+          borderRadiusLG: 8,
+          borderRadiusSM: 8
+        },
+        Popover: {
+          colorBgElevated: token.colorBgSelect
         }
       }
     };

@@ -386,7 +386,6 @@
           .group-header {
             display: flex;
             align-items: center;
-            font-family: PingFangSC-Semibold;
             font-size: var(--font-size-large);
             color: var(--color-text-primarys);
             line-height: 24px;
@@ -442,7 +441,6 @@
             margin: 12px 0 4px;
           }
           > p {
-            font-family: PingFangSC-Regular;
             font-size: var(--font-size-base);
             color: #adb1bc;
             line-height: 20px;

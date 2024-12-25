@@ -109,30 +109,30 @@
         hideChildren: true,
         children: []
       },
-      {
-        id: 5,
-        name: I18N.layout.tuKeShiHuaChengXian,
-        icon: 'zq-icon zq-icon-image',
-        url: '/example',
-        hideChildren: true,
-        children: []
-      },
-      {
-        id: 6,
-        name: I18N.layout.tuBianJiQi,
-        icon: 'zq-icon zq-icon-chart',
-        url: '/example',
-        hideChildren: true,
-        children: []
-      },
-      {
-        id: 7,
-        name: I18N.layout.liuChengBianPai,
-        icon: 'zq-icon zq-icon-share',
-        url: '/example',
-        hideChildren: true,
-        children: []
-      },
+      // {
+      //   id: 5,
+      //   name: I18N.layout.tuKeShiHuaChengXian,
+      //   icon: 'zq-icon zq-icon-image',
+      //   url: '/example',
+      //   hideChildren: true,
+      //   children: []
+      // },
+      // {
+      //   id: 6,
+      //   name: I18N.layout.tuBianJiQi,
+      //   icon: 'zq-icon zq-icon-chart',
+      //   url: '/example',
+      //   hideChildren: true,
+      //   children: []
+      // },
+      // {
+      //   id: 7,
+      //   name: I18N.layout.liuChengBianPai,
+      //   icon: 'zq-icon zq-icon-share',
+      //   url: '/example',
+      //   hideChildren: true,
+      //   children: []
+      // },
       {
         id: 8,
         name: I18N.layout.xiTongSheZhi,

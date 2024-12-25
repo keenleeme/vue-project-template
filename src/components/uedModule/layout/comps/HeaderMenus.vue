@@ -57,13 +57,7 @@
           </a-menu>
         </template>
       </a-dropdown>
-      <!-- <i
-        v-if="config.languageSwitch"
-        class="icon-button menuicon"
-        :class="config.lang === 'zh' ? 'menu-icon-chinese' : 'menu-icon-english'"
-        @click="handleLocaleChangeA(config.lang)"
-      /> -->
-      <a-dropdown class="side-menu-footer-item" placement="bottom">
+      <a-dropdown class="side-menu-footer-item" placement="bottom" v-if="config.languageSwitch">
         <i class="icon-button menuicon menu-icon-multilingual"></i>
         <template #overlay>
           <a-menu @click="handleLocaleChangeA">
@@ -462,7 +456,7 @@
   }
   .header-dark {
     .header {
-      background-color: #222937;
+      background-color: var(--um-dark-color-bg-0);
       color: #fff;
     }
     .header-operates {

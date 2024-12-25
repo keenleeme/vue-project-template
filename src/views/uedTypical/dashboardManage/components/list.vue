@@ -91,13 +91,12 @@
         </a-button>
       </div>
     </div>
-    <s-table
+    <a-table
       v-if="sortStatus"
       class="table-box"
       :columns="[...sortColumns, ...columns]"
       :data-source="data"
       :range-selection="false"
-      bordered
       @change="onChange"
     >
       <template #bodyCell="{ column, record }">
@@ -117,14 +116,13 @@
           }}</a-button>
         </template>
       </template>
-    </s-table>
-    <s-table
+    </a-table>
+    <a-table
       v-else
       class="table-box"
       :row-selection="rowSelection"
       :columns="columns"
       :data-source="data"
-      bordered
       :range-selection="false"
       @change="onChange"
     >
@@ -145,7 +143,7 @@
           }}</a-button>
         </template>
       </template>
-    </s-table>
+    </a-table>
   </div>
   <a-modal
     v-model:open="dialogVisible"

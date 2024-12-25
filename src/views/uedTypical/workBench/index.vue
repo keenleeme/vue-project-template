@@ -1,6 +1,6 @@
 <template>
   <div class="workbench-wrap">
-    <SearchComponent></SearchComponent>
+    <!-- <SearchComponent></SearchComponent> -->
     <div class="card-wrap">
       <div v-for="item in cardData" :key="item.title" class="card-item">
         <img class="icon" :src="item.icon" />
