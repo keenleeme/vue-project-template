@@ -18,7 +18,8 @@
     const theme = themeTokenType.value === 'dark' ? 'dark' : 'default';
     return {
       '/dasUpgrade': `http://10.50.28.10:8199/das-upgrade/#/upgrade?activeName=online&lang=zh-CN&theme=${theme}`,
-      '/dasvScreen': 'https://dasv.das-security.cn/?dasvAuthToken=yourAuthToken',
+      '/dasvScreen':
+        'https://dasv.das-security.cn/?dasvAuthToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsInVzZXJuYW1lIjoiVUVEU2NyZWVuIiwib3JpZ2luIjoibG9jYWwiLCJvcmlnaW5JZCI6bnVsbCwicm9sZSI6WyJtZW1iZXIiXSwic2lkIjoic2Vzc2lvbjo6ZTQxZjEwZGRhZWEyNDEwMjhkZWRhNTdjNDlhNTZkMjkiLCJpYXQiOjE3MjMwODM1NTAsImV4cCI6MTg3ODYwMzU1MH0.bGBmTANqMRximqr4dING1X-UWW2GKHxMRDOdskDFA3Y',
       '/custom-report': 'http://10.20.114.19:8083/home/project',
       '/custom-workbench': 'http://10.20.114.19:8083/preview/4'
     };
