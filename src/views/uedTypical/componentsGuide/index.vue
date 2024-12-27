@@ -250,7 +250,6 @@
         </div>
         <div class="y-axis">
           <div>阻断强</div>
-          <!-- <img src="./images/union-v.svg" alt="union" /> -->
           <div class="axis"></div>
           <div class="low">阻断弱</div>
         </div>
@@ -286,12 +285,24 @@
     }
   }
   .components-guide {
-    p {
-      margin: 0;
-    }
     background: #f3f6fa;
     height: 100vh;
     overflow-y: auto;
+    p {
+      margin: 0;
+    }
+    :deep(.ant-btn) {
+      color: #1e2128;
+      border-color: #d1d5de;
+      &:hover {
+        color: #3b74f7;
+        border-color: #3b74f7;
+      }
+    }
+    .bg-white {
+      background: #f2f3f5;
+      border: none;
+    }
   }
   .title-wrap {
     background: #5d79ca;
@@ -316,9 +327,6 @@
       letter-spacing: 0px;
       text-align: left;
       margin-bottom: 26px;
-    }
-    .bg-white {
-      background: #f2f3f5;
     }
   }
   .saying-wrap {
@@ -482,7 +490,7 @@
       grid-template-columns: repeat(2, 1fr);
       grid-template-rows: repeat(2, 1fr);
       gap: 5.714vw;
-      padding: 1.904vw 5.357vw;
+      padding: 32px 5.357vw;
       margin-top: 48px;
       .y-axis {
         color: #5d79ca;
@@ -563,8 +571,8 @@
         align-items: center;
         flex-direction: column;
         position: relative;
-        padding: 0.952vw;
-        height: 16.428vw;
+        padding: 16px;
+        min-height: 16.428vw;
         border-radius: 8px;
         background: #ffffff;
         box-shadow: 0px 4px 16px 0px #0639c314;
