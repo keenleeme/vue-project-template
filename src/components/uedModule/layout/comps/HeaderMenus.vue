@@ -52,7 +52,10 @@
               <span @click="showHelpDocument">{{ $t('I18N.layout.bangZhuWenDang') }}</span>
             </a-menu-item>
             <a-menu-item>
-              <span @click="$router.push('/vueTour')">{{ $t('I18N.layout.ruMenYinDao') }}</span>
+              <span @click="toComponentsGuide">{{ $t('I18N.layout.zuJianShiYongYinDao') }}</span>
+            </a-menu-item>
+            <a-menu-item>
+              <span @click="handleMenuClick({ url: '/vueTour' })">{{ $t('I18N.layout.ruMenYinDao') }}</span>
             </a-menu-item>
           </a-menu>
         </template>
@@ -142,7 +145,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, watchEffect, watch, computed } from 'vue';
+  import { ref, watchEffect, watch } from 'vue';
   import { changeLocale } from '@international/vue3-i18n';
   import { UedMapMenu, findNodeInTree } from '@ued-material/menu';
   import docsViewer from 'docs-viewer';
@@ -363,7 +366,6 @@
 
   const router = useRouter();
   const handleMenuClick = (val: any) => {
-    console.log(val);
     router.push(val.url);
   };
 
@@ -375,6 +377,11 @@
       container: helpDocument.value,
       src: 'http://10.20.114.19:8089/docs/' // 即你上个步骤部署的文档的静态资源地址
     });
+  };
+
+  // 组件使用引导
+  const toComponentsGuide = () => {
+    window.open(`${window.location.origin}/componentsGuide`, '_blank');
   };
 
   // 国际化切换

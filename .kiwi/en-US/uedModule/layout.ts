@@ -25,6 +25,7 @@ export default {
   yongHuYinDao: 'User guidance',
   bangZhuWenDang: 'Help document',
   ruMenYinDao: 'Introductory guide',
+  zuJianShiYongYinDao: 'Component Usage Guide',
   caiDanMingCheng: 'Menu name',
   qingShuRuCaiDanMingCheng: 'Please enter a menu name',
   caiDanTiXi: 'Menu system',
@@ -172,7 +173,8 @@ export default {
   quanPing: 'Full screen',
   huiFuChuChangSheZhi: 'Reset to factory settings',
   yingYongDangQianSheZhi: 'Apply the current settings',
-  xinZhuTiFengGeTiShi: 'The new theme style will cover all account custom styles, are you sure you want to save the new theme style and apply it to all account systems?',
+  xinZhuTiFengGeTiShi:
+    'The new theme style will cover all account custom styles, are you sure you want to save the new theme style and apply it to all account systems?',
   wenJianGeShiBuWei: 'The file format is not',
   wenJianDaXiaoChaoGuo: 'File size exceeds',
   moRenZhuTi: 'Default theme',
@@ -182,7 +184,8 @@ export default {
   qiTaSheZhi: 'Other settings',
   shengChengYeMianQianTaoCanShu: 'Generate page nested parameters',
   yingYongDangQianZhuTi: 'Apply the current theme',
-  shengChengYeMianQianTaoCanShuTanChuangWenAn: 'Copy the new style of the page and separate the parameters for the menu area and content area of the page. If the menu needs to be hidden when embedded, please include this parameter.',
+  shengChengYeMianQianTaoCanShuTanChuangWenAn:
+    'Copy the new style of the page and separate the parameters for the menu area and content area of the page. If the menu needs to be hidden when embedded, please include this parameter.',
   caiDanXianYinCanShu2: 'Menu display and hide parameters',
   fuZhiCanShu: 'Copy parameters',
   queRen: 'Confirm',
@@ -227,28 +230,40 @@ export default {
   woFuZeDeShiJianGuanBiLv: 'My event closure rate',
   gengDuo: 'More',
   bangZhuWenDangBiaoTi: 'The Importance and Function of Help Documentation',
-  bangZhuWenDangWenAn1: 'Help documentation is a vital resource that provides users with detailed information and guidance on how to use specific software, applications, services, or products. The functions of help documentation are mainly reflected in the following aspects:',
+  bangZhuWenDangWenAn1:
+    'Help documentation is a vital resource that provides users with detailed information and guidance on how to use specific software, applications, services, or products. The functions of help documentation are mainly reflected in the following aspects:',
   bangZhuWenDangWenAnBiaoTi1: 'Quick Start:',
-  bangZhuWenDangWenAnNeiNong1: 'Help documents typically include quick start guides to help new users quickly familiarize themselves with basic functions.',
+  bangZhuWenDangWenAnNeiNong1:
+    'Help documents typically include quick start guides to help new users quickly familiarize themselves with basic functions.',
   bangZhuWenDangWenAnBiaoTi2: 'Detailed Guide:',
-  bangZhuWenDangWenAnNeiNong2: 'Provide detailed operational steps for software or services to guide users through complex operations.',
+  bangZhuWenDangWenAnNeiNong2:
+    'Provide detailed operational steps for software or services to guide users through complex operations.',
   bangZhuWenDangWenAnBiaoTi3: 'Issue Resolution:',
-  bangZhuWenDangWenAnNeiNong3: 'When users encounter issues, the FAQ section in the help document can provide solutions.',
+  bangZhuWenDangWenAnNeiNong3:
+    'When users encounter issues, the FAQ section in the help document can provide solutions.',
   bangZhuWenDangWenAnBiaoTi4: 'Reference Materials:',
-  bangZhuWenDangWenAnNeiNong4: 'Provide a complete list of functions, technical specifications, term explanations, etc., for easy user reference.',
+  bangZhuWenDangWenAnNeiNong4:
+    'Provide a complete list of functions, technical specifications, term explanations, etc., for easy user reference.',
   bangZhuWenDangWenAnBiaoTi5: 'Update Notifications:',
-  bangZhuWenDangWenAnNeiNong5: 'Help documents inform users about software update information, including new features, improvements, and bug fixes.',
+  bangZhuWenDangWenAnNeiNong5:
+    'Help documents inform users about software update information, including new features, improvements, and bug fixes.',
   bangZhuWenDangWenAnBiaoTi6: 'Training Materials:',
-  bangZhuWenDangWenAnNeiNong6: 'For enterprise users, help documents can serve as training materials for onboarding new employees.',
+  bangZhuWenDangWenAnNeiNong6:
+    'For enterprise users, help documents can serve as training materials for onboarding new employees.',
   bangZhuWenDangWenAnBiaoTi7: 'Reduce Support Costs:',
-  bangZhuWenDangWenAnNeiNong7: 'By providing comprehensive help documents, the demand for customer support can be reduced, thus lowering the operational costs of the enterprise.',
+  bangZhuWenDangWenAnNeiNong7:
+    'By providing comprehensive help documents, the demand for customer support can be reduced, thus lowering the operational costs of the enterprise.',
   bangZhuWenDangWenAnBiaoTi8: 'Enhance User Satisfaction:',
-  bangZhuWenDangWenAnNeiNong8: 'Easy-to-access and user-friendly help documents can significantly enhance user satisfaction and loyalty.',
+  bangZhuWenDangWenAnNeiNong8:
+    'Easy-to-access and user-friendly help documents can significantly enhance user satisfaction and loyalty.',
   bangZhuWenDangWenAnBiaoTi9: 'Promote User Engagement:',
-  bangZhuWenDangWenAnNeiNong9: 'Through forums or community links, help documents can promote communication among users and increase user engagement.',
+  bangZhuWenDangWenAnNeiNong9:
+    'Through forums or community links, help documents can promote communication among users and increase user engagement.',
   bangZhuWenDangWenAnBiaoTi10: 'Compliance with Standards:',
-  bangZhuWenDangWenAnNeiNong10: 'In China, help documents should adhere to national language and information security standards, providing content that aligns with socialist core values.',
-  bangZhuWenDangJieWei: 'In conclusion, help documentation is a key resource for users to learn, use, and troubleshoot, and also an important tool for enterprises to improve service quality, enhance user satisfaction, and loyalty.',
+  bangZhuWenDangWenAnNeiNong10:
+    'In China, help documents should adhere to national language and information security standards, providing content that aligns with socialist core values.',
+  bangZhuWenDangJieWei:
+    'In conclusion, help documentation is a key resource for users to learn, use, and troubleshoot, and also an important tool for enterprises to improve service quality, enhance user satisfaction, and loyalty.',
   yiBiaoPanMingCheng1: 'Dashboard name A',
   yiBiaoPanMingCheng2: 'Dashboard name B',
   yiBiaoPanMingCheng3: 'Dashboard name C',
@@ -266,5 +281,5 @@ export default {
   guaZaiFenZu: 'Grouping',
   qiYongZhuangTai: 'Open Status',
   chuangJianShiJian: 'Create time',
-  gengXingeShiJian: 'Update time',
+  gengXingeShiJian: 'Update time'
 };

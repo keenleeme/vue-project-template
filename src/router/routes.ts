@@ -139,6 +139,16 @@ const routes: RouteRecordRaw[] = [
     }
   },
   {
+    name: 'base::componentsGuide',
+    path: '/componentsGuide',
+    component: () => import(/* webpackChunkName: "componentsGuide" */ '@/views/uedTypical/componentsGuide/index.vue'),
+    meta: {
+      title: 'I18N.api.common.zuJianShiYongYinDao',
+      permissionId: 'base::workBench:index',
+      fullScreen: true
+    }
+  },
+  {
     name: 'base::vueTour',
     path: '/vueTour',
     component: () => import(/* webpackChunkName: "vueTour" */ '@/views/uedTypical/vueTour/index.vue'),

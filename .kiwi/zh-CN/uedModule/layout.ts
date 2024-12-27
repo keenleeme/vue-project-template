@@ -25,6 +25,7 @@ export default {
   yongHuYinDao: '用户引导',
   bangZhuWenDang: '帮助文档',
   ruMenYinDao: '入门引导',
+  zuJianShiYongYinDao: '组件使用引导',
   caiDanMingCheng: '菜单名称',
   qingShuRuCaiDanMingCheng: '请输入菜单名称',
   caiDanTiXi: '菜单体系',
@@ -185,7 +186,8 @@ export default {
   qiTaSheZhi: '其他设置',
   shengChengYeMianQianTaoCanShu: '生成页面嵌套参数',
   yingYongDangQianZhuTi: '应用当前主题',
-  shengChengYeMianQianTaoCanShuTanChuangWenAn: '复制页面新风格，并将页面的菜单区和内容区分离的参数。如内嵌时需隐藏页面菜单，请带上此参数。',
+  shengChengYeMianQianTaoCanShuTanChuangWenAn:
+    '复制页面新风格，并将页面的菜单区和内容区分离的参数。如内嵌时需隐藏页面菜单，请带上此参数。',
   caiDanXianYinCanShu2: '菜单显隐参数',
   fuZhiCanShu: '复制参数',
   queRen: '确认',
@@ -230,7 +232,8 @@ export default {
   woFuZeDeShiJianGuanBiLv: '我负责的事件关闭率',
   gengDuo: '更多',
   bangZhuWenDangBiaoTi: '帮助文档的重要性与作用',
-  bangZhuWenDangWenAn1: '帮助文档是一种非常重要的资源，它为用户提供关于如何使用特定软件、应用、服务或产品的详细信息和指导。帮助文档的作用主要体现在以下几个方面：',
+  bangZhuWenDangWenAn1:
+    '帮助文档是一种非常重要的资源，它为用户提供关于如何使用特定软件、应用、服务或产品的详细信息和指导。帮助文档的作用主要体现在以下几个方面：',
   bangZhuWenDangWenAnBiaoTi1: '快速学习：',
   bangZhuWenDangWenAnNeiNong1: '帮助文档通常包含快速入门指南，帮助新用户迅速熟悉基本功能。',
   bangZhuWenDangWenAnBiaoTi2: '详细指南：',
@@ -251,7 +254,8 @@ export default {
   bangZhuWenDangWenAnNeiNong9: '通过论坛或社区链接，帮助文档可以促进用户之间的交流，增加用户参与度。',
   bangZhuWenDangWenAnBiaoTi10: '符合标准：',
   bangZhuWenDangWenAnNeiNong10: '在中国，帮助文档还应遵循国家的语言和信息安全标准，提供符合社会主义核心价值观的内容。',
-  bangZhuWenDangJieWei: '总之，帮助文档是用户学习、使用和解决问题的关键资源，也是企业提高服务质量、促进用户满意度和忠诚度的重要工具。',
+  bangZhuWenDangJieWei:
+    '总之，帮助文档是用户学习、使用和解决问题的关键资源，也是企业提高服务质量、促进用户满意度和忠诚度的重要工具。',
   yiBiaoPanMingCheng1: '仪表盘名称A',
   yiBiaoPanMingCheng2: '仪表盘名称B',
   yiBiaoPanMingCheng3: '仪表盘名称C',
@@ -269,5 +273,5 @@ export default {
   guaZaiFenZu: '挂载分组',
   qiYongZhuangTai: '启用状态',
   chuangJianShiJian: '创建时间',
-  gengXingeShiJian: '更新时间',
+  gengXingeShiJian: '更新时间'
 };
