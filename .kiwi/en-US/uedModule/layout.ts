@@ -25,7 +25,7 @@ export default {
   yongHuYinDao: 'User guidance',
   bangZhuWenDang: 'Help document',
   ruMenYinDao: 'Introductory guide',
-  zuJianShiYongYinDao: 'Component Usage Guide',
+  yinDaoTiShiZuJian: 'Bootstrap Component',
   caiDanMingCheng: 'Menu name',
   qingShuRuCaiDanMingCheng: 'Please enter a menu name',
   caiDanTiXi: 'Menu system',

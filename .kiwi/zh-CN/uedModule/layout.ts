@@ -25,7 +25,7 @@ export default {
   yongHuYinDao: '用户引导',
   bangZhuWenDang: '帮助文档',
   ruMenYinDao: '入门引导',
-  zuJianShiYongYinDao: '组件使用引导',
+  yinDaoTiShiZuJian: '引导提示组件',
   caiDanMingCheng: '菜单名称',
   qingShuRuCaiDanMingCheng: '请输入菜单名称',
   caiDanTiXi: '菜单体系',

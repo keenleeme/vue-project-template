@@ -1,114 +1,139 @@
 <script setup>
   import { ArrowRightOutlined } from '@ant-design/icons-vue';
 
-  const componentItem = [
-    [
-      {
-        group: '欢迎页',
-        items: [
-          {
-            label: 'Popover 气泡提示',
-            url: '/'
-          },
-          {
-            label: 'Empty State 空状态提示',
-            url: '/'
-          }
-        ]
-      },
-      {
-        group: '新功能引导',
-        items: [
-          {
-            label: 'Popover 气泡提示',
-            url: '/'
-          },
-          {
-            label: 'Steps 步骤条引导',
-            url: '/'
-          }
-        ]
-      }
-    ],
-    [
-      {
-        group: '提示说明',
-        items: [
-          {
-            label: 'Placeholder 占位符',
-            url: '/'
-          },
-          {
-            label: 'Tooltips 工具提示',
-            url: '/'
-          },
-          {
-            label: 'Helper Text 帮助文本',
-            url: '/'
-          },
-          {
-            label: 'Popover 气泡提示',
-            url: '/'
-          },
-          {
-            label: 'Comparison Guide 对比指引',
-            url: '/'
-          },
-          {
-            label: 'Empty State 空状态提示',
-            url: '/'
-          }
-        ]
-      },
-      {
-        group: '操作反馈',
-        items: [
-          {
-            label: 'Form Validation 表单校验提示',
-            url: '/'
-          },
-          {
-            label: 'Alert 告警',
-            url: '/'
-          },
-          {
-            label: 'Modal Dialog 模态对话框',
-            url: '/'
-          }
-        ]
-      }
-    ],
-    [
-      {
-        group: '用户手册',
-        items: [
-          {
-            label: 'Help Documentation 帮助手册',
-            url: '/'
-          },
-          {
-            label: 'Tooltips 工具提示',
-            url: '/'
-          }
-        ]
-      },
-      {
-        group: '操作反馈',
-        items: [
-          {
-            label: 'Form Validation 表单校验提示',
-            url: '/'
-          },
-          {
-            label: 'Alert 告警',
-            url: '/'
-          }
-        ]
-      }
-    ]
-  ];
+  const componentItem = ref([
+    {
+      id: '1',
+      items: [
+        {
+          group: '欢迎页',
+          id: '1-1',
+          items: [
+            {
+              label: 'Popover 气泡提示',
+              url: '/'
+            },
+            {
+              label: 'Empty State 空状态提示',
+              url: '/'
+            }
+          ]
+        },
+        {
+          group: '新功能引导',
+          id: '1-2',
+          items: [
+            {
+              label: 'Popover 气泡提示',
+              url: '/'
+            },
+            {
+              label: 'Steps 步骤条引导',
+              url: '/'
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: '2',
+      items: [
+        {
+          group: '提示说明',
+          id: '2-1',
+          items: [
+            {
+              label: 'Placeholder 占位符',
+              url: '/'
+            },
+            {
+              label: 'Tooltips 工具提示',
+              url: '/'
+            },
+            {
+              label: 'Helper Text 帮助文本',
+              url: '/'
+            },
+            {
+              label: 'Popover 气泡提示',
+              url: '/'
+            },
+            {
+              label: 'Comparison Guide 对比指引',
+              url: '/'
+            },
+            {
+              label: 'Empty State 空状态提示',
+              url: '/'
+            }
+          ]
+        },
+        {
+          group: '操作反馈',
+          id: '2-2',
+          items: [
+            {
+              label: 'Form Validation 表单校验提示',
+              url: '/'
+            },
+            {
+              label: 'Alert 告警',
+              url: '/'
+            },
+            {
+              label: 'Notification 通知',
+              url: '/'
+            },
+            {
+              label: 'Modal Dialog 模态对话框',
+              url: '/'
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: '3',
+      items: [
+        {
+          group: '用户手册',
+          id: '3-1',
+          items: [
+            {
+              label: 'Help Documentation 帮助手册',
+              url: '/'
+            }
+          ]
+        },
+        {
+          group: '知识库',
+          id: '3-2',
+          items: [
+            {
+              label: 'Help Documentation 帮助手册',
+              url: '/'
+            }
+          ]
+        },
+        {
+          group: 'FAQ（常见问题）',
+          id: '3-3',
+          items: [
+            {
+              label: 'Help Documentation 帮助手册',
+              url: '/'
+            },
+            {
+              label: '小安小恒智能组件',
+              url: '/'
+            }
+          ]
+        }
+      ]
+    }
+  ]);
 
-  const axisItem = [
+  const axisItem = ref([
     {
       idx: 2,
       items: [
@@ -177,7 +202,7 @@
         }
       ]
     }
-  ];
+  ]);
 </script>
 <template>
   <div class="components-guide">
@@ -223,11 +248,15 @@
         </a-col>
       </a-row>
       <a-row :gutter="{ xs: 8, sm: 8, md: 16, lg: 24 }">
-        <a-col v-for="(group, idx) in componentItem" :key="`componentItem-${idx}`" :span="8">
+        <a-col v-for="group in componentItem" :key="group.id" :span="8">
           <div class="compotent-wrap">
-            <div v-for="item in group" :key="group.group + item.label">
+            <div v-for="item in group.items" :key="item.id + item.label">
               <p class="component-group">{{ item.group }}</p>
-              <a-button class="components" v-for="comp in item.items" shape="round" :key="group.group + comp.label"
+              <a-button
+                class="components"
+                v-for="(comp, idx) in item.items"
+                shape="round"
+                :key="item.id + idx + comp.label"
                 >{{ comp.label }}<ArrowRightOutlined
               /></a-button>
             </div>
