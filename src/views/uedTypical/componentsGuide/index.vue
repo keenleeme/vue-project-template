@@ -11,11 +11,11 @@
           items: [
             {
               label: 'Popover 气泡提示',
-              url: '/'
+              url: 'http://10.20.114.19:8089/docs/Popover%20%E6%B0%94%E6%B3%A1%E6%8F%90%E7%A4%BA.html'
             },
             {
               label: 'Empty State 空状态提示',
-              url: '/'
+              url: 'http://10.20.114.19:8089/docs/Empty%20State%20%E7%A9%BA%E7%8A%B6%E6%80%81%E6%8F%90%E7%A4%BA.html'
             }
           ]
         },
@@ -25,11 +25,11 @@
           items: [
             {
               label: 'Popover 气泡提示',
-              url: '/'
+              url: 'http://10.20.114.19:8089/docs/Popover%20%E6%B0%94%E6%B3%A1%E6%8F%90%E7%A4%BA.html'
             },
             {
               label: 'Steps 步骤条引导',
-              url: '/'
+              url: 'http://10.20.114.19:8089/docs/Steps%20%E6%AD%A5%E9%AA%A4%E6%9D%A1%E5%BC%95%E5%AF%BC.html'
             }
           ]
         }
@@ -44,27 +44,27 @@
           items: [
             {
               label: 'Placeholder 占位符',
-              url: '/'
+              url: 'http://10.20.114.19:8089/docs/Placeholder%20%E5%8D%A0%E4%BD%8D%E7%AC%A6.html'
             },
             {
               label: 'Tooltips 工具提示',
-              url: '/'
+              url: 'http://10.20.114.19:8089/docs/Tooltips%E5%B7%A5%E5%85%B7%E6%8F%90%E7%A4%BA.html'
             },
             {
               label: 'Helper Text 帮助文本',
-              url: '/'
+              url: 'http://10.20.114.19:8089/docs/Help%20Documentation%20%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3.html'
             },
             {
               label: 'Popover 气泡提示',
-              url: '/'
+              url: 'http://10.20.114.19:8089/docs/Popover%20%E6%B0%94%E6%B3%A1%E6%8F%90%E7%A4%BA.html'
             },
             {
               label: 'Comparison Guide 对比指引',
-              url: '/'
+              url: 'http://10.20.114.19:8089/docs/Comparison%20Guide%20%E5%AF%B9%E6%AF%94%E6%8C%87%E5%BC%95.html'
             },
             {
               label: 'Empty State 空状态提示',
-              url: '/'
+              url: 'http://10.20.114.19:8089/docs/Empty%20State%20%E7%A9%BA%E7%8A%B6%E6%80%81%E6%8F%90%E7%A4%BA.html'
             }
           ]
         },
@@ -74,19 +74,19 @@
           items: [
             {
               label: 'Form Validation 表单校验提示',
-              url: '/'
+              url: 'http://10.20.114.19:8089/docs/Form%20Validation%E8%A1%A8%E5%8D%95%E6%A0%A1%E9%AA%8C%E6%8F%90%E7%A4%BA.html'
             },
             {
               label: 'Alert 告警',
-              url: '/'
+              url: 'http://10.20.114.19:8089/docs/Error%20Message%20%E9%94%99%E8%AF%AF%E6%B6%88%E6%81%AF%E6%8F%90%E7%A4%BA.html#alert%E5%91%8A%E8%AD%A6'
             },
             {
               label: 'Notification 通知',
-              url: '/'
+              url: 'http://10.20.114.19:8089/docs/Error%20Message%20%E9%94%99%E8%AF%AF%E6%B6%88%E6%81%AF%E6%8F%90%E7%A4%BA.html#notification%E5%85%A8%E5%B1%80%E9%80%9A%E7%9F%A5'
             },
             {
               label: 'Modal Dialog 模态对话框',
-              url: '/'
+              url: 'http://10.20.114.19:8089/docs/Error%20Message%20%E9%94%99%E8%AF%AF%E6%B6%88%E6%81%AF%E6%8F%90%E7%A4%BA.html#modaldialog%E6%A8%A1%E6%80%81%E5%AF%B9%E8%AF%9D%E6%A1%86'
             }
           ]
         }
@@ -101,7 +101,7 @@
           items: [
             {
               label: 'Help Documentation 帮助手册',
-              url: '/'
+              url: 'http://10.20.114.19:8089/docs/Helper%20Text%20%E5%B8%AE%E5%8A%A9%E6%96%87%E6%9C%AC.html'
             }
           ]
         },
@@ -111,7 +111,7 @@
           items: [
             {
               label: 'Help Documentation 帮助手册',
-              url: '/'
+              url: 'http://10.20.114.19:8089/docs/Helper%20Text%20%E5%B8%AE%E5%8A%A9%E6%96%87%E6%9C%AC.html'
             }
           ]
         },
@@ -121,7 +121,7 @@
           items: [
             {
               label: 'Help Documentation 帮助手册',
-              url: '/'
+              url: 'http://10.20.114.19:8089/docs/Helper%20Text%20%E5%B8%AE%E5%8A%A9%E6%96%87%E6%9C%AC.html'
             },
             {
               label: '小安小恒智能组件',
@@ -139,7 +139,7 @@
       items: [
         {
           label: 'Help Documentation 帮助手册',
-          url: '/'
+          url: 'http://10.20.114.19:8089/docs/Helper%20Text%20%E5%B8%AE%E5%8A%A9%E6%96%87%E6%9C%AC.html'
         }
       ]
     },
@@ -148,15 +148,15 @@
       items: [
         {
           label: 'Modal Dialog 模态对话框',
-          url: '/'
+          url: 'http://10.20.114.19:8089/docs/Error%20Message%20%E9%94%99%E8%AF%AF%E6%B6%88%E6%81%AF%E6%8F%90%E7%A4%BA.html#modaldialog%E6%A8%A1%E6%80%81%E5%AF%B9%E8%AF%9D%E6%A1%86'
         },
         {
           label: 'Popover 气泡提示',
-          url: '/'
+          url: 'http://10.20.114.19:8089/docs/Popover%20%E6%B0%94%E6%B3%A1%E6%8F%90%E7%A4%BA.html'
         },
         {
           label: 'Comparison Guide 对比指引',
-          url: '/'
+          url: 'http://10.20.114.19:8089/docs/Comparison%20Guide%20%E5%AF%B9%E6%AF%94%E6%8C%87%E5%BC%95.html'
         }
       ]
     },
@@ -165,19 +165,19 @@
       items: [
         {
           label: 'Helper Text 帮助文本',
-          url: '/'
+          url: 'http://10.20.114.19:8089/docs/Helper%20Text%20%E5%B8%AE%E5%8A%A9%E6%96%87%E6%9C%AC.html'
         },
         {
           label: 'Form Validation 表单校验提示',
-          url: '/'
+          url: 'http://10.20.114.19:8089/docs/Form%20Validation%E8%A1%A8%E5%8D%95%E6%A0%A1%E9%AA%8C%E6%8F%90%E7%A4%BA.html'
         },
         {
           label: 'Tooltips 工具提示',
-          url: '/'
+          url: 'http://10.20.114.19:8089/docs/Tooltips%E5%B7%A5%E5%85%B7%E6%8F%90%E7%A4%BA.html'
         },
         {
           label: 'Placeholder 占位符',
-          url: '/'
+          url: 'http://10.20.114.19:8089/docs/Placeholder%20%E5%8D%A0%E4%BD%8D%E7%AC%A6.html'
         }
       ]
     },
@@ -186,23 +186,28 @@
       items: [
         {
           label: 'Empty State 空状态提示',
-          url: '/'
+          url: 'http://10.20.114.19:8089/docs/Empty%20State%20%E7%A9%BA%E7%8A%B6%E6%80%81%E6%8F%90%E7%A4%BA.html'
         },
         {
           label: 'Alert 告警',
-          url: '/'
+          url: 'http://10.20.114.19:8089/docs/Error%20Message%20%E9%94%99%E8%AF%AF%E6%B6%88%E6%81%AF%E6%8F%90%E7%A4%BA.html#alert%E5%91%8A%E8%AD%A6'
         },
         {
           label: 'Notification 通知',
-          url: '/'
+          url: 'http://10.20.114.19:8089/docs/Error%20Message%20%E9%94%99%E8%AF%AF%E6%B6%88%E6%81%AF%E6%8F%90%E7%A4%BA.html#notification%E5%85%A8%E5%B1%80%E9%80%9A%E7%9F%A5'
         },
         {
           label: 'Steps 步骤条引导',
-          url: '/'
+          url: 'http://10.20.114.19:8089/docs/Steps%20%E6%AD%A5%E9%AA%A4%E6%9D%A1%E5%BC%95%E5%AF%BC.html'
         }
       ]
     }
   ]);
+
+  const goPage = (item) => {
+    if (item.url === '/') return;
+    window.open(item.url);
+  };
 </script>
 <template>
   <div class="components-guide">
@@ -257,6 +262,7 @@
                 v-for="(comp, idx) in item.items"
                 shape="round"
                 :key="item.id + idx + comp.label"
+                @click="goPage(comp)"
                 >{{ comp.label }}<ArrowRightOutlined
               /></a-button>
             </div>
@@ -272,7 +278,12 @@
       <div class="card-wrap">
         <div v-for="(item, idx) in axisItem" :key="`axisItem-${idx}`" class="card">
           <div :class="['index', [2, 3].includes(item.idx) ? 'index-odd' : 'index-even']">{{ item.idx }}</div>
-          <a-button v-for="comp in item.items" :key="`axisItem-${comp.label}`" class="components" shape="round"
+          <a-button
+            v-for="comp in item.items"
+            :key="`axisItem-${comp.label}`"
+            class="components"
+            shape="round"
+            @click="goPage(comp)"
             >{{ comp.label }}
             <ArrowRightOutlined />
           </a-button>
