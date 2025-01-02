@@ -208,6 +208,9 @@
     if (item.url === '/') return;
     window.open(item.url);
   };
+  const goPage1 = () => {
+    window.open('http://10.20.114.19:8089/docs/Comparison%20Guide%20%E5%AF%B9%E6%AF%94%E6%8C%87%E5%BC%95.html');
+  };
 </script>
 <template>
   <div class="components-guide">
@@ -219,7 +222,7 @@
           引导提示组件可以帮助用户快速理解和使用产品，提升操作效率和用户体验。<br />
           此知识库提供了统一的参考框架，便于制定引导策略，提高开发效率、确保一致性。
         </p>
-        <a-button type="default" class="bg-white" shape="round">
+        <a-button type="default" class="bg-white" shape="round" @click="goPage1">
           查看知识库
           <ArrowRightOutlined />
         </a-button>
