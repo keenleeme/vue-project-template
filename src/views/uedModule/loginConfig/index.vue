@@ -28,25 +28,27 @@
               <a-form-item v-if="loginConfig.bgMode === 'image'" :label="$t('I18N.layout.tuPian')">
                 <div class="uploader">
                   <a-image
-                    :src="loginConfig.bgImage"
+                    :src="loginConfig.mode === 'dark' ? loginConfig.bgImageDark : loginConfig.bgImage"
                     :preview="false"
                     :fallback="config.fallbackImg"
                     style="width: 142px; height: 100px"
                   />
                   <div>
                     <a-upload
-                      name="bgImage"
+                      :name="loginConfig.mode === 'dark' ? 'bgImage' : 'bgImageDark'"
                       :max-count="1"
                       :accept="config.format.join(',')"
                       :show-upload-list="false"
-                      :before-upload="(v: UploadFile) => beforeUpload(v, 'bgImage')"
-                      :custom-request="(v) => customRequest(v, 'bgImage')"
+                      :before-upload="
+                        (v: UploadFile) => beforeUpload(v, loginConfig.mode === 'dark' ? 'bgImage' : 'bgImageDark')
+                      "
+                      :custom-request="(v) => customRequest(v, loginConfig.mode === 'dark' ? 'bgImage' : 'bgImageDark')"
                     >
                       <a-button type="text">{{ $t('I18N.layout.shangChuan') }}</a-button>
                     </a-upload>
-                    <a-button type="text" @click="handleReset('bgImage')">{{
-                      $t('I18N.layout.huiFuChuChangTuPian')
-                    }}</a-button>
+                    <a-button type="text" @click="handleReset(loginConfig.mode === 'dark' ? 'bgImage' : 'bgImageDark')">
+                      {{ $t('I18N.layout.huiFuChuChangTuPian') }}
+                    </a-button>
                   </div>
                   <p>
                     {{ $t('I18N.layout.zhiNengShangChuan') }}{{ config.format.join('/').replace(/\./g, '')

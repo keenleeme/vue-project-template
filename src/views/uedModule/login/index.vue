@@ -2,7 +2,7 @@
   <ued-login-layout
     :forms="forms"
     :theme="loginConfig.mode"
-    :bgImage="loginConfig.bgImage"
+    :bgImage="loginConfig.mode === 'dark' ? loginConfig.bgImageDark : loginConfig.bgImage"
     :bg-video="loginConfig.bgVideo"
     :bg-attrs="{
       poster: loginConfig.bgPoster

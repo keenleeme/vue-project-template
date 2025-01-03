@@ -31,6 +31,8 @@ export class LoginConfigDTO {
 
   bgImage?: string = ''; // 登录页背景
 
+  bgImageDark?: string = ''; // 登录页背景 深色
+
   bgPoster?: string = ''; // 登录页视频封面
 
   bgVideo?: string = ''; // 登录页视频

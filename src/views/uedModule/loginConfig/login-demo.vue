@@ -3,7 +3,7 @@
     :class="{ 'is-small': !fullscreen }"
     :forms="forms"
     :theme="loginConfig.mode"
-    :bg-image="loginConfig.bgImage"
+    :bg-image="loginConfig.mode === 'dark' ? loginConfig.bgImageDark : loginConfig.bgImage"
     :bg-video="loginConfig.bgVideo"
     :bg-attrs="{
       poster: loginConfig.bgPoster
