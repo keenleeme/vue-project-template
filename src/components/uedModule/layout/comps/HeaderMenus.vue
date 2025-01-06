@@ -52,7 +52,7 @@
               <span @click="showHelpDocument">{{ $t('I18N.layout.bangZhuWenDang') }}</span>
             </a-menu-item>
             <a-menu-item>
-              <span @click="toComponentsGuide">{{ $t('I18N.layout.zuJianShiYongYinDao') }}</span>
+              <span @click="toComponentsGuide">{{ $t('I18N.layout.yinDaoTiShiZuJian') }}</span>
             </a-menu-item>
             <a-menu-item>
               <span @click="handleMenuClick({ url: '/vueTour' })">{{ $t('I18N.layout.ruMenYinDao') }}</span>

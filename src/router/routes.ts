@@ -143,7 +143,7 @@ const routes: RouteRecordRaw[] = [
     path: '/componentsGuide',
     component: () => import(/* webpackChunkName: "componentsGuide" */ '@/views/uedTypical/componentsGuide/index.vue'),
     meta: {
-      title: 'I18N.api.common.zuJianShiYongYinDao',
+      title: 'I18N.api.common.yinDaoTiShiZuJian',
       permissionId: 'base::workBench:index',
       fullScreen: true
     }

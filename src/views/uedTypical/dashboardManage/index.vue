@@ -49,7 +49,6 @@
     align-items: flex-start;
     padding: 24px 0 16px 16px;
     background: var(--color-bg-container);
-    border-top: 1px solid var(--color-component-stroke);
     .group {
       width: 208px;
       height: calc(100vh - 176px);

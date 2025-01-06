@@ -53,7 +53,7 @@
         </a-breadcrumb-item>
       </a-breadcrumb>
       <div class="page-title">
-        <i class="zq-icon zq-icon-arrow-left" v-if="activeBreadcrumb && activeBreadcrumb.length > 1"></i>
+        <i class="zq-icon zq-icon-arrow-left page-icon" v-if="activeBreadcrumb && activeBreadcrumb.length > 1"></i>
         <!-- <div class="page-title-text">{{ $t(`${$route.meta.title}`) }}</div> -->
         <!-- 改成获取面包屑的以后一级 -->
         <div class="page-title-text">{{ pageTitle }}</div>
@@ -285,11 +285,11 @@
       font-size: var(--font-size-xl);
       background-color: var(--color-bg-container);
       .page-icon {
-        color: var(--color-text-placeholder);
+        // color: var(--color-text-placeholder);
+        margin-right: 8px;
       }
       .page-title-text {
         color: var(--color-text-primarys);
-        margin-left: 8px;
       }
     }
   }

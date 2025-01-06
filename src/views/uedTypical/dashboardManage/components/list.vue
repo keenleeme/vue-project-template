@@ -207,7 +207,6 @@
     UploadOutlined,
     MoreOutlined
   } from '@ant-design/icons-vue';
-  import STable from '@surely-vue/table';
   import type { TableColumnType, TableProps } from 'ant-design-vue';
 
   type TableDataType = {
@@ -442,47 +441,5 @@
     color: var(--color-text-placeholder);
     line-height: 20px;
     margin-top: 16px;
-  }
-  :deep(.surely-table) {
-    .surely-table-heade r {
-      border-radius: 0;
-    }
-    &.surely-table-bordered {
-      border: 1px solid var(--color-component-border);
-      border-radius: 0;
-      border-bottom: none;
-    }
-    .surely-table-header-cell {
-      color: var(--color-text-primarys);
-      background: var(--color-bg-page);
-      border-bottom: 1px solid var(--color-component-border);
-    }
-    .surely-table-row {
-      color: var(--color-text-primarys);
-      background: var(--color-bg-container);
-      border-bottom: 1px solid var(--color-component-border);
-    }
-    .surely-table-row:hover {
-      background: var(--color-bg-secondarycontainer-hover);
-    }
-    .surely-table-horizontal-scroll + div {
-      visibility: hidden !important;
-    }
-    .surely-table-body-viewport-container > div:nth-child(1) {
-      position: relative;
-      z-index: 1000;
-      background: var(--color-bg-container);
-    }
-    .surely-table-horizontal-scroll-viewport + div {
-      visibility: hidden !important;
-    }
-    .surely-table-unselectable {
-      .surely-table-body-viewport-container + div {
-        clip: rect(0, 0, 0, 0);
-      }
-      + div {
-        visibility: hidden !important;
-      }
-    }
   }
 </style>

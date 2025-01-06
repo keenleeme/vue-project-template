@@ -43,6 +43,7 @@
   import { changeLocale } from '@international/vue3-i18n';
   // @ts-ignore
   import { setI18n } from '@ued-material/ued-wbc/store';
+  import { message } from 'ant-design-vue';
   import { storeToRefs } from 'pinia';
   import { useAppStore, useLoginStore } from '@/store';
   import { LoginConfigDTO, LogoModeEnums } from './types';
@@ -186,8 +187,14 @@
 
   const handleLogin = (e: CustomEvent) => {
     console.log(e.detail);
-    appStore.setToken('dsadsadsada');
-    router.replace('/');
+    const { data } = e.detail;
+    console.log('我是登录');
+    if (data.username === 'admin' && data.password === '2wsxVFR_') {
+      appStore.setToken('dsadsadsada');
+      router.replace('/');
+    } else {
+      message.error('账号或密码错误');
+    }
   };
 
   const handleLocaleChangeA = (e: CustomEvent<{ data: string }>) => {
