@@ -154,6 +154,7 @@
   import TopMenu from '@/components/uedModule/menu/topMenu.vue';
   import UserMenu from '@/components/uedModule/menu/userMenu.vue';
   import microApp from '@/micro/microApi';
+  import { microMenuNavigation } from '@/micro/microApi/helper';
   import { useAppStore, useThemeStore } from '@/store';
   import { LoginConfigDTO } from '@/views/uedModule/login/types';
 
@@ -366,7 +367,8 @@
 
   const router = useRouter();
   const handleMenuClick = (val: any) => {
-    router.push(val.url);
+    // router.push(val.url);
+    microMenuNavigation(val);
   };
 
   // 帮助手册
