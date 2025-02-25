@@ -114,7 +114,7 @@ export default defineStore('menus', () => {
 
   const activeId = computed(() => {
     console.log(22);
-    return activeMenus.value.length > 0 ? activeMenus.value[activeMenus.value.length - 1].id : '';
+    return activeMenus.value.length > 0 ? activeMenus.value[0].id : '';
   });
 
   const reset = () => {
