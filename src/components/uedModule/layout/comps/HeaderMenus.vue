@@ -41,7 +41,7 @@
       </template>
     </UedMapMenu>
 
-    <TopMenu v-if="config.layout !== 'side'" :menu-data="topMenuShowData" :data-props="dataProps"></TopMenu>
+    <TopMenu v-if="config.layout !== 'side'" :menu-data="menuData" :data-props="dataProps"></TopMenu>
 
     <div class="header-operates">
       <a-dropdown>
@@ -206,22 +206,6 @@
   watchEffect(() => {
     config.value = { ...themeConfig.value };
   });
-
-  const topMenuShowData = ref<MenuItem[]>([]);
-  watch(
-    () => themeConfig.value.layout,
-    (newLayout) => {
-      if (newLayout === 'mix') {
-        topMenuShowData.value = props.menuData.map((item: MenuItem) => {
-          const { children, ...rest } = item;
-          return { ...rest, children: [] };
-        });
-      } else {
-        topMenuShowData.value = props.menuData;
-      }
-    },
-    { immediate: true }
-  );
 
   const recentlyKeys = ref([]);
   const starKeys = ref([]);
