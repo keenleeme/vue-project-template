@@ -1,6 +1,7 @@
 import federation from '@originjs/vite-plugin-federation';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
+import { dasComponentResolver } from 'das-component';
 // import extra from 'fs-extra';
 import { resolve } from 'path';
 import UnoCSS from 'unocss/vite';
@@ -54,7 +55,8 @@ export default defineConfig({
       resolvers: [
         AntDesignVueResolver({
           importStyle: false // css in js
-        })
+        }),
+        dasComponentResolver()
       ]
     })
     // extra.copy(
