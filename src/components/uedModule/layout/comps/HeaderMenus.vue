@@ -154,7 +154,7 @@
   import TopMenu from '@/components/uedModule/menu/topMenu.vue';
   import UserMenu from '@/components/uedModule/menu/userMenu.vue';
   import microApp from '@/micro/microApi';
-  import { useAppStore, useThemeStore } from '@/store';
+  import { useLoginStore, useAppStore, useThemeStore } from '@/store';
   import { LoginConfigDTO } from '@/views/uedModule/login/types';
 
   interface MenuItem {
@@ -191,6 +191,7 @@
 
   const appStore = useAppStore();
   const themeStore = useThemeStore();
+  const loginStore = useLoginStore();
 
   const { themePanelVisible, appConfig } = storeToRefs(appStore);
   const loginConfig = ref<LoginConfigDTO>(new LoginConfigDTO(appConfig.value?.loginConfig));
@@ -387,6 +388,7 @@
   // 国际化切换
   const handleLocaleChangeA = ({ key }) => {
     themeConfig.value = { ...themeConfig.value, lang: key };
+    loginStore.set({ language: key });
     changeLocale(key);
     window.location.reload();
   };

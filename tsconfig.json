@@ -19,7 +19,7 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
     },
     "allowJs": true,
     "lib": ["es2020", "dom"],

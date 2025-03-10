@@ -7,7 +7,7 @@ export const [logoSize, logoSizeText] = [1024 * 500, '500KB']; // 500KB
 export const [videoSize, videoSizeText] = [1024 * 1024 * 5, '5MB']; // 5MB
 export const languages = [
   { label: '中文', value: 'zh' },
-  { label: '英文', value: 'en' }
+  { label: 'English', value: 'en' }
 ];
 
 export const formatValid: Record<FormUploadType, string[]> = {

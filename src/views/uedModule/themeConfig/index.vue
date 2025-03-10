@@ -106,10 +106,11 @@
   import { ThemePanelItem } from '@ued-material/menu';
   import { Modal, message } from 'ant-design-vue';
   import { storeToRefs } from 'pinia';
-  import { useThemeStore } from '@/store';
+  import { useLoginStore, useThemeStore } from '@/store';
   import BlockArea from '../../../components/uedModule/blockArea/index.vue';
 
   const themeStore = useThemeStore();
+  const loginStore = useLoginStore();
 
   const { themeConfig } = storeToRefs(themeStore);
   const config = ref({
@@ -191,6 +192,7 @@
   const handleLocaleChangeA = (key: string) => {
     changeConfig('lang', key);
     changeLocale(key);
+    loginStore.set({ language: key });
     window.location.reload();
   };
 </script>

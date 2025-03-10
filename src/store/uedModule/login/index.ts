@@ -1,6 +1,5 @@
 import { ref } from 'vue';
-// @ts-ignore
-import { setI18n, setTheme } from '@ued-material/ued-wbc/store';
+import { setI18n, setTheme } from '@ued-material/ued-wbc';
 import { defineStore } from 'pinia';
 import { LoginConfigDTO } from '@/views/uedModule/login/types';
 import { defaultLoginConfig } from './defaultConfig';
@@ -14,7 +13,7 @@ export default defineStore<'login', LoginConfigStore>(
     const loginConfig = ref<LoginConfigDTO>(new LoginConfigDTO({ ...defaultLoginConfig, ...ZQ_LOGIN_CONFIG }));
 
     function setLoginConfig() {
-      localStorage.setItem('ZQ_LOGIN_CONFIG', JSON.stringify(loginConfig.value));
+      localStorage.setItem(name, JSON.stringify(loginConfig.value));
       ZQ_LOGIN_CONFIG = loginConfig.value;
     }
 

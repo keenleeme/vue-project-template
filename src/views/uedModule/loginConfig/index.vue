@@ -182,6 +182,9 @@
                   </div>
                 </a-form-item>
               </a-form-item>
+              <a-form-item :label="$t('I18N.layout.huanYingBiaoTi')">
+                <a-input v-model:value="loginConfig.title"></a-input>
+              </a-form-item>
               <a-form-item :label="$t('I18N.layout.xianShiDuoYuYanQieHuan')">
                 <a-switch v-model:checked="loginConfig.showLanguage"></a-switch>
               </a-form-item>
@@ -246,9 +249,8 @@
 <script setup lang="ts">
   import { h } from 'vue';
   import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons-vue';
-  import type { FormDto } from '@ued-material/ued-wbc/dist/types/types';
-  // @ts-ignore
-  import { setTheme } from '@ued-material/ued-wbc/store';
+  import type { FormDto } from '@ued-material/ued-wbc';
+  import { setTheme } from '@ued-material/ued-wbc';
   import { UploadFile, message } from 'ant-design-vue';
   import { storeToRefs } from 'pinia';
   import { useLoginStore } from '@/store';
@@ -351,6 +353,7 @@
     if (dialogTitle.value === I18N.layout.yingYongDangQianSheZhi) {
       loginStore.set(loginConfig.value);
       dialogVisible.value = false;
+      // window.location.reload();
     } else {
       loginStore.set(defaultConfig.loginConfig);
       loginConfig.value = new LoginConfigDTO(defaultConfig.loginConfig);
@@ -358,9 +361,9 @@
     }
   };
 
-  onBeforeRouteLeave(() => {
-    loginStore.set(loginConfigStore.value);
-  });
+  // onBeforeRouteLeave(() => {
+  //   loginStore.set(loginConfigStore.value);
+  // });
 </script>
 
 <style lang="less" scoped>

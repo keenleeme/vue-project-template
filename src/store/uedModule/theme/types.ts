@@ -1,5 +1,5 @@
 /* eslint-disable max-classes-per-file */
-import type { ThemeType } from '@ued-material/ued-wbc/dist/types/types';
+import type { Theme } from '@ued-material/ued-wbc';
 
 export interface ThemeConfigType {
   // type: string; // 配置项类型 'mode'/'primaryColor'/'layout'/'others'
@@ -19,5 +19,5 @@ export interface ThemeConfigType {
   languageSwitch: boolean; // 语言切换
   helpCenter: boolean; // 帮助中心
 
-  loginMode?: ThemeType;
+  loginMode?: Theme;
 }

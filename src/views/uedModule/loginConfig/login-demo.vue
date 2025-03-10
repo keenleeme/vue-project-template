@@ -2,11 +2,14 @@
   <ued-login-layout
     :class="{ 'is-small': !fullscreen }"
     :forms="forms"
-    :theme="loginConfig.mode"
-    :bg-image="loginConfig.mode === 'dark' ? loginConfig.bgImageDark : loginConfig.bgImage"
-    :bg-video="loginConfig.bgVideo"
-    :bg-attrs="{
-      poster: loginConfig.bgPoster
+    :props="{
+      title: loginConfig.title,
+      theme: loginConfig.mode,
+      bgImage: loginConfig.mode === 'dark' ? loginConfig.bgImageDark : loginConfig.bgImage,
+      bgVideo: loginConfig.bgVideo,
+      bgAttrs: {
+        poster: loginConfig.bgPoster
+      }
     }"
   >
     <div v-if="loginConfig.logoMode" slot="logo">
@@ -15,7 +18,7 @@
         :src="loginConfig.logoUrl"
         :mode="loginConfig.logoMode"
         width="auto"
-        height="48px"
+        height="32px"
       >
         {{ [LogoModeEnums.IMAGE].includes(loginConfig.logoMode) ? '' : loginConfig.logoName }}
       </ued-logo>
@@ -36,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-  import type { FormDto } from '@ued-material/ued-wbc/dist/types/types';
+  import { FormDto } from '@ued-material/ued-wbc';
   import { LoginConfigDTO, LogoModeEnums } from '../login/types';
   import * as config from './index';
 

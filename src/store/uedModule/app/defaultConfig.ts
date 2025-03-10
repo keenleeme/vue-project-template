@@ -11,6 +11,7 @@ export const defaultConfig: AppConfigType = {
     mode: 'light',
     logoMode: LogoModeEnums.IMAGE,
     logoName: '智启vue3孵化器系统',
+    title: '欢迎登录',
     bgMode: 'image',
     bgImage,
     bgImageDark,

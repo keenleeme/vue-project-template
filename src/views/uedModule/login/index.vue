@@ -1,13 +1,16 @@
 <template>
   <ued-login-layout
-    :forms="forms"
-    :theme="loginConfig.mode"
-    :bgImage="loginConfig.mode === 'dark' ? loginConfig.bgImageDark : loginConfig.bgImage"
-    :bg-video="loginConfig.bgVideo"
-    :bg-attrs="{
-      poster: loginConfig.bgPoster
-    }"
     :class="loginConfig.language === 'en' ? 'loginEnglish' : ''"
+    :forms="forms"
+    :props="{
+      title: loginConfig.title,
+      theme: loginConfig.mode,
+      bgImage: loginConfig.mode === 'dark' ? loginConfig.bgImageDark : loginConfig.bgImage,
+      bgVideo: loginConfig.bgVideo,
+      bgAttrs: {
+        poster: loginConfig.bgPoster
+      }
+    }"
     @u-submit="handleLogin"
   >
     <ued-logo
@@ -41,19 +44,17 @@
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
   import { changeLocale } from '@international/vue3-i18n';
-  // @ts-ignore
-  import { setI18n } from '@ued-material/ued-wbc/store';
   import { message } from 'ant-design-vue';
   import { storeToRefs } from 'pinia';
-  import { useAppStore, useLoginStore } from '@/store';
+  import { useAppStore, useLoginStore, useThemeStore } from '@/store';
   import { LoginConfigDTO, LogoModeEnums } from './types';
 
   const appStore = useAppStore();
   const loginStore = useLoginStore();
   const router = useRouter();
-  const { appConfig } = storeToRefs(appStore);
+  const { themeConfig } = storeToRefs(useThemeStore());
 
-  const loginConfig = ref<LoginConfigDTO>(new LoginConfigDTO(appConfig.value.loginConfig));
+  const loginConfig = ref<LoginConfigDTO>(new LoginConfigDTO(loginStore.loginConfig));
   const language = ref();
   const forms = ref([
     {
@@ -83,7 +84,7 @@
           rules: {
             type: 'string',
             min: 6,
-            validator: (rule: any, value: any, cab: any) => {
+            validator: (_, value: any, cab: any) => {
               if (value.length < 6) {
                 cab(new Error(I18N.layout.miMaBuDeXiaoYu));
               }
@@ -199,34 +200,22 @@
 
   const handleLocaleChangeA = (e: CustomEvent<{ data: string }>) => {
     const locale = e.detail.data === 'en' ? 'en' : 'zh';
+    themeConfig.value = { ...themeConfig.value, lang: locale };
     changeLocale(locale);
     loginStore.set({ language: locale });
     window.location.reload();
   };
 
   watch(
-    appConfig.value.loginConfig,
+    loginStore.loginConfig,
     (v) => {
       loginConfig.value = Object.assign(loginConfig.value, v);
-      // loginConfig.value.language = themeConfig.value.lang;
       loginConfig.value.language = window.localStorage.getItem('das-intl-locale') || 'zh';
       language.value = loginConfig.value.language;
-      console.log('appConfig-changes:', loginConfig.value, loginConfig.value.language);
+      // console.log('appConfig-changes:', loginConfig.value, loginConfig.value.language);
     },
     { deep: true, immediate: true }
   );
-  watch(
-    loginConfig,
-    (v) => {
-      console.log('loginConfig-changes:', v);
-      // handleLocaleChangeA(v.language);
-    },
-    { deep: true }
-  );
-
-  onMounted(() => {
-    setI18n(loginConfig.value.language);
-  });
 </script>
 
 <style lang="less" scoped>

@@ -168,6 +168,7 @@ export default {
   wenzi: 'Text',
   shenSeBeiJingJianYiShiYong: 'Dark background suggests using a white logo',
   xianShiDuoYuYanQieHuan: 'Display multilingual switching',
+  huanYingBiaoTi: 'Welcome title',
   lianJieDiZhi: 'Url',
   shuaXin: 'Refresh',
   quanPing: 'Full screen',

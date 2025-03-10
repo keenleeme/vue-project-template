@@ -1,5 +1,5 @@
 /* eslint-disable max-classes-per-file */
-import type { ThemeType } from '@ued-material/ued-wbc/dist/types/types';
+import type { Theme } from '@ued-material/ued-wbc';
 
 export enum LogoModeEnums {
   IMAGE = 'image',
@@ -25,7 +25,7 @@ export class CopyrightVO {
 }
 
 export class LoginConfigDTO {
-  mode?: ThemeType = 'light'; // 主题风格
+  mode?: Theme = 'light'; // 主题风格
 
   bgMode?: 'image' | 'video' = 'image'; // 登录页背景模式
 
@@ -51,7 +51,7 @@ export class LoginConfigDTO {
 
   slogan?: string = ''; // 宣传标语
 
-  companyName?: string = ''; // 公司名称
+  title?: string = '智启'; // 公司名称
 
   copyright?: CopyrightVO[] = []; // 版权信息
 

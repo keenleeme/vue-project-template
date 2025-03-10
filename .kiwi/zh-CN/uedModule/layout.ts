@@ -170,6 +170,7 @@ export default {
   wenzi: '文字',
   shenSeBeiJingJianYiShiYong: '深色背景建议使用白色logo',
   xianShiDuoYuYanQieHuan: '显示多语言切换',
+  huanYingBiaoTi: '欢迎标题',
   lianJieDiZhi: '链接地址',
   shuaXin: '刷新',
   quanPing: '全屏',
