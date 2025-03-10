@@ -5,8 +5,10 @@
       <div v-for="item in cardData" :key="item.title" class="card-item">
         <img class="icon" :src="item.icon" />
         <div class="content">
-          <div class="title">{{ item.title }}({{ item.unit }})</div>
-          <div v-show="item.type !== 'time'" class="data">{{ item.value }}</div>
+          <div class="title">{{ item.title }}</div>
+          <div v-show="item.type !== 'time'" class="data">
+            <DasCountTo :end="item.value" :size="32" :weight="600" :suffix="` ${item.unit}`" :unit-size="12" />
+          </div>
           <div v-show="item.type === 'time'" class="data">
             <div v-for="child in item.timeValue" :key="child.label">
               {{ child.value }}<span>{{ child.label }}</span>

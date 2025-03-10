@@ -41,7 +41,7 @@
       </template>
     </UedMapMenu>
 
-    <TopMenu v-if="config.layout !== 'side'" :menu-data="topMenuShowData" :data-props="dataProps"></TopMenu>
+    <TopMenu v-if="config.layout !== 'side'" :menu-data="menuData" :data-props="dataProps"></TopMenu>
 
     <div class="header-operates">
       <a-dropdown>
@@ -145,7 +145,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, watchEffect, watch } from 'vue';
+  import { ref, watchEffect } from 'vue';
   import { changeLocale } from '@international/vue3-i18n';
   import { UedMapMenu, findNodeInTree } from '@ued-material/menu';
   import docsViewer from 'docs-viewer';
@@ -154,6 +154,7 @@
   import TopMenu from '@/components/uedModule/menu/topMenu.vue';
   import UserMenu from '@/components/uedModule/menu/userMenu.vue';
   import microApp from '@/micro/microApi';
+  import { microMenuNavigation } from '@/micro/microApi/helper';
   import { useLoginStore, useAppStore, useThemeStore } from '@/store';
   import { LoginConfigDTO } from '@/views/uedModule/login/types';
 
@@ -207,22 +208,6 @@
   watchEffect(() => {
     config.value = { ...themeConfig.value };
   });
-
-  const topMenuShowData = ref<MenuItem[]>([]);
-  watch(
-    () => themeConfig.value.layout,
-    (newLayout) => {
-      if (newLayout === 'mix') {
-        topMenuShowData.value = props.menuData.map((item: MenuItem) => {
-          const { children, ...rest } = item;
-          return { ...rest, children: [] };
-        });
-      } else {
-        topMenuShowData.value = props.menuData;
-      }
-    },
-    { immediate: true }
-  );
 
   const recentlyKeys = ref([]);
   const starKeys = ref([]);
@@ -367,7 +352,8 @@
 
   const router = useRouter();
   const handleMenuClick = (val: any) => {
-    router.push(val.url);
+    // router.push(val.url);
+    microMenuNavigation(val);
   };
 
   // 帮助手册

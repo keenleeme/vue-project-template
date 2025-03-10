@@ -103,6 +103,7 @@
 <script lang="ts" setup>
   import { UedMapMenu, findNodeInTree } from '@ued-material/menu';
   import { storeToRefs } from 'pinia';
+  import { microMenuNavigation } from '@/micro/microApi/helper';
   import { useThemeStore } from '@/store';
 
   const props = defineProps({
@@ -303,10 +304,10 @@
     console.log(val);
   };
 
-  const router = useRouter();
+  // const router = useRouter();
   const handleMenuClick = (val: any) => {
-    console.log(val);
-    router.push(val.url);
+    // router.push(val.url);
+    microMenuNavigation(val);
   };
 
   // 国际化
