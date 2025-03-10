@@ -1641,17 +1641,17 @@
     sortablejs "^1.15.1"
     vue-demi latest
 
-"@ued-material/ued-wbc-vue3@0.0.0":
-  version "0.0.0"
-  resolved "https://ci.das-security.cn/repository/ah_npm/@ued-material/ued-wbc-vue3/-/ued-wbc-vue3-0.0.0.tgz#cfc36c7e9fefcad77441e07132bb6211bd15e0b8"
-  integrity sha512-y8b8F8CVz5KsNrWFwuq1dQIBt3p8XZLeSLYubN7op2FJR8JbMKzKT/5yauZJ18rRyouRJUep2lc9wYZZhInPtA==
+"@ued-material/ued-wbc-vue3@0.2.0":
+  version "0.2.0"
+  resolved "https://ci.das-security.cn/repository/ah_npm/@ued-material/ued-wbc-vue3/-/ued-wbc-vue3-0.2.0.tgz#2c1af66d663ad5494f0dd4fb1540c95f6c38de9b"
+  integrity sha512-8yS22i/j3tNbxutJgXjGaso1NJIogt3hIx0x7aqMFDKHZLm3uSggO5FnuOOYsNYtONIGxmK5cRBHq0vy/8caMA==
   dependencies:
-    "@ued-material/ued-wbc" "^0.0.0"
+    "@ued-material/ued-wbc" "^0.2.0"
 
-"@ued-material/ued-wbc@^0.0.0":
-  version "0.0.0"
-  resolved "https://ci.das-security.cn/repository/ah_npm/@ued-material/ued-wbc/-/ued-wbc-0.0.0.tgz#d94890ac96873d05d62aaf7cd6843295978e3dcb"
-  integrity sha512-jXlMUZFeYq2o/F2iqXpp+XAa9A6i6u+zhRQ0grH5HjD8tgfKNfP8zLOqEiMQo4qYkYhGX7uw9eIkuybmvrNv4A==
+"@ued-material/ued-wbc@^0.2.0":
+  version "0.2.0"
+  resolved "https://ci.das-security.cn/repository/ah_npm/@ued-material/ued-wbc/-/ued-wbc-0.2.0.tgz#62c4baf62d2e7b4de7ac895dd98ea18e20dcdf0a"
+  integrity sha512-dCv9A3PZmRzskpt36V1/7STFZZ0JYKNy9udf4FNOB0u1JRBi9uAoBWecb5uCVR21gKw9dOqprSnEmt3xI4bVKw==
   dependencies:
     "@stencil-community/less" "^2.0.0"
     "@stencil/core" "^4.23.0"
