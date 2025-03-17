@@ -274,5 +274,6 @@ export default {
   guaZaiFenZu: '挂载分组',
   qiYongZhuangTai: '启用状态',
   chuangJianShiJian: '创建时间',
-  gengXingeShiJian: '更新时间'
+  gengXingeShiJian: '更新时间',
+  aiWeb: 'AI Web'
 };

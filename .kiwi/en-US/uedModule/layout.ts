@@ -282,5 +282,6 @@ export default {
   guaZaiFenZu: 'Grouping',
   qiYongZhuangTai: 'Open Status',
   chuangJianShiJian: 'Create time',
-  gengXingeShiJian: 'Update time'
+  gengXingeShiJian: 'Update time',
+  aiWeb: 'AI Web',
 };

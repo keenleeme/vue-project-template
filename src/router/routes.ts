@@ -2,6 +2,16 @@ import type { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
   {
+    name: 'base::ai-web',
+    path: '/ai-web',
+    component: () => import('@/views/aiWeb/index.vue'),
+    meta: {
+      title: 'I18N.layout.aiWeb',
+      permissionId: 'base::workBench:index',
+      fullScreen: true
+    }
+  },
+  {
     name: 'base::work-list',
     path: '/work-list',
     component: () => import('@/views/uedTypical/baseList/index.vue'),
