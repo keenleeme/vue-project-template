@@ -394,33 +394,26 @@
           const text = response?.text || '';
           const ask = response?.ask || '';
 
-          // 如果收到新的 taskId，添加到数组并保存到本地存储
-          if (response.taskId && !this.taskIds.includes(response.taskId)) {
-            this.taskIds.push(response.taskId);
-            localStorage.setItem('taskIds', JSON.stringify(this.taskIds));
-            this.currentTaskId = response.taskId;
-          }
-
           // 处理 followup 类型的消息
-          if (type === 'ask' && ask === 'followup') {
-            // 添加 AI 的追问消息
-            this.currentMessages.push({
-              id: response.ts || Date.now(),
-              type: 'ai',
-              text,
-              html: md.render(text),
-              isGenerating: false,
-              status: null
-            });
+          // if (type === 'ask' && ask === 'followup') {
+          //   // 添加 AI 的追问消息
+          //   this.currentMessages.push({
+          //     id: response.ts || Date.now(),
+          //     type: 'ai',
+          //     text,
+          //     html: md.render(text),
+          //     isGenerating: false,
+          //     status: null
+          //   });
 
-            // 重置生成状态
-            this.isGenerating = false;
-            if (this.currentGeneratingMessage) {
-              this.currentGeneratingMessage.isGenerating = false;
-              this.currentGeneratingMessage.status = null;
-            }
-            return;
-          }
+          //   // 重置生成状态
+          //   this.isGenerating = false;
+          //   if (this.currentGeneratingMessage) {
+          //     this.currentGeneratingMessage.isGenerating = false;
+          //     this.currentGeneratingMessage.status = null;
+          //   }
+          //   return;
+          // }
 
           // 处理 api_req_failed 错误
           if (ask === 'api_req_failed') {
@@ -471,6 +464,11 @@
 
             case 'create_task':
               this.taskId = text;
+              this.currentTaskId = text;
+              if (text && !this.taskIds.includes(text)) {
+                this.taskIds.push(text);
+                localStorage.setItem('taskIds', JSON.stringify(this.taskIds));
+              }
               break;
 
             case 'api_req_started':
@@ -503,7 +501,19 @@
               break;
 
             case 'ask':
-              currentAIMessage.status = '代码生成中...';
+              if (ask === 'followup') {
+                // currentAIMessage.html = md.render(text);
+                currentAIMessage.text = `${this.lastText}\n${text}`.trim();
+                currentAIMessage.html = md.render(currentAIMessage.text);
+                // 重置生成状态
+                this.isGenerating = false;
+                if (this.currentGeneratingMessage) {
+                  this.currentGeneratingMessage.isGenerating = false;
+                  this.currentGeneratingMessage.status = null;
+                }
+              } else {
+                currentAIMessage.status = '代码生成中...';
+              }
               break;
 
             case 'install':
