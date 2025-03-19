@@ -342,7 +342,7 @@
     modelFormVisible.value = true;
   };
 
-  const handleDeleteModel = async (record: ModelConfigResponseData) => {
+  const handleDeleteModel = async () => {
     // try {
     //   await modelApi.deleteModelConfig(record.id);
     //   message.success('删除成功');
@@ -400,6 +400,12 @@
   );
 
   onMounted(() => {
+    // 先获取模型
+    const savedSettings = localStorage.getItem('chatSettings');
+    if (savedSettings) {
+      const parsedSettings = JSON.parse(savedSettings);
+      settings.normalChatModel = String(parsedSettings.apiKey);
+    }
     if (props.open) {
       fetchModelConfigs();
     }

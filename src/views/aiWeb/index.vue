@@ -77,6 +77,11 @@
             <!-- 用户消息 -->
             <template v-if="message.type === 'user_question'">
               {{ message.text }}
+
+              <!-- 用户消息的复制按钮 -->
+              <!-- <a-button type="text" class="copy-btn" @click="copyMessage(message.text)">
+                <template #icon><copy-outlined /></template>
+              </a-button> -->
             </template>
 
             <!-- AI 回答 -->
@@ -93,11 +98,6 @@
                 </div>
               </div>
 
-              <!-- 状态消息 -->
-              <div v-if="message.status" class="status-message">
-                <loading-outlined spin v-if="message.isGenerating" />
-                {{ message.status }}
-              </div>
               <!-- AI 回答内容 -->
               <div v-if="message.text" class="ai-content markdown-body">
                 <div v-html="message.html"></div>
@@ -112,7 +112,6 @@
                       <fullscreen-exit-outlined v-if="message.isFullscreen" />
                       <fullscreen-outlined v-else />
                     </template>
-                    {{ message.isFullscreen ? '退出全屏' : '全屏' }}
                   </a-button>
                 </div>
                 <div class="iframe-wrapper" :class="{ fullscreen: message.isFullscreen }">
@@ -125,7 +124,6 @@
                     @click="toggleIframeFullscreen(message)"
                   >
                     <template #icon><fullscreen-exit-outlined /></template>
-                    退出全屏
                   </a-button>
                 </div>
               </div>
@@ -134,19 +132,23 @@
               <div v-if="message.completionText" class="completion-text markdown-body">
                 <div v-html="message.completionText"></div>
               </div>
-
+              <!-- 状态消息 -->
+              <div v-if="message.status" class="status-message">
+                <loading-outlined spin v-if="message.isGenerating" />
+                {{ message.status }}
+              </div>
               <!-- 生成中动画 -->
               <div v-if="message.isGenerating && !message.status" class="generating-indicator">
                 <span class="dot"></span>
                 <span class="dot"></span>
                 <span class="dot"></span>
               </div>
-            </template>
 
-            <!-- 复制按钮 -->
-            <a-button v-if="message.type === 'say'" type="text" class="copy-btn" @click="copyMessage(message.text)">
-              <template #icon><copy-outlined /></template>
-            </a-button>
+              <!-- AI消息的复制按钮 -->
+              <a-button v-if="message.text" type="text" class="copy-btn" @click="copyMessage(message.text)">
+                <template #icon><copy-outlined /></template>
+              </a-button>
+            </template>
           </div>
         </div>
       </div>
@@ -166,11 +168,7 @@
           <!-- 操作按钮区域 -->
           <div class="input-actions">
             <!-- 文件上传按钮 -->
-            <a-upload
-              accept=".txt,.pdf,.doc,.docx,.json,.jpg,.jpeg,.png,.gif"
-              :before-upload="handleFileUpload"
-              :show-upload-list="false"
-            >
+            <a-upload accept=".json,.jpg,.jpeg,.png," :before-upload="handleFileUpload" :show-upload-list="false">
               <a-button type="text" class="upload-btn">
                 <template #icon><upload-outlined /></template>
               </a-button>
@@ -282,7 +280,8 @@
         taskIds: [], // 存储任务ID数组
         historyData: [], // 存储历史对话数据
         chatSettings: null, // 存储聊天设置
-        currentMessages: [] // 当前对话消息列表
+        currentMessages: [], // 当前对话消息列表
+        lastTime: '' // 上次发送时间
       };
     },
     // 监听器
@@ -313,7 +312,13 @@
     created() {
       // 从本地存储加载设置
       const savedSettings = localStorage.getItem('chatSettings');
-      this.chatSettings = savedSettings ? JSON.parse(savedSettings) : {};
+      this.chatSettings = savedSettings ? JSON.parse(savedSettings) : null;
+
+      // 页面加载时获取选中的模型
+      if (this.chatSettings) {
+        const selectedModel = this.chatSettings;
+        localStorage.setItem('chatSettings', JSON.stringify(selectedModel));
+      }
 
       // 从本地存储加载 taskIds
       const savedTaskIds = localStorage.getItem('taskIds');
@@ -394,27 +399,6 @@
           const text = response?.text || '';
           const ask = response?.ask || '';
 
-          // 处理 followup 类型的消息
-          // if (type === 'ask' && ask === 'followup') {
-          //   // 添加 AI 的追问消息
-          //   this.currentMessages.push({
-          //     id: response.ts || Date.now(),
-          //     type: 'ai',
-          //     text,
-          //     html: md.render(text),
-          //     isGenerating: false,
-          //     status: null
-          //   });
-
-          //   // 重置生成状态
-          //   this.isGenerating = false;
-          //   if (this.currentGeneratingMessage) {
-          //     this.currentGeneratingMessage.isGenerating = false;
-          //     this.currentGeneratingMessage.status = null;
-          //   }
-          //   return;
-          // }
-
           // 处理 api_req_failed 错误
           if (ask === 'api_req_failed') {
             message.error(text || '请求失败');
@@ -455,6 +439,14 @@
             this.currentMessages.push(currentAIMessage);
             this.currentGeneratingMessage = currentAIMessage;
           }
+
+          if (this.lastTime !== response.ts) {
+            console.log('lastTime', this.lastTime);
+            // 保存上一次的文本和推理文本
+            this.lastText = currentAIMessage.text;
+            this.lastTextReasoning = currentAIMessage.reasoning;
+          }
+          this.lastTime = response?.ts || '';
           switch (messageType) {
             case 'error':
               message.error(text || message || '发生错误');
@@ -472,8 +464,8 @@
               break;
 
             case 'api_req_started':
-              this.lastText = currentAIMessage.text;
-              this.lastTextReasoning = currentAIMessage.reasoning;
+              // this.lastText = currentAIMessage.text;
+              // this.lastTextReasoning = currentAIMessage.reasoning;
               currentAIMessage.status = '正在思考中...';
               break;
 
@@ -775,7 +767,7 @@
           reader.onload = (e) => {
             const fileInfo = {
               type: this.getFileType(file.name),
-              text: e.target?.result,
+              content: e.target?.result,
               name: file.name,
               size: file.size
             };
@@ -907,6 +899,7 @@
     width: 0;
     padding: 0;
     border: none;
+    display: none;
   }
 
   .logo {
@@ -919,21 +912,37 @@
   }
 
   .sidebar-header {
-    padding: 20px;
+    padding: 16px;
     border-bottom: 1px solid #f0f0f0;
     display: flex;
     flex-direction: column;
     gap: 12px;
+    min-width: 0;
   }
 
   .header-buttons {
     display: flex;
     gap: 8px;
     align-items: center;
+    min-width: 0;
   }
 
   .new-chat-btn {
     flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 12px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .new-chat-btn :deep(.anticon) {
+    margin-right: 4px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
   }
 
   .history-list {
@@ -1013,18 +1022,21 @@
     margin-bottom: 24px;
     max-width: 85%;
     gap: 12px;
+    position: relative;
   }
 
   .message-avatar {
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #f0f2f5;
-    font-size: 20px;
+    font-size: 22px;
     flex-shrink: 0;
+    margin-top: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
 
   .message.user_question {
@@ -1037,22 +1049,26 @@
   .message.ask,
   .message.install,
   .message.build,
-  .message.iframe {
+  .message.iframe,
+  .message.ai {
     margin-right: auto;
   }
 
   .message.user_question .message-content {
     background-color: #1890ff;
     color: white;
+    border-top-right-radius: 4px;
   }
 
   .message.say .message-content,
   .message.reasoning .message-content,
   .message.ask .message-content,
   .message.install .message-content,
-  .message.build .message-content {
+  .message.build .message-content,
+  .message.ai .message-content {
     background-color: #f5f5f5;
     color: #333;
+    border-top-left-radius: 4px;
   }
 
   .message-content {
@@ -1061,16 +1077,42 @@
     position: relative;
     word-break: break-word;
     line-height: 1.6;
-    max-width: calc(100% - 48px);
+    max-width: calc(100% - 52px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    align-self: flex-start;
+  }
+
+  .ai-content {
+    margin-top: 8px;
+  }
+
+  .copy-btn {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    opacity: 0.5;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .message.user_question .copy-btn {
     color: white;
+    opacity: 0.7;
+  }
+
+  .copy-btn:hover {
+    opacity: 1;
   }
 
   .message.user_question .message-avatar {
     background-color: #1890ff;
     color: white;
+    box-shadow: 0 2px 8px rgba(24, 144, 255, 0.3);
   }
 
   .message:not(.user_question) .message-avatar {
@@ -1078,19 +1120,21 @@
     color: #1890ff;
   }
 
-  .message.user_question :deep(.v-md-preview) {
-    color: white;
+  /* 状态消息样式改进 */
+  .status-message {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #1890ff;
+    font-size: 14px;
+    padding: 8px 12px;
+    background-color: rgba(24, 144, 255, 0.1);
+    border-radius: 6px;
+    margin-bottom: 8px;
   }
 
-  .message.user_question :deep(.v-md-preview code) {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: white;
-  }
-
-  .message.user_question .uploaded-files .ant-tag {
-    background-color: rgba(255, 255, 255, 0.2);
-    border-color: transparent;
-    color: white;
+  .status-message .anticon {
+    font-size: 16px;
   }
 
   .chat-input-area {
@@ -1218,21 +1262,6 @@
     background-color: #fff;
     border-radius: 6px;
     border: 1px solid #e8e8e8;
-  }
-
-  .status-message {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #1890ff;
-    font-size: 14px;
-    padding: 8px 12px;
-    background-color: rgba(24, 144, 255, 0.1);
-    border-radius: 6px;
-  }
-
-  .status-message .anticon {
-    font-size: 16px;
   }
 
   .preview-iframe {
@@ -1383,15 +1412,35 @@
     border: 1px solid #e8e8e8;
     border-radius: 4px;
     overflow: hidden;
+    transition: all 0.3s ease;
   }
 
   .iframe-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 12px;
+    padding: 4px 8px;
     background-color: #fafafa;
     border-bottom: 1px solid #e8e8e8;
+    transition: all 0.2s ease;
+  }
+
+  .iframe-header .ant-btn {
+    padding: 2px;
+    height: 22px;
+    width: 22px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    opacity: 0.7;
+    transition: all 0.2s ease;
+  }
+
+  .iframe-header .ant-btn:hover {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.05);
   }
 
   .iframe-wrapper {
@@ -1413,6 +1462,7 @@
     width: 100%;
     height: 500px;
     border: none;
+    transition: all 0.3s ease;
   }
 
   .iframe-wrapper.fullscreen .preview-iframe {
@@ -1422,15 +1472,33 @@
   /* 全屏时的退出按钮样式 */
   .exit-fullscreen-btn {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    bottom: 12px;
+    right: 12px;
     z-index: 1001;
-    opacity: 0.8;
-    transition: opacity 0.3s;
+    opacity: 0.6;
+    transition: all 0.3s ease;
+    padding: 0;
+    height: 28px;
+    width: 28px;
+    font-size: 12px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    transform: scale(0.9);
   }
 
   .exit-fullscreen-btn:hover {
     opacity: 1;
+    background-color: rgba(0, 0, 0, 0.8);
+    transform: scale(1);
+  }
+
+  .exit-fullscreen-btn :deep(.anticon) {
+    font-size: 14px;
   }
 
   /* 添加 completion 文本样式 */
@@ -1448,5 +1516,13 @@
 
   .completion-text ul {
     padding-left: 20px;
+  }
+
+  .chat-title {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-left: 8px;
   }
 </style>
