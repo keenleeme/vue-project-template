@@ -561,24 +561,10 @@
           console.error('处理WebSocket消息时出错:', error);
         }
       },
-
-      // 创建新对话
-      async createNewChat() {
-        try {
-          // 先关闭当前对话
-          if (this.ws && this.ws.readyState === WebSocket.OPEN) {
-            await this.ws.send(
-              JSON.stringify({
-                taskId: this.currentTaskId || '',
-                type: 'cancel',
-                isAbandoned: true,
-                chatSettings: this.chatSettings
-              })
-            );
-            this.closeWebSocket();
-          }
-          // 发送历史记录到后端
-          const res = await axios.post('/api/ai/history', {
+      // 查询历史
+      async getHistory() {
+         // 发送历史记录到后端
+         const res = await axios.post('/api/ai/history', {
             taskIds: this.taskIds
           });
 
@@ -607,11 +593,28 @@
               })
               .filter(Boolean); // 过滤掉解析失败的记录
           }
+      },
+
+      // 创建新对话
+      async createNewChat() {
+        try {
+          // 先关闭当前对话
+          if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+            await this.ws.send(
+              JSON.stringify({
+                taskId: this.currentTaskId || '',
+                type: 'cancel',
+                isAbandoned: true,
+                chatSettings: this.chatSettings
+              })
+            );
+            this.closeWebSocket();
+          }
+         this.getHistory()
           console.log('historyData', this.historyData);
 
           // 重置状态
           this.currentTaskId = '';
-          // this.taskId = ''; // 重置taskId
           this.currentMessages = [];
           this.inputMessage = '';
           this.uploadedFiles = [];
@@ -639,12 +642,12 @@
         if (this.isGenerating) {
           this.stopGeneration(true);
         }
+        this.getHistory()
         // 重新发送消息 告诉AI 切换对话
         this.resendMessage(taskId);
         const chat = this.historyData.find((c) => c.taskId === taskId);
         if (chat) {
           this.currentTaskId = chat.taskId;
-          // this.taskId = chat.taskId; // 保存当前taskId
           this.currentMessages = [];
           
           let currentAiMessage = null;
@@ -986,11 +989,18 @@
           // 显示加载中状态
           const hide = message.loading('正在写入...', 0);
           
+          // {
+          //   taskId: this.currentTaskId,
+          //   messageId: message.id,
+          //   iframeUrl: message.iframeUrl
+          // }
           // 调用后端接口
-          const response = await axios.post('/api/ai/quickWrite', {
-            taskId: this.currentTaskId,
-            messageId: message.id,
-            iframeUrl: message.iframeUrl
+          const response = await axios.post('/file/write-file', {
+            path: message.iframeUrl,
+            content: message.completionText,
+            type: 'vue',
+            start: message.start,
+            end: message.end
           });
 
           // 隐藏加载状态
