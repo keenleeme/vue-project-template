@@ -77,6 +77,13 @@
             <!-- 用户消息 -->
             <template v-if="message.type === 'user_question'">
               {{ message.text }}
+              
+              <!-- 添加文件显示区域 -->
+              <div v-if="message.files && message.files.length" class="uploaded-files-display">
+                <div v-for="file in message.files" :key="file.name" class="file-item">
+                  <file-outlined /> {{ file.name }}
+                </div>
+              </div>
 
               <!-- 用户消息的复制按钮 -->
               <!-- <a-button type="text" class="copy-btn" @click="copyMessage(message.text)">
@@ -107,12 +114,20 @@
               <div v-if="message.iframeUrl" class="iframe-container">
                 <div class="iframe-header">
                   <span>预览</span>
-                  <a-button type="text" @click="toggleIframeFullscreen(message)">
-                    <template #icon>
-                      <fullscreen-exit-outlined v-if="message.isFullscreen" />
-                      <fullscreen-outlined v-else />
-                    </template>
-                  </a-button>
+                  <div class="iframe-actions">
+                    <!-- 添加一键写入按钮 -->
+                    <a-button type="primary" size="small" @click="handleQuickWrite(message)" class="quick-write-btn">
+                      <template #icon><edit-outlined /></template>
+                      一键写入
+                    </a-button>
+                    <!-- 现有的全屏按钮 -->
+                    <a-button type="text" @click="toggleIframeFullscreen(message)">
+                      <template #icon>
+                        <fullscreen-exit-outlined v-if="message.isFullscreen" />
+                        <fullscreen-outlined v-else />
+                      </template>
+                    </a-button>
+                  </div>
                 </div>
                 <div class="iframe-wrapper" :class="{ fullscreen: message.isFullscreen }">
                   <iframe :src="message.iframeUrl" class="preview-iframe" sandbox="allow-same-origin allow-scripts">
@@ -145,9 +160,9 @@
               </div>
 
               <!-- AI消息的复制按钮 -->
-              <a-button v-if="message.text" type="text" class="copy-btn" @click="copyMessage(message.text)">
+              <!-- <a-button v-if="message.text" type="text" class="copy-btn" @click="copyMessage(message.text)">
                 <template #icon><copy-outlined /></template>
-              </a-button>
+              </a-button> -->
             </template>
           </div>
         </div>
@@ -225,9 +240,11 @@
     UpOutlined,
     LoadingOutlined,
     FullscreenOutlined,
-    FullscreenExitOutlined
+    FullscreenExitOutlined,
+    FileOutlined,
+    EditOutlined
   } from '@ant-design/icons-vue';
-  import { message } from 'ant-design-vue';
+  import { message, Modal } from 'ant-design-vue';
   // 添加这行
   import axios from 'axios';
   // 导入消息提示组件
@@ -260,7 +277,9 @@
       LoadingOutlined,
       FullscreenOutlined,
       FullscreenExitOutlined,
-      SettingModal
+      SettingModal,
+      FileOutlined,
+      EditOutlined
     },
     // 组件数据
     data() {
@@ -272,7 +291,7 @@
         ws: null, // WebSocket实例
         isGenerating: false, // 是否正在生成回答
         currentGeneratingMessage: null, // 当前正在生成的消息
-        taskId: '', // 任务ID
+        // taskId: '', // 任务ID
         uploadedFiles: [], // 已上传的文件列表
         showSettingModal: false, // 是否显示设置弹窗
         lastTextReasoning: '', // 上次文本推理的内容
@@ -281,7 +300,7 @@
         historyData: [], // 存储历史对话数据
         chatSettings: null, // 存储聊天设置
         currentMessages: [], // 当前对话消息列表
-        lastTime: '' // 上次发送时间
+        lastTime: '', // 上次发送时间
       };
     },
     // 监听器
@@ -377,7 +396,7 @@
           if (this.ws.readyState === WebSocket.OPEN) {
             this.ws.send(
               JSON.stringify({
-                taskId: this.taskId || '',
+                taskId: this.currentTaskId || '',
                 type: 'cancel',
                 isAbandoned: true,
                 chatSettings
@@ -407,6 +426,9 @@
               this.currentGeneratingMessage.isGenerating = false;
             }
             return;
+          }
+          if (ask === 'resume_completed_task') {
+            return
           }
 
           // 如果没有 type，但有 ask，则使用 ask 作为 type
@@ -455,7 +477,7 @@
               break;
 
             case 'create_task':
-              this.taskId = text;
+              this.currentTaskId = text;
               this.currentTaskId = text;
               if (text && !this.taskIds.includes(text)) {
                 this.taskIds.push(text);
@@ -585,9 +607,11 @@
               })
               .filter(Boolean); // 过滤掉解析失败的记录
           }
+          console.log('historyData', this.historyData);
 
           // 重置状态
           this.currentTaskId = '';
+          // this.taskId = ''; // 重置taskId
           this.currentMessages = [];
           this.inputMessage = '';
           this.uploadedFiles = [];
@@ -601,8 +625,8 @@
           this.currentMessages.push({
             id: Date.now(),
             type: 'ai',
-            text: '你好！我是AI助手，有什么我可以帮你的吗？',
-            html: '<p>你好！我是AI助手，有什么我可以帮你的吗？</p>'
+            text: '您好！我是一个专业的智能问答系统。我可以帮您解答问题、编写代码、分析数据，让我们开始愉快的对话吧！',
+            html: '<p>您好！我是一个专业的智能问答系统。我可以帮您解答问题、编写代码、分析数据，让我们开始愉快的对话吧！</p>'
           });
         } catch (error) {
           console.error('创建新对话失败:', error);
@@ -615,20 +639,90 @@
         if (this.isGenerating) {
           this.stopGeneration(true);
         }
+        // 重新发送消息 告诉AI 切换对话
         this.resendMessage(taskId);
         const chat = this.historyData.find((c) => c.taskId === taskId);
         if (chat) {
           this.currentTaskId = chat.taskId;
+          // this.taskId = chat.taskId; // 保存当前taskId
           this.currentMessages = [];
+          
+          let currentAiMessage = null;
+          
           chat.messages.forEach((element) => {
-            element.status = null;
             // 用户发送的消息
-            if (element.say === 'user_question' || element.say === 'text' || element.ask === 'followup') {
-              element.type = element.say === 'user_question' ? 'user_question' : 'text';
-              element.html = md.render(element.text);
-              this.currentMessages.push(element);
+            if (element.say === 'user_question' || element.say === 'user_feedback') {
+              // 如果之前有AI消息，先把它加入到消息列表中
+              if (currentAiMessage) {
+                this.currentMessages.push({...currentAiMessage, status: null});
+             
+                currentAiMessage = null;
+              }
+              
+              // 添加用户消息
+              const userMessage = {
+                id: element.ts || Date.now(),
+                type: 'user_question',
+                text: element.text,
+                html: md.render(element.text)
+              };
+              this.currentMessages.push(userMessage);
+            } else {
+              // AI的消息
+              if (!currentAiMessage) {
+                currentAiMessage = {
+                  id: element.ts || Date.now(),
+                  type: 'ai',
+                  text: '',
+                  html: '',
+                  reasoning: '',
+                  reasoningHtml: '',
+                  isReasoningExpanded: true,
+                  isFullscreen: false,
+                  completionText: '',
+                  iframeUrl: '',
+                  commandOutput: []
+                };
+              }
+              
+              // 处理不同类型的AI消息
+              switch (element.say) {
+                case 'reasoning':
+                  currentAiMessage.reasoning = (currentAiMessage.reasoning + '\n' + element.text).trim();
+                  currentAiMessage.reasoningHtml = md.render(currentAiMessage.reasoning);
+                  break;
+                case 'text':
+                  currentAiMessage.text = (currentAiMessage.text + '\n' + element.text).trim();
+                  currentAiMessage.html = md.render(currentAiMessage.text);
+                  break;
+                case 'command_output':
+                  currentAiMessage.commandOutput.push(element.text);
+                  break;
+                case 'iframe':
+                  currentAiMessage.iframeUrl = element.text;
+                  break;
+                case 'completion_result':
+                  currentAiMessage.completionText = md.render(element.text);
+                  break;
+                default:
+                  // 处理其他类型的消息
+                  if (element.ask === 'followup') {
+                    currentAiMessage.text = (currentAiMessage.text + '\n' + element.text).trim();
+                    currentAiMessage.html = md.render(currentAiMessage.text);
+                  } else if (element.ask === 'completion_result') {
+                    currentAiMessage.completionText = md.render(element.text);
+                  }
+                  break;
+              }
             }
           });
+          
+          // 如果最后还有未添加的AI消息，添加到消息列表中
+          if (currentAiMessage) {
+            const aiMessage = {...currentAiMessage, status: ''};
+            this.currentMessages = [...this.currentMessages, aiMessage];
+          }
+          
           // 重置其他状态
           this.isGenerating = false;
           this.currentGeneratingMessage = null;
@@ -639,10 +733,29 @@
 
       // 删除对话
       deleteChat(taskId) {
-        this.chatHistory = this.chatHistory.filter((c) => c.taskId !== taskId);
-        if (this.currentTaskId === taskId) {
-          this.currentTaskId = this.chatHistory[0]?.taskId || null;
-        }
+        // 添加删除确认
+        Modal.confirm({
+          title: '确认删除',
+          content: '确定要删除这个对话吗？删除后无法恢复。',
+          okText: '确认',
+          cancelText: '取消',
+          onOk: () => {
+            // 从本地存储的 taskIds 中移除当前 taskId
+            this.taskIds = this.taskIds.filter(id => id !== taskId);
+            // 更新本地存储
+            localStorage.setItem('taskIds', JSON.stringify(this.taskIds));
+            
+            // 如果删除的是当前对话，重置当前对话ID
+            if (this.currentTaskId === taskId) {
+              this.currentTaskId = '';
+            }
+            
+            // 重新获取历史记录
+            this.createNewChat();
+            // 显示删除成功提示
+            message.success('对话已删除');
+          }
+        });
       },
 
       // 重新开启对话
@@ -670,6 +783,7 @@
 
         // 创建用户消息
         const userMessage = {
+          taskId: this.currentTaskId || '',
           id: Date.now(),
           type: 'user_question',
           text: this.inputMessage,
@@ -694,7 +808,7 @@
 
           // 构建发送给后端的数据格式
           const payload = {
-            taskId: this.taskId || '',
+            taskId: this.currentTaskId || '',
             type: 'user_question',
             message: this.inputMessage,
             files: this.uploadedFiles,
@@ -720,18 +834,15 @@
             aiModelConfig: this.chatSettings
           })
         );
-        //       {
-        //   "taskId":"",
-        //   "type":"yesButtonClicked",
-        // }
       },
 
       // 修改停止生成方法
       stopGeneration(isAbandoned) {
+        this.isGenerating = false;
         if (this.ws && this.ws.readyState === WebSocket.OPEN) {
           this.ws.send(
             JSON.stringify({
-              taskId: this.taskId || '',
+              taskId: this.currentTaskId || '',
               type: 'cancel',
               isAbandoned,
               aiModelConfig: this.chatSettings
@@ -854,7 +965,7 @@
           // 发送取消请求
           this.ws.send(
             JSON.stringify({
-              taskId: this.taskId || '',
+              taskId: this.currentTaskId || '',
               type: 'cancel',
               isAbandoned: true,
               chatSettings
@@ -867,7 +978,36 @@
       updateChatSettings(settings) {
         this.chatSettings = settings;
         localStorage.setItem('chatSettings', JSON.stringify(settings));
-      }
+      },
+
+      // 添加一键写入方法
+      async handleQuickWrite(message) {
+        try {
+          // 显示加载中状态
+          const hide = message.loading('正在写入...', 0);
+          
+          // 调用后端接口
+          const response = await axios.post('/api/ai/quickWrite', {
+            taskId: this.currentTaskId,
+            messageId: message.id,
+            iframeUrl: message.iframeUrl
+          });
+
+          // 隐藏加载状态
+          hide();
+
+          if (response.data.code === 0) {
+            // 写入成功
+            message.success('写入成功');
+          } else {
+            // 写入失败
+            message.error(response.data.message || '写入失败');
+          }
+        } catch (error) {
+          console.error('一键写入失败:', error);
+          message.error('写入失败，请稍后重试');
+        }
+      },
     }
   });
 </script>
@@ -1419,28 +1559,28 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 4px 8px;
+    padding: 8px 12px;
     background-color: #fafafa;
     border-bottom: 1px solid #e8e8e8;
-    transition: all 0.2s ease;
   }
 
-  .iframe-header .ant-btn {
-    padding: 2px;
-    height: 22px;
-    width: 22px;
-    font-size: 12px;
+  .iframe-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .quick-write-btn {
     display: flex;
     align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-    opacity: 0.7;
-    transition: all 0.2s ease;
+    gap: 4px;
+    font-size: 12px;
+    height: 24px;
+    padding: 0 8px;
   }
 
-  .iframe-header .ant-btn:hover {
-    opacity: 1;
-    background-color: rgba(0, 0, 0, 0.05);
+  .quick-write-btn :deep(.anticon) {
+    font-size: 12px;
   }
 
   .iframe-wrapper {
@@ -1524,5 +1664,25 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     margin-left: 8px;
+  }
+
+  /* 添加文件显示样式 */
+  .uploaded-files-display {
+    margin-top: 8px;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+  }
+
+  .file-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 0;
+    font-size: 13px;
+  }
+
+  .file-item :deep(.anticon) {
+    font-size: 14px;
   }
 </style>
