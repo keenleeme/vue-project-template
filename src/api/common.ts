@@ -238,3 +238,7 @@ export async function refreshToken(): Promise<any> {
     refreshToken: localStorage.getItem('refreshToken')
   });
 }
+
+export async function verifyToken(): Promise<any> {
+  return createService.get('/api/users/verify-token');
+}
