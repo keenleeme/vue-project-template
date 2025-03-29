@@ -14,7 +14,8 @@
 <script setup lang="ts">
   import { UedUserMenu } from '@ued-material/menu';
   import { storeToRefs } from 'pinia';
-  import { useAppStore, useMenusStore, useThemeStore } from '@/store';
+  import { onLogout, refreshToken } from '@/api/common';
+  import { useUserStore, useMenusStore, useThemeStore } from '@/store';
 
   const props = defineProps({
     menuData: {
@@ -54,19 +55,16 @@
     placement: {
       type: String,
       default: 'bottom'
-    },
-    currentUserName: {
-      type: String,
-      default: 'Admin'
     }
   });
   const menusStore = useMenusStore();
-  const appStore = useAppStore();
+  const userStore = useUserStore();
   const themeStore = useThemeStore();
   const { themeConfig } = storeToRefs(themeStore);
   const config = ref({
     ...themeConfig.value
   });
+  const currentUserName = computed(() => userStore.userInfo.username || 'Admin');
   // 监听主题配置
   watchEffect(() => {
     config.value = { ...themeConfig.value };
@@ -74,9 +72,10 @@
 
   // 退出登录
   const router = useRouter();
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await onLogout();
     menusStore.reset();
-    appStore.reset();
+    userStore.reset();
     themeStore.reset();
     router.push('/login');
   };
@@ -85,6 +84,10 @@
   const emit = defineEmits(['userMenuClick']);
   const userMenuClick = (item: any) => {
     console.log('>>userMenuClick>>', item);
+    if (item.id === 2) {
+      refreshToken();
+      return;
+    }
     emit('userMenuClick', item);
     handleLogout();
   };

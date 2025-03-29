@@ -1,3 +1,4 @@
+import createService from '@/service';
 import { AppConfigType } from '@/store/uedModule/app/types';
 import { defaultLoginConfig } from '@/store/uedModule/login/defaultConfig';
 import type { MenuType } from '@/store/uedModule/menus/types';
@@ -214,4 +215,26 @@ export async function getWebsiteConfig(): Promise<
       ...ZQ_LOGIN_CONFIG
     }
   };
+}
+
+export async function onLogin(data: any): Promise<any> {
+  return createService.post('/api/users/login', data);
+}
+
+export async function onRegister(data: any): Promise<any> {
+  return createService.post('/api/users/register', data);
+}
+
+export async function onLogout(): Promise<any> {
+  return createService.post('/api/users/logout');
+}
+
+export async function getCaptcha(): Promise<any> {
+  return createService.get('/api/users/captcha');
+}
+
+export async function refreshToken(): Promise<any> {
+  return createService.post('/api/users/refresh-token', {
+    refreshToken: localStorage.getItem('refreshToken')
+  });
 }

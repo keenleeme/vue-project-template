@@ -2,13 +2,13 @@ import { message } from 'ant-design-vue';
 import axios, { AxiosInstance } from 'axios';
 import type { InternalAxiosRequestConfig, AxiosResponse } from 'axios';
 import router from '@/router';
-import pinia, { useAppStore, useMenusStore } from '@/store';
+import pinia, { useUserStore, useMenusStore } from '@/store';
 import { CreateAxiosConfig, ResponseType, RequestConfigType } from './types';
 
 export default class Request {
   private instance: AxiosInstance;
 
-  private appStore = useAppStore(pinia);
+  private userStore = useUserStore(pinia);
 
   private menusStroe = useMenusStore(pinia);
 
@@ -16,9 +16,9 @@ export default class Request {
     this.instance = axios.create(createConfig);
     this.instance.interceptors.request.use(
       (config: InternalAxiosRequestConfig) => {
-        const { token } = this.appStore;
+        const { token } = this.userStore;
         if (token) {
-          config.headers.Authorization = token;
+          config.headers.Authorization = `Bearer ${token}`;
         }
         return config;
       },
@@ -40,7 +40,7 @@ export default class Request {
             break;
           case 401:
             msg = '未授权，请重新登录(401)';
-            this.appStore.reset();
+            this.userStore.reset();
             this.menusStroe.reset();
             router.replace('/login');
             break;

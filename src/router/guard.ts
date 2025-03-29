@@ -1,22 +1,23 @@
 import { Router } from 'vue-router';
 import { getMenus, getPermissions } from '@/api/common';
-import { useAppStore, useMenusStore } from '@/store';
+import { useAppStore, useMenusStore, useUserStore } from '@/store';
 
-export const WHITE_LIST: string[] = ['/404', '/login'];
+export const WHITE_LIST: string[] = ['/404', '/login', '/ai-agent'];
 
 export function setupPermissionGuard(router: Router) {
   router.beforeEach(async (to, from, next) => {
     const appStore = useAppStore();
     const menusStore = useMenusStore();
+    const userStore = useUserStore();
     if (to.path !== '/themeConfig') {
       appStore.setThemePanelVisible(false);
     }
     if (WHITE_LIST.includes(to.path)) {
-      if (to.path === '/login' && appStore.token) {
+      if (to.path === '/login' && userStore.token) {
         next({ path: '/' });
       }
       next();
-    } else if (appStore.token) {
+    } else if (userStore.token) {
       // 判断是否登录
       // 判断是否获取菜单权限
       if (!menusStore.menusData.length) {
@@ -24,9 +25,9 @@ export function setupPermissionGuard(router: Router) {
         menusStore.setMenus(menusData);
       }
       // 判断是否获取权限 ids;
-      if (!appStore.permissionIds.length) {
+      if (!userStore.permissionIds.length) {
         const permissionIds = await getPermissions();
-        appStore.setPermissionIds(permissionIds);
+        userStore.setPermissionIds(permissionIds);
       }
       if (to.path === '/') {
         const firstMenu = menusStore.findFistSiderMenu();
@@ -37,7 +38,7 @@ export function setupPermissionGuard(router: Router) {
         next('/404');
         return;
       }
-      if (!appStore.permissionIds.includes(to.meta.permissionId as string) && !to.meta.public) {
+      if (!userStore.permissionIds.includes(to.meta.permissionId as string) && !to.meta.public) {
         next('/404');
         return;
       }

@@ -80,6 +80,10 @@
     },
     userMenu: [
       {
+        id: 2,
+        name: '测试'
+      },
+      {
         id: 1,
         name: I18N.layout.tuiChuDengLu
       }

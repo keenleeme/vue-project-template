@@ -49,11 +49,9 @@ export default defineStore<'login', LoginConfigStore>(
     };
   },
   {
-    persist: [
-      {
-        key: process.env.TOKEN_NAME || 'token',
-        paths: ['token']
-      }
-    ]
+    persist: {
+      key: 'login-store',
+      storage: localStorage
+    }
   }
 );

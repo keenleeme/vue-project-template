@@ -137,6 +137,7 @@ export default {
   gongNengKaiFaZhong: 'Under development, stay tuned~',
   zhangHaoMiMaDengLu: 'Log in with account and password',
   miMaBuDeXiaoYu: 'The password must not be less than 6 characters',
+  miMaBuXiangTong: 'The password is not the same',
   yanZhengMa: 'Captcha',
   shouJiYanZhengMaDengLu: 'Log in with mobile phone verification code',
   shouJiHaoMa: 'Phone number',
