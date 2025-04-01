@@ -242,3 +242,11 @@ export async function refreshToken(): Promise<any> {
 export async function verifyToken(): Promise<any> {
   return createService.get('/api/users/verify-token');
 }
+
+export async function getLoginRedirectUrl(): Promise<any> {
+  return createService.get('/api/users/dingtalk/login-url');
+}
+
+export async function fetchDingTalkUserInfo(code: string): Promise<any> {
+  return createService.get(`/api/users/dingtalk/callback?code=${encodeURIComponent(code)}`);
+}

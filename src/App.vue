@@ -20,6 +20,7 @@
   const appStore = useAppStore();
   const loginStore = useLoginStore();
   const userStore = useUserStore();
+
   watch(
     userStore.$state,
     (state) => {

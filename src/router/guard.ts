@@ -1,14 +1,26 @@
 import { Router } from 'vue-router';
-import { getMenus, getPermissions } from '@/api/common';
+import { getMenus, getPermissions, fetchDingTalkUserInfo } from '@/api/common';
 import { useAppStore, useMenusStore, useUserStore } from '@/store';
 
 export const WHITE_LIST: string[] = ['/404', '/login', '/ai-agent'];
 
 export function setupPermissionGuard(router: Router) {
-  router.beforeEach(async (to, from, next) => {
+  router.beforeEach(async (to, _, next) => {
+    const userStore = useUserStore();
+    if (to.query) {
+      const { code, state } = to.query;
+      if (code && state === 'relogin') {
+        const res = await fetchDingTalkUserInfo(code as string);
+        if (res.code === 200) {
+          const { data } = res;
+          const { accessToken, user } = data;
+          userStore.setToken(accessToken);
+          userStore.setUserInfo(user);
+        }
+      }
+    }
     const appStore = useAppStore();
     const menusStore = useMenusStore();
-    const userStore = useUserStore();
     if (to.path !== '/themeConfig') {
       appStore.setThemePanelVisible(false);
     }
@@ -45,8 +57,8 @@ export function setupPermissionGuard(router: Router) {
       next();
     } else {
       next({
-        path: '/login',
-        query: { redirect: to.fullPath }
+        path: '/login'
+        // query: { redirect: to.fullPath }
       });
     }
   });

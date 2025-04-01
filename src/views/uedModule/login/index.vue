@@ -44,7 +44,7 @@
   import { changeLocale } from '@international/vue3-i18n';
   import { message } from 'ant-design-vue';
   import { storeToRefs } from 'pinia';
-  import { onLogin, onRegister, getCaptcha } from '@/api/common';
+  import { onLogin, onRegister, getCaptcha, getLoginRedirectUrl } from '@/api/common';
   import { useAppStore, useLoginStore, useThemeStore, useUserStore } from '@/store';
   import { LoginConfigDTO, LogoModeEnums } from './types';
 
@@ -222,22 +222,17 @@
     },
     {
       type: 'qr-ding',
-      name: I18N.layout.dingDingSaoMa
-      // items: [
-      //   {
-      //     api: (value: any) => {
-      //       return new Promise((resolve) => {
-      //         resolve(
-      //           `https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=25e07c0b-a65e-49cb-a524-1b4ead9cfc6b&response_type=code&scope=snsapi_login&state=STATE&redirect_uri=REDIRECT_URI`
-      //         );
-      //       });
-      //     }
-      //   }
-      // ]
-    },
-    {
-      type: 'qr-wx',
-      name: I18N.layout.weiXinSaoMa
+      name: I18N.layout.dingDingSaoMa,
+      items: [
+        {
+          api: () => {
+            return new Promise(async (resolve) => {
+              await handleLoginRedirect();
+              resolve(true);
+            });
+          }
+        }
+      ]
     }
   ]);
   const options = ref([
@@ -287,6 +282,13 @@
     changeLocale(locale);
     loginStore.set({ language: locale });
     window.location.reload();
+  };
+
+  const handleLoginRedirect = async () => {
+    const res = await getLoginRedirectUrl();
+    if (res.code === 200) {
+      window.location.href = res.data.redirectUrl;
+    }
   };
 
   watch(
