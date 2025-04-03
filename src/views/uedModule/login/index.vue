@@ -2,11 +2,15 @@
   <ued-login-layout
     ref="loginLayout"
     :forms="forms"
-    :theme="loginConfig.mode"
-    :bgImage="loginConfig.mode === 'dark' ? loginConfig.bgImageDark : loginConfig.bgImage"
-    :bg-video="loginConfig.bgVideo"
-    :bg-attrs="{
-      poster: loginConfig.bgPoster
+    :mode="forms[0].type"
+    :props="{
+      title: loginConfig.title,
+      theme: loginConfig.mode,
+      bgImage: loginConfig.mode === 'dark' ? loginConfig.bgImageDark : loginConfig.bgImage,
+      bgVideo: loginConfig.bgVideo,
+      bgAttrs: {
+        poster: loginConfig.bgPoster
+      }
     }"
     :class="loginConfig.language === 'en' ? 'loginEnglish' : ''"
     @u-submit="handleSubmit"
