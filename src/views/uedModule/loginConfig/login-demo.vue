@@ -2,6 +2,7 @@
   <ued-login-layout
     :class="{ 'is-small': !fullscreen }"
     :forms="forms"
+    :mode="forms[0].type"
     :props="{
       title: loginConfig.title,
       theme: loginConfig.mode,

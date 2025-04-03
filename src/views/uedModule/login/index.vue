@@ -2,6 +2,7 @@
   <ued-login-layout
     :class="loginConfig.language === 'en' ? 'loginEnglish' : ''"
     :forms="forms"
+    :mode="forms[0].type"
     :props="{
       title: loginConfig.title,
       theme: loginConfig.mode,
