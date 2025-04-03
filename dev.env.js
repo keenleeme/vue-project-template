@@ -13,7 +13,7 @@ module.exports = {
       secure: false
     },
     '^/api/users': {
-      target: 'http://localhost:3000',
+      target: 'http://10.11.42.160:3000',
       changeOrigin: true,
       secure: false,
       logLevel: 'debug'
