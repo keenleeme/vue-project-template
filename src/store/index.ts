@@ -7,7 +7,7 @@ import useThemeStore from './uedModule/theme';
 import useUserStore from './uedModule/user';
 
 const pinia = createPinia();
-pinia.use(piniaPluginPersistedstate); // 使用 pinia 数据持久化插件
+pinia.use(piniaPluginPersistedstate);
 
 export { useAppStore, useLoginStore, useUserStore, useMenusStore, useThemeStore };
 export default pinia;

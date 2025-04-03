@@ -5,7 +5,6 @@ import '@unocss/reset/normalize.css';
 // import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/reset.css';
 import 'virtual:uno.css';
-// import useDasComponent from '@/libs/hooks/useDasComponent';
 import '@/theme/theme.css';
 import '@/theme/themeAntdReset.css';
 import App from './App.vue';
@@ -28,8 +27,6 @@ app.config.globalProperties.$oem = {
 i18n(app);
 // app.use(Antd);
 
-// 引用das-component, 没有全局引入所有组件，到 useDasComponent 下引入所需组件
-// useDasComponent(app);
 app.use(ComponentLibrary);
 
 (async () => {

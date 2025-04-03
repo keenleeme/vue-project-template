@@ -139,7 +139,7 @@
 
   const handleLogin = (e) => {
     console.log('登录事件', e);
-    appStore.setToken('dsadsadsada');
+    // appStore.setToken('dsadsadsada');
     router.replace('/');
   };
 </script>

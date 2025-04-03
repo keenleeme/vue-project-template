@@ -1,25 +1,29 @@
-import { ref } from 'vue';
+import { ref, Ref } from 'vue';
 import { defineStore } from 'pinia';
 import { useThemeStore } from '@/store';
 import { LoginConfigDTO } from '@/views/uedModule/login/types';
 import { defaultConfig } from './defaultConfig';
 import { AppConfigType } from './types';
 
-export default defineStore(
+interface AppStore {
+  appConfig: Ref<AppConfigType>;
+  watermark: Ref<string>;
+  themePanelVisible: Ref<boolean>;
+  activeModuleId: Ref<string>;
+  fullScreen: Ref<boolean>;
+  setAppConfig: (config: AppConfigType) => void;
+  setLoginConfig: (config: LoginConfigDTO) => void;
+  setWatermark: (watermarkStr: string) => void;
+  setThemePanelVisible: (show: boolean) => void;
+  changeActiveModuleId: (id: string) => void;
+  setFullScreen: (isFull: boolean) => void;
+}
+
+export default defineStore<'app', AppStore>(
   'app',
   () => {
     const themeStore = useThemeStore();
 
-    // token
-    const token = ref<string>();
-    const setToken = (tokenStr: string) => {
-      token.value = tokenStr;
-    };
-    // 权限 code
-    const permissionIds = ref<string[]>([]);
-    const setPermissionIds = (ids: string[]) => {
-      permissionIds.value = ids;
-    };
     // 系统配置
     const appConfig = ref<AppConfigType>({ ...defaultConfig });
     const setAppConfig = (config: AppConfigType) => {
@@ -52,17 +56,8 @@ export default defineStore(
     const setFullScreen = (isFull: boolean) => {
       fullScreen.value = isFull;
     };
-    // 重置数据
-    const reset = () => {
-      token.value = '';
-      permissionIds.value = [];
-    };
+
     return {
-      reset,
-      token,
-      setToken,
-      permissionIds,
-      setPermissionIds,
       appConfig,
       setAppConfig,
       setLoginConfig,
@@ -77,12 +72,9 @@ export default defineStore(
     };
   },
   {
-    // 持久化存储
-    persist: [
-      {
-        key: process.env.TOKEN_NAME || 'token',
-        paths: ['token']
-      }
-    ]
+    persist: {
+      key: 'app-store',
+      storage: localStorage
+    }
   }
 );

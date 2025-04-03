@@ -13,12 +13,23 @@
   import { getWebsiteConfig } from './api/common';
   import Layout from './components/uedModule/layout/index.vue';
   import RobotInit from './components/uedModule/robot/index';
-  import { useAppStore, useLoginStore, useThemeStore } from './store';
+  import { useAppStore, useLoginStore, useThemeStore, useUserStore } from './store';
   import { AppConfigType } from './store/uedModule/app/types';
   import themeAlgorithm from './theme/themeAlgorithm';
 
   const appStore = useAppStore();
   const loginStore = useLoginStore();
+  const userStore = useUserStore();
+
+  watch(
+    userStore.$state,
+    (state) => {
+      console.log('state', state);
+      // 每当状态发生变化时，将整个 state 持久化到本地存储。
+      localStorage.setItem('user-store', JSON.stringify(state));
+    },
+    { deep: true }
+  );
   const loadingWrapper: any = document.getElementById('loader');
   if (loadingWrapper) {
     loadingWrapper.parentNode.removeChild(loadingWrapper);

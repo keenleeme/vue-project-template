@@ -139,6 +139,7 @@ export default {
   gongNengKaiFaZhong: '功能开发中，敬请期待~',
   zhangHaoMiMaDengLu: '账号密码登录',
   miMaBuDeXiaoYu: '密码不得小于6位',
+  miMaBuXiangTong: '密码不一致',
   yanZhengMa: '验证码',
   shouJiYanZhengMaDengLu: '手机验证码登录',
   shouJiHaoMa: '手机号码',

@@ -1,6 +1,6 @@
 <template>
   <ued-login-layout
-    :class="loginConfig.language === 'en' ? 'loginEnglish' : ''"
+    ref="loginLayout"
     :forms="forms"
     :mode="forms[0].type"
     :props="{
@@ -12,7 +12,8 @@
         poster: loginConfig.bgPoster
       }
     }"
-    @u-submit="handleLogin"
+    :class="loginConfig.language === 'en' ? 'loginEnglish' : ''"
+    @u-submit="handleSubmit"
   >
     <ued-logo
       slot="logo"
@@ -42,21 +43,26 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { ref, watch } from 'vue';
   import { useRouter } from 'vue-router';
   import { changeLocale } from '@international/vue3-i18n';
   import { message } from 'ant-design-vue';
   import { storeToRefs } from 'pinia';
-  import { useAppStore, useLoginStore, useThemeStore } from '@/store';
+  import { onLogin, onRegister, getCaptcha, getLoginRedirectUrl } from '@/api/common';
+  import { useAppStore, useLoginStore, useThemeStore, useUserStore } from '@/store';
   import { LoginConfigDTO, LogoModeEnums } from './types';
 
   const appStore = useAppStore();
   const loginStore = useLoginStore();
+  const userStore = useUserStore();
   const router = useRouter();
   const { themeConfig } = storeToRefs(useThemeStore());
 
   const loginConfig = ref<LoginConfigDTO>(new LoginConfigDTO(loginStore.loginConfig));
   const language = ref();
+  const resiterPassword = ref('');
+  const loginLayout = ref();
+  const captchaId = ref('');
   const forms = ref([
     {
       type: 'login-password',
@@ -97,7 +103,15 @@
           type: 'ued-code-image',
           field: 'verifyCode',
           label: I18N.layout.yanZhengMa,
-          icon: 'code'
+          icon: 'code',
+          api: () => {
+            return new Promise((resolve) => {
+              getCaptcha().then((res) => {
+                captchaId.value = res.data.captchaId;
+                resolve(res.data.captchaBase64);
+              });
+            });
+          }
         }
       ]
     },
@@ -158,8 +172,45 @@
         { type: 'ued-input', field: 'phone', label: I18N.layout.shouJiHaoMa, icon: 'phone' },
         { type: 'ued-code', field: 'code', label: I18N.layout.shouJiYanZhengMa, icon: 'code-phone' },
         { type: 'ued-input', field: 'username', label: I18N.common.username, icon: 'user' },
-        { type: 'ued-password', field: 'pwd', label: I18N.common.password, icon: 'password' },
-        { type: 'ued-password', field: 'pwdConfirm', label: I18N.layout.queRenMiMa, icon: 'password' }
+        {
+          type: 'ued-password',
+          field: 'password',
+          label: I18N.common.password,
+          icon: 'password',
+          rules: [
+            {
+              type: 'string',
+              min: 6,
+              required: true,
+              validator: (rule: any, value: any, cab: any) => {
+                resiterPassword.value = value;
+                if (value.length < 6) {
+                  cab(new Error(I18N.layout.miMaBuDeXiaoYu));
+                }
+                cab();
+              }
+            }
+          ]
+        },
+        {
+          type: 'ued-password',
+          field: 'passwordConfirm',
+          label: I18N.layout.queRenMiMa,
+          icon: 'password',
+          rules: [
+            {
+              type: 'string',
+              min: 6,
+              required: true,
+              validator: (rule: any, value: any, cab: any) => {
+                if (value !== resiterPassword.value) {
+                  cab(new Error(I18N.layout.miMaBuXiangTong));
+                }
+                cab();
+              }
+            }
+          ]
+        }
       ]
     },
     {
@@ -175,11 +226,17 @@
     },
     {
       type: 'qr-ding',
-      name: I18N.layout.dingDingSaoMa
-    },
-    {
-      type: 'qr-wx',
-      name: I18N.layout.weiXinSaoMa
+      name: I18N.layout.dingDingSaoMa,
+      items: [
+        {
+          api: () => {
+            return new Promise(async (resolve) => {
+              await handleLoginRedirect();
+              resolve(true);
+            });
+          }
+        }
+      ]
     }
   ]);
   const options = ref([
@@ -187,16 +244,40 @@
     { label: 'English', value: 'en' }
   ]);
 
-  const handleLogin = (e: CustomEvent) => {
+  const handleSubmit = (e: CustomEvent) => {
     console.log(e.detail);
     const { data } = e.detail;
-    console.log('我是登录');
-    if (data.username === 'admin' && data.password === '2wsxVFR_') {
-      appStore.setToken('dsadsadsada');
-      router.replace('/');
-    } else {
-      message.error('账号或密码错误');
+    if (e.detail.type === 'login-password') {
+      handleLogin(data);
+    } else if (e.detail.type === 'registry-phone') {
+      handleRegistry(data);
     }
+  };
+
+  const handleLogin = (data) => {
+    onLogin({ ...data, captchaId: captchaId.value }).then((res) => {
+      if (res.code === 200) {
+        userStore.setToken(res.data.accessToken);
+        userStore.setUserInfo(res.data.user);
+        message.success(res.message);
+        setTimeout(() => {
+          router.replace('/');
+        }, 1000);
+      } else {
+        message.error(res.message);
+      }
+    });
+  };
+
+  const handleRegistry = (data) => {
+    onRegister(data).then((res) => {
+      if (res.code === 200) {
+        message.success(res.message);
+        loginLayout.value.setType('login-password');
+      } else {
+        message.error(res.message);
+      }
+    });
   };
 
   const handleLocaleChangeA = (e: CustomEvent<{ data: string }>) => {
@@ -205,6 +286,13 @@
     changeLocale(locale);
     loginStore.set({ language: locale });
     window.location.reload();
+  };
+
+  const handleLoginRedirect = async () => {
+    const res = await getLoginRedirectUrl();
+    if (res.code === 200) {
+      window.location.href = res.data.redirectUrl;
+    }
   };
 
   watch(
