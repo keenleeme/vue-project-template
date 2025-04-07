@@ -299,6 +299,14 @@
             children: []
           }
         ]
+      },
+      {
+        id: 'aiweb',
+        name: I18N.layout.aiWeb,
+        icon: 'zq-icon zq-icon-jiancerenwuzhongxin',
+        url: '/aiweb',
+        hideChildren: true,
+        children: []
       }
     ]
   });

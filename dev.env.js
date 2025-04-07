@@ -13,7 +13,7 @@ module.exports = {
       secure: false
     },
     '^/api/users': {
-      target: 'http://10.11.42.160:3000',
+      target: proxy.DEV_PROXY_TARGET_xxy,
       changeOrigin: true,
       secure: false,
       logLevel: 'debug'

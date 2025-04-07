@@ -13,6 +13,12 @@ export async function getMenus(): Promise<MenuType[]> {
       path: '/custom-workbench'
     },
     {
+      id: 'aiweb',
+      title: I18N.common.example,
+      icon: 'AppstoreOutlined',
+      path: '/aiweb'
+    },
+    {
       id: 'example',
       title: I18N.layout.baoBiaoZiDingYi,
       icon: 'AppstoreOutlined',

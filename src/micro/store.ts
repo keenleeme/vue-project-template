@@ -8,10 +8,22 @@ export interface SubApp {
   baseroute: string;
   custom?: boolean;
   routerMode?: 'hash' | 'history';
+  meta?: {
+    fullScreen?: boolean;
+  };
 }
 
 export const useMicroStore = defineStore('micro', () => {
   const apps = ref<SubApp[]>([
+    {
+      name: 'aiweb',
+      url: getRegistryUrl('aiweb', '7005'),
+      baseroute: '/aiweb',
+      routerMode: 'history',
+      meta: {
+        fullScreen: true
+      }
+    },
     {
       name: 'vue2',
       url: getRegistryUrl('vue2', '7001'), //'/subapp/vue2/', // 如果是同源的 子应用需要有一个公共的文件夹在服务器上；

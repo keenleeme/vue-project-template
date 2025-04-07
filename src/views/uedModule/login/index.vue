@@ -115,115 +115,115 @@
         }
       ]
     },
-    {
-      type: 'login-phone',
-      name: I18N.layout.shouJiYanZhengMaDengLu,
-      btnText: I18N.common.login,
-      items: [
-        {
-          type: 'ued-input',
-          field: 'username',
-          label: I18N.layout.shouJiHaoMa,
-          icon: 'phone',
-          rules: [
-            {
-              type: 'string',
-              min: 2,
-              max: 6,
-              required: true
-            }
-          ]
-        },
-        {
-          type: 'ued-password',
-          field: 'password',
-          label: I18N.common.password,
-          icon: 'password',
-          rules: {
-            type: 'string',
-            min: 12
-          }
-        },
-        {
-          type: 'ued-code',
-          field: 'verifyCode',
-          label: I18N.layout.yanZhengMa,
-          icon: 'code',
-          api: () => {
-            return new Promise((resolve) => {
-              setTimeout(() => {
-                resolve(true);
-              }, 2000);
-            });
-          }
-        },
-        {
-          type: 'ued-touch-bar',
-          field: 'touchVerify',
-          label: I18N.layout.huaKuaiYanZheng
-        }
-      ]
-    },
-    {
-      type: 'registry-phone',
-      name: I18N.layout.zhuCeZhangHao,
-      btnText: I18N.common.signup,
-      items: [
-        { type: 'ued-input', field: 'phone', label: I18N.layout.shouJiHaoMa, icon: 'phone' },
-        { type: 'ued-code', field: 'code', label: I18N.layout.shouJiYanZhengMa, icon: 'code-phone' },
-        { type: 'ued-input', field: 'username', label: I18N.common.username, icon: 'user' },
-        {
-          type: 'ued-password',
-          field: 'password',
-          label: I18N.common.password,
-          icon: 'password',
-          rules: [
-            {
-              type: 'string',
-              min: 6,
-              required: true,
-              validator: (rule: any, value: any, cab: any) => {
-                resiterPassword.value = value;
-                if (value.length < 6) {
-                  cab(new Error(I18N.layout.miMaBuDeXiaoYu));
-                }
-                cab();
-              }
-            }
-          ]
-        },
-        {
-          type: 'ued-password',
-          field: 'passwordConfirm',
-          label: I18N.layout.queRenMiMa,
-          icon: 'password',
-          rules: [
-            {
-              type: 'string',
-              min: 6,
-              required: true,
-              validator: (rule: any, value: any, cab: any) => {
-                if (value !== resiterPassword.value) {
-                  cab(new Error(I18N.layout.miMaBuXiangTong));
-                }
-                cab();
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      type: 'forget-phone',
-      name: I18N.layout.zhaoHuiMiMa,
-      btnText: I18N.layout.zhaoHuiMiMa,
-      items: [
-        { type: 'ued-input', field: 'phone', label: I18N.layout.shouJiHaoMa, icon: 'phone' },
-        { type: 'ued-code', field: 'code', label: I18N.layout.shouJiYanZhengMa, icon: 'code-phone' },
-        { type: 'ued-password', field: 'pwd', label: I18N.layout.xinMiMa, icon: 'password' },
-        { type: 'ued-password', field: 'pwdConfirm', label: I18N.layout.queRenMiMa, icon: 'password' }
-      ]
-    },
+    // {
+    //   type: 'login-phone',
+    //   name: I18N.layout.shouJiYanZhengMaDengLu,
+    //   btnText: I18N.common.login,
+    //   items: [
+    //     {
+    //       type: 'ued-input',
+    //       field: 'username',
+    //       label: I18N.layout.shouJiHaoMa,
+    //       icon: 'phone',
+    //       rules: [
+    //         {
+    //           type: 'string',
+    //           min: 2,
+    //           max: 6,
+    //           required: true
+    //         }
+    //       ]
+    //     },
+    //     {
+    //       type: 'ued-password',
+    //       field: 'password',
+    //       label: I18N.common.password,
+    //       icon: 'password',
+    //       rules: {
+    //         type: 'string',
+    //         min: 12
+    //       }
+    //     },
+    //     {
+    //       type: 'ued-code',
+    //       field: 'verifyCode',
+    //       label: I18N.layout.yanZhengMa,
+    //       icon: 'code',
+    //       api: () => {
+    //         return new Promise((resolve) => {
+    //           setTimeout(() => {
+    //             resolve(true);
+    //           }, 2000);
+    //         });
+    //       }
+    //     },
+    //     {
+    //       type: 'ued-touch-bar',
+    //       field: 'touchVerify',
+    //       label: I18N.layout.huaKuaiYanZheng
+    //     }
+    //   ]
+    // },
+    // {
+    //   type: 'registry-phone',
+    //   name: I18N.layout.zhuCeZhangHao,
+    //   btnText: I18N.common.signup,
+    //   items: [
+    //     { type: 'ued-input', field: 'phone', label: I18N.layout.shouJiHaoMa, icon: 'phone' },
+    //     { type: 'ued-code', field: 'code', label: I18N.layout.shouJiYanZhengMa, icon: 'code-phone' },
+    //     { type: 'ued-input', field: 'username', label: I18N.common.username, icon: 'user' },
+    //     {
+    //       type: 'ued-password',
+    //       field: 'password',
+    //       label: I18N.common.password,
+    //       icon: 'password',
+    //       rules: [
+    //         {
+    //           type: 'string',
+    //           min: 6,
+    //           required: true,
+    //           validator: (rule: any, value: any, cab: any) => {
+    //             resiterPassword.value = value;
+    //             if (value.length < 6) {
+    //               cab(new Error(I18N.layout.miMaBuDeXiaoYu));
+    //             }
+    //             cab();
+    //           }
+    //         }
+    //       ]
+    //     },
+    //     {
+    //       type: 'ued-password',
+    //       field: 'passwordConfirm',
+    //       label: I18N.layout.queRenMiMa,
+    //       icon: 'password',
+    //       rules: [
+    //         {
+    //           type: 'string',
+    //           min: 6,
+    //           required: true,
+    //           validator: (rule: any, value: any, cab: any) => {
+    //             if (value !== resiterPassword.value) {
+    //               cab(new Error(I18N.layout.miMaBuXiangTong));
+    //             }
+    //             cab();
+    //           }
+    //         }
+    //       ]
+    //     }
+    //   ]
+    // },
+    // {
+    //   type: 'forget-phone',
+    //   name: I18N.layout.zhaoHuiMiMa,
+    //   btnText: I18N.layout.zhaoHuiMiMa,
+    //   items: [
+    //     { type: 'ued-input', field: 'phone', label: I18N.layout.shouJiHaoMa, icon: 'phone' },
+    //     { type: 'ued-code', field: 'code', label: I18N.layout.shouJiYanZhengMa, icon: 'code-phone' },
+    //     { type: 'ued-password', field: 'pwd', label: I18N.layout.xinMiMa, icon: 'password' },
+    //     { type: 'ued-password', field: 'pwdConfirm', label: I18N.layout.queRenMiMa, icon: 'password' }
+    //   ]
+    // },
     {
       type: 'qr-ding',
       name: I18N.layout.dingDingSaoMa,

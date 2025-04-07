@@ -1,5 +1,5 @@
 <template>
-  <div class="micro-content">
+  <div :class="['micro-content', {'full-screen': isFullScreen}]">
     <a-button v-if="appInfo.name === 'vue2'" @click="sendData">动态发送基座数据</a-button>
     <micro-app
       :name="appInfo.name"
@@ -56,6 +56,10 @@
     return getAppRealUrl(props.appInfo.url);
   });
 
+  const isFullScreen = computed(() => {
+    return props.appInfo.meta?.fullScreen === true;
+  });
+
   const showSpin = ref(false);
   function appCreated() {
     showSpin.value = true;
@@ -74,5 +78,10 @@
     padding: 16px;
     height: calc(100vh - 132px);
     overflow: auto;
+    
+    &.full-screen {
+      padding: 0;
+      height: 100vh;
+    }
   }
 </style>
