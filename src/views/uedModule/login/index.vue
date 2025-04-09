@@ -264,6 +264,7 @@
           router.replace('/');
         }, 1000);
       } else {
+        loginLayout.value.refresh('verifyCode');
         message.error(res.message);
       }
     });
