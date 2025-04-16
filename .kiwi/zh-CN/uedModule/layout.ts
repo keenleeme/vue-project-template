@@ -276,5 +276,5 @@ export default {
   qiYongZhuangTai: '启用状态',
   chuangJianShiJian: '创建时间',
   gengXingeShiJian: '更新时间',
-  aiWeb: 'AI Web'
+  dasReaddy: 'Das-Readdy'
 };

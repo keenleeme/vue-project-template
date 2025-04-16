@@ -2,11 +2,15 @@ import type { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
   {
-    name: 'base::ai-web',
-    path: '/ai-web',
-    component: () => import('@/views/aiWeb/index.vue'),
+    name: 'base::das-readdy',
+    path: '/das-readdy',
+    beforeEnter() {
+      window.open('https://10.20.114.19:8888', '_blank');
+      return false; // 阻止原页面跳转
+    },
+    component: () => import('@/views/uedTypical/iframe/index.vue'),
     meta: {
-      title: 'I18N.layout.aiWeb',
+      title: 'I18N.layout.dasReaddy',
       permissionId: 'base::workBench:index',
       fullScreen: true
     }

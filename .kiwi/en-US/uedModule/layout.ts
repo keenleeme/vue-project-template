@@ -284,5 +284,5 @@ export default {
   qiYongZhuangTai: 'Open Status',
   chuangJianShiJian: 'Create time',
   gengXingeShiJian: 'Update time',
-  aiWeb: 'AI Web',
+  dasReaddy: 'Das-Readdy',
 };

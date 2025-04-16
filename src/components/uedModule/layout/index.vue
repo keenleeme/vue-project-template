@@ -301,10 +301,10 @@
         ]
       },
       {
-        id: 'aiweb',
-        name: I18N.layout.aiWeb,
+        id: 'dasReaddy',
+        name: I18N.layout.dasReaddy,
         icon: 'zq-icon zq-icon-jiancerenwuzhongxin',
-        url: '/aiweb',
+        url: '/das-readdy',
         hideChildren: true,
         children: []
       }

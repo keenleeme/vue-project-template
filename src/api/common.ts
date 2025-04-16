@@ -13,10 +13,10 @@ export async function getMenus(): Promise<MenuType[]> {
       path: '/custom-workbench'
     },
     {
-      id: 'aiweb',
+      id: 'dasReaddy',
       title: I18N.common.example,
       icon: 'AppstoreOutlined',
-      path: '/aiweb'
+      path: '/das-readdy'
     },
     {
       id: 'example',

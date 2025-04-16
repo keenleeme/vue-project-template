@@ -195,7 +195,7 @@
   const loginStore = useLoginStore();
 
   const { themePanelVisible, appConfig } = storeToRefs(appStore);
-  const loginConfig = ref<LoginConfigDTO>(new LoginConfigDTO(appConfig.value?.loginConfig));
+  const { loginConfig } = storeToRefs(loginStore);
 
   // 菜单数据
   const topMenuData = ref<MenuItem[]>(props.menuData);
