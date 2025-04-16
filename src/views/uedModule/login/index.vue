@@ -164,55 +164,53 @@
     //     }
     //   ]
     // },
-    // {
-    //   type: 'registry-phone',
-    //   name: I18N.layout.zhuCeZhangHao,
-    //   btnText: I18N.common.signup,
-    //   items: [
-    //     { type: 'ued-input', field: 'phone', label: I18N.layout.shouJiHaoMa, icon: 'phone' },
-    //     { type: 'ued-code', field: 'code', label: I18N.layout.shouJiYanZhengMa, icon: 'code-phone' },
-    //     { type: 'ued-input', field: 'username', label: I18N.common.username, icon: 'user' },
-    //     {
-    //       type: 'ued-password',
-    //       field: 'password',
-    //       label: I18N.common.password,
-    //       icon: 'password',
-    //       rules: [
-    //         {
-    //           type: 'string',
-    //           min: 6,
-    //           required: true,
-    //           validator: (rule: any, value: any, cab: any) => {
-    //             resiterPassword.value = value;
-    //             if (value.length < 6) {
-    //               cab(new Error(I18N.layout.miMaBuDeXiaoYu));
-    //             }
-    //             cab();
-    //           }
-    //         }
-    //       ]
-    //     },
-    //     {
-    //       type: 'ued-password',
-    //       field: 'passwordConfirm',
-    //       label: I18N.layout.queRenMiMa,
-    //       icon: 'password',
-    //       rules: [
-    //         {
-    //           type: 'string',
-    //           min: 6,
-    //           required: true,
-    //           validator: (rule: any, value: any, cab: any) => {
-    //             if (value !== resiterPassword.value) {
-    //               cab(new Error(I18N.layout.miMaBuXiangTong));
-    //             }
-    //             cab();
-    //           }
-    //         }
-    //       ]
-    //     }
-    //   ]
-    // },
+    {
+      type: 'registry-phone',
+      name: '注册账号',
+      btnText: '注册',
+      items: [
+        { type: 'ued-input', field: 'username', label: '用户名', icon: 'user' },
+        {
+          type: 'ued-password',
+          field: 'password',
+          label: '密码',
+          icon: 'password',
+          rules: [
+            {
+              type: 'string',
+              min: 6,
+              required: true,
+              validator: (rule: any, value: any, cab: any) => {
+                resiterPassword.value = value;
+                if (value.length < 6) {
+                  cab(new Error('密码不能小于6位'));
+                }
+                cab();
+              }
+            }
+          ]
+        },
+        {
+          type: 'ued-password',
+          field: 'passwordConfirm',
+          label: '确认密码',
+          icon: 'password',
+          rules: [
+            {
+              type: 'string',
+              min: 6,
+              required: true,
+              validator: (rule: any, value: any, cab: any) => {
+                if (value !== resiterPassword.value) {
+                  cab(new Error('密码不一致'));
+                }
+                cab();
+              }
+            }
+          ]
+        }
+      ]
+    },
     // {
     //   type: 'forget-phone',
     //   name: I18N.layout.zhaoHuiMiMa,
