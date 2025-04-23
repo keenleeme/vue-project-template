@@ -1,11 +1,13 @@
 import type { RouteRecordRaw } from 'vue-router';
+import { useUserStore } from '@/store';
 
 const routes: RouteRecordRaw[] = [
   {
     name: 'base::das-readdy',
     path: '/das-readdy',
     beforeEnter() {
-      window.open('https://10.20.114.19:8888', '_blank');
+      const { token } = useUserStore();
+      window.open(`http://localhost:7005?readdyAuthToken=${token}`, '_blank');
       return false; // 阻止原页面跳转
     },
     component: () => import('@/views/uedTypical/iframe/index.vue'),

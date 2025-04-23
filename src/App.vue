@@ -10,7 +10,7 @@
   import { RouterView } from 'vue-router';
   import zhCN from 'ant-design-vue/es/locale/zh_CN';
   import { storeToRefs } from 'pinia';
-  import { getWebsiteConfig } from './api/common';
+  import { verifyToken, getWebsiteConfig } from '@/api/common';
   import Layout from './components/uedModule/layout/index.vue';
   import RobotInit from './components/uedModule/robot/index';
   import { useAppStore, useLoginStore, useThemeStore, useUserStore } from './store';
@@ -54,6 +54,11 @@
 
   onUnmounted(() => {
     // window.localStorage.clear();
+  });
+  onMounted(() => {
+    if (userStore.token) {
+      verifyToken();
+    }
   });
 </script>
 
