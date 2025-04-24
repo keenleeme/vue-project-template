@@ -7,7 +7,7 @@ const routes: RouteRecordRaw[] = [
     path: '/das-readdy',
     beforeEnter() {
       const { token } = useUserStore();
-      window.open(`http://localhost:7005?readdyAuthToken=${token}`, '_blank');
+      window.open(`https://10.20.114.19:8888/das-readdy?readdyAuthToken=${token}`, '_blank');
       return false; // 阻止原页面跳转
     },
     component: () => import('@/views/uedTypical/iframe/index.vue'),
