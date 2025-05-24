@@ -60,7 +60,7 @@
       </div>
     </div>
     <a-layout-content>
-      <div class="h-full w-full pos-reactive">
+      <div class="h-full w-full pos-reactive overflow-auto">
         <RouterView />
       </div>
     </a-layout-content>
