@@ -10,7 +10,7 @@
       :props="dataProps"
       :data="topMenuData"
       :dark="config.mode === 'dark' || (config.mode === 'light' && config.topStyle === 'dark')"
-      :pop-dark="config.mode === 'dark' || (config.mode === 'light' && config.topStyle === 'dark')"
+      :pop-dark="config.mode === 'dark'"
       :star="true"
       :recently-keys="recentlyKeys"
       popover-class="map-menu-popover"

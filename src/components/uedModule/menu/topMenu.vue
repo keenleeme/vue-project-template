@@ -5,7 +5,7 @@
     :data="menuData"
     :pop-active="popActive"
     :dark="config.mode === 'dark' || (config.mode === 'light' && config.topStyle === 'dark')"
-    :pop-dark="config.mode === 'dark' || (config.mode === 'light' && config.topStyle === 'dark')"
+    :pop-dark="config.mode === 'dark'"
     :mix="config.layout === 'mix'"
     popover-class="top-menu-popover"
     @menu-click="handleMenuClick"
