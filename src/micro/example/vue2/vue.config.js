@@ -1,5 +1,5 @@
 const { defineConfig } = require('@vue/cli-service')
-const ModuleFederationPlugin = require('webpack').container.ModuleFederationPlugin;
+// const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const MicroRouterJsonPlugin = require('micro-router-json-plugin')
 const path = require('path');
 console.log(process.cwd() +'/src/router.js')
@@ -8,13 +8,13 @@ module.exports = defineConfig({
   transpileDependencies: true,
   configureWebpack: {
     plugins: [
-      new ModuleFederationPlugin({
-        name: 'consumer',
-        filename: 'remoteLib.umd.js',
-        remotes: {
-          myRemote: 'webpackChunkload_myRemote@http://localhost:9003/remoteLib.umd.js',
-        },
-      }),
+      // new ModuleFederationPlugin({
+      //   name: 'consumer',
+      //   filename: 'remoteLib.umd.js',
+      //   remotes: {
+      //     myRemote: 'webpackChunkload_myRemote@http://localhost:9003/remoteLib.umd.js',
+      //   },
+      // }),
       new MicroRouterJsonPlugin({
         routerPath: process.cwd() +'/src/router.js',
         encrypt:false

@@ -12,7 +12,7 @@ module.exports = {
       changeOrigin: true,
       secure: false
     },
-    '^/api/users': {
+    '^/api/user': {
       target: proxy.DEV_PROXY_TARGET_xxy,
       changeOrigin: true,
       secure: false,

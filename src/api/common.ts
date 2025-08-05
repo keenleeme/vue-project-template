@@ -224,35 +224,35 @@ export async function getWebsiteConfig(): Promise<
 }
 
 export async function onLogin(data: any): Promise<any> {
-  return createService.post('/api/users/v1/login', data);
+  return createService.post('/api/user/v1/login', data);
 }
 
 export async function onRegister(data: any): Promise<any> {
-  return createService.post('/api/users/v1/register', data);
+  return createService.post('/api/user/v1/register', data);
 }
 
 export async function onLogout(): Promise<any> {
-  return createService.post('/api/users/v1/logout');
+  return createService.post('/api/user/v1/logout');
 }
 
 export async function getCaptcha(): Promise<any> {
-  return createService.get('/api/users/v1/captcha');
+  return createService.get('/api/user/v1/captcha');
 }
 
 export async function refreshToken(): Promise<any> {
-  return createService.post('/api/users/v1/refresh-token', {
+  return createService.post('/api/user/v1/refresh-token', {
     refreshToken: localStorage.getItem('refreshToken')
   });
 }
 
 export async function verifyToken(): Promise<any> {
-  return createService.get('/api/users/v1/verify-token');
+  return createService.get('/api/user/v1/verify-token');
 }
 
 export async function getLoginRedirectUrl(): Promise<any> {
-  return createService.get('/api/users/v1/dingtalk/login-url');
+  return createService.get('/api/user/v1/dingtalk/login-url');
 }
 
 export async function fetchDingTalkUserInfo(code: string): Promise<any> {
-  return createService.get(`/api/users/v1/dingtalk/callback?code=${encodeURIComponent(code)}`);
+  return createService.get(`/api/user/v1/dingtalk/callback?code=${encodeURIComponent(code)}`);
 }

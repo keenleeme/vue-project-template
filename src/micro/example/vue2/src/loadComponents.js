@@ -18,5 +18,6 @@
 })()
 
 // 这是适用于基座单独针对共享的库 进行单独的构造MF识别的模式，使用umd模式进行打包 参考基座的 remote-lib.js 和 vite.config.lib.ts
-import dayjs from 'myRemote/dayjs'
-console.log(dayjs().format('YYYY-MM-DD'))
+// import dayjs from 'myRemote/dayjs'
+// console.log(dayjs().format('YYYY-MM-DD'))
+console.log('Module Federation temporarily disabled for build compatibility')
