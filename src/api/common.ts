@@ -249,8 +249,8 @@ export async function verifyToken(): Promise<any> {
   return createService.get('/api/user/v1/verify-token');
 }
 
-export async function getLoginRedirectUrl(): Promise<any> {
-  return createService.get('/api/user/v1/dingtalk/login-url');
+export async function getLoginRedirectUrl(params: { state: string; redirectUri: string }): Promise<any> {
+  return createService.get('/api/user/v1/dingtalk/login-url', params);
 }
 
 export async function fetchDingTalkUserInfo(code: string): Promise<any> {

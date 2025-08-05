@@ -288,7 +288,10 @@
   };
 
   const handleLoginRedirect = async () => {
-    const res = await getLoginRedirectUrl();
+    const res = await getLoginRedirectUrl({
+      state: 'relogin',
+      redirectUri: window.location.origin
+    });
     if (res.code === 200) {
       window.location.href = res.data.redirectUrl;
     }
