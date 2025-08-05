@@ -14,7 +14,7 @@
 <script setup lang="ts">
   import { UedUserMenu } from '@ued-material/menu';
   import { storeToRefs } from 'pinia';
-  import { onLogout, verifyToken } from '@/api/common';
+  import { onLogout } from '@/api/common';
   import { useUserStore, useMenusStore, useThemeStore } from '@/store';
 
   const props = defineProps({
@@ -84,10 +84,6 @@
   const emit = defineEmits(['userMenuClick']);
   const userMenuClick = (item: any) => {
     console.log('>>userMenuClick>>', item);
-    if (item.id === 2) {
-      verifyToken();
-      return;
-    }
     emit('userMenuClick', item);
     handleLogout();
   };
