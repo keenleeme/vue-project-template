@@ -296,6 +296,5 @@
 
   .w-full {
     background-color: var(--color-bg-page);
-    border-left: 1px solid var(--color-bg-container);
   }
 </style>

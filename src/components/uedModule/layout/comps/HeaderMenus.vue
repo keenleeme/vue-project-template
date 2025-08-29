@@ -414,6 +414,9 @@
     z-index: 99;
     position: relative;
     background: #fff;
+    :deep(.user-menu-wrapper) .uesr-menu-content > span {
+      max-width: 80px;
+    }
     .logo-wrap {
       display: flex;
       align-items: center;
