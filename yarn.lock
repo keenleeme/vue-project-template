@@ -1774,10 +1774,10 @@
     "@typescript-eslint/types" "6.21.0"
     eslint-visitor-keys "^3.4.1"
 
-"@ued-material/menu@^2.2.22":
-  version "2.2.22"
-  resolved "https://ci.das-security.cn/repository/ah_npm/@ued-material/menu/-/menu-2.2.22.tgz"
-  integrity sha512-1qiX4fzgA4o/Il/8LrY00SVAktEEo+J9/2AK+QVsN63MgRpAdUVNcllYFC9PDI2ktq/X9inzbQaD0uNqyaDBaA==
+"@ued-material/menu@^2.2.23":
+  version "2.2.23"
+  resolved "https://ci.das-security.cn/repository/ah_npm/@ued-material/menu/-/menu-2.2.23.tgz#66cfa05f11fb555ee05b2283cb553a14193d0c6e"
+  integrity sha512-Zu2vJ/Xh7OdCQCz9uBm4+hlDCeahqR+HejdoijnEbF0rA5eLyFIf+dvLoKgeJ2tY67GDIhaqjU+17vzpzOgmbQ==
   dependencies:
     "@types/sortablejs" "^1.15.7"
     sortablejs "^1.15.1"
