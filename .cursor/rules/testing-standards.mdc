@@ -1,0 +1,1127 @@
+# 前端测试规范
+
+## 1. 测试策略概览
+
+### 1.1 测试金字塔
+
+```
+    E2E 测试
+  ================
+    集成测试
+  ================
+     单元测试
+  ================
+```
+
+- **单元测试 (70%)**：测试独立的函数、工具类、store 等
+- **集成测试 (20%)**：测试组件交互、API 集成等
+- **E2E 测试 (10%)**：测试完整的用户流程
+
+### 1.2 测试工具栈
+
+```typescript
+// 推荐的测试工具配置
+{
+  "unitTesting": "Vitest",           // 单元测试框架
+  "componentTesting": "Vue Test Utils", // Vue 组件测试
+  "e2eTesting": "Playwright",       // 端到端测试
+  "mockLibrary": "MSW",             // API Mock
+  "coverageReporting": "c8",        // 代码覆盖率
+  "testRunner": "Vitest"            // 测试运行器
+}
+```
+
+## 2. 单元测试规范
+
+### 2.1 测试文件组织
+
+```
+src/
+├── utils/
+│   ├── format.ts
+│   └── format.test.ts           # 工具函数测试
+├── store/
+│   ├── user.ts
+│   └── user.test.ts             # Store 测试
+├── composables/
+│   ├── useAuth.ts
+│   └── useAuth.test.ts          # Composable 测试
+└── components/
+    ├── UserCard.vue
+    └── UserCard.test.ts         # 组件测试
+```
+
+### 2.2 测试配置
+
+```typescript
+// vitest.config.ts
+import { defineConfig } from 'vitest/config';
+import vue from '@vitejs/plugin-vue';
+import { resolve } from 'path';
+
+export default defineConfig({
+  plugins: [vue()],
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: ['./tests/setup.ts'],
+    coverage: {
+      provider: 'c8',
+      reporter: ['text', 'html', 'lcov'],
+      exclude: [
+        'node_modules/',
+        'tests/',
+        '**/*.d.ts',
+        '**/*.config.*'
+      ]
+    }
+  },
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, 'src')
+    }
+  }
+});
+```
+
+### 2.3 工具函数测试
+
+```typescript
+// src/utils/format.test.ts
+import { describe, it, expect } from 'vitest';
+import { formatCurrency, formatDate, truncateText } from './format';
+
+describe('格式化工具函数', () => {
+  describe('formatCurrency', () => {
+    it('应该正确格式化货币', () => {
+      expect(formatCurrency(1234.56)).toBe('¥1,234.56');
+      expect(formatCurrency(0)).toBe('¥0.00');
+      expect(formatCurrency(-100)).toBe('-¥100.00');
+    });
+
+    it('应该处理无效输入', () => {
+      expect(formatCurrency(null)).toBe('¥0.00');
+      expect(formatCurrency(undefined)).toBe('¥0.00');
+      expect(formatCurrency(NaN)).toBe('¥0.00');
+    });
+  });
+
+  describe('formatDate', () => {
+    it('应该正确格式化日期', () => {
+      const date = new Date('2023-12-25T10:30:00');
+      expect(formatDate(date, 'YYYY-MM-DD')).toBe('2023-12-25');
+      expect(formatDate(date, 'YYYY年MM月DD日')).toBe('2023年12月25日');
+    });
+
+    it('应该处理时间戳', () => {
+      const timestamp = 1703505000000;
+      expect(formatDate(timestamp, 'YYYY-MM-DD')).toBe('2023-12-25');
+    });
+
+    it('应该处理无效日期', () => {
+      expect(formatDate(null)).toBe('');
+      expect(formatDate('invalid')).toBe('');
+    });
+  });
+
+  describe('truncateText', () => {
+    it('应该正确截断文本', () => {
+      const longText = '这是一段很长的文本内容';
+      expect(truncateText(longText, 5)).toBe('这是一段很...');
+      expect(truncateText(longText, 20)).toBe(longText);
+    });
+
+    it('应该处理边界情况', () => {
+      expect(truncateText('', 10)).toBe('');
+      expect(truncateText('短文本', 10)).toBe('短文本');
+      expect(truncateText(null, 10)).toBe('');
+    });
+  });
+});
+```
+
+### 2.4 Store 测试
+
+```typescript
+// src/store/user.test.ts
+import { describe, it, expect, beforeEach } from 'vitest';
+import { setActivePinia, createPinia } from 'pinia';
+import { useUserStore } from './user';
+
+describe('User Store', () => {
+  beforeEach(() => {
+    // 为每个测试创建新的 Pinia 实例
+    setActivePinia(createPinia());
+  });
+
+  describe('状态管理', () => {
+    it('应该正确设置用户信息', () => {
+      const userStore = useUserStore();
+      const mockUser = {
+        id: '1',
+        name: '测试用户',
+        email: 'test@example.com',
+        roles: ['user']
+      };
+
+      userStore.setUserInfo(mockUser);
+
+      expect(userStore.userInfo).toEqual(mockUser);
+      expect(userStore.isLoggedIn).toBe(true);
+    });
+
+    it('应该正确设置权限', () => {
+      const userStore = useUserStore();
+      const permissions = ['read', 'write', 'delete'];
+
+      userStore.setPermissions(permissions);
+
+      expect(userStore.permissions).toEqual(permissions);
+    });
+
+    it('应该正确执行登出', () => {
+      const userStore = useUserStore();
+      
+      // 先设置用户信息
+      userStore.setUserInfo({ id: '1', name: 'Test', roles: [] });
+      userStore.setPermissions(['read']);
+
+      // 执行登出
+      userStore.logout();
+
+      expect(userStore.userInfo).toBeNull();
+      expect(userStore.permissions).toEqual([]);
+      expect(userStore.isLoggedIn).toBe(false);
+    });
+  });
+
+  describe('权限检查', () => {
+    it('应该正确检查权限', () => {
+      const userStore = useUserStore();
+      userStore.setPermissions(['read', 'write']);
+
+      expect(userStore.hasPermission('read')).toBe(true);
+      expect(userStore.hasPermission('write')).toBe(true);
+      expect(userStore.hasPermission('delete')).toBe(false);
+    });
+
+    it('应该正确检查管理员权限', () => {
+      const userStore = useUserStore();
+      
+      userStore.setUserInfo({ 
+        id: '1', 
+        name: 'Admin', 
+        roles: ['admin'] 
+      });
+      expect(userStore.isAdmin).toBe(true);
+
+      userStore.setUserInfo({ 
+        id: '2', 
+        name: 'User', 
+        roles: ['user'] 
+      });
+      expect(userStore.isAdmin).toBe(false);
+    });
+  });
+});
+```
+
+### 2.5 Composable 测试
+
+```typescript
+// src/composables/useAuth.test.ts
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { setActivePinia, createPinia } from 'pinia';
+import { useAuth } from './useAuth';
+import * as authApi from '@/api/auth';
+
+// Mock API
+vi.mock('@/api/auth', () => ({
+  login: vi.fn(),
+  logout: vi.fn()
+}));
+
+describe('useAuth Composable', () => {
+  beforeEach(() => {
+    setActivePinia(createPinia());
+    vi.clearAllMocks();
+  });
+
+  describe('登录功能', () => {
+    it('应该成功登录', async () => {
+      const mockResponse = {
+        userInfo: { id: '1', name: 'Test User', roles: ['user'] },
+        permissions: ['read', 'write'],
+        token: 'mock-token'
+      };
+
+      vi.mocked(authApi.login).mockResolvedValue(mockResponse);
+
+      const { login, isAuthenticated } = useAuth();
+      const result = await login({
+        username: 'test',
+        password: 'password'
+      });
+
+      expect(authApi.login).toHaveBeenCalledWith({
+        username: 'test',
+        password: 'password'
+      });
+      expect(result).toEqual(mockResponse);
+      expect(isAuthenticated.value).toBe(true);
+    });
+
+    it('应该处理登录失败', async () => {
+      const mockError = new Error('登录失败');
+      vi.mocked(authApi.login).mockRejectedValue(mockError);
+
+      const { login } = useAuth();
+
+      await expect(login({
+        username: 'test',
+        password: 'wrong'
+      })).rejects.toThrow('登录失败');
+    });
+  });
+
+  describe('登出功能', () => {
+    it('应该成功登出', async () => {
+      vi.mocked(authApi.logout).mockResolvedValue(undefined);
+
+      const { logout, isAuthenticated } = useAuth();
+      
+      // 先登录
+      const userStore = useUserStore();
+      userStore.setUserInfo({ id: '1', name: 'Test', roles: [] });
+
+      // 执行登出
+      await logout();
+
+      expect(authApi.logout).toHaveBeenCalled();
+      expect(isAuthenticated.value).toBe(false);
+    });
+
+    it('应该处理登出API失败但仍清理本地状态', async () => {
+      vi.mocked(authApi.logout).mockRejectedValue(new Error('网络错误'));
+
+      const { logout, isAuthenticated } = useAuth();
+      
+      // 先登录
+      const userStore = useUserStore();
+      userStore.setUserInfo({ id: '1', name: 'Test', roles: [] });
+
+      // 执行登出（不应该抛出错误）
+      await logout();
+
+      expect(isAuthenticated.value).toBe(false);
+    });
+  });
+});
+```
+
+## 3. 组件测试规范
+
+### 3.1 Vue 组件测试
+
+```typescript
+// src/components/UserCard.test.ts
+import { describe, it, expect, vi } from 'vitest';
+import { mount } from '@vue/test-utils';
+import { createPinia } from 'pinia';
+import UserCard from './UserCard.vue';
+
+// Mock Ant Design Vue 组件
+vi.mock('ant-design-vue', () => ({
+  message: {
+    success: vi.fn(),
+    error: vi.fn()
+  }
+}));
+
+describe('UserCard 组件', () => {
+  const createWrapper = (props = {}) => {
+    return mount(UserCard, {
+      props: {
+        user: {
+          id: '1',
+          name: '测试用户',
+          email: 'test@example.com',
+          avatar: 'https://example.com/avatar.jpg',
+          status: 'active'
+        },
+        ...props
+      },
+      global: {
+        plugins: [createPinia()]
+      }
+    });
+  };
+
+  describe('渲染测试', () => {
+    it('应该正确渲染用户信息', () => {
+      const wrapper = createWrapper();
+
+      expect(wrapper.find('.user-name').text()).toBe('测试用户');
+      expect(wrapper.find('.user-email').text()).toBe('test@example.com');
+      expect(wrapper.find('.user-avatar').attributes('src')).toBe('https://example.com/avatar.jpg');
+    });
+
+    it('应该根据状态显示不同的标签', () => {
+      const activeWrapper = createWrapper({
+        user: { id: '1', name: 'Test', status: 'active' }
+      });
+      expect(activeWrapper.find('.status-tag').classes()).toContain('status-active');
+
+      const inactiveWrapper = createWrapper({
+        user: { id: '1', name: 'Test', status: 'inactive' }
+      });
+      expect(inactiveWrapper.find('.status-tag').classes()).toContain('status-inactive');
+    });
+
+    it('应该处理缺失的头像', () => {
+      const wrapper = createWrapper({
+        user: { id: '1', name: 'Test', avatar: null }
+      });
+
+      expect(wrapper.find('.user-avatar').attributes('src')).toBe('/default-avatar.png');
+    });
+  });
+
+  describe('交互测试', () => {
+    it('应该在点击编辑按钮时触发事件', async () => {
+      const wrapper = createWrapper();
+      const editButton = wrapper.find('[data-testid="edit-button"]');
+
+      await editButton.trigger('click');
+
+      expect(wrapper.emitted('edit')).toBeTruthy();
+      expect(wrapper.emitted('edit')?.[0]).toEqual([{ id: '1', name: '测试用户' }]);
+    });
+
+    it('应该在点击删除按钮时显示确认框', async () => {
+      const wrapper = createWrapper();
+      const deleteButton = wrapper.find('[data-testid="delete-button"]');
+
+      await deleteButton.trigger('click');
+
+      expect(wrapper.find('.delete-confirm').exists()).toBe(true);
+    });
+
+    it('应该在确认删除时触发删除事件', async () => {
+      const wrapper = createWrapper();
+      
+      // 点击删除按钮
+      await wrapper.find('[data-testid="delete-button"]').trigger('click');
+      
+      // 确认删除
+      await wrapper.find('[data-testid="confirm-delete"]').trigger('click');
+
+      expect(wrapper.emitted('delete')).toBeTruthy();
+      expect(wrapper.emitted('delete')?.[0]).toEqual([{ id: '1' }]);
+    });
+  });
+
+  describe('权限测试', () => {
+    it('应该根据权限显示或隐藏操作按钮', () => {
+      const wrapperWithPermission = createWrapper({
+        hasEditPermission: true,
+        hasDeletePermission: true
+      });
+      expect(wrapperWithPermission.find('[data-testid="edit-button"]').exists()).toBe(true);
+      expect(wrapperWithPermission.find('[data-testid="delete-button"]').exists()).toBe(true);
+
+      const wrapperWithoutPermission = createWrapper({
+        hasEditPermission: false,
+        hasDeletePermission: false
+      });
+      expect(wrapperWithoutPermission.find('[data-testid="edit-button"]').exists()).toBe(false);
+      expect(wrapperWithoutPermission.find('[data-testid="delete-button"]').exists()).toBe(false);
+    });
+  });
+});
+```
+
+### 3.2 DAS 组件测试
+
+```typescript
+// src/components/DataTable.test.ts
+import { describe, it, expect, vi } from 'vitest';
+import { mount } from '@vue/test-utils';
+import DataTable from './DataTable.vue';
+
+// Mock DAS 组件
+vi.mock('das-component-vue', () => ({
+  DasTable: {
+    name: 'DasTable',
+    template: '<div class="das-table"><slot /></div>',
+    props: ['columns', 'dataSource', 'pagination', 'loading']
+  }
+}));
+
+describe('DataTable 组件', () => {
+  const mockColumns = [
+    { title: '姓名', dataIndex: 'name', key: 'name' },
+    { title: '邮箱', dataIndex: 'email', key: 'email' },
+    { title: '操作', dataIndex: 'action', key: 'action' }
+  ];
+
+  const mockData = [
+    { id: '1', name: '张三', email: 'zhangsan@example.com' },
+    { id: '2', name: '李四', email: 'lisi@example.com' }
+  ];
+
+  const createWrapper = (props = {}) => {
+    return mount(DataTable, {
+      props: {
+        columns: mockColumns,
+        dataSource: mockData,
+        loading: false,
+        ...props
+      }
+    });
+  };
+
+  describe('基础功能', () => {
+    it('应该正确传递 props 到 DAS 表格', () => {
+      const wrapper = createWrapper({
+        loading: true,
+        pagination: { current: 1, pageSize: 10, total: 100 }
+      });
+
+      const dasTable = wrapper.findComponent({ name: 'DasTable' });
+      expect(dasTable.props('columns')).toEqual(mockColumns);
+      expect(dasTable.props('dataSource')).toEqual(mockData);
+      expect(dasTable.props('loading')).toBe(true);
+      expect(dasTable.props('pagination')).toEqual({
+        current: 1,
+        pageSize: 10,
+        total: 100
+      });
+    });
+
+    it('应该处理表格变化事件', async () => {
+      const wrapper = createWrapper();
+      const dasTable = wrapper.findComponent({ name: 'DasTable' });
+
+      const paginationChange = {
+        current: 2,
+        pageSize: 20,
+        total: 100
+      };
+
+      await dasTable.vm.$emit('change', paginationChange, {}, {});
+
+      expect(wrapper.emitted('tableChange')).toBeTruthy();
+      expect(wrapper.emitted('tableChange')?.[0]).toEqual([paginationChange]);
+    });
+  });
+
+  describe('数据处理', () => {
+    it('应该正确处理空数据', () => {
+      const wrapper = createWrapper({
+        dataSource: []
+      });
+
+      const dasTable = wrapper.findComponent({ name: 'DasTable' });
+      expect(dasTable.props('dataSource')).toEqual([]);
+    });
+
+    it('应该正确处理加载状态', () => {
+      const wrapper = createWrapper({
+        loading: true
+      });
+
+      const dasTable = wrapper.findComponent({ name: 'DasTable' });
+      expect(dasTable.props('loading')).toBe(true);
+    });
+  });
+});
+```
+
+## 4. 测试工具和 Mock
+
+### 4.1 API Mock 配置
+
+```typescript
+// tests/mocks/handlers.ts
+import { rest } from 'msw';
+
+export const handlers = [
+  // 用户相关 API
+  rest.post('/api/auth/login', (req, res, ctx) => {
+    const { username, password } = req.body as any;
+    
+    if (username === 'admin' && password === 'password') {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          code: 0,
+          data: {
+            userInfo: {
+              id: '1',
+              name: '管理员',
+              roles: ['admin']
+            },
+            permissions: ['read', 'write', 'delete'],
+            token: 'mock-token'
+          }
+        })
+      );
+    }
+    
+    return res(
+      ctx.status(401),
+      ctx.json({
+        code: 401,
+        message: '用户名或密码错误'
+      })
+    );
+  }),
+
+  rest.get('/api/users', (req, res, ctx) => {
+    const page = req.url.searchParams.get('page') || '1';
+    const pageSize = req.url.searchParams.get('pageSize') || '10';
+    
+    return res(
+      ctx.status(200),
+      ctx.json({
+        code: 0,
+        data: [
+          { id: '1', name: '张三', email: 'zhangsan@example.com' },
+          { id: '2', name: '李四', email: 'lisi@example.com' }
+        ],
+        total: 100
+      })
+    );
+  }),
+
+  rest.post('/api/users', (req, res, ctx) => {
+    const userData = req.body as any;
+    
+    return res(
+      ctx.status(200),
+      ctx.json({
+        code: 0,
+        data: {
+          id: Date.now().toString(),
+          ...userData
+        }
+      })
+    );
+  })
+];
+```
+
+```typescript
+// tests/setup.ts
+import { beforeAll, afterEach, afterAll } from 'vitest';
+import { setupServer } from 'msw/node';
+import { handlers } from './mocks/handlers';
+
+// 设置 MSW 服务器
+const server = setupServer(...handlers);
+
+beforeAll(() => {
+  server.listen();
+});
+
+afterEach(() => {
+  server.resetHandlers();
+});
+
+afterAll(() => {
+  server.close();
+});
+```
+
+### 4.2 常用测试工具函数
+
+```typescript
+// tests/utils/test-utils.ts
+import { mount, VueWrapper } from '@vue/test-utils';
+import { createPinia } from 'pinia';
+import { createRouter, createWebHistory } from 'vue-router';
+
+// 创建测试路由器
+export function createTestRouter(routes = []) {
+  return createRouter({
+    history: createWebHistory(),
+    routes: [
+      { path: '/', component: { template: '<div>Home</div>' } },
+      ...routes
+    ]
+  });
+}
+
+// 创建完整的 Vue 应用挂载配置
+export function createMountOptions(options = {}) {
+  return {
+    global: {
+      plugins: [
+        createPinia(),
+        createTestRouter()
+      ],
+      stubs: {
+        // 常用组件 stub
+        'a-button': true,
+        'a-input': true,
+        'a-table': true,
+        'das-table': true,
+        'das-form': true
+      },
+      ...options.global
+    },
+    ...options
+  };
+}
+
+// 等待 Vue 更新完成
+export function waitForUpdate() {
+  return new Promise(resolve => setTimeout(resolve, 0));
+}
+
+// 模拟用户输入
+export async function setInputValue(wrapper: VueWrapper, selector: string, value: string) {
+  const input = wrapper.find(selector);
+  await input.setValue(value);
+  await input.trigger('input');
+  await waitForUpdate();
+}
+
+// 模拟表单提交
+export async function submitForm(wrapper: VueWrapper, formSelector = 'form') {
+  const form = wrapper.find(formSelector);
+  await form.trigger('submit');
+  await waitForUpdate();
+}
+```
+
+## 5. E2E 测试规范
+
+### 5.1 Playwright 配置
+
+```typescript
+// playwright.config.ts
+import { defineConfig, devices } from '@playwright/test';
+
+export default defineConfig({
+  testDir: './e2e',
+  fullyParallel: true,
+  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 2 : 0,
+  workers: process.env.CI ? 1 : undefined,
+  reporter: 'html',
+  use: {
+    baseURL: 'http://localhost:3000',
+    trace: 'on-first-retry',
+    screenshot: 'only-on-failure'
+  },
+  projects: [
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] }
+    },
+    {
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'] }
+    },
+    {
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'] }
+    }
+  ],
+  webServer: {
+    command: 'npm run dev',
+    url: 'http://localhost:3000',
+    reuseExistingServer: !process.env.CI
+  }
+});
+```
+
+### 5.2 Page Object 模式
+
+```typescript
+// e2e/pages/LoginPage.ts
+import { Page, Locator } from '@playwright/test';
+
+export class LoginPage {
+  readonly page: Page;
+  readonly usernameInput: Locator;
+  readonly passwordInput: Locator;
+  readonly loginButton: Locator;
+  readonly errorMessage: Locator;
+
+  constructor(page: Page) {
+    this.page = page;
+    this.usernameInput = page.locator('[data-testid="username"]');
+    this.passwordInput = page.locator('[data-testid="password"]');
+    this.loginButton = page.locator('[data-testid="login-button"]');
+    this.errorMessage = page.locator('[data-testid="error-message"]');
+  }
+
+  async goto() {
+    await this.page.goto('/login');
+  }
+
+  async login(username: string, password: string) {
+    await this.usernameInput.fill(username);
+    await this.passwordInput.fill(password);
+    await this.loginButton.click();
+  }
+
+  async getErrorMessage() {
+    return await this.errorMessage.textContent();
+  }
+}
+```
+
+### 5.3 E2E 测试用例
+
+```typescript
+// e2e/auth.spec.ts
+import { test, expect } from '@playwright/test';
+import { LoginPage } from './pages/LoginPage';
+
+test.describe('用户认证', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/');
+  });
+
+  test('应该成功登录', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.goto();
+
+    await loginPage.login('admin', 'password');
+
+    // 验证登录成功后跳转到首页
+    await expect(page).toHaveURL('/dashboard');
+    await expect(page.locator('[data-testid="user-menu"]')).toBeVisible();
+  });
+
+  test('应该显示登录错误信息', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.goto();
+
+    await loginPage.login('admin', 'wrongpassword');
+
+    const errorMessage = await loginPage.getErrorMessage();
+    expect(errorMessage).toContain('用户名或密码错误');
+  });
+
+  test('应该成功登出', async ({ page }) => {
+    // 先登录
+    const loginPage = new LoginPage(page);
+    await loginPage.goto();
+    await loginPage.login('admin', 'password');
+
+    // 执行登出
+    await page.locator('[data-testid="user-menu"]').click();
+    await page.locator('[data-testid="logout-button"]').click();
+
+    // 验证登出成功
+    await expect(page).toHaveURL('/login');
+  });
+});
+```
+
+## 6. 测试覆盖率要求
+
+### 6.1 覆盖率目标
+
+```typescript
+// vitest.config.ts - 覆盖率配置
+export default defineConfig({
+  test: {
+    coverage: {
+      provider: 'c8',
+      reporter: ['text', 'html', 'lcov'],
+      statements: 80,    // 语句覆盖率 ≥ 80%
+      branches: 75,      // 分支覆盖率 ≥ 75%
+      functions: 80,     // 函数覆盖率 ≥ 80%
+      lines: 80,         // 行覆盖率 ≥ 80%
+      exclude: [
+        'node_modules/',
+        'tests/',
+        '**/*.d.ts',
+        '**/*.config.*',
+        'src/main.ts',
+        'src/router/index.ts'
+      ]
+    }
+  }
+});
+```
+
+### 6.2 关键模块覆盖率要求
+
+```typescript
+// 不同模块的覆盖率要求
+const coverageRequirements = {
+  'src/utils/': {
+    statements: 95,  // 工具函数要求高覆盖率
+    branches: 90,
+    functions: 95,
+    lines: 95
+  },
+  'src/store/': {
+    statements: 90,  // Store 逻辑要求高覆盖率
+    branches: 85,
+    functions: 90,
+    lines: 90
+  },
+  'src/composables/': {
+    statements: 85,  // Composable 中等覆盖率
+    branches: 80,
+    functions: 85,
+    lines: 85
+  },
+  'src/components/': {
+    statements: 70,  // 组件覆盖率要求相对较低
+    branches: 65,
+    functions: 70,
+    lines: 70
+  }
+};
+```
+
+## 7. 测试最佳实践
+
+### 7.1 测试命名规范
+
+```typescript
+// ✅ 好的测试命名
+describe('UserService', () => {
+  describe('getUserById', () => {
+    it('应该返回用户信息当用户存在时', () => {});
+    it('应该抛出错误当用户不存在时', () => {});
+    it('应该处理网络错误', () => {});
+  });
+});
+
+// ❌ 不好的测试命名
+describe('UserService', () => {
+  it('test1', () => {});
+  it('getUserById works', () => {});
+  it('error case', () => {});
+});
+```
+
+### 7.2 测试数据管理
+
+```typescript
+// tests/fixtures/users.ts
+export const mockUsers = {
+  admin: {
+    id: '1',
+    name: '管理员',
+    email: 'admin@example.com',
+    roles: ['admin']
+  },
+  normalUser: {
+    id: '2',
+    name: '普通用户',
+    email: 'user@example.com',
+    roles: ['user']
+  },
+  inactiveUser: {
+    id: '3',
+    name: '非活跃用户',
+    email: 'inactive@example.com',
+    roles: ['user'],
+    status: 'inactive'
+  }
+};
+
+export const createMockUser = (overrides = {}) => ({
+  id: Math.random().toString(),
+  name: '测试用户',
+  email: 'test@example.com',
+  roles: ['user'],
+  status: 'active',
+  ...overrides
+});
+```
+
+### 7.3 异步测试处理
+
+```typescript
+// ✅ 正确的异步测试
+describe('异步操作', () => {
+  it('应该正确处理异步数据获取', async () => {
+    const store = useDataStore();
+    
+    // 等待异步操作完成
+    await store.fetchData();
+    
+    expect(store.loading).toBe(false);
+    expect(store.data).toHaveLength(2);
+  });
+
+  it('应该处理异步错误', async () => {
+    vi.mocked(api.getData).mockRejectedValue(new Error('网络错误'));
+    
+    const store = useDataStore();
+    
+    await store.fetchData();
+    
+    expect(store.error).toBe('网络错误');
+    expect(store.loading).toBe(false);
+  });
+});
+```
+
+### 7.4 测试隔离
+
+```typescript
+describe('测试隔离示例', () => {
+  beforeEach(() => {
+    // 重置所有 mock
+    vi.clearAllMocks();
+    
+    // 重置 Pinia 状态
+    setActivePinia(createPinia());
+    
+    // 清理 localStorage
+    localStorage.clear();
+    
+    // 重置 DOM
+    document.body.innerHTML = '';
+  });
+
+  afterEach(() => {
+    // 清理定时器
+    vi.useRealTimers();
+  });
+});
+```
+
+## 8. 持续集成配置
+
+### 8.1 GitHub Actions 配置
+
+```yaml
+# .github/workflows/test.yml
+name: 测试
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: 设置 Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: 安装依赖
+        run: npm ci
+
+      - name: 运行单元测试
+        run: npm run test:unit
+
+      - name: 运行组件测试
+        run: npm run test:component
+
+      - name: 运行 E2E 测试
+        run: npm run test:e2e
+
+      - name: 上传覆盖率报告
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage/lcov.info
+```
+
+### 8.2 质量门禁
+
+```typescript
+// package.json scripts
+{
+  "scripts": {
+    "test": "vitest",
+    "test:unit": "vitest run src/**/*.test.ts",
+    "test:component": "vitest run src/**/*.vue.test.ts",
+    "test:e2e": "playwright test",
+    "test:coverage": "vitest run --coverage",
+    "test:ci": "npm run test:coverage && npm run test:e2e",
+    "quality-gate": "npm run lint && npm run test:ci && npm run build"
+  }
+}
+```
+
+## 9. 测试文档和报告
+
+### 9.1 测试报告生成
+
+```typescript
+// vitest.config.ts
+export default defineConfig({
+  test: {
+    reporter: [
+      'default',
+      'html',
+      'json',
+      'junit'
+    ],
+    outputFile: {
+      html: './test-results/html/index.html',
+      json: './test-results/json/results.json',
+      junit: './test-results/junit/results.xml'
+    }
+  }
+});
+```
+
+### 9.2 测试维护
+
+```typescript
+// 定期检查和维护测试
+const testMaintenance = {
+  // 每月检查
+  monthly: [
+    '更新过时的测试用例',
+    '移除无用的测试',
+    '检查测试覆盖率',
+    '更新 Mock 数据'
+  ],
+  
+  // 每季度检查
+  quarterly: [
+    '评估测试策略',
+    '升级测试工具',
+    '性能测试优化',
+    '测试文档更新'
+  ]
+};
+```
+
+## 10. 总结
+
+### 10.1 测试原则
+
+1. **测试应该快速可靠**
+2. **测试应该独立且可重复**
+3. **测试应该覆盖关键业务逻辑**
+4. **测试应该易于理解和维护**
+5. **测试应该提供有意义的反馈**
+
+### 10.2 测试流程
+
+1. **开发前**：编写测试用例（TDD）
+2. **开发中**：保持测试通过
+3. **开发后**：检查测试覆盖率
+4. **提交前**：运行完整测试套件
+5. **部署前**：通过所有质量门禁
+
+description:
+globs:
+alwaysApply: false
+---

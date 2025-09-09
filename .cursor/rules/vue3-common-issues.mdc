@@ -1,0 +1,446 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Vue3 常见问题解决指南
+
+> 🔗 **页面布局规范**: 详细的页面布局标准请参考 [页面布局标准](mdc:.cursor/rules/page-layout-standards.mdc)
+
+本文档专注于Vue3开发中的常见问题与解决方案。
+
+## DAS组件库使用规范
+
+### DAS组件使用规范
+
+> 🔗 **组件使用指南**: 详细的组件使用说明请参考 [组件库使用标准](mdc:.cursor/rules/component-library-standards.mdc)
+
+关键要点：
+- **组件优先级**: DAS组件 > Ant Design Vue > 自定义组件
+- **文档查阅**: 使用前必须查阅 `das-components-folder/docs/` 中的组件文档
+- **常见问题**: placeholder不显示（使用`undefined`而非空字符串）、表单项必须设置name属性
+
+## v-model 使用问题
+
+### 问题描述
+Vue3中子组件不能直接在props上使用v-model，会报错。
+
+### 错误写法
+```vue
+<!-- 子组件 - 错误 -->
+<a-modal v-model:visible="visible">
+```
+
+### 正确写法
+```vue
+<!-- 子组件 - 正确 -->
+<a-modal 
+  :visible="visible" 
+  @update:visible="handleClose"
+>
+
+<script setup lang="ts">
+const emit = defineEmits(['update:visible'])
+
+const handleClose = () => {
+  emit('update:visible', false)
+}
+</script>
+```
+
+```vue
+<!-- 父组件 -->
+<ArchiveDetailModal 
+  :visible="detailModalVisible"
+  @update:visible="detailModalVisible = $event"
+/>
+```
+
+## Composition API 最佳实践
+
+### 1. 响应式数据定义
+```typescript
+import { ref, reactive } from 'vue'
+
+// 基本类型使用 ref
+const loading = ref(false)
+const searchForm = ref({})
+
+// 对象类型可使用 reactive
+const formData = reactive({
+  name: '',
+  status: ''
+})
+```
+
+### 2. 计算属性
+```typescript
+import { computed } from 'vue'
+
+const filteredData = computed(() => {
+  return tableData.value.filter(item => 
+    item.name.includes(searchForm.value.name)
+  )
+})
+```
+
+### 3. 生命周期钩子
+```typescript
+import { onMounted, onUnmounted } from 'vue'
+
+onMounted(() => {
+  fetchData()
+})
+
+onUnmounted(() => {
+  // 清理工作
+})
+```
+
+## TypeScript 类型定义
+
+### 1. 组件 Props 类型
+```typescript
+interface Props {
+  visible: boolean
+  data?: any[]
+}
+
+const props = defineProps<Props>()
+```
+
+### 2. Emit 事件类型
+```typescript
+interface Emits {
+  'update:visible': [value: boolean]
+  'confirm': [data: any]
+}
+
+const emit = defineEmits<Emits>()
+```
+
+### 3. 表格列类型
+```typescript
+import type { ColumnsType } from 'ant-design-vue/es/table'
+
+const columns: ColumnsType = [
+  {
+    title: '名称',
+    dataIndex: 'name',
+    key: 'name'
+  }
+]
+```
+
+## API调用规范
+
+> 🔗 **详细规范**: [API请求标准](mdc:.cursor/rules/api-request-standards.mdc)
+
+统一使用Http客户端进行API调用：
+```typescript
+import Http from '@/service'
+const response = await Http.get('/api/data')
+```
+
+## 性能优化建议
+
+### 1. 使用 shallowRef
+对于大数据集合，使用 shallowRef 可以提高性能：
+```typescript
+import { shallowRef } from 'vue'
+const largeData = shallowRef([])
+```
+
+### 2. 组件懒加载
+```typescript
+import { defineAsyncComponent } from 'vue'
+
+const HeavyComponent = defineAsyncComponent(
+  () => import('./HeavyComponent.vue')
+)
+```
+
+### 3. v-memo 指令
+对于复杂列表项使用 v-memo：
+```vue
+<div 
+  v-for="item in list" 
+  :key="item.id"
+  v-memo="[item.id, item.status]"
+>
+  <!-- 复杂内容 -->
+</div>
+```
+
+## 调试技巧
+
+### 1. 开发环境调试
+```typescript
+import { getCurrentInstance } from 'vue'
+
+// 获取当前组件实例用于调试
+const instance = getCurrentInstance()
+console.log('组件实例:', instance)
+```
+
+### 2. 响应式数据调试
+```typescript
+import { watch } from 'vue'
+
+// 监听数据变化
+watch(() => formData.value, (newVal) => {
+  console.log('表单数据变化:', newVal)
+}, { deep: true })
+```
+
+## 枚举值管理最佳实践
+
+### 1. 动态枚举值获取
+使用统一的枚举值获取工具：
+```typescript
+import { getEnumOptions } from '@/api/common/getEnum'
+
+// 在组件中加载枚举选项
+const loadEnumData = async () => {
+  industryOptions.value = await getEnumOptions('industry_type')
+  statusOptions.value = await getEnumOptions('system_status')
+  riskLevelOptions.value = await getEnumOptions('risk_level')
+}
+
+onMounted(() => {
+  loadEnumData()
+})
+```
+
+### 2. 静态常量定义
+对于不经常变化的选项，可以定义为常量：
+```typescript
+// 定义常量选项
+const STATIC_OPTIONS = {
+  priority: [
+    { label: '高', value: 'high' },
+    { label: '中', value: 'middle' },
+    { label: '低', value: 'low' }
+  ],
+  status: [
+    { label: '启用', value: true },
+    { label: '禁用', value: false }
+  ]
+}
+
+// 或使用枚举
+enum Priority {
+  HIGH = 'high',
+  MIDDLE = 'middle', 
+  LOW = 'low'
+}
+
+const priorityOptions = [
+  { label: '高', value: Priority.HIGH },
+  { label: '中', value: Priority.MIDDLE },
+  { label: '低', value: Priority.LOW }
+]
+```
+
+### 3. 带缓存的枚举值管理
+```typescript
+// 带缓存的枚举值获取
+const enumCache = new Map<string, any[]>()
+
+const getCachedEnumOptions = async (groupCode: string, forceRefresh = false) => {
+  if (!forceRefresh && enumCache.has(groupCode)) {
+    return enumCache.get(groupCode)
+  }
+  
+  const options = await getEnumOptions(groupCode)
+  enumCache.set(groupCode, options)
+  return options
+}
+
+// 清除缓存
+const clearEnumCache = (groupCode?: string) => {
+  if (groupCode) {
+    enumCache.delete(groupCode)
+  } else {
+    enumCache.clear()
+  }
+}
+```
+
+### 4. 表单中的枚举值使用
+
+#### 下拉框placeholder显示问题解决
+```vue
+<!-- 正确的下拉框使用方式 -->
+<a-select
+  v-model:value="searchForm.industry"
+  placeholder="请选择所属行业"
+  :options="industryOptions"
+  allow-clear
+/>
+```
+
+```typescript
+// 对应的数据定义 - 关键是初始值的设置
+const searchForm = reactive({
+  industry: undefined, // ✅ 使用undefined以显示placeholder
+  status: undefined,   // ✅ 使用undefined以显示placeholder
+  name: '',           // ✅ 输入框可以使用空字符串
+  tags: []            // ✅ 多选使用空数组
+})
+
+const industryOptions = ref([])
+
+// ❌ 错误的重置方式 - 会导致placeholder消失
+const handleResetWrong = () => {
+  Object.assign(searchForm, {
+    industry: '', // 空字符串会被认为是有效值，导致placeholder不显示
+    status: ''
+  })
+}
+
+// ✅ 正确的重置方式 - 保持placeholder显示
+const handleReset = () => {
+  Object.assign(searchForm, {
+    industry: undefined, // 使用undefined恢复placeholder
+    status: undefined,
+    name: '',
+    tags: []
+  })
+}
+```
+
+#### 不同组件的初始值规范
+```typescript
+// 不同组件类型的初始值设置
+const formData = reactive({
+  // 单选下拉框
+  singleSelect: undefined,
+  
+  // 多选下拉框  
+  multiSelect: [],
+  
+  // 级联选择器
+  cascader: [],
+  
+  // 单选框组
+  radioGroup: undefined,
+  
+  // 复选框
+  checkbox: false,
+  
+  // 开关
+  switch: false,
+  
+  // 输入框
+  input: '',
+  
+  // 数字输入框
+  inputNumber: undefined,
+  
+  // 日期选择器
+  datePicker: undefined,
+  
+  // 日期范围选择器
+  dateRangePicker: []
+})
+```
+
+### 5. 枚举值的类型安全
+```typescript
+// 定义枚举值接口
+interface EnumOption {
+  label: string
+  value: string | number | boolean
+  disabled?: boolean
+  [key: string]: any
+}
+
+// 定义枚举值响应接口
+interface EnumValue {
+  id: number
+  valueName: string
+  valueCode: string
+  groupCode: string
+  description?: string
+  isBuiltin: boolean
+}
+
+// 类型安全的枚举选项
+const industryOptions = ref<EnumOption[]>([])
+```
+
+### 6. 枚举值加载状态管理
+```typescript
+const enumLoading = ref(false)
+const enumError = ref('')
+
+const loadEnumOptions = async (groupCode: string) => {
+  try {
+    enumLoading.value = true
+    enumError.value = ''
+    const options = await getEnumOptions(groupCode)
+    return options
+  } catch (error) {
+    enumError.value = `加载${groupCode}选项失败`
+    console.error(`加载枚举值失败 [${groupCode}]:`, error)
+    return []
+  } finally {
+    enumLoading.value = false
+  }
+}
+```
+
+### 7. 批量加载枚举值
+```typescript
+// 批量加载多个枚举值
+const loadAllEnumData = async () => {
+  const enumGroups = [
+    'industry_type',
+    'system_status', 
+    'risk_level',
+    'business_type'
+  ]
+  
+  const results = await Promise.allSettled(
+    enumGroups.map(groupCode => getEnumOptions(groupCode))
+  )
+  
+  results.forEach((result, index) => {
+    const groupCode = enumGroups[index]
+    if (result.status === 'fulfilled') {
+      // 根据groupCode设置对应的options
+      switch(groupCode) {
+        case 'industry_type':
+          industryOptions.value = result.value
+          break
+        case 'system_status':
+          statusOptions.value = result.value
+          break
+        // ... 其他枚举值
+      }
+    } else {
+      console.error(`加载${groupCode}失败:`, result.reason)
+    }
+  })
+}
+```
+
+### 8. 枚举值本地化处理
+```typescript
+// 支持国际化的枚举值
+const getLocalizedOptions = (options: EnumOption[]) => {
+  return options.map(option => ({
+    ...option,
+    label: t(option.label) // 使用i18n翻译
+  }))
+}
+
+// 或者后端返回多语言枚举值
+interface MultiLangEnumValue extends EnumValue {
+  valueName_en?: string
+  valueName_zh?: string
+}
+```
+
+实际案例参考：[ArchiveDetailModal.vue](mdc:src/views/archive-management/components/ArchiveDetailModal.vue)

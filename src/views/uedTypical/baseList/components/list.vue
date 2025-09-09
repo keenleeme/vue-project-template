@@ -1,8 +1,37 @@
 <template>
   <div class="table-wrap">
-    <SearchComponent :is-reset="true" :initial-values="initialValues" :form-items="formItems"></SearchComponent>
-    <div class="operation-wrap">
-      <div class="left">
+    <das-search-bar :model="searchForm" :columns="4" :expandable="true" @search="handleSearch" @reset="handleReset">
+      <a-form-item :label="$t('I18N.layout.shuRuKuangWenBen')" name="name">
+        <a-input v-model:value="searchForm.name" :placeholder="$t('I18N.base_form.pleaseEnter')" />
+      </a-form-item>
+
+      <a-form-item :label="$t('I18N.layout.xuanZeQi')" name="sex">
+        <a-select
+          v-model:value="searchForm.sex"
+          :placeholder="$t('I18N.base_form.pleaseChoose')"
+          :options="sexOptions"
+        />
+      </a-form-item>
+
+      <a-form-item :label="$t('I18N.layout.riQiFanWei')" name="dateRange">
+        <a-range-picker
+          v-model:value="searchForm.dateRange"
+          :placeholder="[$t('I18N.layout.kaiShiShiJian'), $t('I18N.layout.jieShuShiJian')]"
+        />
+      </a-form-item>
+    </das-search-bar>
+
+    <das-table
+      class="table-box"
+      :columns="columns"
+      :data-source="data"
+      :row-key="'key'"
+      :current="1"
+      :total="data.length"
+      @change="onChange"
+    >
+      <!-- 操作栏插槽 -->
+      <template #operate>
         <a-button @click="add" type="primary" class="mr-8">
           <template #icon>
             <PlusOutlined />
@@ -12,22 +41,9 @@
         <a-button class="mr-8"> {{ $t('I18N.layout.daoChu') }} </a-button>
         <a-button class="mr-8"> {{ $t('I18N.layout.zhongDianGuanZhu') }} </a-button>
         <a-button class="mr-8"> {{ $t('I18N.layout.quXiaoGuanZhu') }} </a-button>
-        <!-- <a-button ghost>Ghost</a-button> -->
-      </div>
-      <div class="right">
-        <a-button class="mr-8">
-          <template #icon>
-            <i class="zq-icon zq-icon-setting"></i>
-          </template>
-        </a-button>
-        <a-button>
-          <template #icon>
-            <i class="zq-icon zq-icon-fullsreen"></i>
-          </template>
-        </a-button>
-      </div>
-    </div>
-    <a-table class="table-box" :columns="columns" :data-source="data" @change="onChange">
+      </template>
+
+      <!-- 自定义单元格内容 -->
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'name'">
           <a>
@@ -50,14 +66,17 @@
           <a-button class="link" type="link">{{ $t('I18N.common.delete') }}</a-button>
         </template>
       </template>
-    </a-table>
+    </das-table>
   </div>
 </template>
 
 <script setup lang="ts">
+  import { reactive } from 'vue';
+  import { useI18n } from 'vue-i18n';
   import { PlusOutlined } from '@ant-design/icons-vue';
   import type { TableColumnType, TableProps } from 'ant-design-vue';
-  import SearchComponent from './search.vue';
+
+  const { t } = useI18n();
 
   type TableDataType = {
     key: string;
@@ -68,47 +87,41 @@
 
   const router = useRouter();
 
-  const initialValues = {
+  // 搜索表单数据
+  const searchForm = reactive({
     name: '',
     sex: '1',
     dateRange: undefined
-  };
+  });
 
-  const formItems = [
+  // 性别选项
+  const sexOptions = [
     {
-      label: I18N.layout.shuRuKuangWenBen,
-      prop: 'name',
-      type: 'input'
+      label: t('I18N.layout.xuanZeXiang1'),
+      value: '1'
     },
     {
-      label: I18N.layout.xuanZeQi,
-      props: 'sex',
-      type: 'select',
-      options: [
-        {
-          label: I18N.layout.xuanZeXiang1,
-          value: '1'
-        },
-        {
-          label: I18N.layout.xuanZeXiang2,
-          value: '2'
-        }
-      ]
-    },
-    // {
-    //   label: I18N.layout.riQi,
-    //   prop: 'date',
-    //   type: 'date',
-    //   placeholder: I18N.layout.qingXuanZe,
-    // },
-    {
-      label: I18N.layout.riQiFanWei,
-      prop: 'dateRange',
-      type: 'daterange',
-      startPlaceholder: I18N.layout.kaiShiShiJian,
-      endPlaceholder: I18N.layout.jieShuShiJian
+      label: t('I18N.layout.xuanZeXiang2'),
+      value: '2'
     }
   ];
+
+  // 搜索处理函数
+  const handleSearch = (values: any) => {
+    console.log('搜索参数:', values);
+    // 这里可以调用API进行搜索
+  };
+
+  // 重置处理函数
+  const handleReset = (values: any) => {
+    console.log('重置参数:', values);
+    // 重置搜索条件
+    Object.assign(searchForm, {
+      name: '',
+      sex: '1',
+      dateRange: undefined
+    });
+  };
 
   const columns: TableColumnType<TableDataType>[] = [
     {
@@ -188,6 +201,6 @@
     margin: 16px;
   }
   .table-box {
-    margin: 16px;
+    padding: 16px;
   }
 </style>

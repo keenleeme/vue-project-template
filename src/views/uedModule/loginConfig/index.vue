@@ -2,11 +2,12 @@
   <div class="setting-wrapper">
     <div class="page-content">
       <div class="setting">
-        <a-form
+        <das-form
           :colon="false"
           label-align="right"
           v-bind="formItemLayout"
           :label-col="{ style: { width: '33.3%', 'white-space': 'normal' } }"
+          layout="horizontal"
         >
           <div class="group basic">
             <div class="group-header">
@@ -196,22 +197,26 @@
               <span>（{{ $t('I18N.login.meiYouLianJie') }}）</span>
             </div>
             <div class="group-content">
-              <a-form-item v-for="(item, idx) in loginConfig.copyright" :key="idx">
-                <div class="flex">
+              <div v-for="(item, idx) in loginConfig.copyright" :key="idx" class="copyright-item">
+                <a-form-item :label="$t('I18N.layout.wenZi')" :name="['copyright', idx, 'text']">
                   <a-input v-model:value="item.text" :placeholder="$t('I18N.base_form.pleaseEnterContent')"></a-input>
+                </a-form-item>
+                <a-form-item :label="$t('I18N.layout.lianJieDiZhi')" :name="['copyright', idx, 'link']">
                   <a-input
                     v-model:value="item.link"
                     :placeholder="$t('I18N.base_form.pleaseEnterContent') + $t('I18N.layout.lianJieDiZhi')"
                   ></a-input>
+                </a-form-item>
+                <a-form-item-rest>
                   <MinusCircleOutlined @click="copyrightHandler('remove', idx)" />
-                </div>
-              </a-form-item>
+                </a-form-item-rest>
+              </div>
               <a-button type="dashed" :icon="h(PlusOutlined)" style="width: 100%" @click="copyrightHandler('append')">
                 {{ $t('I18N.common.add') }}
               </a-button>
             </div>
           </div>
-        </a-form>
+        </das-form>
       </div>
       <!--  -->
       <!-- preview -->
@@ -228,20 +233,12 @@
       <a-button type="primary" @click="handleFormSet('apply')">{{ $t('I18N.layout.yingYongDangQianSheZhi') }}</a-button>
     </div>
 
-    <a-modal v-model:open="dialogVisible" :title="dialogTitle" :centered="true" :closable="false">
+    <a-modal v-model:open="dialogVisible" :title="dialogTitle" @ok="handleSubmit" @cancel="dialogVisible = false">
       <div class="content">{{ $t('I18N.layout.xinZhuTiFengGeTiShi') }}</div>
-      <template #footer>
-        <a-button key="back" @click="dialogVisible = false">{{ $t('I18N.common.cancel') }}</a-button>
-        <a-button key="submit" type="primary" @click="handleSubmit">{{ $t('I18N.common.confirm') }}</a-button>
-      </template>
     </a-modal>
 
-    <a-modal v-model:open="fullscreen" title="" width="100%" wrap-class-name="full-modal" :closable="false">
+    <a-modal v-model:open="fullscreen" title="" @cancel="fullscreen = false">
       <LoginDemo :key="previewKey" fullscreen :forms="forms" :login-config="loginConfig"></LoginDemo>
-
-      <template #footer>
-        <a-button class="close" @click="fullscreen = false">{{ $t('I18N.common.close') }}</a-button>
-      </template>
     </a-modal>
   </div>
 </template>

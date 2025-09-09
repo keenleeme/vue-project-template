@@ -1,0 +1,666 @@
+# 国际化开发规范
+
+## 概述
+
+本项目基于 `@international/vue3-i18n` 构建国际化系统，支持中英文双语，使用Kiwi工具进行翻译管理。
+
+## 技术架构
+
+### 1. 核心技术
+- **i18n框架**: @international/vue3-i18n
+- **翻译工具**: das-intl (Kiwi)
+- **支持语言**: 中文(zh-CN)、英文(en-US)
+- **组件国际化**: das-locale-provider
+
+### 2. 目录结构
+```
+.kiwi/                    # 翻译文件目录
+├── zh-CN/               # 中文翻译
+│   ├── index.ts         # 导出文件
+│   └── uedModule/       # 模块翻译
+│       ├── common.ts    # 通用翻译
+│       ├── layout.ts    # 布局翻译
+│       ├── login.ts     # 登录翻译
+│       └── ...
+├── en-US/               # 英文翻译
+│   └── ...
+└── kiwi-config.json     # Kiwi配置
+```
+
+## 国际化配置
+
+### 1. 基础配置
+```typescript
+// src/locale/index.ts
+import { createI18n } from '@international/vue3-i18n';
+import en from '../../.kiwi/en-US';
+import zh from '../../.kiwi/zh-CN';
+
+export default function i18n(app: any) {
+  const i18nIns = createI18n(app, {
+    autoDetect: false,
+    messages: {
+      zh: { I18N: zh },
+      en: { I18N: en }
+    },
+    kiwi: { zh, en }
+  });
+  app.use(i18nIns);
+}
+```
+
+### 2. Kiwi配置
+```json
+// kiwi-config.json
+{
+  "fileType": "ts",
+  "srcLang": "zh-CN",
+  "distLangs": ["en-US"],
+  "googleApiKey": "",
+  "baiduApiKey": {
+    "appId": "",
+    "appKey": ""
+  },
+  "baiduLangMap": {
+    "en-US": "en",
+    "zh-TW": "cht"
+  },
+  "translateOptions": {
+    "concurrentLimit": 10,
+    "requestOptions": {}
+  },
+  "defaultTranslateKeyApi": "Pinyin",
+  "importI18N": "",
+  "ignoreDir": [],
+  "ignoreFile": []
+}
+```
+
+## 翻译文件管理
+
+### 1. 模块化翻译结构
+```typescript
+// .kiwi/zh-CN/index.ts
+import common from './uedModule/common';
+import layout from './uedModule/layout';
+import login from './uedModule/login';
+import api from './uedModule/api';
+import base_form from './uedModule/base_form';
+
+export default Object.assign({}, {
+  common,
+  api,
+  layout,
+  login,
+  base_form
+});
+```
+
+### 2. 通用翻译词汇
+```typescript
+// .kiwi/zh-CN/uedModule/common.ts
+export default {
+  // 基础操作
+  add: '新增',
+  edit: '编辑',
+  delete: '删除',
+  cancel: '取消',
+  save: '保存',
+  confirm: '确定',
+  close: '关闭',
+  update: '更新',
+  search: '搜索',
+  reset: '重置',
+  
+  // 状态词汇
+  status: '状态',
+  loading: '加载中',
+  success: '成功',
+  error: '错误',
+  warning: '警告',
+  
+  // 业务术语
+  userManage: '用户管理',
+  roleManage: '角色管理',
+  assetManage: '资产管理',
+  reportManage: '报表管理'
+};
+```
+
+```typescript
+// .kiwi/en-US/uedModule/common.ts
+export default {
+  // 基础操作
+  add: 'Add',
+  edit: 'Edit',
+  delete: 'Delete',
+  cancel: 'Cancel',
+  save: 'Save',
+  confirm: 'Confirm',
+  close: 'Close',
+  update: 'Update',
+  search: 'Search',
+  reset: 'Reset',
+  
+  // 状态词汇
+  status: 'Status',
+  loading: 'Loading',
+  success: 'Success',
+  error: 'Error',
+  warning: 'Warning',
+  
+  // 业务术语
+  userManage: 'User Management',
+  roleManage: 'Role Management',
+  assetManage: 'Asset Management',
+  reportManage: 'Report Management'
+};
+```
+
+## 在组件中使用
+
+### 1. 基础使用
+```vue
+<template>
+  <div>
+    <!-- 直接使用翻译 -->
+    <h1>{{ $t('I18N.common.userManage') }}</h1>
+    
+    <!-- 按钮文字 -->
+    <a-button type="primary">
+      {{ $t('I18N.common.add') }}
+    </a-button>
+    
+    <!-- 表格列标题 -->
+    <a-table :columns="columns" :dataSource="data" />
+  </div>
+</template>
+
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
+
+// 定义表格列
+const columns = [
+  {
+    title: t('I18N.common.username'),
+    dataIndex: 'username',
+    key: 'username'
+  },
+  {
+    title: t('I18N.common.status'),
+    dataIndex: 'status',
+    key: 'status'
+  }
+];
+</script>
+```
+
+### 2. 动态翻译
+```vue
+<script setup lang="ts">
+import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const { t, locale } = useI18n();
+
+// 计算属性中使用翻译
+const statusOptions = computed(() => [
+  { label: t('I18N.common.enable'), value: 1 },
+  { label: t('I18N.common.disable'), value: 0 }
+]);
+
+// 方法中使用翻译
+const showMessage = (type: 'success' | 'error') => {
+  const message = type === 'success' 
+    ? t('I18N.common.operateSuccess')
+    : t('I18N.common.operateFailed');
+  
+  console.log(message);
+};
+</script>
+```
+
+### 3. 插值和复数
+```typescript
+// 翻译文件
+export default {
+  welcome: '欢迎 {name}',
+  itemCount: '共 {count} 项',
+  // 复数形式
+  appleCount: '{count} 个苹果 | {count} 个苹果'
+};
+```
+
+```vue
+<template>
+  <!-- 插值使用 -->
+  <div>{{ $t('I18N.common.welcome', { name: username }) }}</div>
+  
+  <!-- 复数使用 -->
+  <div>{{ $tc('I18N.common.appleCount', count, { count }) }}</div>
+</template>
+```
+
+## 组件库国际化
+
+### 1. DAS组件国际化
+```vue
+<template>
+  <das-locale-provider :locale="dasLocale">
+    <div id="app">
+      <!-- DAS组件 -->
+      <das-table />
+      <das-form />
+    </div>
+  </das-locale-provider>
+</template>
+
+<script setup lang="ts">
+import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+import enUS from 'das-component-vue/es/locale/en';
+import zhCN from 'das-component-vue/es/locale/zh-CN';
+
+const { locale } = useI18n();
+
+// 根据当前语言设置DAS组件语言
+const dasLocale = computed(() => {
+  return locale.value === 'en' ? enUS : zhCN;
+});
+</script>
+```
+
+### 2. Ant Design国际化
+```vue
+<template>
+  <a-config-provider :locale="antdLocale">
+    <!-- Ant Design组件 -->
+  </a-config-provider>
+</template>
+
+<script setup lang="ts">
+import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+import zhCN from 'ant-design-vue/es/locale/zh_CN';
+import enUS from 'ant-design-vue/es/locale/en_US';
+
+const { locale } = useI18n();
+
+const antdLocale = computed(() => {
+  return locale.value === 'en' ? enUS : zhCN;
+});
+</script>
+```
+
+## 语言切换
+
+### 1. 语言切换组件
+```vue
+<!-- LanguageSwitcher.vue -->
+<template>
+  <a-select 
+    v-model:value="currentLocale"
+    @change="handleLocaleChange"
+  >
+    <a-select-option value="zh">简体中文</a-select-option>
+    <a-select-option value="en">English</a-select-option>
+  </a-select>
+</template>
+
+<script setup lang="ts">
+import { ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { changeLocale } from '@international/vue3-i18n';
+
+const { locale } = useI18n();
+const currentLocale = ref(locale.value);
+
+// 切换语言
+const handleLocaleChange = (newLocale: string) => {
+  changeLocale(newLocale);
+  // 保存到本地存储
+  localStorage.setItem('das-intl-locale', newLocale);
+  // 可能需要刷新页面
+  window.location.reload();
+};
+
+// 监听语言变化
+watch(() => locale.value, (newLocale) => {
+  currentLocale.value = newLocale;
+});
+</script>
+```
+
+### 2. 持久化语言设置
+```typescript
+// 在主题store或单独的语言store中管理
+const handleLocaleChangeA = (key: string) => {
+  // 更新i18n
+  changeLocale(key);
+  
+  // 更新登录配置
+  loginStore.set({ language: key });
+  
+  // 刷新页面确保所有组件更新
+  window.location.reload();
+};
+```
+
+## Kiwi工具使用
+
+### 1. 命令行工具
+```json
+// package.json scripts
+{
+  "scripts": {
+    "i18n:init": "das-intl --init",
+    "i18n:extract": "das-intl --extract",
+    "i18n:translate": "das-intl --translate",
+    "i18n:exportAll": "das-intl --exportAll",
+    "i18n:import": "das-intl --import ./export-en-US.csv en-US",
+    "i18n:sync": "das-intl --sync"
+  }
+}
+```
+
+### 2. 工作流程
+```bash
+# 1. 初始化国际化
+npm run i18n:init
+
+# 2. 提取中文文本
+npm run i18n:extract
+
+# 3. 自动翻译
+npm run i18n:translate
+
+# 4. 导出翻译文件
+npm run i18n:exportAll
+
+# 5. 导入翻译
+npm run i18n:import ./export-en-US.csv en-US
+
+# 6. 同步翻译
+npm run i18n:sync
+```
+
+### 3. 翻译提取
+```typescript
+// 代码中标记需要翻译的文本
+const title = '用户管理'; // 会被自动提取
+
+// 或使用注释标记
+const dynamicText = getMessage(); // kiwi-disable-line
+```
+
+## 最佳实践
+
+### 1. 翻译键命名规范
+```typescript
+// ✅ 好的命名方式
+export default {
+  // 模块.功能.具体含义
+  user: {
+    form: {
+      usernameLabel: '用户名',
+      passwordLabel: '密码',
+      submitButton: '登录'
+    },
+    message: {
+      loginSuccess: '登录成功',
+      loginFailed: '登录失败'
+    }
+  }
+};
+
+// ❌ 避免的命名方式
+export default {
+  text1: '用户名',
+  msg: '登录成功',
+  btn: '确定'
+};
+```
+
+### 2. 组织翻译文件
+```typescript
+// 按功能模块分组
+common.ts      // 通用词汇
+layout.ts      // 布局相关
+login.ts       // 登录模块
+user.ts        // 用户管理
+asset.ts       // 资产管理
+report.ts      // 报表模块
+```
+
+### 3. 处理复杂翻译
+```typescript
+// 日期时间格式化
+const formatDate = (date: Date) => {
+  const locale = useI18n().locale.value;
+  return new Intl.DateTimeFormat(
+    locale === 'zh' ? 'zh-CN' : 'en-US'
+  ).format(date);
+};
+
+// 数字格式化
+const formatNumber = (num: number) => {
+  const locale = useI18n().locale.value;
+  return new Intl.NumberFormat(
+    locale === 'zh' ? 'zh-CN' : 'en-US'
+  ).format(num);
+};
+
+// 货币格式化
+const formatCurrency = (amount: number) => {
+  const locale = useI18n().locale.value;
+  const currency = locale === 'zh' ? 'CNY' : 'USD';
+  
+  return new Intl.NumberFormat(locale === 'zh' ? 'zh-CN' : 'en-US', {
+    style: 'currency',
+    currency
+  }).format(amount);
+};
+```
+
+### 4. 动态内容翻译
+```vue
+<script setup lang="ts">
+// 枚举值翻译
+const statusMap = {
+  1: 'I18N.common.enable',
+  0: 'I18N.common.disable'
+};
+
+const getStatusText = (status: number) => {
+  return t(statusMap[status] || 'I18N.common.unknown');
+};
+
+// 动态表格列
+const generateColumns = () => {
+  return [
+    {
+      title: t('I18N.user.username'),
+      dataIndex: 'username'
+    },
+    {
+      title: t('I18N.common.status'),
+      dataIndex: 'status',
+      customRender: ({ text }: any) => getStatusText(text)
+    }
+  ];
+};
+</script>
+```
+
+## 翻译质量管理
+
+### 1. 翻译审核流程
+```typescript
+// 翻译状态管理
+interface TranslationItem {
+  key: string;
+  zhText: string;
+  enText: string;
+  status: 'pending' | 'translated' | 'reviewed' | 'approved';
+  reviewer?: string;
+  updatedAt: Date;
+}
+
+// 翻译审核工具
+const reviewTranslation = (item: TranslationItem, status: string) => {
+  item.status = status as any;
+  item.reviewer = getCurrentUser().name;
+  item.updatedAt = new Date();
+};
+```
+
+### 2. 缺失翻译检测
+```typescript
+// 检测缺失翻译
+const checkMissingTranslations = () => {
+  const zhKeys = Object.keys(zhTranslations);
+  const enKeys = Object.keys(enTranslations);
+  
+  const missingInEn = zhKeys.filter(key => !enKeys.includes(key));
+  const missingInZh = enKeys.filter(key => !zhKeys.includes(key));
+  
+  console.warn('缺失英文翻译:', missingInEn);
+  console.warn('缺失中文翻译:', missingInZh);
+};
+```
+
+### 3. 翻译一致性检查
+```typescript
+// 检查术语一致性
+const terminology = {
+  '用户': 'User',
+  '资产': 'Asset',
+  '报表': 'Report',
+  '管理': 'Management'
+};
+
+const checkTerminologyConsistency = (translations: Record<string, string>) => {
+  Object.entries(terminology).forEach(([zh, en]) => {
+    // 检查翻译一致性
+    const inconsistentTranslations = Object.entries(translations)
+      .filter(([key, value]) => 
+        key.includes(zh) && !value.toLowerCase().includes(en.toLowerCase())
+      );
+    
+    if (inconsistentTranslations.length > 0) {
+      console.warn(`术语"${zh}"翻译不一致:`, inconsistentTranslations);
+    }
+  });
+};
+```
+
+## 性能优化
+
+### 1. 按需加载翻译
+```typescript
+// 动态导入翻译文件
+const loadTranslations = async (locale: string) => {
+  try {
+    const translations = await import(`../.kiwi/${locale}/index.ts`);
+    return translations.default;
+  } catch (error) {
+    console.error(`加载翻译文件失败: ${locale}`, error);
+    return {};
+  }
+};
+
+// 懒加载模块翻译
+const loadModuleTranslations = async (module: string, locale: string) => {
+  const translations = await import(`../.kiwi/${locale}/modules/${module}.ts`);
+  return translations.default;
+};
+```
+
+### 2. 翻译缓存
+```typescript
+// 翻译结果缓存
+const translationCache = new Map<string, string>();
+
+const getCachedTranslation = (key: string, locale: string): string | null => {
+  const cacheKey = `${locale}:${key}`;
+  return translationCache.get(cacheKey) || null;
+};
+
+const setCachedTranslation = (key: string, locale: string, value: string) => {
+  const cacheKey = `${locale}:${key}`;
+  translationCache.set(cacheKey, value);
+};
+```
+
+## 测试策略
+
+### 1. 翻译完整性测试
+```typescript
+// 测试所有翻译键是否存在
+describe('国际化测试', () => {
+  it('应该包含所有必需的翻译键', () => {
+    const requiredKeys = [
+      'I18N.common.add',
+      'I18N.common.edit',
+      'I18N.common.delete'
+    ];
+    
+    requiredKeys.forEach(key => {
+      expect(zhTranslations).toHaveProperty(key);
+      expect(enTranslations).toHaveProperty(key);
+    });
+  });
+  
+  it('中英文翻译数量应该一致', () => {
+    const zhCount = countTranslationKeys(zhTranslations);
+    const enCount = countTranslationKeys(enTranslations);
+    expect(zhCount).toBe(enCount);
+  });
+});
+```
+
+### 2. 语言切换测试
+```typescript
+// 测试语言切换功能
+test('语言切换', async ({ page }) => {
+  await page.goto('/');
+  
+  // 默认中文
+  await expect(page.locator('[data-testid="welcome"]')).toContainText('欢迎');
+  
+  // 切换到英文
+  await page.click('[data-testid="language-switcher"]');
+  await page.click('[data-value="en"]');
+  
+  // 验证英文显示
+  await expect(page.locator('[data-testid="welcome"]')).toContainText('Welcome');
+});
+```
+
+## 常见问题
+
+### Q: 翻译不生效？
+A: 检查翻译键路径是否正确，确认翻译文件是否正确导入。
+
+### Q: 语言切换后部分内容未更新？
+A: 确保使用了响应式的`t()`函数，避免在setup中直接赋值。
+
+### Q: 如何处理HTML内容翻译？
+A: 使用`v-html`指令，但要注意XSS安全问题。
+
+### Q: 动态内容如何翻译？
+A: 使用计算属性或方法，确保响应式更新。
+
+## 参考资料
+
+- [项目国际化配置](mdc:src/locale/index.ts)
+- [中文翻译文件](mdc:.kiwi/zh-CN/)
+- [英文翻译文件](mdc:.kiwi/en-US/)
+- [DAS组件国际化](mdc:das-components-folder/docs/das-locale-provider.md)
+- [Vue I18n官方文档](https://vue-i18n.intlify.dev/)
+description:
+globs:
+alwaysApply: false
+---

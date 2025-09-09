@@ -6,11 +6,9 @@
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
   import logoUrl from '@/assets/images/demo/logo.svg';
-  import { useAppStore } from '@/store';
   import UedLogin from '../uedModule/login/indexComponent.vue';
 
   const router = useRouter();
-  const appStore = useAppStore();
   const from = ref([
     {
       type: 'login-password',

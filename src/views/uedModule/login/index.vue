@@ -49,10 +49,9 @@
   import { message } from 'ant-design-vue';
   import { storeToRefs } from 'pinia';
   import { onLogin, onRegister, getCaptcha, getLoginRedirectUrl } from '@/api/common';
-  import { useAppStore, useLoginStore, useThemeStore, useUserStore } from '@/store';
+  import { useLoginStore, useThemeStore, useUserStore } from '@/store';
   import { LoginConfigDTO, LogoModeEnums } from './types';
 
-  const appStore = useAppStore();
   const loginStore = useLoginStore();
   const userStore = useUserStore();
   const router = useRouter();
@@ -105,11 +104,38 @@
           label: I18N.layout.yanZhengMa,
           icon: 'code',
           api: () => {
-            return new Promise((resolve) => {
-              getCaptcha().then((res) => {
-                captchaId.value = res.data.captchaId;
-                resolve(res.data.captchaBase64);
-              });
+            return new Promise((resolve, reject) => {
+              console.log('开始获取验证码');
+              getCaptcha()
+                .then((res) => {
+                  console.log('验证码API响应:', res);
+                  console.log('响应类型:', typeof res);
+                  console.log('响应数据结构:', Object.keys(res));
+
+                  // 检查响应格式，支持多种格式
+                  if (res.data && res.data.captchaId && res.data.captchaBase64) {
+                    // 标准格式：{data: {captchaId, captchaBase64}}
+                    console.log('使用标准格式处理验证码');
+                    captchaId.value = res.data.captchaId;
+                    resolve(res.data.captchaBase64);
+                  } else if (res.captchaId && res.captchaBase64) {
+                    // 直接格式：{captchaId, captchaBase64}
+                    console.log('使用直接格式处理验证码');
+                    captchaId.value = res.captchaId;
+                    resolve(res.captchaBase64);
+                  } else {
+                    console.error('验证码响应格式不正确:', res);
+                    console.error('期望的字段:', {
+                      captchaId: !!res.data?.captchaId,
+                      captchaBase64: !!res.data?.captchaBase64
+                    });
+                    reject(new Error('验证码响应格式不正确'));
+                  }
+                })
+                .catch((error) => {
+                  console.error('获取验证码失败:', error);
+                  reject(error);
+                });
             });
           }
         }
@@ -228,9 +254,14 @@
       items: [
         {
           api: () => {
-            return new Promise(async (resolve) => {
-              await handleLoginRedirect();
-              resolve(true);
+            return new Promise(async (resolve, reject) => {
+              try {
+                await handleLoginRedirect();
+                resolve(true);
+              } catch (error) {
+                console.error('钉钉登录跳转失败:', error);
+                reject(error);
+              }
             });
           }
         }
@@ -252,31 +283,82 @@
     }
   };
 
-  const handleLogin = (data) => {
-    onLogin({ ...data, captchaId: captchaId.value }).then((res) => {
-      if (res.code === 200) {
-        userStore.setToken(res.data.accessToken);
-        userStore.setUserInfo(res.data.user);
-        message.success(res.message);
+  const handleLogin = async (data) => {
+    try {
+      console.log('开始登录，输入数据:', data);
+      const res = await onLogin({ ...data, captchaId: captchaId.value });
+      console.log('登录响应:', res);
+
+      // 检查响应格式，支持多种格式
+      const isSuccess = res.code === 200 || (res.data && res.data.accessToken && res.data.user);
+
+      if (isSuccess) {
+        // 确保数据完整性
+        const loginData = res.data || res;
+        if (!loginData.accessToken || !loginData.user) {
+          throw new Error('登录响应数据不完整');
+        }
+
+        console.log('设置用户token:', loginData.accessToken);
+        console.log('设置用户信息:', loginData.user);
+
+        // 设置用户信息
+        userStore.setToken(loginData.accessToken);
+        userStore.setUserInfo(loginData.user);
+
+        // 验证数据是否设置成功
+        console.log('验证token设置:', userStore.token);
+        console.log('验证用户信息设置:', userStore.userInfo);
+
+        // 验证localStorage中的数据
+        const storedData = localStorage.getItem('user-store');
+        console.log('localStorage中的数据:', storedData);
+
+        message.success(res.message || '登录成功');
+
+        // 延迟跳转，确保数据保存完成
         setTimeout(() => {
-          router.replace('/');
+          try {
+            console.log('准备跳转到首页');
+            router.replace('/');
+          } catch (routerError) {
+            console.error('路由跳转失败:', routerError);
+            // 如果路由跳转失败，尝试使用window.location
+            window.location.href = '/';
+          }
         }, 1000);
       } else {
+        console.error('登录失败，响应码:', res.code, '消息:', res.message);
         loginLayout.value.refresh('verifyCode');
-        message.error(res.message);
+        message.error(res.message || '登录失败');
       }
-    });
+    } catch (error) {
+      console.error('登录失败:', error);
+      const errorMessage = error instanceof Error ? error.message : '登录失败，请重试';
+      message.error(errorMessage);
+      loginLayout.value.refresh('verifyCode');
+    }
   };
 
-  const handleRegistry = (data) => {
-    onRegister(data).then((res) => {
-      if (res.code === 200) {
-        message.success(res.message);
+  const handleRegistry = async (data) => {
+    try {
+      const res = await onRegister(data);
+      console.log('注册响应:', res);
+
+      // 检查响应格式，支持多种格式
+      const isSuccess = res.code === 200 || res.message;
+
+      if (isSuccess) {
+        message.success(res.message || '注册成功');
         loginLayout.value.setType('login-password');
       } else {
-        message.error(res.message);
+        message.error(res.message || '注册失败');
       }
-    });
+    } catch (error) {
+      console.error('注册失败:', error);
+      const errorMessage = error instanceof Error ? error.message : '注册失败，请重试';
+      message.error(errorMessage);
+    }
   };
 
   const handleLocaleChangeA = (e: CustomEvent<{ data: string }>) => {
@@ -288,12 +370,29 @@
   };
 
   const handleLoginRedirect = async () => {
-    const res = await getLoginRedirectUrl({
-      state: 'relogin',
-      redirectUri: window.location.origin
-    });
-    if (res.code === 200) {
-      window.location.href = res.data.redirectUrl;
+    try {
+      console.log('开始获取钉钉登录URL');
+      const res = await getLoginRedirectUrl({
+        state: 'relogin',
+        redirectUri: window.location.origin
+      });
+      console.log('钉钉登录URL响应:', res);
+
+      // 检查响应格式，支持多种格式
+      const redirectUrl = res.data?.redirectUrl || res.redirectUrl;
+      const isSuccess = res.code === 200 || redirectUrl;
+
+      if (isSuccess && redirectUrl) {
+        console.log('跳转到钉钉登录页面:', redirectUrl);
+        window.location.href = redirectUrl;
+      } else {
+        throw new Error(res.message || '获取钉钉登录URL失败');
+      }
+    } catch (error) {
+      console.error('获取钉钉登录URL失败:', error);
+      const errorMessage = error instanceof Error ? error.message : '获取钉钉登录URL失败';
+      message.error(errorMessage);
+      throw error;
     }
   };
 

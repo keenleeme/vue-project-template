@@ -135,7 +135,10 @@
   watch(
     () => [themePanelVisible.value, activeModuleId.value],
     () => {
-      if (themePanelVisible.value) window.location.hash = activeModuleId.value;
+      if (themePanelVisible.value) {
+        const el = document.getElementById(activeModuleId.value);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
   );
 

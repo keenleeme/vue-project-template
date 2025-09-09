@@ -276,5 +276,11 @@ export default {
   qiYongZhuangTai: '启用状态',
   chuangJianShiJian: '创建时间',
   gengXingeShiJian: '更新时间',
-  dasReaddy: 'Das-Readdy'
+  dasReaddy: 'DasReaddy',
+  aiNengLi: 'ChatAI',
+  chatV: 'ChatV',
+  chatBI: 'ChatBI',
+  jiJian: '基建',
+  dasComponent: 'Das-Component',
+  dasComponentsX: 'Das-Component-X'
 };

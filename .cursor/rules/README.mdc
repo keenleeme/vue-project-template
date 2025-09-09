@@ -1,0 +1,284 @@
+# 开发规范索引
+
+## 🚨 开发前必读警告 🚨
+
+**⚠️ 任何功能开发前必须严格遵循以下流程，违者后果自负：**
+
+### 强制性预开发检查清单
+
+**第一步：规范学习（必须完成）**
+- [ ] 阅读本文件了解规范体系架构
+- [ ] 根据功能类型查阅对应规范文件（见下方导航）
+- [ ] 检查 `das-components-folder/` 中可用组件
+- [ ] 研究现有类似功能的实现方式
+
+**第二步：技术方案设计（必须验证）**
+- [ ] 确认组件选择：**DAS组件 > Ant Design Vue > 自定义组件**
+- [ ] 确认页面结构符合对应规范（如 list-page-rule.mdc）
+- [ ] 确认数据流和API调用符合项目标准
+
+**第三步：实现验证（必须检查）**
+- [ ] 代码实现严格遵循规范
+- [ ] 通过 TypeScript 类型检查
+- [ ] 通过项目 linting 检查
+- [ ] 功能测试正常
+
+### 🚫 常见违规行为（立即停止并重构）
+
+1. **使用 `a-table` 而不是 `das-table`**
+2. **使用 `a-form` 搜索而不是 `das-search-bar`**
+4. **页面结构不符合 list-page-rule.mdc 规范**
+5. **跳过规范学习直接开始开发**
+
+---
+
+## 🎯 规范覆盖概览
+
+| 类别 | 覆盖率 | 核心规范文件 |
+|------|-------|-------------|
+| **核心开发标准** | 95% | [项目配置](mdc:cursor-project-configuration.mdc)、[组件库标准](mdc:component-library-standards.mdc) |
+| **页面开发规范** | 98% | [页面布局标准](mdc:page-layout-standards.mdc)、[列表页规范](mdc:list-page-rule.mdc)、[典型页面规范](mdc:pages/uedTypical-pages-standards.mdc) |
+| **技术实现规范** | 95% | [API请求标准](mdc:api-request-standards.mdc)、[状态管理](mdc:state-management-standards.mdc)、[表单验证](mdc:form-validation-standards.mdc) |
+| **工程化规范** | 90% | [构建部署](mdc:build-deployment-standards.mdc)、[测试标准](mdc:testing-standards.mdc) |
+| **数据可视化规范** | 95% | [数据可视化标准](mdc:data-visualization-standards.mdc) |
+| **架构扩展规范** | 88% | [微前端标准](mdc:microfrontend-standards.mdc)、[主题系统](mdc:theme-system-standards.mdc) |
+| **质量保证规范** | 85% | [性能优化](mdc:performance-optimization-standards.mdc)、[国际化标准](mdc:internationalization-standards.mdc) |
+
+**总体覆盖率: 94%** ✅
+
+## 🔄 最新优化 (v2.5)
+
+### 典型页面规范新增
+- **新增规范**: [典型页面开发规范](mdc:pages/uedTypical-pages-standards.mdc) - 基于 uedTypical 目录分析
+- **页面覆盖率**: 新增 5 种典型页面模板 (列表页、表单页、详情页、仪表盘、管理页)
+- **详细文档**: [baseList 页面详解](mdc:pages/uedTypical-baseList.md) - 提供具体实现指导
+- **规范完整性**: 页面开发规范覆盖率从 95% 提升至 98%
+
+### `.cursorrules` 文件优化
+- **精简程度**: 452行 → 100行 (减少78%)
+- **移除重复**: 清理与专项mdc文件的重复定义
+- **保留核心**: 角色定义、代码风格、MD解析规则、项目结构
+- **引用机制**: 通过 `specialized_standards` 字段引用专项规范
+
+### 优先级机制说明
+```
+高优先级 ← → 低优先级
+.cursor/rules/*.mdc > .cursorrules > 默认行为
+```
+
+## 📚 规范文件导航
+
+### 🔧 核心开发规范
+- **[development-workflow.mdc](mdc:development-workflow.mdc)** - 强制性开发工作流程 (必读)
+- **[cursor-project-configuration.mdc](mdc:cursor-project-configuration.mdc)** - 项目配置与代码生成规则
+- **[component-library-standards.mdc](mdc:component-library-standards.mdc)** - DAS组件库使用标准 (权威文档)
+- **[api-request-standards.mdc](mdc:api-request-standards.mdc)** - HTTP请求规范 (权威文档)
+
+### 🎨 页面开发规范
+- **[page-layout-standards.mdc](mdc:page-layout-standards.mdc)** - 页面布局标准 (权威文档)
+- **[list-page-rule.mdc](mdc:list-page-rule.mdc)** - 列表页面开发规范
+- **[uedTypical-pages-standards.mdc](mdc:pages/uedTypical-pages-standards.mdc)** - 典型页面开发规范 (权威文档)
+- **[vue-page-development.mdc](mdc:vue-page-development.mdc)** - Vue页面创建快速指南
+- **[route-configuration.mdc](mdc:route-configuration.mdc)** - 路由配置规范
+
+### 🏗️ 状态与数据管理
+- **[state-management-standards.mdc](mdc:state-management-standards.mdc)** - Pinia状态管理规范
+- **[form-validation-standards.mdc](mdc:form-validation-standards.mdc)** - 表单验证开发规范
+- **[vue3-common-issues.mdc](mdc:vue3-common-issues.mdc)** - Vue3常见问题解决
+
+### 🔬 质量保证
+- **[testing-standards.mdc](mdc:testing-standards.mdc)** - 测试策略与规范
+- **[performance-optimization-standards.mdc](mdc:performance-optimization-standards.mdc)** - 性能优化指南
+
+### 🚀 工程化规范  
+- **[build-deployment-standards.mdc](mdc:build-deployment-standards.mdc)** - 构建与部署规范
+
+### 📊 数据可视化
+- **[data-visualization-standards.mdc](mdc:data-visualization-standards.mdc)** - 图表组件开发规范
+
+### 🌐 架构扩展
+- **[microfrontend-standards.mdc](mdc:microfrontend-standards.mdc)** - 微前端开发规范
+- **[theme-system-standards.mdc](mdc:theme-system-standards.mdc)** - 主题系统开发规范
+- **[internationalization-standards.mdc](mdc:internationalization-standards.mdc)** - 国际化开发规范
+
+### 📖 参考文档
+- **[archive-management-reference.mdc](mdc:archive-management-reference.mdc)** - 档案管理页面参考实现
+
+### 📋 页面功能索引
+- **[pages/README.md](mdc:pages/README.md)** - 🗂️ 项目页面功能总索引 ⭐
+- **[pages/page-function-template.md](mdc:pages/page-function-template.md)** - 📝 页面功能描述模板
+
+#### 🗃️ 具体页面功能说明
+- **[pages/archive-management.md](mdc:pages/archive-management.md)** - 档案管理页面功能详情
+- **[pages/database-account.md](mdc:pages/database-account.md)** - 数据库账号管理页面功能详情  
+- **[pages/enum-manager.md](mdc:pages/enum-manager.md)** - 枚举管理页面功能详情
+- **[pages/application-system.md](mdc:pages/application-system.md)** - 应用系统管理页面功能详情
+- **[pages/table-asset.md](mdc:pages/table-asset.md)** - 表资产管理页面功能详情
+- **[pages/database-assets.md](mdc:pages/database-assets.md)** - 数据库资产管理页面功能详情
+- **[pages/safety-system.md](mdc:pages/safety-system.md)** - 安全系统管理页面功能详情
+
+## 🔄 规范引用关系
+
+### 核心规范 (被广泛引用)
+```
+component-library-standards.mdc  ← 组件使用的权威文档
+├── vue-page-development.mdc
+├── vue3-common-issues.mdc  
+├── list-page-rule.mdc
+└── page-layout-standards.mdc
+
+api-request-standards.mdc  ← API请求的权威文档
+├── vue-page-development.mdc
+├── vue3-common-issues.mdc
+├── state-management-standards.mdc
+└── archive-management-reference.mdc
+
+page-layout-standards.mdc  ← 页面布局的权威文档
+├── vue-page-development.mdc
+├── vue3-common-issues.mdc
+└── list-page-rule.mdc
+```
+
+### 专门化规范 (独立使用)
+```
+data-visualization-standards.mdc ← 数据可视化开发
+microfrontend-standards.mdc     ← 微前端开发
+theme-system-standards.mdc     ← 主题系统开发  
+internationalization-standards.mdc  ← 国际化开发
+testing-standards.mdc          ← 测试策略
+build-deployment-standards.mdc ← 构建部署
+performance-optimization-standards.mdc ← 性能优化
+```
+
+## 🎯 快速开始指南
+
+### 🔄 推荐开发模式
+**支持"功能实现后再进行规范改造"的两阶段开发模式**
+- 阶段A：使用标准组件快速实现功能
+- 阶段B：学习规范并升级为DAS组件
+- 详细流程请查看：**[开发工作流程规范](mdc:development-workflow.mdc)** ⭐
+
+### 新页面开发流程
+1. **📋 规划阶段**: 阅读 [页面布局标准](mdc:page-layout-standards.mdc)
+2. **🛠️ 创建页面**: 参考 [Vue页面开发](mdc:vue-page-development.mdc)
+3. **🧩 组件选择**: 查阅 [组件库标准](mdc:component-library-standards.mdc)
+4. **📝 表单验证**: 配置 [表单验证标准](mdc:form-validation-standards.mdc)
+5. **🌐 API集成**: 遵循 [API请求标准](mdc:api-request-standards.mdc)
+6. **🗂️ 状态管理**: 使用 [状态管理标准](mdc:state-management-standards.mdc)
+7. **🛣️ 路由配置**: 配置 [路由规范](mdc:route-configuration.mdc)
+
+### 特殊功能开发
+- **数据可视化**: [数据可视化标准](mdc:data-visualization-standards.mdc)
+- **微前端应用**: [微前端标准](mdc:microfrontend-standards.mdc)
+- **主题定制**: [主题系统标准](mdc:theme-system-standards.mdc)  
+- **多语言支持**: [国际化标准](mdc:internationalization-standards.mdc)
+- **性能优化**: [性能优化标准](mdc:performance-optimization-standards.mdc)
+
+### 测试与部署
+- **测试策略**: [测试标准](mdc:testing-standards.mdc)
+- **构建部署**: [构建部署标准](mdc:build-deployment-standards.mdc)
+
+## 🔍 常见问题解决路径
+
+### 组件相关
+**Q: 使用什么组件？**  
+→ [组件库标准](mdc:component-library-standards.mdc) - 查看组件优先级和使用指南
+
+**Q: 组件使用有问题？**  
+→ [Vue3常见问题](mdc:vue3-common-issues.mdc) - 查看Vue3特有问题解决
+
+### 页面开发
+**Q: 页面布局怎么做？**  
+→ [页面布局标准](mdc:page-layout-standards.mdc) - 查看页面结构规范
+
+**Q: 列表页面如何实现？**  
+→ [列表页规范](mdc:list-page-rule.mdc) - 查看列表页专门规范
+
+### API和数据
+**Q: 如何发送HTTP请求？**  
+→ [API请求标准](mdc:api-request-standards.mdc) - 查看HTTP客户端使用规范
+
+**Q: 状态管理怎么做？**  
+→ [状态管理标准](mdc:state-management-standards.mdc) - 查看Pinia使用规范
+
+**Q: 表单验证怎么做？**  
+→ [表单验证标准](mdc:form-validation-standards.mdc) - 查看完整的验证规范和实践
+
+### 数据可视化
+**Q: 如何选择图表组件？**  
+→ [数据可视化标准](mdc:data-visualization-standards.mdc) - 查看图表组件选择优先级
+
+**Q: 图表主题不匹配？**  
+→ [数据可视化标准](mdc:data-visualization-standards.mdc) - 查看主题适配配置
+
+### 架构功能
+**Q: 如何开发微前端？**  
+→ [微前端标准](mdc:microfrontend-standards.mdc) - 查看micro-app开发指南
+
+**Q: 如何定制主题？**  
+→ [主题系统标准](mdc:theme-system-standards.mdc) - 查看主题开发指南
+
+**Q: 如何支持多语言？**  
+→ [国际化标准](mdc:internationalization-standards.mdc) - 查看i18n实现指南
+
+## 📈 规范更新记录
+
+### v2.3 (最新) - 完整性增强版
+- ✅ 新增表单验证开发规范 (16KB) - 整合项目现有验证实践
+- ✅ 清理了页面布局标准中的重复内容（API请求、组件使用、性能优化）
+- ✅ 建立了更清晰的规范引用关系，避免内容重复
+- ✅ 精简了page-layout-standards.mdc文件大小（44KB → 约35KB）
+- ✅ 统一了各文件的引用方式，提高维护效率
+- 📊 总体覆盖率提升至 93%，现共有19个规范文件
+
+### v2.2 - 规范优化清理版
+- ✅ 清理了页面布局标准中的重复内容（API请求、组件使用、性能优化）
+- ✅ 建立了更清晰的规范引用关系，避免内容重复
+- ✅ 精简了page-layout-standards.mdc文件大小（44KB → 约35KB）
+- ✅ 统一了各文件的引用方式，提高维护效率
+- 📊 总体覆盖率保持 92%，重复度大幅降低
+
+### v2.1 - 数据可视化增强版
+- ✅ 新增数据可视化开发规范 (29KB)
+- ✅ 统一图表组件选择优先级 (DAS > 项目组件 > ECharts)
+- ✅ 完善图表主题适配和响应式配置
+- ✅ 建立图表数据处理和性能优化标准
+- 📊 总体覆盖率提升至 92%
+
+### v2.0 - 规范优化版
+- ✅ 清理了7处组件使用重复定义
+- ✅ 统一了API请求规范引用
+- ✅ 新增微前端开发规范 (27KB)
+- ✅ 新增主题系统开发规范 (32KB)  
+- ✅ 新增国际化开发规范 (22KB)
+- ✅ 建立了清晰的规范引用关系
+- 📊 总体覆盖率提升至 91%
+
+### v1.0 - 基础版
+- 基础页面开发规范
+- 组件库使用指南
+- API请求基础规范
+- 简单的项目配置
+
+## 🤝 规范维护
+
+### 维护原则
+1. **单一职责**: 每个规范文件负责一个明确的领域
+2. **避免重复**: 使用引用方式而非重复定义
+3. **保持更新**: 随项目演进及时更新规范
+4. **实用性优先**: 规范应便于实际开发使用
+
+### 更新流程
+1. 识别新需求或重复内容
+2. 评估影响范围和引用关系
+3. 更新相关规范文件
+4. 更新本索引文件
+5. 验证规范的一致性和完整性
+
+---
+
+> 💡 **提示**: 这些规范文件相互配合，形成完整的开发标准体系。建议根据具体开发任务选择相应的规范文件参考。
+description:
+globs:
+alwaysApply: false
+---

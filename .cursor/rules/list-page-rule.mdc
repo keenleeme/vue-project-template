@@ -1,0 +1,916 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# 数据安全监管平台 - 列表页面开发规则
+
+## 项目概述
+
+本项目是一个数据安全监管平台，主要包含三个核心管理模块：
+- **数据库账号管理** (`databaseAccount`)：账号资源信息管理、生命周期管理、审计日志
+- **数据库资产管理** (`databaseAssets`)：数据库资产录入、查询、统计、风险监控
+- **元数据管理** (`tableAssetManage`)：数据表元数据管理、字段管理、敏感数据识别
+可参考以上上个列表页的内容进行开发。
+
+## 页面结构规范
+
+### 1. 标准页面布局
+
+**参考通用页面布局规范**：详见 `page-layout-standards.mdc`
+
+**列表页面特有结构**：
+```vue
+<template>
+  <div class="[module-name]-container">
+    <a-card style="height: 100%">
+      <!-- 1. 统计概览区域（可选） -->
+      <div class="statistics-section" v-if="showStatistics">
+        <a-row :gutter="24" style="margin-bottom: 24px">
+          <!-- 统计卡片 -->
+        </a-row>
+      </div>
+
+      <!-- 2. 搜索区域 -->
+      <div class="search-section" style="margin-bottom: 16px">
+        <das-search-bar 
+          :model="searchForm" 
+          :columns="4" 
+          :expandable="true" 
+          @search="handleSearch" 
+          @reset="handleReset"
+        />
+      </div>
+
+      <!-- 3. 操作区域 -->
+      <div class="action-section" style="margin-bottom: 16px">
+        <div style="display: flex; justify-content: space-between; align-items: center">
+          <div class="left-actions">
+            <!-- 主要操作按钮 -->
+          </div>
+          <div class="right-actions">
+            <!-- 视图切换、设置等 -->
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. 数据展示区域 -->
+      <div class="data-display-section">
+        <!-- 列表/卡片视图切换 -->
+      </div>
+    </a-card>
+
+    <!-- 5. 弹窗组件 -->
+  </div>
+</template>
+```
+
+### 2. 页面样式规范
+
+```less
+.[module-name]-container {
+  padding: 20px;
+  height: 100%;
+  
+  .statistics-section {
+    // 统计区域样式
+  }
+  
+  .card-view {
+    // 卡片视图样式
+    .[module-name]-card {
+      height: 320px;
+      max-height: 320px;
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--color-component-stroke) !important;
+      border-radius: 6px !important;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+      }
+    }
+  }
+  
+  .list-view {
+    /deep/ .ant-pagination > div:last-child {
+      display: none;
+    }
+  }
+}
+```
+
+## 组件使用规范
+
+### 1. 组件优先级
+
+1. **优先使用 das-components 组件库**
+   - `das-search-bar`: 搜索栏组件
+   - `das-table`: 表格展示组件
+   - `das-form`: 表单组件
+   - `das-select`: 选择器组件
+   - `das-detail`: 详情展示组件
+   - `das-drawer`: 抽屉组件
+
+2. **其次使用 antd 组件**
+   - `a-card`: 卡片容器
+   - `a-button`: 按钮组件
+   - `a-input`: 输入框组件
+   - `a-select`: 选择器组件
+   - `a-tag`: 标签组件
+   - `a-tooltip`: 提示组件
+   - `a-empty`: 空状态组件
+
+### 2. 图标组件
+
+优先使用 Ant Design Vue 的图标：
+```vue
+import { 
+  EyeOutlined, 
+  EditOutlined, 
+  DeleteOutlined, 
+  AppstoreOutlined, 
+  UnorderedListOutlined,
+  PlusOutlined,
+  DownloadOutlined,
+  UploadOutlined
+} from '@ant-design/icons-vue';
+
+// 在模板中使用
+<template #icon><EyeOutlined /></template>
+```
+
+### 3. 图表组件
+
+统一使用 `CommonEChart` 组件：
+```vue
+<CommonEChart :option="chartOption" height="250px" />
+```
+
+#### 3.1 饼图超长文本处理
+
+饼图图例文字超长时需要截断处理：
+
+```typescript
+// 处理饼图数据，截断超长文本
+const processPieChartData = (data: any[]) => {
+  return data.map(item => ({
+    ...item,
+    name: item.name.length > 8 ? item.name.substring(0, 8) + '...' : item.name
+  }));
+};
+
+// 饼图配置
+const pieChartOption = ref({
+  tooltip: {
+    trigger: 'item',
+    formatter: '{a} <br/>{b}: {c} ({d}%)'
+  },
+  legend: {
+    orient: 'horizontal',
+    bottom: 0,
+    left: 'center',
+    itemWidth: 12,
+    itemHeight: 8,
+    textStyle: {
+      fontSize: 12,
+      overflow: 'truncate',
+      ellipsis: '...',
+      width: 100
+    }
+  },
+  series: [
+    {
+      name: '数据库类型',
+      type: 'pie',
+      radius: ['45%', '75%'],
+      center: ['50%', '45%'],
+      avoidLabelOverlap: false,
+      itemStyle: {
+        borderRadius: 6,
+        borderColor: '#fff',
+        borderWidth: 1
+      },
+      label: {
+        show: true,
+        overflow: 'truncate',
+        ellipsis: '...',
+        width: 100
+      },
+      labelLine: {
+        show: true
+      },
+      data: [] as PieChartDataItem[]
+    }
+  ]
+});
+
+// 更新饼图数据时处理超长文本
+const updatePieChartData = (data: any[]) => {
+  pieChartOption.value.series[0].data = data.map(item => ({
+    name: item.name.length > 8 ? item.name.substring(0, 8) + '...' : item.name,
+    value: item.value,
+    // 保存原始名称用于 tooltip 显示
+    originalName: item.name
+  }));
+};
+
+// 自定义 tooltip 显示完整文本
+const pieChartOptionWithCustomTooltip = ref({
+  tooltip: {
+    trigger: 'item',
+    formatter: (params: any) => {
+      // 使用原始名称显示完整文本
+      const originalName = params.data.originalName || params.name;
+      return `${params.seriesName}<br/>${originalName}: ${params.value} (${params.percent}%)`;
+    }
+  },
+  legend: {
+    orient: 'horizontal',
+    bottom: 0,
+    left: 'center',
+    itemWidth: 12,
+    itemHeight: 8,
+    textStyle: {
+      fontSize: 12,
+      overflow: 'truncate',
+      ellipsis: '...',
+      width: 100
+    }
+  },
+  series: [
+    {
+      name: '数据库类型',
+      type: 'pie',
+      radius: ['45%', '75%'],
+      center: ['50%', '45%'],
+      avoidLabelOverlap: false,
+      itemStyle: {
+        borderRadius: 6,
+        borderColor: '#fff',
+        borderWidth: 1
+      },
+      label: {
+        show: true,
+        overflow: 'truncate',
+        ellipsis: '...',
+        width: 100
+      },
+      labelLine: {
+        show: true
+      },
+      data: []
+    }
+  ]
+});
+```
+
+#### 3.2 柱状图超长文本处理
+
+柱状图 X 轴标签超长处理：
+
+```typescript
+// 柱状图配置
+const barChartOption = computed(() => ({
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'shadow'
+    }
+  },
+  xAxis: {
+    type: 'category',
+    data: chartData.value.map(item => item.name),
+    axisLabel: {
+      interval: 0,
+      rotate: 45, // 旋转标签
+      formatter: (value: string) => {
+        // 截断超长文本
+        return value.length > 6 ? value.substring(0, 6) + '...' : value;
+      }
+    }
+  },
+  yAxis: {
+    type: 'value'
+  },
+  series: [
+    {
+      type: 'bar',
+      data: chartData.value.map(item => item.value)
+    }
+  ]
+}));
+```
+
+### 4. 表单组件
+
+使用 `das-form` 和 `a-form-item`：
+```vue
+<das-form
+  ref="formRef"
+  :model="formData"
+  :rules="rules"
+  :label-col="{ span: 6 }"
+  :wrapper-col="{ span: 18 }"
+  layout="horizontal"
+>
+  <a-form-item label="字段名" name="fieldName" :rules="rules.fieldName">
+    <a-input v-model:value="formData.fieldName" placeholder="请输入字段名" allow-clear />
+  </a-form-item>
+</das-form>
+```
+
+## 权限控制规范
+
+### 1. 权限检查函数
+
+```typescript
+import { useButtonPermission } from '@/libs/hooks/useButtonPermission';
+
+const pagePermission = useButtonPermission();
+const hasPermission = (permissionId: string): boolean => {
+  return pagePermission.value.some((item: any) => item.id === permissionId);
+};
+```
+
+### 2. 按钮权限应用
+
+```vue
+<!-- 操作按钮 -->
+<a-button v-if="hasPermission('ModuleNameAdd')" type="primary" @click="handleAdd">
+  新增
+</a-button>
+
+<!-- 表格操作列 -->
+<template v-else-if="column.dataIndex === 'action'">
+  <a-space>
+    <a-button v-if="hasPermission('ModuleNameDetail')" type="link" size="small" @click="handleViewDetail(record)">
+      详情
+    </a-button>
+    <a-button v-if="hasPermission('ModuleNameEdit')" type="link" size="small" @click="handleEdit(record)">
+      编辑
+    </a-button>
+    <a-button v-if="hasPermission('ModuleNameDelete')" type="link" size="small" danger  @click="handleDelete(record)">
+        删除
+    </a-button>
+  </a-space>
+</template>
+```
+
+<!-- 卡片操作菜单 -->
+<a-menu @click="({ key }) => handleCardAction(key as string, item)">
+  <a-menu-item v-if="hasPermission('ModuleNameDetail')" key="detail">
+    <EyeOutlined /> 详情
+  </a-menu-item>
+  <a-menu-item v-if="hasPermission('ModuleNameEdit')" key="edit">
+    <EditOutlined /> 编辑
+  </a-menu-item>
+  <a-menu-item v-if="hasPermission('ModuleNameDelete')" key="delete" style="color: #ff4d4f">
+    <DeleteOutlined /> 删除
+  </a-menu-item>
+</a-menu>
+
+### 3. 删除确认弹窗
+
+所有删除操作必须使用确认弹窗：
+
+```vue
+<!-- 表格删除按钮 -->
+<a-popconfirm 
+  title="确定要删除该记录吗？" 
+  @confirm="handleDelete(record)"
+>
+  <a-button type="link" size="small" danger>删除</a-button>
+</a-popconfirm>
+
+<!-- 卡片删除操作 -->
+const handleCardAction = (key: string, item: any) => {
+  if (key === 'delete') {
+    Modal.confirm({
+      title: '确认删除',
+      content: '确定要删除该记录吗？',
+      onOk: () => handleDelete(item)
+    });
+  }
+};
+```
+
+### 3. 常见权限ID
+
+- `DatabaseAccountManage*`: 数据库账号管理相关权限
+- `DatabaseAssetManage*`: 数据库资产管理相关权限
+- `TableAssetManage*`: 元数据管理相关权限
+
+## API 接口规范
+
+### 1. HTTP 客户端使用
+
+```typescript
+import Http from '@/service';
+
+// 统一使用 Http 客户端
+const res = await Http.get('/api/data');
+const res = await Http.post('/api/data', payload);
+```
+
+### 2. 接口错误处理
+
+```typescript
+try {
+  const res = await getDataList(params);
+  if (res.code === 0) {
+    dataList.value = res.data || [];
+    pagination.total = res.total || 0;
+  } else {
+    message.error(res.message || '获取数据失败');
+  }
+} catch (error) {
+  console.error('获取数据失败:', error);
+  // message.error('获取数据失败');
+}
+```
+
+### 3. 分页参数规范
+
+```typescript
+const params = {
+  ...searchForm,
+  pageNum: pagination.currentPage,
+  pageSize: pagination.pageSize
+};
+```
+
+### 4. 分页自动跳转处理
+
+当删除操作导致当前页数据为空且不是第一页时，自动跳转到上一页：
+
+```typescript
+const handleDelete = async (record: any) => {
+  try {
+    await deleteData(record.id);
+    message.success('删除成功');
+    
+    // 检查是否需要跳转到上一页
+    if (dataList.value.length === 1 && pagination.currentPage > 1) {
+      pagination.currentPage -= 1;
+    }
+    
+    // 重新加载数据
+    await loadDataList();
+  } catch (error) {
+    message.error('删除失败');
+  }
+};
+```
+
+## 数据处理规范
+
+### 1. 枚举值处理
+
+#### 1.1 获取枚举值
+
+共用枚举值通过 `getEnumOptions` 获取：
+
+```typescript
+import { getEnumOptions } from '@/api/common/getEnum';
+
+// 单个枚举获取
+const lifecycleStatusOptions = ref<any[]>([]);
+const loadLifecycleStatusOptions = async () => {
+  try {
+    const res = await getEnumOptions('lifecycleStatus');
+    if (res.code === 0) {
+      lifecycleStatusOptions.value = res.data || [];
+    }
+  } catch (error) {
+    console.error('获取生命周期状态枚举失败:', error);
+  }
+};
+
+// 多个枚举获取 - 封装成函数
+const fetchEnumOptions = async () => {
+  try {
+    const [statusRes, typeRes, levelRes] = await Promise.all([
+      getEnumOptions('status'),
+      getEnumOptions('type'),
+      getEnumOptions('level')
+    ]);
+    
+    if (statusRes.code === 0) statusOptions.value = statusRes.data || [];
+    if (typeRes.code === 0) typeOptions.value = typeRes.data || [];
+    if (levelRes.code === 0) levelOptions.value = levelRes.data || [];
+  } catch (error) {
+    console.error('获取枚举值失败:', error);
+  }
+};
+```
+
+#### 1.2 枚举值显示
+
+优先显示枚举值的 `xxxName` 字段：
+```typescript
+// 表格列定义
+const tableColumns = [
+  { title: '分级', dataIndex: 'level', key: 'level', width: 100 },
+  { title: '分类', dataIndex: 'type', key: 'type', width: 120 },
+];
+
+// 在 bodyCell 中处理显示
+<template v-else-if="column.dataIndex === 'level'">
+  <a-tag :color="getLevelTagColor(record.level)">{{ record.levelName || record.level }}</a-tag>
+</template>
+```
+
+### 2. 标签处理
+
+#### 2.1 获取标签数据
+
+标签数据通过 `getSystemTags` 获取：
+
+```typescript
+import { getSystemTags } from '@/api/common';
+
+// 获取标签选项
+const tagOptions = ref<any[]>([]);
+const loadTagOptions = async () => {
+  try {
+    const res = await getSystemTags();
+    if (res.code === 0) {
+      tagOptions.value = res.data || [];
+    }
+  } catch (error) {
+    console.error('获取标签数据失败:', error);
+  }
+};
+```
+
+#### 2.2 标签显示
+
+```vue
+<template v-else-if="column.dataIndex === 'tags'">
+  <span>
+    <a-tag
+      v-for="(tag, idx) in (record.tags || '').split(',')"
+      :key="idx"
+      size="small"
+      color="blue"
+      style="margin-right: 4px"
+    >
+      {{ tag }}
+    </a-tag>
+  </span>
+</template>
+```
+
+### 3. 单位数据处理
+
+单位数据通过 `getTopTenCompanyListByName` 接口获取：
+
+```typescript
+import { getTopTenCompanyListByName } from '@/api/common';
+
+// 获取单位选项
+const orgOptions = ref<any[]>([]);
+const handleOrgSearch = async (value: string) => {
+  if (!value) {
+    orgOptions.value = [];
+    return;
+  }
+  
+  try {
+    const res = await getTopTenCompanyListByName(value);
+    if (res.code === 0) {
+      orgOptions.value = res.data || [];
+    }
+  } catch (error) {
+    console.error('获取单位数据失败:', error);
+  }
+};
+
+const handleOrgClear = () => {
+  orgOptions.value = [];
+};
+```
+
+### 4. 超长文本处理
+
+```vue
+<template v-if="column.dataIndex === 'fieldName'">
+  <a-tooltip :title="record.fieldName">
+    <span class="ellipsis-cell">{{ record.fieldName || '-' }}</span>
+  </a-tooltip>
+</template>
+
+<style>
+.ellipsis-cell {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+</style>
+```
+
+## 弹窗组件规范
+
+### 1. 弹窗结构
+
+```vue
+<template>
+  <a-modal
+    :visible="visible"
+    :title="isEdit ? '编辑' : '新增'"
+    width="1000px"
+    @cancel="handleCancel"
+    :confirm-loading="loading"
+    ok-text="保存"
+    @ok="handleOk"
+  >
+    <das-form ref="formRef" :model="formData" :rules="rules">
+      <!-- 表单内容 -->
+    </das-form>
+  </a-modal>
+</template>
+
+<script setup lang="ts">
+const props = defineProps<{
+  visible: boolean;
+  editData?: any;
+}>();
+
+const emit = defineEmits(['update:visible', 'success']);
+
+const handleCancel = () => {
+  emit('update:visible', false);
+};
+
+const handleOk = () => {
+  formRef.value?.validate().then(() => {
+    // 提交逻辑
+    emit('success');
+    handleCancel();
+  });
+};
+</script>
+```
+
+### 2. 详情弹窗
+
+```vue
+<template>
+  <a-modal :visible="visible" title="详情" width="1100px" :footer="null" @cancel="handleCancel">
+    <div class="detail-content">
+      <a-skeleton :loading="loading" active :paragraph="{ rows: 10 }">
+        <!-- 详情内容 -->
+        <das-detail
+          :detail-data="detailData"
+          :items="detailItems"
+          :column="3"
+          layout="horizontal"
+          :label-width="120"
+        />
+      </a-skeleton>
+    </div>
+  </a-modal>
+</template>
+```
+
+### 3. 新增和编辑共用弹窗
+
+新增和编辑共用同一个弹窗时，需要监听 `visible` 变化来处理表单状态：
+
+```typescript
+// 弹窗状态
+const visible = ref(false);
+const isEdit = ref(false);
+const editData = ref<any>(null);
+const loading = ref(false);
+
+// 表单数据
+const formData = ref<any>({});
+const formRef = ref();
+
+// 选项数据
+const enumOptions = ref<any[]>([]);
+const tagOptions = ref<any[]>([]);
+const orgOptions = ref<any[]>([]);
+
+// 监听弹窗显示状态
+watch(visible, async (newVal) => {
+  if (newVal) {
+    // 1. 重置表单
+    resetForm();
+    
+    // 2. 先加载所有选项
+    await loadAllOptions();
+    
+    // 3. 编辑时回显数据
+    if (isEdit.value && editData.value) {
+      await loadEditData();
+    }
+  }
+});
+
+// 重置表单
+const resetForm = () => {
+  formData.value = {};
+  formRef.value?.resetFields();
+};
+
+// 加载所有选项
+const loadAllOptions = async () => {
+  try {
+    const [enumRes, tagRes] = await Promise.all([
+      getEnumOptions('enumType'),
+      getSystemTags()
+    ]);
+    
+    if (enumRes.code === 0) enumOptions.value = enumRes.data || [];
+    if (tagRes.code === 0) tagOptions.value = tagRes.data || [];
+  } catch (error) {
+    console.error('加载选项失败:', error);
+  }
+};
+
+// 加载编辑数据
+const loadEditData = async () => {
+  if (!editData.value?.id) return;
+  
+  loading.value = true;
+  try {
+    const res = await getDetailData(editData.value.id);
+    if (res.code === 0) {
+      // 回显数据到表单
+      formData.value = { ...res.data };
+      
+      // 处理特殊字段回显（如标签、单位等）
+      if (res.data.tags) {
+        formData.value.tags = res.data.tags.split(',');
+      }
+      if (res.data.companyIds) {
+        formData.value.companyIds = Array.isArray(res.data.companyIds) 
+          ? res.data.companyIds 
+          : [res.data.companyIds];
+      }
+    }
+  } catch (error) {
+    message.error('获取详情失败');
+  } finally {
+    loading.value = false;
+  }
+};
+
+// 新增操作
+const handleAdd = () => {
+  visible.value = true;
+  isEdit.value = false;
+  editData.value = null;
+};
+
+// 编辑操作
+const handleEdit = (record: any) => {
+  visible.value = true;
+  isEdit.value = true;
+  editData.value = record;
+};
+
+// 关闭弹窗
+const handleCancel = () => {
+  visible.value = false;
+  isEdit.value = false;
+  editData.value = null;
+  resetForm();
+};
+```
+
+## 文件组织规范
+
+### 1. 页面文件结构
+
+```
+src/views/[moduleName]/
+├── index.vue                    # 主页面
+├── components/                  # 组件目录
+│   ├── [ModuleName]FormModal.vue    # 新增/编辑弹窗
+│   ├── [ModuleName]DetailModal.vue  # 详情弹窗
+│   ├── ImportModal.vue              # 导入弹窗
+│   └── [OtherComponents].vue        # 其他组件
+├── README.md                    # 功能说明文档
+└── [业务文档].md                # 业务需求文档
+```
+
+### 2. 组件命名规范
+
+- 页面组件：`index.vue`
+- 弹窗组件：`[ModuleName]FormModal.vue`、`[ModuleName]DetailModal.vue`
+- 功能组件：`[FunctionName].vue`
+
+## 开发注意事项
+
+### 1. 性能优化
+
+- 使用 `v-if` 而不是 `v-show` 控制大块内容显示
+- 合理使用 `computed` 和 `watch`
+- 避免在模板中使用复杂计算
+- 多个枚举值获取时使用 `Promise.all` 并行请求
+
+### 2. 用户体验
+
+- 所有操作都要有 loading 状态
+- 空数据时显示友好的空状态
+- 长文本使用 tooltip 显示完整内容
+- 表格内容超长时使用省略号
+- 删除操作必须有确认弹窗
+- 分页自动跳转处理
+
+### 3. 代码质量
+
+- 使用 TypeScript 进行类型检查
+- 统一的错误处理机制
+- 合理的组件拆分和复用
+- 遵循项目的代码风格规范
+- 详情和编辑共用弹窗时封装详情接口
+
+### 4. 响应式设计
+
+- 支持不同屏幕尺寸
+- 卡片视图自适应布局
+- 移动端友好的交互设计
+
+### 5. 数据获取规范
+
+- 枚举值统一通过 `getEnumOptions` 获取
+- 标签数据通过 `getSystemTags` 获取
+- 单位数据通过 `getTopTenCompanyListByName` 获取
+- 多个枚举获取时封装 `fetchEnumOptions` 函数
+
+## 常见问题解决
+
+### 1. 类型错误处理
+
+```typescript
+// 处理 API 响应类型问题
+const res = await getDataList(params);
+if (res.code === 0) {
+  dataList.value = (res.data as any[]) || [];
+  pagination.total = (res as any).total || 0;
+}
+```
+
+### 2. 组件库兼容性
+
+```typescript
+// 处理 das-components 和 antd 的兼容问题
+// 优先使用 das-components，降级到 antd
+```
+
+### 3. 权限控制
+
+```typescript
+// 确保权限检查函数正确工作
+const hasPermission = (permissionId: string): boolean => {
+  return pagePermission.value.some((item: any) => item.id === permissionId);
+};
+```
+
+### 4. 数据获取接口
+
+```typescript
+// 确保正确导入和使用数据获取接口
+import { getEnumOptions } from '@/api/common/getEnum';
+import { getSystemTags, getTopTenCompanyListByName } from '@/api/common';
+
+// 检查接口返回格式
+const res = await getEnumOptions('enumType');
+if (res.code === 0 && Array.isArray(res.data)) {
+  // 处理数据
+}
+```
+
+---
+
+*本文档基于 databaseAccount、databaseAssets、tableAssetManage 三个核心模块的实际开发经验整理，适用于整个数据安全监管平台的页面开发。*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

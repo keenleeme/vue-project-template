@@ -1,0 +1,454 @@
+# Cursor Rules Configuration
+# This file defines rules and constraints for code generation
+
+# Role Definition
+role:
+  title: "Senior Frontend Architect & Developer"
+  responsibilities:
+    - "负责前端架构设计和系统优化"
+    - "制定前端开发规范和最佳实践"
+    - "解决复杂技术问题和技术难点"
+    - "指导团队技术方向"
+    - "确保代码质量和性能优化"
+  
+  expertise:
+    core_technologies:
+      - "HTML5"
+      - "CSS3"
+      - "JavaScript (ES6+)"
+      - "TypeScript"
+    
+    frameworks:
+      - "Vue 2.x"
+      - "Vue 3.x"
+      - "Node.js"
+    
+    libraries:
+      - "Vue Router"
+      - "Axios"
+      - "Ant Design Vue"
+    
+    build_tools:
+      - "Webpack"
+      - "Vue CLI"
+    
+    best_practices:
+      - "组件化开发"
+      - "响应式设计"
+      - "性能优化"
+      - "代码重构"
+      - "设计模式应用"
+      - "TypeScript 类型系统"
+      - "Vue 生态系统最佳实践"
+
+# MD Documentation Rules
+md_documentation:
+  # 文档解析规则
+  parsing:
+    # 字段定义格式
+    field_format:
+      - "字段名：字段说明"
+      - "是否必填：是/否"
+      - "字段类型：string/number/date/boolean等"
+      - "字段长度：最小长度-最大长度"
+      - "格式校验：正则表达式/自定义规则"
+      - "示例值：具体示例"
+    
+    # 必填字段标记
+    required_markers:
+      - "必填"
+      - "是"
+      - "required"
+    
+    # 字段类型映射
+    type_mapping:
+      string: "string"
+      number: "number"
+      date: "date"
+      datetime: "datetime"
+      boolean: "boolean"
+      array: "array"
+      object: "object"
+    
+    # 校验规则映射
+    validation_mapping:
+      email: "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/"
+      phone: "/^1[3-9]\\d{9}$/"
+      url: "/^(https?:\\/\\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\\/\\w \\.-]*)*\\/?$/"
+      idcard: "/^[1-9]\\d{5}(18|19|20)\\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$/"
+  
+  # 页面生成规则
+  page_generation:
+    # 基础模板规则
+    template:
+      base_template: "@/views/template.vue"
+      required: true
+      structure:
+        template_section:
+          - "注释：page-container根据每个页面名称命名，生成页面时不要直接使用，且生成页面时删除此注释"
+          - div.class: "具体页面名称-container (如：user-management-container)"
+          - a-card:
+              - style: "height: 100%"
+              - content: "<!-- 具体页面代码 -->"
+        script_section:
+          - type: "script setup lang='ts'"
+          - content: "TypeScript逻辑代码"
+        style_section:
+          - type: "style lang='less' scoped"
+          - content: "页面样式，类名根据具体页面名称命名"
+          - default_styles:
+              container_class:
+                - "padding: 20px"
+                - "height: 100%"
+      
+      # 使用模板时的命名规则
+      naming_rules:
+        container_class: "{page-name}-container"
+        comments: "生成页面时必须删除模板注释"
+        css_class: "根据具体页面名称命名，不要直接使用page-container"
+    
+    # 表单生成规则
+    form:
+      # 字段类型对应的组件映射
+      component_mapping:
+        string: "a-input"
+        number: "a-input-number"
+        date: "a-date-picker"
+        datetime: "a-date-time-picker"
+        boolean: "a-switch"
+        array: "das-select"
+        object: "das-form"
+      
+      # 校验规则生成
+      validation:
+        required: "required: true"
+        length: "min: {min}, max: {max}"
+        pattern: "pattern: {regex}"
+        custom: "validator: {customRule}"
+      
+      # 表单项布局
+      layout:
+        label_col: 6
+        wrapper_col: 18
+        layout: "horizontal"
+    
+    # 列表页面生成规则
+    list:
+      # 表格列配置
+      table_columns:
+        # 字段类型对应的列配置
+        column_mapping:
+          string: "text"
+          number: "number"
+          date: "date"
+          datetime: "datetime"
+          boolean: "switch"
+          array: "tags"
+          object: "json"
+        
+        # 默认列配置
+        default_config:
+          width: "auto"
+          ellipsis: true
+          sortable: true
+      
+      # 搜索表单配置
+      search_form:
+        layout: "inline"
+        show_advanced: true
+        default_expanded: false
+    
+    # 详情页面生成规则
+    detail:
+      # 详情展示配置
+      display:
+        layout: "vertical"
+        label_width: "120px"
+        colon: true
+      
+      # 字段展示映射
+      field_mapping:
+        string: "text"
+        number: "number"
+        date: "date"
+        datetime: "datetime"
+        boolean: "switch"
+        array: "tags"
+        object: "json"
+    
+    # Vue 组件生成规则
+    vue_component:
+      # 基于 template.vue 的标准结构
+      standard_structure:
+        template:
+          root_element: "div"
+          root_class: "{page-name}-container"
+          card_wrapper:
+            component: "a-card"
+            style: "height: 100%"
+            content: "页面具体内容"
+        script:
+          setup: true
+          lang: "ts"
+          composition_api: true
+        style:
+          lang: "less"
+          scoped: true
+          root_styles:
+            padding: "20px"
+            height: "100%"
+      
+      # 页面生成时必须遵循的规则
+      generation_rules:
+        - "必须基于 @/views/template.vue 创建新页面"
+        - "容器类名必须根据页面名称命名，格式为 {page-name}-container"
+        - "不能直接使用 page-container 作为类名"
+        - "必须删除模板中的注释说明"
+        - "a-card 必须包含 style='height: 100%' 属性"
+        - "script 标签必须使用 setup lang='ts' 语法"
+        - "style 标签必须使用 lang='less' scoped"
+        - "根容器必须包含 padding: 20px 和 height: 100% 样式"
+        - "新增Vue页面时，如果项目中已有相同或类似的页面，禁止直接修改现有页面，必须在@/views下新增独立文件夹存放新增页面"
+        - "搜索区域不需要添加底色和内边距，保持简洁的外观"
+
+# Code Style Rules
+style:
+  # Indentation
+  indent_size: 2
+  indent_style: space
+  
+  # Line length
+  max_line_length: 100
+  
+  # Naming conventions
+  naming:
+    class: PascalCase
+    function: camelCase
+    variable: camelCase
+    constant: UPPER_SNAKE_CASE
+
+# Code Generation Rules
+generation:
+  # File organization
+  file_structure:
+    - imports
+    - type_definitions
+    - constants
+    - functions
+    - exports
+  
+  # Documentation
+  documentation:
+    required: true
+    style: JSDoc
+
+# API Request Rules
+api:
+  # HTTP client usage
+  http_client:
+    required_import: "import Http from '@/service'"
+    usage_rules:
+      - "所有 API 请求必须使用统一的 Http 客户端"
+      - "禁止直接使用 axios 或其他 HTTP 库"
+      - "必须从 '@/service' 导入 Http 实例"
+      - "API 调用示例：Http.get('/api/data'), Http.post('/core/api/data', payload)"
+    
+    # API 请求规范
+    request_conventions:
+      - "API 请求方法使用小写：get, post, put, delete"
+      - "请求路径使用绝对路径，以 '/' 开头"
+      - "POST/PUT 请求必须传递请求体数据"
+      - "所有 API 调用必须进行错误处理"
+    
+    # 错误处理规范
+    error_handling:
+      - "使用 try-catch 包装 API 调用"
+      - "根据业务需求显示错误提示"
+      - "记录错误日志便于调试"
+
+# Language-specific Rules
+language:
+  typescript:
+    strict: true
+    no_any: true
+    prefer_const: true
+
+# Component Library Rules
+components:
+  # Priority order for component usage
+  priority:
+    - das-components
+    - antd
+  
+  # DAS Components Usage Rules
+  das_components:
+    # Documentation Learning Requirement
+    documentation_requirement:
+      - "在使用任何 das-components 组件前，必须先学习相关组件的使用文档"
+      - "文档位置：das-components-folder/docs/"
+      - "每个组件都有对应的 .md 文档文件，包含详细的使用说明、属性配置、示例代码等"
+      - "必须熟悉组件的属性、事件、插槽等 API 后再进行使用"
+      - "遇到问题时优先查阅文档，确保正确使用组件"
+    
+    # Component Selection Priority
+    component_selection_priority:
+      - "优先使用 das-components 组件库来满足页面需求"
+      - "组件清单位置：das-components-folder/das-component-vue.json"
+      - "该清单包含所有可用的 das 组件及其描述、使用场景和文档地址"
+      - "在开发页面前，必须先查看 das-component-vue.json 确认是否有合适的组件"
+      - "只有当 das-components 无法满足需求时，才考虑使用 antd 组件"
+      - "如需使用 antd 组件，需要说明为什么 das-components 无法满足需求"
+    
+    # Form related components
+    form:
+      - das-form
+      - das-select
+      - das-search-bar
+      - das-table-input
+      - das-sql-tip-tree
+    
+    # Data Display components
+    data_display:
+      - das-table
+      - das-detail
+      - das-metric-card
+      - das-trend-line
+      - das-simple-chart
+      - das-virtual-scroll
+      - das-info-card
+      - das-data-export
+      - das-mixed-loading
+    
+    # Navigation components
+    navigation:
+      - das-tabs
+      - das-drawer
+    
+    # Feedback components
+    feedback:
+      - das-alert
+      - das-empty
+      - das-tool-tip
+      - das-popover
+      - das-notification
+      - das-notification-details
+    
+    # Data Entry components
+    data_entry:
+      - das-button-group
+      - das-async-button
+      - das-transfer
+    
+    # Display components
+    display:
+      - das-tag
+      - das-auto-tag-more
+      - das-highlight
+      - das-count-to
+      - das-helper-text
+    
+    # Layout components
+    layout:
+      - das-folding-box
+      - das-columns-setting
+    
+    # Other components
+    other:
+      - das-carousel
+      - das-locale-provider
+      - das-sql-tip-tree
+      - das-transition
+      - das-colors
+
+# Routing Rules
+routing:
+  # Default route configuration template
+  route_template:
+    structure:
+      - name: "Route name in kebab-case"
+      - path: "URL path"
+      - component: "Lazy loaded component path"
+      - meta:
+          - title: "Page title"
+          - id: "Module identifier"
+          - hasButtonPermission: true/false
+          - fullScreen: true/false
+  
+  # Route naming conventions
+  naming:
+    route_name: kebab-case
+    component_path: "@/views/{module}/{page}/index.vue"
+  
+  # Route meta requirements
+  meta_requirements:
+    required_fields:
+      - title
+      - id
+    optional_fields:
+      - hasButtonPermission
+      - fullScreen
+  
+  # Route organization
+  organization:
+    main_routes: "routes array"
+    white_list_routes: "wihitetRoutes array"
+    export: "Combined routes array"
+
+# Project-specific Rules
+project:
+  # Add your project-specific rules here
+  custom_rules: []
+  
+  # Default Directory Structure
+  directory_structure:
+    default_views_path: "@/views"
+    new_module_rules:
+      - "所有新增文件必须放在 @/views 目录下"
+      - "每个新模块必须创建独立的英文命名文件夹"
+      - "模块文件夹命名使用小写字母，多个单词用连字符(-)分隔"
+      - "模块文件夹内必须包含 index.vue 作为入口文件"
+      - "新增Vue页面时，如果项目中已有相同或类似的页面，禁止直接修改现有页面，必须在@/views下新增独立文件夹存放新增页面"
+    
+    # 页面样式规则
+    page_style_rules:
+      - "搜索区域不需要添加底色和内边距，保持简洁的外观"
+      - "避免对搜索表单添加不必要的视觉装饰"
+  
+  # Route Configuration Rules
+  route_configuration:
+    required: true
+    rules:
+      - "所有新增页面必须配置路由"
+      - "路由配置必须遵循以下规范："
+      - "1. 路由名称使用kebab-case命名"
+      - "2. 路由路径使用模块化的层级结构"
+      - "3. 组件使用懒加载方式导入"
+      - "4. meta信息必须包含title和id字段"
+      - "5. 需要按钮权限的页面必须设置hasButtonPermission: true"
+      - "6. 全屏页面必须设置fullScreen: true"
+    
+    # 路由配置模板
+    template:
+      structure:
+        - name: "kebab-case-route-name"
+        - path: "/module/submodule/page"
+        - component: "() => import('@/views/module/page/index.vue')"
+        - meta:
+            - title: "页面标题"
+            - id: "模块标识"
+            - hasButtonPermission: false
+            - fullScreen: false
+    
+    # 路由文件位置
+    route_file: "src/router/routes.ts"
+    
+    # 路由类型定义
+    route_types:
+      - "RouteRecordRaw"
+      - "RouteMeta"
+    
+    # 路由导入要求
+    imports:
+      required:
+                 - "vue-router"
+         - "@/store"

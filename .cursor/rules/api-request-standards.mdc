@@ -1,0 +1,545 @@
+# API 请求规范
+
+## 1. HTTP 客户端使用规范
+
+### 1.1 统一HTTP客户端
+
+**必须使用项目统一的 HTTP 客户端**：
+
+```typescript
+import Http from '@/service';
+
+// ✅ 正确使用
+const res = await Http.get('/api/data');
+const res = await Http.post('/core/api/data', payload);
+const res = await Http.put('/api/data/123', updateData);
+const res = await Http.delete('/api/data/123');
+
+// ❌ 禁止直接使用 axios 或其他 HTTP 库
+import axios from 'axios'; // 禁止
+```
+
+### 1.2 请求方法规范
+
+```typescript
+// GET 请求 - 数据查询
+const getDataList = async (params: any) => {
+  return Http.get('/api/database-accounts', { params });
+};
+
+// POST 请求 - 新增数据
+const createData = async (data: any) => {
+  return Http.post('/api/database-accounts', data);
+};
+
+// PUT 请求 - 更新数据
+const updateData = async (id: string, data: any) => {
+  return Http.put(`/api/database-accounts/${id}`, data);
+};
+
+// DELETE 请求 - 删除数据
+const deleteData = async (id: string) => {
+  return Http.delete(`/api/database-accounts/${id}`);
+};
+```
+
+### 1.3 请求路径规范
+
+- **使用绝对路径**：以 `/` 开头
+- **RESTful 风格**：使用标准的 REST API 设计
+- **路径命名**：使用小写字母和连字符
+
+```typescript
+// ✅ 推荐的路径格式
+'/api/database-accounts'           // 获取列表
+'/api/database-accounts/123'       // 获取详情
+'/api/database-accounts'           // POST 新增
+'/api/database-accounts/123'       // PUT 更新
+'/api/database-accounts/123'       // DELETE 删除
+
+// ✅ 特殊操作的路径格式
+'/api/database-accounts/123/enable'     // 启用
+'/api/database-accounts/123/disable'    // 禁用
+'/api/database-accounts/batch-delete'   // 批量删除
+```
+
+## 2. 错误处理规范
+
+### 2.1 标准错误处理模式
+
+**所有API调用必须使用 try-catch 包装**：
+
+```typescript
+const loadDataList = async () => {
+  loading.value = true;
+  try {
+    const res = await getDataList(searchParams.value);
+    if (res.code === 0) {
+      dataList.value = res.data || [];
+      pagination.total = res.total || 0;
+    } else {
+      message.error(res.message || '获取数据失败');
+    }
+  } catch (error) {
+    console.error('获取数据失败:', error);
+    message.error('网络错误，请稍后重试');
+  } finally {
+    loading.value = false;
+  }
+};
+```
+
+### 2.2 分页自动跳转处理
+
+删除操作导致当前页数据为空时的处理：
+
+```typescript
+const handleDelete = async (record: any) => {
+  try {
+    await deleteData(record.id);
+    message.success('删除成功');
+    
+    // 检查是否需要跳转到上一页
+    if (dataList.value.length === 1 && pagination.currentPage > 1) {
+      pagination.currentPage -= 1;
+    }
+    
+    // 重新加载数据
+    await loadDataList();
+  } catch (error) {
+    message.error('删除失败');
+  }
+};
+```
+
+### 2.3 错误提示规范
+
+```typescript
+// 根据不同场景显示合适的错误信息
+const handleApiError = (error: any, operation: string) => {
+  if (error.response) {
+    // HTTP 错误状态码
+    const status = error.response.status;
+    switch (status) {
+      case 401:
+        message.error('登录已过期，请重新登录');
+        // 跳转到登录页
+        break;
+      case 403:
+        message.error('权限不足，无法执行该操作');
+        break;
+      case 404:
+        message.error('请求的资源不存在');
+        break;
+      case 500:
+        message.error('服务器内部错误，请联系管理员');
+        break;
+      default:
+        message.error(`${operation}失败，请稍后重试`);
+    }
+  } else if (error.request) {
+    // 网络错误
+    message.error('网络连接失败，请检查网络设置');
+  } else {
+    // 其他错误
+    message.error(`${operation}失败: ${error.message}`);
+  }
+  
+  // 记录错误日志
+  console.error(`${operation}错误:`, error);
+};
+```
+
+## 3. 数据格式处理规范
+
+### 3.1 请求参数处理
+
+```typescript
+// 分页参数标准格式
+const buildListParams = (searchForm: any, pagination: any) => {
+  return {
+    ...searchForm,
+    pageNum: pagination.currentPage,
+    pageSize: pagination.pageSize
+  };
+};
+
+// 表单数据处理
+const buildFormData = (formData: any) => {
+  const data = { ...formData };
+  
+  // 处理数组字段
+  if (data.tags && Array.isArray(data.tags)) {
+    data.tags = data.tags.join(',');
+  }
+  
+  // 处理日期字段
+  if (data.createTime && data.createTime.length === 2) {
+    data.startTime = data.createTime[0];
+    data.endTime = data.createTime[1];
+    delete data.createTime;
+  }
+  
+  // 移除空值
+  Object.keys(data).forEach(key => {
+    if (data[key] === '' || data[key] === null || data[key] === undefined) {
+      delete data[key];
+    }
+  });
+  
+  return data;
+};
+```
+
+### 3.2 响应数据处理
+
+```typescript
+// 标准响应格式
+interface ApiResponse<T = any> {
+  code: number;
+  message: string;
+  data: T;
+  total?: number;
+}
+
+// 列表数据处理
+const processListData = (res: ApiResponse) => {
+  if (res.code === 0) {
+    const list = res.data || [];
+    const total = res.total || 0;
+    return { list, total };
+  }
+  throw new Error(res.message || '数据处理失败');
+};
+
+// 详情数据处理
+const processDetailData = (res: ApiResponse) => {
+  if (res.code === 0) {
+    const data = res.data || {};
+    
+    // 处理标签字段回显
+    if (data.tags && typeof data.tags === 'string') {
+      data.tags = data.tags.split(',').filter(Boolean);
+    }
+    
+    // 处理日期字段回显
+    if (data.startTime && data.endTime) {
+      data.createTime = [data.startTime, data.endTime];
+    }
+    
+    return data;
+  }
+  throw new Error(res.message || '获取详情失败');
+};
+```
+
+## 4. 枚举值和选项数据处理规范
+
+### 4.1 枚举值获取
+
+```typescript
+import { getEnumOptions } from '@/api/common/getEnum';
+
+// 单个枚举获取
+const loadEnumOptions = async (enumType: string) => {
+  try {
+    const res = await getEnumOptions(enumType);
+    if (res.code === 0) {
+      return res.data || [];
+    }
+    return [];
+  } catch (error) {
+    console.error(`获取枚举值失败 [${enumType}]:`, error);
+    return [];
+  }
+};
+
+// 批量枚举获取
+const loadAllEnumOptions = async () => {
+  try {
+    const [statusRes, typeRes, levelRes] = await Promise.all([
+      getEnumOptions('status'),
+      getEnumOptions('type'),
+      getEnumOptions('level')
+    ]);
+    
+    return {
+      statusOptions: statusRes.code === 0 ? statusRes.data || [] : [],
+      typeOptions: typeRes.code === 0 ? typeRes.data || [] : [],
+      levelOptions: levelRes.code === 0 ? levelRes.data || [] : []
+    };
+  } catch (error) {
+    console.error('批量获取枚举值失败:', error);
+    return {
+      statusOptions: [],
+      typeOptions: [],
+      levelOptions: []
+    };
+  }
+};
+```
+
+### 4.2 其他选项数据获取
+
+```typescript
+import { getSystemTags, getTopTenCompanyListByName } from '@/api/common';
+
+// 系统标签获取
+const loadSystemTags = async () => {
+  try {
+    const res = await getSystemTags();
+    return res.code === 0 ? res.data || [] : [];
+  } catch (error) {
+    console.error('获取系统标签失败:', error);
+    return [];
+  }
+};
+
+// 单位数据搜索
+const searchCompanies = async (keyword: string) => {
+  if (!keyword) return [];
+  
+  try {
+    const res = await getTopTenCompanyListByName(keyword);
+    return res.code === 0 ? res.data || [] : [];
+  } catch (error) {
+    console.error('搜索单位数据失败:', error);
+    return [];
+  }
+};
+```
+
+## 5. 文件上传处理规范
+
+### 5.1 文件上传
+
+```typescript
+// 文件上传
+const uploadFile = async (file: File) => {
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('type', 'document'); // 文件类型标识
+  
+  try {
+    const res = await Http.post('/api/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    
+    if (res.code === 0) {
+      return res.data;
+    }
+    throw new Error(res.message || '文件上传失败');
+  } catch (error) {
+    console.error('文件上传失败:', error);
+    throw error;
+  }
+};
+```
+
+## 6. 导入导出处理规范
+
+### 6.1 数据导入
+
+```typescript
+// Excel 数据导入
+const importData = async (file: File) => {
+  const formData = new FormData();
+  formData.append('file', file);
+  
+  try {
+    const res = await Http.post('/api/database-accounts/import', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    
+    if (res.code === 0) {
+      message.success(`导入成功，共导入 ${res.data.successCount} 条数据`);
+      if (res.data.failCount > 0) {
+        message.warning(`${res.data.failCount} 条数据导入失败`);
+      }
+      return res.data;
+    }
+    throw new Error(res.message || '导入失败');
+  } catch (error) {
+    message.error('导入失败，请检查文件格式');
+    throw error;
+  }
+};
+```
+
+### 6.2 数据导出
+
+```typescript
+// 数据导出
+const exportData = async (params: any) => {
+  try {
+    const res = await Http.post('/api/database-accounts/export', params, {
+      responseType: 'blob'
+    });
+    
+    // 创建下载链接
+    const url = window.URL.createObjectURL(new Blob([res]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `数据库账号列表_${new Date().getTime()}.xlsx`;
+    link.click();
+    
+    // 清理资源
+    window.URL.revokeObjectURL(url);
+    
+    message.success('导出成功');
+  } catch (error) {
+    console.error('导出失败:', error);
+    message.error('导出失败，请稍后重试');
+  }
+};
+```
+
+## 7. API 接口设计规范
+
+### 7.1 RESTful API 规范
+
+```typescript
+// 标准的 CRUD 接口设计
+interface DatabaseAccountApi {
+  // 查询列表
+  getList: (params: ListParams) => Promise<ApiResponse<ListData>>;
+  
+  // 获取详情
+  getDetail: (id: string) => Promise<ApiResponse<DetailData>>;
+  
+  // 新增
+  create: (data: CreateData) => Promise<ApiResponse<any>>;
+  
+  // 更新
+  update: (id: string, data: UpdateData) => Promise<ApiResponse<any>>;
+  
+  // 删除
+  delete: (id: string) => Promise<ApiResponse<any>>;
+  
+  // 批量操作
+  batchDelete: (ids: string[]) => Promise<ApiResponse<any>>;
+  
+  // 状态操作
+  enable: (id: string) => Promise<ApiResponse<any>>;
+  disable: (id: string) => Promise<ApiResponse<any>>;
+}
+```
+
+### 7.2 接口命名规范
+
+```typescript
+// API 文件组织规范
+// src/api/databaseAccount.ts
+export const databaseAccountApi = {
+  getList: (params: any) => Http.get('/api/database-accounts', { params }),
+  getDetail: (id: string) => Http.get(`/api/database-accounts/${id}`),
+  create: (data: any) => Http.post('/api/database-accounts', data),
+  update: (id: string, data: any) => Http.put(`/api/database-accounts/${id}`, data),
+  delete: (id: string) => Http.delete(`/api/database-accounts/${id}`),
+  batchDelete: (ids: string[]) => Http.post('/api/database-accounts/batch-delete', { ids }),
+  import: (file: File) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    return Http.post('/api/database-accounts/import', formData);
+  },
+  export: (params: any) => Http.post('/api/database-accounts/export', params, { responseType: 'blob' })
+};
+```
+
+## 8. 性能优化建议
+
+### 8.1 请求优化
+
+```typescript
+// 使用 AbortController 取消请求
+const abortController = new AbortController();
+
+const searchData = async (keyword: string) => {
+  try {
+    const res = await Http.get('/api/search', {
+      params: { keyword },
+      signal: abortController.signal
+    });
+    return res.data;
+  } catch (error) {
+    if (error.name === 'AbortError') {
+      console.log('请求已取消');
+    } else {
+      throw error;
+    }
+  }
+};
+
+// 组件卸载时取消请求
+onUnmounted(() => {
+  abortController.abort();
+});
+```
+
+### 8.2 缓存策略
+
+```typescript
+// 简单的内存缓存
+const cache = new Map();
+const CACHE_EXPIRE_TIME = 5 * 60 * 1000; // 5分钟
+
+const getCachedData = async (key: string, fetcher: () => Promise<any>) => {
+  const cached = cache.get(key);
+  
+  if (cached && Date.now() - cached.timestamp < CACHE_EXPIRE_TIME) {
+    return cached.data;
+  }
+  
+  const data = await fetcher();
+  cache.set(key, {
+    data,
+    timestamp: Date.now()
+  });
+  
+  return data;
+};
+
+// 使用示例
+const getEnumOptionsWithCache = (enumType: string) => {
+  return getCachedData(`enum_${enumType}`, () => getEnumOptions(enumType));
+};
+```
+
+## 9. 最佳实践总结
+
+### 9.1 开发规范
+
+1. **统一使用 Http 客户端**，禁止直接使用其他 HTTP 库
+2. **所有 API 调用必须进行错误处理**
+3. **使用 TypeScript 定义接口类型**
+4. **遵循 RESTful API 设计规范**
+5. **合理使用缓存策略**
+
+### 9.2 错误处理
+
+1. **使用 try-catch 包装所有异步操作**
+2. **提供用户友好的错误提示**
+3. **记录详细的错误日志**
+4. **处理网络异常和超时**
+
+### 9.3 性能优化
+
+1. **避免重复请求**
+2. **使用适当的缓存策略**
+3. **支持请求取消**
+4. **优化大数据量处理**
+
+### 9.4 代码质量
+
+1. **使用 TypeScript 类型定义**
+2. **编写清晰的 JSDoc 注释**
+3. **遵循统一的命名规范**
+4. **保持代码的可读性和可维护性**
+description:
+globs:
+alwaysApply: false
+---

@@ -1,0 +1,92 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# 路由配置规范
+
+## 路由配置文件位置
+所有路由配置在 [routes.ts](mdc:src/router/routes.ts) 中管理。
+
+## 路由配置模板
+
+### 标准路由结构
+```typescript
+{
+  name: 'kebab-case-route-name',
+  path: '/module/submodule/page',
+  component: () => import('@/views/module/page/index.vue'),
+  meta: {
+    title: '页面标题',
+    id: '模块标识',
+    hasButtonPermission: false, // 是否需要按钮权限
+    fullScreen: false // 是否全屏显示
+  }
+}
+```
+
+### 实际配置示例
+参考档案管理页面配置：
+```typescript
+{
+  name: 'archive-management',
+  path: '/archiveManagement', 
+  component: () => import('@/views/archive-management/index.vue'),
+  meta: {
+    title: '档案管理',
+    id: 'archiveManagement',
+    hasButtonPermission: true,
+    fullScreen: false
+  }
+}
+```
+
+## 路由分类
+
+### 1. 主路由数组 (routes)
+- 正常权限控制的页面
+- 需要登录和权限验证
+
+### 2. 白名单路由数组 (wihitetRoutes) 
+- 前端调试页面
+- 无需后端接口的演示页面
+- 跳过权限验证
+
+## 命名规范
+
+### 1. 路由名称 (name)
+- 使用kebab-case命名
+- 与文件夹名称保持一致
+- 示例：archive-management
+
+### 2. 路径 (path)
+- 使用camelCase或kebab-case
+- 避免过深的嵌套
+- 示例：/archiveManagement
+
+### 3. 组件导入
+- 使用懒加载：`() => import('@/views/...')`
+- 路径必须指向具体的index.vue文件
+
+## Meta信息配置
+
+### 必需字段
+- `title`: 页面标题，用于面包屑和标签页
+- `id`: 模块标识，用于权限控制
+
+### 可选字段  
+- `hasButtonPermission`: 页面是否有按钮权限控制
+- `fullScreen`: 是否全屏显示页面
+
+## 白名单配置
+当页面需要跳过权限验证时：
+
+1. 将路由配置添加到 `wihitetRoutes` 数组
+2. 在 [guard.ts](mdc:src/router/guard.ts) 的 `WHITE_LIST` 添加路径
+3. 确保路由守卫正确处理白名单逻辑
+
+## 最佳实践
+- 新增页面时先配置路由
+- 保持路由名称与页面功能的一致性
+- 合理设置meta信息用于权限控制
+- 前端调试页面使用白名单机制

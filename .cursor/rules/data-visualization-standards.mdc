@@ -1,0 +1,608 @@
+# 数据可视化开发规范
+
+## 图表组件选择优先级
+
+项目中存在多种图表实现方式，必须按以下优先级选择：
+
+### 1. DAS组件优先 (🏆 首选)
+`das-simple-chart` 是基于 ECharts 封装的轻量级图表组件，提供了统一的API和样式规范：
+
+```vue
+<template>
+  <!-- 优先使用 das-simple-chart（基于ECharts封装） -->
+  <das-simple-chart 
+    :needResize="true"
+    :option="chartOption" 
+    width="100%" 
+    height="300px" 
+  />
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const chartOption = ref({
+  tooltip: { trigger: 'axis' },
+  xAxis: {
+    type: 'category',
+    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+  },
+  yAxis: { type: 'value' },
+  series: [{
+    data: [820, 932, 901, 934, 1290, 1330, 1320],
+    type: 'line',
+    smooth: true
+  }]
+});
+</script>
+```
+
+**优势**：
+- ✅ 统一的API接口和样式规范
+- ✅ 自动处理响应式调整（`needResize="true"`）
+- ✅ 内置主题适配和样式优化
+- ✅ 减少重复的ECharts配置代码
+
+### 2. 项目封装组件 (🥈 次选)
+当DAS组件无法满足需求时，使用项目自定义组件：
+```vue
+<template>
+  <!-- 统计数据图表 -->
+  <CommonEChart :option="chartOption" height="400px" width="100%" />
+  
+  <!-- 或使用具体类型的图表组件 -->
+  <PieChartComponent :data="pieData" height="160px" />
+  <LineChartComponent :data="lineData" height="160px" />
+</template>
+
+<script setup lang="ts">
+import CommonEChart from '@/components/CommonEChart.vue';
+import PieChartComponent from '@/components/uedModule/charts/pieChart.vue';
+import LineChartComponent from '@/components/uedModule/charts/lineChart.vue';
+</script>
+```
+
+### 3. 直接使用ECharts (⚠️ 谨慎使用)
+仅在DAS组件和项目组件都无法满足高度定制化需求时，才直接使用ECharts API：
+```vue
+<template>
+  <div ref="chartRef" class="chart-container"></div>
+</template>
+
+<script setup>
+import { ref, onMounted, onUnmounted } from 'vue';
+import * as echarts from 'echarts';
+
+const chartRef = ref(null);
+let chartInstance = null;
+
+onMounted(() => {
+  if (chartRef.value) {
+    chartInstance = echarts.init(chartRef.value);
+    // 配置图表...
+  }
+});
+
+onUnmounted(() => {
+  if (chartInstance) {
+    chartInstance.dispose();
+  }
+});
+</script>
+```
+
+## 图表类型选择指南
+
+### 支持的图表类型
+| 图表类型 | 使用场景 | DAS组件 | 项目组件 |
+|---------|---------|---------|----------|
+| **柱状图** | 数据对比、分类统计 | ✅ das-simple-chart (基于ECharts) | ✅ BarChart |
+| **折线图** | 趋势分析、时间序列 | ✅ das-simple-chart (基于ECharts) | ✅ LineChart |
+| **饼图** | 占比分析、分布展示 | ✅ das-simple-chart (基于ECharts) | ✅ PieChart |
+| **环形图** | 占比分析、突出总量 | ✅ das-simple-chart (基于ECharts) | ✅ 自定义配置 |
+| **统计图表** | 复杂数据展示 | ❌ | ✅ CommonEChart (基于ECharts) |
+
+### 图表组件选择决策流程
+```mermaid
+flowchart TD
+    A[需要图表] --> B{das-simple-chart能满足需求?}
+    B -->|是| C[使用das-simple-chart]
+    B -->|否| D{项目组件能满足需求?}
+    D -->|是| E[使用项目封装组件<br/>CommonEChart等]
+    D -->|否| F{确实需要特殊定制?}
+    F -->|是| G[直接使用ECharts API]
+    F -->|否| H[重新评估需求<br/>考虑das-simple-chart]
+```
+
+### 图表类型建议
+```typescript
+// 图表类型选择逻辑
+const getChartType = (dataType: string, purpose: string) => {
+  if (purpose === '趋势分析') return 'line';
+  if (purpose === '数据对比') return 'bar';
+  if (purpose === '占比分析') return 'pie';
+  if (purpose === '分布展示') return 'pie';
+  return 'bar'; // 默认
+};
+```
+
+## 图表配置规范
+
+### 1. 标准颜色配置
+项目使用统一的颜色体系，必须遵循主题色彩规范：
+
+```typescript
+// 标准颜色配置
+const CHART_COLORS = {
+  primary: ['#134BEA', '#FF7F29', '#FFB005', '#7E8494'],
+  success: ['#1DB969', '#52c41a', '#95de64'],
+  warning: ['#faad14', '#ffc53d', '#ffd666'],
+  error: ['#F53C3C', '#ff4d4f', '#ff7875'],
+  info: ['#134BEA', '#40a9ff', '#69c0ff']
+};
+
+// 使用示例
+const chartOption = ref({
+  color: CHART_COLORS.primary,
+  // 其他配置...
+});
+```
+
+### 2. 主题适配配置
+所有图表必须支持明暗主题切换：
+
+```typescript
+// 主题适配函数
+const getThemeColors = () => {
+  const getCssVar = (name: string, fallback: string) => {
+    return getComputedStyle(document.documentElement)
+      .getPropertyValue(name).trim() || fallback;
+  };
+
+  return {
+    textColor: getCssVar('--color-text-primarys', '#1E2435'),
+    backgroundColor: getCssVar('--color-bg-container', '#FFFFFF'),
+    borderColor: getCssVar('--color-component-stroke', '#E9EAF0'),
+    splitLineColor: getCssVar('--color-component-stroke', '#E9EAF0')
+  };
+};
+
+// 在图表配置中使用
+const chartOption = ref({
+  tooltip: {
+    backgroundColor: getThemeColors().backgroundColor,
+    borderColor: getThemeColors().borderColor,
+    textStyle: { color: getThemeColors().textColor }
+  },
+  xAxis: {
+    axisLabel: { color: getThemeColors().textColor },
+    axisLine: { lineStyle: { color: getThemeColors().borderColor } }
+  },
+  yAxis: {
+    axisLabel: { color: getThemeColors().textColor },
+    splitLine: { lineStyle: { color: getThemeColors().splitLineColor } }
+  }
+});
+```
+
+### 3. 响应式配置
+图表必须支持容器大小变化：
+
+```vue
+<template>
+  <!-- DAS组件自动响应式 -->
+  <das-simple-chart :needResize="true" />
+  
+  <!-- 项目组件响应式 -->
+  <CommonEChart :option="chartOption" height="400px" width="100%" />
+</template>
+
+<script setup>
+// 对于直接使用ECharts的场景
+const resizeHandler = () => {
+  if (chartInstance) {
+    chartInstance.resize();
+  }
+};
+
+onMounted(() => {
+  window.addEventListener('resize', resizeHandler);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('resize', resizeHandler);
+});
+</script>
+```
+
+## 图表数据处理规范
+
+### 1. 数据格式标准化
+```typescript
+// 标准图表数据接口
+interface ChartDataItem {
+  name: string;
+  value: number;
+  itemStyle?: {
+    color?: string;
+  };
+}
+
+interface LineChartData {
+  xAxis: string[];
+  series: {
+    name: string;
+    data: number[];
+    type: 'line' | 'bar';
+  }[];
+}
+
+interface PieChartData {
+  data: ChartDataItem[];
+}
+
+// 数据转换函数
+const transformApiDataToChart = (apiData: any[]): ChartDataItem[] => {
+  return apiData.map(item => ({
+    name: item.label || item.name || '',
+    value: item.count || item.value || 0,
+    itemStyle: {
+      color: item.color || undefined
+    }
+  }));
+};
+```
+
+### 2. 空数据处理
+```vue
+<template>
+  <div class="chart-wrapper">
+    <!-- 有数据时显示图表 -->
+    <das-simple-chart 
+      v-if="chartData.length > 0"
+      :option="chartOption" 
+      width="100%" 
+      height="300px" 
+    />
+    
+    <!-- 无数据时显示空状态 -->
+    <a-empty 
+      v-else
+      description="暂无图表数据" 
+      class="chart-empty"
+    />
+  </div>
+</template>
+
+<style lang="less" scoped>
+.chart-wrapper {
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  .chart-empty {
+    width: 100%;
+    height: 100%;
+  }
+}
+</style>
+```
+
+### 3. 数据错误处理
+```typescript
+// 图表数据验证
+const validateChartData = (data: any): boolean => {
+  if (!Array.isArray(data)) return false;
+  if (data.length === 0) return false;
+  
+  return data.every(item => 
+    typeof item.value === 'number' && 
+    typeof item.name === 'string'
+  );
+};
+
+// 使用示例
+const updateChartData = (newData: any[]) => {
+  if (!validateChartData(newData)) {
+    console.warn('Invalid chart data:', newData);
+    chartData.value = [];
+    return;
+  }
+  
+  chartData.value = newData;
+};
+```
+
+## 图表交互规范
+
+### 1. 工具提示(Tooltip)配置
+```typescript
+const standardTooltip = {
+  trigger: 'axis', // 或 'item'
+  confine: true, // 限制在图表区域内
+  formatter: function(params: any) {
+    // 自定义格式化逻辑
+    if (Array.isArray(params)) {
+      let result = `${params[0].axisValue}<br/>`;
+      params.forEach(param => {
+        result += `${param.marker}${param.seriesName}: ${param.value}<br/>`;
+      });
+      return result;
+    }
+    return `${params.marker}${params.name}: ${params.value}`;
+  }
+};
+```
+
+### 2. 图例(Legend)配置
+```typescript
+const standardLegend = {
+  orient: 'horizontal', // 或 'vertical'
+  bottom: 0, // 位置
+  left: 'center',
+  textStyle: {
+    fontSize: 12,
+    color: 'var(--color-text-primarys)'
+  },
+  itemWidth: 10,
+  itemHeight: 10,
+  itemGap: 16
+};
+```
+
+### 3. 点击事件处理
+```typescript
+// 图表点击事件
+const handleChartClick = (params: any) => {
+  console.log('Chart clicked:', params);
+  
+  // 触发自定义事件
+  emit('chartClick', {
+    name: params.name,
+    value: params.value,
+    dataIndex: params.dataIndex
+  });
+};
+
+// 在图表配置中绑定
+onMounted(() => {
+  if (chartInstance) {
+    chartInstance.on('click', handleChartClick);
+  }
+});
+```
+
+## 图表性能优化
+
+### 1. 懒加载ECharts模块
+```typescript
+// 按需引入ECharts模块
+import { PieChart, BarChart, LineChart } from 'echarts/charts';
+import { 
+  TitleComponent, 
+  TooltipComponent, 
+  LegendComponent,
+  GridComponent 
+} from 'echarts/components';
+import { CanvasRenderer } from 'echarts/renderers';
+import { use } from 'echarts/core';
+
+// 只注册需要的组件
+use([
+  CanvasRenderer,
+  PieChart,
+  BarChart,
+  LineChart,
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+  GridComponent
+]);
+```
+
+### 2. 图表实例管理
+```typescript
+// 图表实例生命周期管理
+let chartInstance: echarts.ECharts | null = null;
+
+const initChart = () => {
+  // 销毁旧实例
+  if (chartInstance) {
+    chartInstance.dispose();
+  }
+  
+  // 创建新实例
+  chartInstance = echarts.init(chartRef.value);
+  chartInstance.setOption(chartOption.value);
+};
+
+// 组件销毁时清理
+onUnmounted(() => {
+  if (chartInstance) {
+    chartInstance.dispose();
+    chartInstance = null;
+  }
+});
+```
+
+### 3. 数据量大时的优化
+```typescript
+// 大数据量处理
+const handleLargeData = (data: any[]) => {
+  if (data.length > 1000) {
+    // 数据采样或分页处理
+    return data.slice(0, 1000);
+  }
+  return data;
+};
+
+// 使用虚拟渲染
+const chartOption = ref({
+  animation: false, // 关闭动画
+  progressive: 400, // 渐进式渲染
+  progressiveThreshold: 3000,
+  // 其他配置...
+});
+```
+
+## 常见图表配置模板
+
+### 1. 标准柱状图
+```typescript
+const barChartTemplate = {
+  tooltip: { trigger: 'axis' },
+  grid: {
+    left: 40,
+    right: 20,
+    bottom: 35,
+    top: 15,
+    containLabel: true
+  },
+  xAxis: {
+    type: 'category',
+    data: [], // 动态数据
+    axisLabel: { fontSize: 12 },
+    axisLine: { lineStyle: { color: 'var(--color-component-stroke)' } }
+  },
+  yAxis: {
+    type: 'value',
+    minInterval: 1,
+    axisLabel: { fontSize: 12 },
+    splitLine: { lineStyle: { color: 'var(--color-component-stroke)' } }
+  },
+  series: [{
+    type: 'bar',
+    barWidth: 16,
+    itemStyle: {
+      color: 'var(--color-brand-normal)',
+      borderRadius: [4, 4, 0, 0]
+    },
+    data: [] // 动态数据
+  }]
+};
+```
+
+### 2. 标准饼图
+```typescript
+const pieChartTemplate = {
+  tooltip: {
+    trigger: 'item',
+    formatter: '{a} <br/>{b}: {c} ({d}%)'
+  },
+  legend: {
+    orient: 'vertical',
+    left: 'left',
+    textStyle: { color: 'var(--color-text-primarys)' }
+  },
+  series: [{
+    name: '数据分布',
+    type: 'pie',
+    radius: '50%',
+    data: [], // 动态数据
+    emphasis: {
+      itemStyle: {
+        shadowBlur: 10,
+        shadowOffsetX: 0,
+        shadowColor: 'rgba(0, 0, 0, 0.5)'
+      }
+    }
+  }]
+};
+```
+
+### 3. 标准折线图
+```typescript
+const lineChartTemplate = {
+  tooltip: { trigger: 'axis' },
+  grid: {
+    left: 40,
+    right: 20,
+    bottom: 35,
+    top: 15,
+    containLabel: true
+  },
+  xAxis: {
+    type: 'category',
+    data: [], // 动态数据
+    axisLabel: { fontSize: 12 }
+  },
+  yAxis: {
+    type: 'value',
+    axisLabel: { fontSize: 12 }
+  },
+  series: [{
+    type: 'line',
+    smooth: true,
+    data: [], // 动态数据
+    lineStyle: { color: 'var(--color-brand-normal)' },
+    itemStyle: { color: 'var(--color-brand-normal)' }
+  }]
+};
+```
+
+## 图表测试规范
+
+### 1. 数据测试
+```typescript
+// 图表组件测试
+describe('ChartComponent', () => {
+  it('should render chart with valid data', () => {
+    const validData = [
+      { name: 'A', value: 10 },
+      { name: 'B', value: 20 }
+    ];
+    
+    // 测试图表渲染
+    // ...
+  });
+  
+  it('should show empty state with invalid data', () => {
+    const invalidData: any[] = [];
+    
+    // 测试空状态显示
+    // ...
+  });
+});
+```
+
+### 2. 响应式测试
+```typescript
+// 响应式测试
+it('should resize chart when container size changes', () => {
+  // 模拟容器大小变化
+  // 验证图表是否正确响应
+});
+```
+
+## 最佳实践总结
+
+### ✅ 推荐做法
+1. **优先使用DAS组件**：`das-simple-chart`（基于ECharts封装）能满足需求时首选，获得统一的API和样式
+2. **统一颜色体系**：使用项目CSS变量定义的颜色
+3. **支持主题切换**：确保图表在明暗主题下都正常显示
+4. **响应式设计**：图表随容器大小自适应
+5. **数据验证**：对图表数据进行有效性检查
+6. **性能优化**：按需引入ECharts模块，及时销毁实例
+
+### ❌ 避免做法
+1. **直接硬编码颜色**：避免使用固定的十六进制颜色值
+2. **忽略空数据状态**：必须处理无数据的展示情况
+3. **忘记清理资源**：组件销毁时必须dispose图表实例
+4. **过度自定义**：优先使用现有封装组件而非直接使用ECharts底层API
+5. **绕过封装组件**：不要为了小的定制需求就直接使用ECharts，应优先考虑das-simple-chart
+6. **忽略主题适配**：确保图表在不同主题下的显示效果
+
+## 相关规范引用
+
+> 🔗 **组件库使用**: [组件库使用标准](mdc:.cursor/rules/component-library-standards.mdc)  
+> 🔗 **主题系统**: [主题系统开发规范](mdc:.cursor/rules/theme-system-standards.mdc)  
+> 🔗 **性能优化**: [性能优化标准](mdc:.cursor/rules/performance-optimization-standards.mdc)
+
+---
+
+> 💡 **提示**: 本规范确保项目中所有图表组件的一致性和高质量，提升用户体验和开发效率。
+description:
+globs:
+alwaysApply: false
+---

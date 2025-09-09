@@ -17,7 +17,7 @@ function outFileName(pathData) {
 function loadEnv() {
   const mode = process.env.NODE_ENV || 'development';
   const env = dotenv.config({
-    path: getPath(`.env.${mode}`)
+    path: getPath(`env.${mode}`)
   });
   if (env.error) {
     console.error(env.error);

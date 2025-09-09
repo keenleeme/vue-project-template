@@ -1,0 +1,558 @@
+# 表单验证开发规范
+
+## 验证组件选择优先级
+
+### 1. Ant Design Vue 原生验证 (🏆 首选)
+使用 Ant Design Vue 内置的验证系统：
+
+```vue
+<template>
+  <a-form 
+    :model="formData" 
+    :rules="validationRules"
+    @finish="handleSubmit"
+    @finishFailed="handleSubmitFailed"
+  >
+    <a-form-item label="系统名称" name="systemName">
+      <a-input v-model:value="formData.systemName" placeholder="请输入系统名称" />
+    </a-form-item>
+    
+    <a-form-item label="邮箱地址" name="email">
+      <a-input v-model:value="formData.email" placeholder="请输入邮箱地址" />
+    </a-form-item>
+  </a-form>
+</template>
+
+<script setup lang="ts">
+import { reactive } from 'vue'
+
+const formData = reactive({
+  systemName: '',
+  email: ''
+})
+
+const validationRules = {
+  systemName: [
+    { required: true, message: '请输入系统名称', trigger: 'blur' },
+    { min: 2, max: 150, message: '系统名称长度为2-150个字符', trigger: 'blur' }
+  ],
+  email: [
+    { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+    { type: 'email', message: '请输入有效的邮箱地址', trigger: 'blur' }
+  ]
+}
+</script>
+```
+
+### 2. 项目自定义验证工具 (🥈 次选)
+当需要复杂业务逻辑验证时，使用项目的验证工具：
+
+```typescript
+import { createValidationRules, businessValidationRules, asyncValidators } from '@/composables/useFormValidation'
+
+// 使用预定义的业务验证规则
+const rules = {
+  systemName: businessValidationRules.systemName,
+  domain: [
+    ...businessValidationRules.domain,
+    asyncValidators.domainNameUnique() // 异步唯一性验证
+  ]
+}
+```
+
+## 标准字段验证规范
+
+### 基础字段类型验证
+
+#### 1. 数据字典字段ID
+```typescript
+const dataFieldIdRules = [
+  { required: true, message: '请输入字段ID', trigger: 'blur' },
+  { pattern: /^[a-zA-Z_]\w{0,49}$/, message: '字母或下划线开头，可包含字母数字下划线，最长50字符', trigger: 'blur' },
+  { max: 50, message: '字段ID不能超过50个字符', trigger: 'blur' }
+]
+```
+
+#### 2. 名称类字段
+```typescript
+const nameFieldRules = [
+  { required: true, message: '请输入名称', trigger: 'blur' },
+  { pattern: /^([\u4e00-\u9fa5]|[a-zA-Z0-9.:&/\-_()（）、]){1,150}$/, message: '可输入中文、字母、数字和常用符号，最长150字符', trigger: 'blur' },
+  { max: 150, message: '名称不能超过150个字符', trigger: 'blur' }
+]
+```
+
+#### 3. 描述类字段
+```typescript
+const descriptionRules = [
+  { max: 4096, message: '描述不能超过4096个字符', trigger: 'blur' }
+]
+```
+
+#### 4. 标签字段
+```typescript
+const tagRules = [
+  { pattern: /^([\u4e00-\u9fa5]|[a-zA-Z0-9.:\-&/_()（）、 ]){0,150}$/, message: '可输入中文、字母、数字、空格和常用符号，最长150字符', trigger: 'blur' },
+  { max: 150, message: '标签不能超过150个字符', trigger: 'blur' }
+]
+```
+
+### 网络相关字段验证
+
+#### 5. IPv4地址验证
+```typescript
+const ipv4Rules = [
+  { 
+    pattern: /^(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)$/, 
+    message: '请输入有效的IPv4地址', 
+    trigger: 'blur' 
+  }
+]
+```
+
+#### 6. IPv6地址验证
+```typescript
+const ipv6Rules = [
+  { 
+    pattern: /^(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$|^::1$|^::$/, 
+    message: '请输入有效的IPv6地址', 
+    trigger: 'blur' 
+  }
+]
+```
+
+#### 7. 域名验证
+```typescript
+const domainRules = [
+  { 
+    pattern: /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/i, 
+    message: '请输入有效的域名', 
+    trigger: 'blur' 
+  },
+  { max: 253, message: '域名长度不能超过253个字符', trigger: 'blur' }
+]
+```
+
+#### 8. URL地址验证
+```typescript
+const urlRules = [
+  { type: 'url', message: '请输入有效的URL地址', trigger: 'blur' }
+]
+```
+
+#### 9. 端口号验证
+```typescript
+const portRules = [
+  { type: 'number', min: 1, max: 65535, message: '端口号应在1-65535之间', trigger: 'blur' }
+]
+```
+
+### 联系信息验证
+
+#### 10. 手机号验证
+```typescript
+const phoneRules = [
+  { pattern: /^1[3-9]\d{9}$/, message: '请输入有效的手机号码', trigger: 'blur' }
+]
+```
+
+#### 11. 邮箱验证
+```typescript
+const emailRules = [
+  { type: 'email', message: '请输入有效的邮箱地址', trigger: 'blur' },
+  { max: 320, message: '邮箱地址不能超过320个字符', trigger: 'blur' }
+]
+```
+
+#### 12. 身份证号验证
+```typescript
+const idCardRules = [
+  { 
+    pattern: /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/, 
+    message: '请输入有效的身份证号', 
+    trigger: 'blur' 
+  }
+]
+```
+
+## 验证规则工厂函数
+
+### 基础验证规则创建器
+```typescript
+export const createValidationRules = {
+  // 必填规则
+  required: (message = '此字段为必填项', trigger = 'blur') => ({
+    required: true,
+    message,
+    trigger
+  }),
+
+  // 字符长度限制
+  maxLength: (max: number, message?: string) => ({
+    max,
+    message: message || `不能超过${max}个字符`,
+    trigger: 'blur'
+  }),
+
+  // 最小长度限制
+  minLength: (min: number, message?: string) => ({
+    min,
+    message: message || `不能少于${min}个字符`,
+    trigger: 'blur'
+  }),
+
+  // 数字范围验证
+  numberRange: (min: number, max: number, message?: string) => ({
+    type: 'number',
+    min,
+    max,
+    message: message || `请输入${min}-${max}之间的数字`,
+    trigger: 'blur'
+  }),
+
+  // 自定义正则验证
+  pattern: (pattern: RegExp, message: string, trigger = 'blur') => ({
+    pattern,
+    message,
+    trigger
+  })
+}
+```
+
+### 组合验证规则
+```typescript
+// 组合多个验证规则
+export const combineRules = (...rules: any[][]) => {
+  return rules.flat().filter(Boolean)
+}
+
+// 使用示例
+const systemNameRules = combineRules(
+  [createValidationRules.required('请输入系统名称')],
+  [createValidationRules.maxLength(150)],
+  [createValidationRules.pattern(/^[\u4e00-\u9fa5a-zA-Z0-9_-]+$/, '只能包含中文、字母、数字、下划线和横线')]
+)
+```
+
+## 异步验证规范
+
+### 唯一性验证
+```typescript
+// 异步验证器示例
+export const asyncValidators = {
+  // 系统名称唯一性验证
+  systemNameUnique: (currentId?: string) => ({
+    validator: async (rule: any, value: string) => {
+      if (!value) return Promise.resolve()
+      
+      try {
+        // 调用API检查唯一性
+        const response = await Http.post('/api/check-unique', {
+          field: 'systemName',
+          value,
+          excludeId: currentId
+        })
+        
+        if (response.data.exists) {
+          return Promise.reject(new Error('系统名称已存在，请使用其他名称'))
+        }
+        
+        return Promise.resolve()
+      } catch (error) {
+        console.error('验证系统名称唯一性失败:', error)
+        // 验证失败时允许通过，避免阻塞用户操作
+        return Promise.resolve()
+      }
+    },
+    trigger: 'blur'
+  })
+}
+
+// 使用异步验证
+const formRules = {
+  systemName: [
+    createValidationRules.required('请输入系统名称'),
+    createValidationRules.maxLength(150),
+    asyncValidators.systemNameUnique(currentSystemId)
+  ]
+}
+```
+
+### API调用的验证处理
+```typescript
+// 表单验证与API调用的配合
+const handleSubmit = async () => {
+  try {
+    // 1. 先进行前端验证
+    const valid = await formRef.value?.validate()
+    if (!valid) {
+      message.error('请完善表单信息')
+      return
+    }
+    
+    // 2. 构建提交数据
+    const submitData = {
+      ...formData,
+      // 数据格式化处理
+    }
+    
+    // 3. 提交到服务器
+    await Http.post('/api/submit', submitData)
+    message.success('提交成功')
+    
+  } catch (error) {
+    // 4. 处理服务器验证错误
+    if (error.response?.data?.fieldErrors) {
+      // 显示服务器端的字段验证错误
+      const fieldErrors = error.response.data.fieldErrors
+      Object.keys(fieldErrors).forEach(field => {
+        formRef.value?.setFields([{
+          name: field,
+          errors: [fieldErrors[field]]
+        }])
+      })
+    } else {
+      message.error('提交失败，请重试')
+    }
+  }
+}
+```
+
+## 特殊场景验证
+
+### 1. 数组字段验证
+```vue
+<template>
+  <a-form :model="formData" :rules="rules">
+    <a-form-item 
+      v-for="(contact, index) in formData.contacts" 
+      :key="index"
+      :label="`联系人${index + 1}`"
+      :name="['contacts', index, 'name']"
+    >
+      <a-input v-model:value="contact.name" placeholder="请输入联系人姓名" />
+    </a-form-item>
+  </a-form>
+</template>
+
+<script setup lang="ts">
+const rules = {
+  contacts: {
+    type: 'array',
+    defaultField: {
+      name: [
+        { required: true, message: '请输入联系人姓名', trigger: 'blur' },
+        { max: 50, message: '姓名不能超过50个字符', trigger: 'blur' }
+      ]
+    }
+  }
+}
+</script>
+```
+
+### 2. 动态字段验证
+```typescript
+// 动态添加验证规则
+const addDynamicValidation = (fieldName: string, rules: any[]) => {
+  formRules.value[fieldName] = rules
+  // 重新设置表单验证规则
+  nextTick(() => {
+    formRef.value?.clearValidate()
+  })
+}
+
+// 移除动态验证规则
+const removeDynamicValidation = (fieldName: string) => {
+  delete formRules.value[fieldName]
+  formRef.value?.clearValidate(fieldName)
+}
+```
+
+### 3. 条件验证
+```typescript
+// 根据条件动态设置验证规则
+const conditionalRules = computed(() => {
+  const rules: any = {}
+  
+  // 基础验证规则
+  rules.systemName = [
+    createValidationRules.required('请输入系统名称'),
+    createValidationRules.maxLength(150)
+  ]
+  
+  // 条件验证：如果是互联网系统，域名为必填
+  if (formData.isInternetSystem) {
+    rules.domain = [
+      createValidationRules.required('互联网系统必须填写域名'),
+      ...domainRules
+    ]
+  } else {
+    rules.domain = domainRules // 可选填写
+  }
+  
+  return rules
+})
+```
+
+## 表单验证最佳实践
+
+### 1. 验证时机选择
+```typescript
+// 不同验证时机的选择
+const validationConfig = {
+  // blur: 失去焦点时验证（推荐用于格式验证）
+  formatValidation: { trigger: 'blur' },
+  
+  // change: 值改变时验证（推荐用于实时反馈）
+  realTimeValidation: { trigger: 'change' },
+  
+  // 手动验证（推荐用于提交前的完整验证）
+  manualValidation: { trigger: ['blur', 'change'] }
+}
+```
+
+### 2. 错误信息显示规范
+```vue
+<template>
+  <!-- 统一的错误提示样式 -->
+  <a-form-item 
+    label="系统名称" 
+    name="systemName"
+    :validate-status="getValidateStatus('systemName')"
+    :help="getFieldError('systemName')"
+  >
+    <a-input 
+      v-model:value="formData.systemName" 
+      placeholder="请输入系统名称"
+      :status="getInputStatus('systemName')"
+    />
+  </a-form-item>
+</template>
+
+<script setup lang="ts">
+// 获取字段验证状态
+const getValidateStatus = (field: string) => {
+  const fieldError = formRef.value?.getFieldError?.(field)
+  return fieldError?.length > 0 ? 'error' : ''
+}
+
+// 获取字段错误信息
+const getFieldError = (field: string) => {
+  const fieldError = formRef.value?.getFieldError?.(field)
+  return fieldError?.[0] || ''
+}
+
+// 获取输入框状态
+const getInputStatus = (field: string) => {
+  return getValidateStatus(field) === 'error' ? 'error' : ''
+}
+</script>
+```
+
+### 3. 数据格式化处理
+```typescript
+// 提交前的数据格式化
+const formatSubmitData = (formData: any) => {
+  return {
+    ...formData,
+    // 去除字符串首尾空格
+    systemName: formData.systemName?.trim(),
+    // 格式化日期
+    expireDate: formData.expireDate ? dayjs(formData.expireDate).format('YYYY-MM-DD') : null,
+    // 处理数组字段
+    tags: formData.tags?.filter(Boolean) || [],
+    // 数字字段处理
+    port: formData.port ? Number(formData.port) : null
+  }
+}
+```
+
+### 4. 表单重置处理
+```typescript
+// 完整的表单重置
+const resetForm = () => {
+  // 重置表单数据
+  Object.assign(formData, getInitialFormData())
+  
+  // 清除验证状态
+  formRef.value?.resetFields()
+  
+  // 清除自定义错误状态
+  clearCustomErrors()
+}
+
+// 获取初始表单数据
+const getInitialFormData = () => ({
+  systemName: '',
+  domain: undefined, // 下拉框使用undefined显示placeholder
+  tags: [],
+  isActive: false
+})
+```
+
+## 常见验证场景实例
+
+### 1. 登录表单验证
+```typescript
+const loginRules = {
+  username: [
+    createValidationRules.required('请输入用户名'),
+    createValidationRules.minLength(3, '用户名至少3个字符'),
+    createValidationRules.maxLength(20, '用户名最多20个字符')
+  ],
+  password: [
+    createValidationRules.required('请输入密码'),
+    createValidationRules.minLength(6, '密码至少6个字符'),
+    createValidationRules.pattern(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&]{6,}$/,
+      '密码必须包含大小写字母和数字'
+    )
+  ]
+}
+```
+
+### 2. 个人信息表单验证
+```typescript
+const profileRules = {
+  realName: [
+    createValidationRules.required('请输入真实姓名'),
+    createValidationRules.pattern(/^[\u4e00-\u9fa5]{2,10}$/, '请输入2-10位中文姓名')
+  ],
+  phone: phoneRules,
+  email: emailRules,
+  idCard: idCardRules,
+  address: [
+    createValidationRules.maxLength(200, '地址不能超过200个字符')
+  ]
+}
+```
+
+### 3. 系统配置表单验证
+```typescript
+const systemConfigRules = {
+  systemName: nameFieldRules,
+  domain: domainRules,
+  ip: ipv4Rules,
+  port: portRules,
+  description: descriptionRules,
+  tags: {
+    type: 'array',
+    max: 10,
+    message: '最多只能选择10个标签'
+  }
+}
+```
+
+## 相关规范引用
+
+> 🔗 **组件使用**: [组件库使用标准](mdc:.cursor/rules/component-library-standards.mdc)  
+> 🔗 **API请求**: [API请求标准](mdc:.cursor/rules/api-request-standards.mdc)  
+> 🔗 **错误处理**: 统一的错误处理和用户反馈机制
+
+---
+
+> 💡 **提示**: 表单验证是用户体验的重要组成部分，应该在保证数据准确性的同时，提供良好的用户交互体验。
+description:
+globs:
+alwaysApply: false
+---

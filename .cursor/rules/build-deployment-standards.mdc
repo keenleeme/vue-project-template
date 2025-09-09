@@ -1,0 +1,1040 @@
+# 构建和部署规范
+
+## 1. 构建工具配置
+
+### 1.1 Vite 基础配置
+
+```typescript
+// configs/vite.config.base.ts
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import vueJsx from '@vitejs/plugin-vue-jsx';
+import { resolve } from 'path';
+
+export default defineConfig({
+  base: process.env.BASE_PATH || '/',
+  
+  plugins: [
+    vue({
+      template: {
+        compilerOptions: {
+          // 自定义元素支持（微前端）
+          isCustomElement: (tag) => /^(micro-app|ued-)/.test(tag)
+        }
+      }
+    }),
+    vueJsx()
+  ],
+  
+  resolve: {
+    alias: [
+      {
+        find: '@',
+        replacement: resolve(__dirname, '../src')
+      },
+      {
+        find: 'vue',
+        replacement: 'vue/dist/vue.esm-bundler.js'
+      }
+    ],
+    extensions: ['.ts', '.js', '.vue', '.json']
+  },
+  
+  define: {
+    'process.env': JSON.stringify(process.env)
+  },
+  
+  css: {
+    preprocessorOptions: {
+      less: {
+        javascriptEnabled: true,
+        additionalData: '@import "@/assets/styles/variables.less";'
+      }
+    }
+  }
+});
+```
+
+### 1.2 开发环境配置
+
+```typescript
+// configs/vite.config.dev.ts
+import { mergeConfig } from 'vite';
+import baseConfig from './vite.config.base';
+
+export default mergeConfig(
+  {
+    mode: 'development',
+    
+    server: {
+      host: '0.0.0.0',
+      port: 3000,
+      open: true,
+      cors: true,
+      proxy: {
+        '/api': {
+          target: 'http://localhost:8080',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, '')
+        }
+      }
+    },
+    
+    build: {
+      sourcemap: true,
+      minify: false
+    }
+  },
+  baseConfig
+);
+```
+
+### 1.3 生产环境配置
+
+```typescript
+// configs/vite.config.prod.ts
+import { mergeConfig } from 'vite';
+import compressPlugin from 'vite-plugin-compression';
+import { createHtmlPlugin } from 'vite-plugin-html';
+import baseConfig from './vite.config.base';
+
+export default mergeConfig(
+  {
+    mode: 'production',
+    
+    plugins: [
+      // Gzip 压缩
+      compressPlugin({
+        ext: '.gz',
+        algorithm: 'gzip'
+      }),
+      
+      // HTML 模板处理
+      createHtmlPlugin({
+        minify: true,
+        inject: {
+          data: {
+            title: '数据安全监管平台'
+          }
+        }
+      })
+    ],
+    
+    build: {
+      target: 'es2015',
+      outDir: 'dist',
+      assetsDir: 'assets',
+      sourcemap: false,
+      minify: 'terser',
+      
+      // 代码分割
+      rollupOptions: {
+        output: {
+          chunkFileNames: 'js/[name]-[hash].js',
+          entryFileNames: 'js/[name]-[hash].js',
+          assetFileNames: (assetInfo) => {
+            if (assetInfo.name?.endsWith('.css')) {
+              return 'css/[name]-[hash][extname]';
+            }
+            return 'assets/[name]-[hash][extname]';
+          },
+          
+          // 手动分包
+          manualChunks: {
+            vue: ['vue', 'vue-router', 'pinia'],
+            antd: ['ant-design-vue'],
+            das: ['das-component-vue'],
+            utils: ['lodash', 'dayjs', 'axios']
+          }
+        }
+      },
+      
+      // 构建性能优化
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true
+        }
+      },
+      
+      // 文件大小警告阈值
+      chunkSizeWarningLimit: 2000
+    }
+  },
+  baseConfig
+);
+```
+
+## 2. 环境配置管理
+
+### 2.1 环境变量配置
+
+```bash
+# .env.development
+NODE_ENV=development
+VITE_APP_BASE_API=http://localhost:8080/api
+VITE_APP_TITLE=数据安全监管平台(开发)
+VITE_APP_VERSION=1.0.0-dev
+VITE_APP_BUILD_TIME=
+```
+
+```bash
+# .env.production
+NODE_ENV=production
+VITE_APP_BASE_API=https://api.example.com
+VITE_APP_TITLE=数据安全监管平台
+VITE_APP_VERSION=1.0.0
+VITE_APP_BUILD_TIME=
+```
+
+```bash
+# .env.staging
+NODE_ENV=production
+VITE_APP_BASE_API=https://staging-api.example.com
+VITE_APP_TITLE=数据安全监管平台(测试)
+VITE_APP_VERSION=1.0.0-staging
+VITE_APP_BUILD_TIME=
+```
+
+### 2.2 环境配置工具
+
+```typescript
+// configs/utils.ts
+import path from 'path';
+import dotenv from 'dotenv';
+import fs from 'fs';
+
+function getPath(_path: string) {
+  return path.join(process.cwd(), _path);
+}
+
+function packageInfo() {
+  const buf = fs.readFileSync(getPath('package.json'));
+  return JSON.parse(buf.toString());
+}
+
+function loadEnv() {
+  const mode = process.env.NODE_ENV || 'development';
+  const env = dotenv.config({
+    path: getPath(`.env.${mode}`)
+  });
+  
+  if (env.error) {
+    console.error(`环境配置文件 .env.${mode} 加载失败:`, env.error);
+    return {};
+  }
+  
+  // 添加构建时间
+  const envParsed = env.parsed || {};
+  envParsed.VITE_APP_BUILD_TIME = new Date().toISOString();
+  
+  return envParsed;
+}
+
+export { getPath, packageInfo, loadEnv };
+```
+
+### 2.3 构建时环境处理
+
+```typescript
+// src/utils/env.ts
+interface AppConfig {
+  baseAPI: string;
+  title: string;
+  version: string;
+  buildTime: string;
+}
+
+function getAppConfig(): AppConfig {
+  return {
+    baseAPI: import.meta.env.VITE_APP_BASE_API,
+    title: import.meta.env.VITE_APP_TITLE,
+    version: import.meta.env.VITE_APP_VERSION,
+    buildTime: import.meta.env.VITE_APP_BUILD_TIME
+  };
+}
+
+// 开发环境检查
+function isDevelopment(): boolean {
+  return import.meta.env.DEV;
+}
+
+// 生产环境检查
+function isProduction(): boolean {
+  return import.meta.env.PROD;
+}
+
+export { getAppConfig, isDevelopment, isProduction };
+```
+
+## 3. 构建优化策略
+
+### 3.1 代码分割策略
+
+```typescript
+// 路由级代码分割
+const routes = [
+  {
+    path: '/dashboard',
+    component: () => import('@/views/dashboard/index.vue')
+  },
+  {
+    path: '/user-management',
+    component: () => import('@/views/user-management/index.vue')
+  }
+];
+
+// 组件级懒加载
+const LazyComponent = defineAsyncComponent({
+  loader: () => import('@/components/HeavyComponent.vue'),
+  loadingComponent: LoadingSpinner,
+  errorComponent: ErrorComponent,
+  delay: 200,
+  timeout: 3000
+});
+```
+
+### 3.2 依赖分析和优化
+
+```typescript
+// configs/vite.config.analyzer.ts
+import { defineConfig } from 'vite';
+import { visualizer } from 'rollup-plugin-visualizer';
+import baseConfig from './vite.config.base';
+
+export default defineConfig({
+  ...baseConfig,
+  plugins: [
+    ...baseConfig.plugins,
+    visualizer({
+      filename: 'dist/stats.html',
+      open: true,
+      gzipSize: true,
+      brotliSize: true
+    })
+  ]
+});
+```
+
+### 3.3 静态资源优化
+
+```typescript
+// configs/plugin/imagemin.ts
+import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
+
+export default function configImageminPlugin() {
+  return ViteImageOptimizer({
+    // JPEG 优化
+    jpg: {
+      quality: 80
+    },
+    
+    // PNG 优化
+    png: {
+      quality: 80
+    },
+    
+    // WebP 转换
+    webp: {
+      quality: 80
+    },
+    
+    // SVG 优化
+    svg: {
+      plugins: [
+        { name: 'removeViewBox', active: false },
+        { name: 'removeDimensions', active: true }
+      ]
+    }
+  });
+}
+```
+
+### 3.4 缓存策略
+
+```typescript
+// 文件命名策略
+const rollupOptions = {
+  output: {
+    // 内容哈希命名，便于缓存
+    chunkFileNames: (chunkInfo) => {
+      if (chunkInfo.isEntry) {
+        return 'js/[name]-[hash].js';
+      }
+      return 'js/[name]-[hash].js';
+    },
+    
+    // 分离第三方库（长期缓存）
+    manualChunks: {
+      vendor: ['vue', 'vue-router', 'pinia'],
+      ui: ['ant-design-vue', 'das-component-vue'],
+      utils: ['lodash', 'dayjs', 'echarts']
+    }
+  }
+};
+```
+
+## 4. 构建脚本配置
+
+### 4.1 Package.json Scripts
+
+```json
+{
+  "scripts": {
+    // 开发相关
+    "dev": "cross-env NODE_ENV=development vite --config ./configs/vite.config.dev.ts",
+    "dev:staging": "cross-env NODE_ENV=staging vite --config ./configs/vite.config.staging.ts",
+    
+    // 构建相关
+    "build": "cross-env NODE_ENV=production vite build --config ./configs/vite.config.prod.ts",
+    "build:staging": "cross-env NODE_ENV=staging vite build --config ./configs/vite.config.staging.ts",
+    "build:analyze": "cross-env NODE_ENV=production vite build --config ./configs/vite.config.analyzer.ts",
+    
+    // 预览相关
+    "preview": "vite preview",
+    "preview:dist": "vite preview --outDir dist",
+    
+    // 质量检查
+    "lint": "eslint src --ext .vue,.js,.ts,.tsx --fix",
+    "type-check": "vue-tsc --noEmit",
+    
+    // 部署准备
+    "build:docker": "npm run build && docker build -t app:latest .",
+    "deploy:prepare": "npm run lint && npm run type-check && npm run build"
+  }
+}
+```
+
+### 4.2 构建前检查脚本
+
+```bash
+#!/bin/bash
+# scripts/pre-build.sh
+
+echo "🚀 开始构建前检查..."
+
+# 检查 Node.js 版本
+REQUIRED_NODE_VERSION="16"
+CURRENT_NODE_VERSION=$(node -v | cut -d'.' -f1 | cut -d'v' -f2)
+
+if [ $CURRENT_NODE_VERSION -lt $REQUIRED_NODE_VERSION ]; then
+  echo "❌ Node.js 版本过低，需要 v$REQUIRED_NODE_VERSION 或更高版本"
+  exit 1
+fi
+
+# 检查依赖
+echo "📦 检查依赖..."
+npm ci
+
+# 代码检查
+echo "🔍 代码质量检查..."
+npm run lint
+
+# 类型检查
+echo "📝 TypeScript 类型检查..."
+npm run type-check
+
+# 测试
+echo "🧪 运行测试..."
+npm run test
+
+echo "✅ 构建前检查完成"
+```
+
+### 4.3 构建后处理脚本
+
+```bash
+#!/bin/bash
+# scripts/post-build.sh
+
+echo "🔧 开始构建后处理..."
+
+# 生成构建信息
+echo "📋 生成构建信息..."
+cat > dist/build-info.json << EOF
+{
+  "buildTime": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+  "version": "$(node -p "require('./package.json').version")",
+  "gitCommit": "$(git rev-parse HEAD)",
+  "gitBranch": "$(git rev-parse --abbrev-ref HEAD)",
+  "nodeVersion": "$(node -v)",
+  "environment": "${NODE_ENV:-production}"
+}
+EOF
+
+# 计算文件大小
+echo "📊 分析构建产物..."
+du -sh dist/*
+
+# 生成文件清单
+find dist -type f -name "*.js" -o -name "*.css" -o -name "*.html" | sort > dist/file-manifest.txt
+
+echo "✅ 构建后处理完成"
+```
+
+## 5. 部署配置
+
+### 5.1 Docker 部署
+
+```dockerfile
+# Dockerfile
+FROM node:18-alpine as builder
+
+WORKDIR /app
+
+# 复制依赖文件
+COPY package*.json ./
+RUN npm ci --only=production
+
+# 复制源代码
+COPY . .
+
+# 构建应用
+RUN npm run build
+
+# 生产镜像
+FROM nginx:alpine
+
+# 复制构建产物
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# 复制 Nginx 配置
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# 健康检查
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost/ || exit 1
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
+```
+
+### 5.2 Nginx 配置
+
+```nginx
+# nginx.conf
+events {
+    worker_connections 1024;
+}
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+    
+    # Gzip 压缩
+    gzip on;
+    gzip_vary on;
+    gzip_min_length 1024;
+    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+    
+    # 缓存策略
+    map $sent_http_content_type $expires {
+        default                    off;
+        text/html                  epoch;
+        text/css                   max;
+        application/javascript     max;
+        ~image/                    max;
+    }
+    
+    server {
+        listen 80;
+        server_name localhost;
+        
+        # 设置缓存过期时间
+        expires $expires;
+        
+        # 静态资源
+        location / {
+            root /usr/share/nginx/html;
+            index index.html index.htm;
+            try_files $uri $uri/ /index.html;
+        }
+        
+        # API 代理
+        location /api/ {
+            proxy_pass http://backend:8080/;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
+        
+        # 健康检查
+        location /health {
+            access_log off;
+            return 200 "healthy\n";
+            add_header Content-Type text/plain;
+        }
+        
+        # 安全头
+        add_header X-Frame-Options DENY;
+        add_header X-Content-Type-Options nosniff;
+        add_header X-XSS-Protection "1; mode=block";
+    }
+}
+```
+
+### 5.3 Kubernetes 部署
+
+```yaml
+# k8s/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-app
+  labels:
+    app: frontend-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: frontend-app
+  template:
+    metadata:
+      labels:
+        app: frontend-app
+    spec:
+      containers:
+      - name: frontend-app
+        image: your-registry/frontend-app:latest
+        ports:
+        - containerPort: 80
+        env:
+        - name: NODE_ENV
+          value: "production"
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 250m
+            memory: 256Mi
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+spec:
+  selector:
+    app: frontend-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: frontend-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  tls:
+  - hosts:
+    - your-domain.com
+    secretName: frontend-tls
+  rules:
+  - host: your-domain.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend-service
+            port:
+              number: 80
+```
+
+## 6. CI/CD 配置
+
+### 6.1 GitHub Actions
+
+```yaml
+# .github/workflows/deploy.yml
+name: Build and Deploy
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+env:
+  NODE_VERSION: '18'
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run tests
+        run: npm run test
+      
+      - name: Run lint
+        run: npm run lint
+      
+      - name: Type check
+        run: npm run type-check
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    
+    outputs:
+      image: ${{ steps.image.outputs.image }}
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build application
+        run: npm run build
+        env:
+          NODE_ENV: production
+      
+      - name: Login to Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=sha
+      
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+      
+      - name: Output image
+        id: image
+        run: echo "image=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}" >> $GITHUB_OUTPUT
+
+  deploy-staging:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop'
+    environment: staging
+    
+    steps:
+      - name: Deploy to staging
+        run: |
+          echo "Deploying ${{ needs.build.outputs.image }} to staging"
+          # 部署逻辑
+
+  deploy-production:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    environment: production
+    
+    steps:
+      - name: Deploy to production
+        run: |
+          echo "Deploying ${{ needs.build.outputs.image }} to production"
+          # 部署逻辑
+```
+
+### 6.2 部署脚本
+
+```bash
+#!/bin/bash
+# scripts/deploy.sh
+
+set -e
+
+ENVIRONMENT=${1:-staging}
+VERSION=${2:-latest}
+
+echo "🚀 开始部署到 $ENVIRONMENT 环境..."
+
+# 检查必要的环境变量
+if [ -z "$KUBECONFIG" ]; then
+  echo "❌ KUBECONFIG 环境变量未设置"
+  exit 1
+fi
+
+# 更新镜像版本
+kubectl set image deployment/frontend-app \
+  frontend-app=your-registry/frontend-app:$VERSION \
+  -n $ENVIRONMENT
+
+# 等待部署完成
+kubectl rollout status deployment/frontend-app -n $ENVIRONMENT
+
+# 检查部署状态
+if kubectl get pods -n $ENVIRONMENT | grep frontend-app | grep Running; then
+  echo "✅ 部署成功"
+else
+  echo "❌ 部署失败"
+  exit 1
+fi
+
+echo "🎉 $ENVIRONMENT 环境部署完成"
+```
+
+## 7. 监控和日志
+
+### 7.1 构建监控
+
+```typescript
+// 构建时间监控
+const buildStartTime = Date.now();
+
+process.on('exit', () => {
+  const buildTime = Date.now() - buildStartTime;
+  console.log(`🕐 构建耗时: ${buildTime}ms`);
+  
+  // 记录到监控系统
+  if (process.env.CI) {
+    // 发送构建指标到监控服务
+  }
+});
+```
+
+### 7.2 应用监控
+
+```typescript
+// src/utils/monitoring.ts
+interface PerformanceMetrics {
+  buildTime: string;
+  version: string;
+  environment: string;
+}
+
+function sendMetrics(metrics: PerformanceMetrics) {
+  if (isProduction()) {
+    // 发送指标到监控服务
+    fetch('/api/metrics', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(metrics)
+    }).catch(console.error);
+  }
+}
+
+// 页面加载性能监控
+function monitorPageLoad() {
+  if (typeof window !== 'undefined' && 'performance' in window) {
+    window.addEventListener('load', () => {
+      const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
+      
+      const metrics = {
+        loadTime: navigation.loadEventEnd - navigation.loadEventStart,
+        domContentLoaded: navigation.domContentLoadedEventEnd - navigation.domContentLoadedEventStart,
+        firstPaint: performance.getEntriesByName('first-paint')[0]?.startTime,
+        firstContentfulPaint: performance.getEntriesByName('first-contentful-paint')[0]?.startTime
+      };
+      
+      sendMetrics(metrics);
+    });
+  }
+}
+
+export { sendMetrics, monitorPageLoad };
+```
+
+## 8. 安全配置
+
+### 8.1 构建时安全检查
+
+```bash
+#!/bin/bash
+# scripts/security-check.sh
+
+echo "🔒 开始安全检查..."
+
+# 依赖漏洞检查
+npm audit --audit-level moderate
+
+# 检查敏感信息
+echo "🔍 检查敏感信息泄露..."
+grep -r --exclude-dir=node_modules --exclude-dir=.git \
+  -E "(password|secret|key|token)" src/ || true
+
+# 检查硬编码的 URL
+echo "🔍 检查硬编码 URL..."
+grep -r --exclude-dir=node_modules --exclude-dir=.git \
+  -E "https?://[^/]+\.(com|cn|org)" src/ || true
+
+echo "✅ 安全检查完成"
+```
+
+### 8.2 CSP 配置
+
+```html
+<!-- public/index.html -->
+<meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src 'self' 'unsafe-inline' 'unsafe-eval';
+  style-src 'self' 'unsafe-inline';
+  img-src 'self' data: https:;
+  font-src 'self';
+  connect-src 'self' https://api.example.com;
+  frame-src 'none';
+  object-src 'none';
+">
+```
+
+## 9. 性能优化
+
+### 9.1 构建性能优化
+
+```typescript
+// vite.config.prod.ts
+export default defineConfig({
+  // 使用 esbuild 进行依赖预构建
+  optimizeDeps: {
+    include: [
+      'vue',
+      'vue-router',
+      'pinia',
+      'ant-design-vue',
+      'lodash'
+    ]
+  },
+  
+  // 构建性能配置
+  build: {
+    // 使用多线程
+    minify: 'esbuild',
+    
+    // 禁用 brotli 压缩（在 nginx 层处理）
+    reportCompressedSize: false,
+    
+    // 减少输出
+    rollupOptions: {
+      output: {
+        // 减少 chunk 数量
+        manualChunks: (id) => {
+          if (id.includes('node_modules')) {
+            if (id.includes('vue')) return 'vue';
+            if (id.includes('ant-design')) return 'antd';
+            return 'vendor';
+          }
+        }
+      }
+    }
+  }
+});
+```
+
+### 9.2 运行时性能优化
+
+```typescript
+// 预加载关键资源
+const preloadCriticalResources = () => {
+  const criticalResources = [
+    '/assets/logo.png',
+    '/assets/fonts/primary.woff2'
+  ];
+  
+  criticalResources.forEach(resource => {
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.href = resource;
+    link.as = resource.endsWith('.png') ? 'image' : 'font';
+    link.crossOrigin = 'anonymous';
+    document.head.appendChild(link);
+  });
+};
+
+// 资源懒加载
+const lazyLoadImages = () => {
+  const images = document.querySelectorAll('img[data-src]');
+  const imageObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const img = entry.target as HTMLImageElement;
+        img.src = img.dataset.src!;
+        img.removeAttribute('data-src');
+        imageObserver.unobserve(img);
+      }
+    });
+  });
+  
+  images.forEach(img => imageObserver.observe(img));
+};
+```
+
+## 10. 最佳实践总结
+
+### 10.1 构建最佳实践
+
+1. **环境分离**：开发、测试、生产环境独立配置
+2. **代码分割**：合理拆分代码，优化加载性能
+3. **缓存策略**：利用浏览器缓存，提升用户体验
+4. **安全检查**：构建时进行安全漏洞检查
+5. **性能监控**：监控构建时间和产物大小
+
+### 10.2 部署最佳实践
+
+1. **自动化部署**：使用 CI/CD 进行自动化部署
+2. **零停机部署**：滚动更新，确保服务可用性
+3. **版本管理**：使用语义化版本号管理发布
+4. **回滚机制**：快速回滚到上一个稳定版本
+5. **监控告警**：部署后进行健康检查和监控
+
+### 10.3 维护最佳实践
+
+1. **依赖管理**：定期更新依赖，修复安全漏洞
+2. **性能优化**：定期分析和优化构建性能
+3. **文档维护**：保持部署文档的及时更新
+4. **备份策略**：重要配置和数据的备份
+5. **灾难恢复**：制定灾难恢复预案
+description:
+globs:
+alwaysApply: false
+---

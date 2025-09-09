@@ -1,0 +1,401 @@
+# 微前端开发规范
+
+## 概述
+
+本项目基于 [micro-app](https://micro-zoe.github.io/micro-app/) 构建微前端架构，实现主应用与子应用的解耦。
+
+## 架构说明
+
+### 主应用架构
+- **基座应用**: 主应用作为微前端容器，负责子应用的注册、路由管理和通信
+- **子应用**: 独立的前端应用，可以是Vue、React、Angular等不同技术栈
+- **路由管理**: 统一的路由中心管理主应用和子应用路由
+
+### 技术栈支持
+- Vue 3.x (主应用)
+- Vue 2.x (子应用)
+- React (子应用)
+- Angular (子应用)
+
+## 子应用配置
+
+### 1. 子应用注册
+在 `src/micro/store.ts` 中配置子应用：
+
+```typescript
+export interface SubApp {
+  name: string;          // 子应用通配名称
+  url: string;           // 应用访问地址
+  baseroute: string;     // 激活路径
+  custom?: boolean;      // 是否为定制应用
+  routerMode?: 'hash' | 'history'; // 路由模式
+  meta?: {
+    fullScreen?: boolean; // 是否全屏显示
+  };
+}
+
+// 子应用配置示例
+const apps = ref<SubApp[]>([
+  {
+    name: 'ailpha',
+    url: 'http://localhost:3010/',
+    baseroute: '/ailpha',
+    routerMode: 'history'
+  },
+  {
+    name: 'custom',
+    url: '/subapp/custom/',
+    baseroute: '/custom',
+    custom: true
+  }
+]);
+```
+
+### 2. 配置要求
+- **name**: 子应用唯一标识，用于路由匹配
+- **url**: 
+  - 绝对地址: `http://127.0.0.1:8080/`
+  - 相对地址: `//127.0.0.1:8080/` 或 `/ailpha/`
+- **baseroute**: 子应用激活路径，必须以 `/` 开头
+- **custom**: 定制应用标记，影响路由处理逻辑
+
+## 子应用开发规范
+
+### 1. 项目结构
+```
+子应用/
+├── src/
+│   ├── router.js        # 路由配置（必需）
+│   ├── main.js         # 入口文件
+│   └── ...
+├── package.json
+├── vite.config.js      # 构建配置
+└── ...
+```
+
+### 2. 构建配置
+
+#### Vue3 子应用 (Vite)
+```javascript
+// vite.config.js
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import MicroRouterJsonPlugin from 'micro-router-json-plugin'
+
+export default defineConfig({
+  plugins: [
+    vue(),
+    MicroRouterJsonPlugin({
+      routerPath: `${process.cwd()}/src/router.js`,
+      encrypt: false
+    })
+  ],
+  build: {
+    outDir: path.resolve(__dirname, '../../../../dist/subapp/vue3')
+  },
+  server: {
+    port: 7002,
+    host: true,
+    fs: { strict: false }
+  },
+  base: `/subapp/vue3`
+})
+```
+
+#### Vue2 子应用 (Webpack)
+```javascript
+// vue.config.js
+module.exports = {
+  publicPath: `/subapp/vue2/`,
+  outputDir: '../../../../dist/subapp/vue2',
+  devServer: {
+    port: 8081,
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+    }
+  }
+}
+```
+
+### 3. 路由配置
+子应用必须导出路由配置供主应用使用：
+
+```javascript
+// src/router.js
+import { createRouter, createWebHistory } from 'vue-router'
+
+const routes = [
+  {
+    path: '/home',
+    component: () => import('./views/Home.vue')
+  }
+]
+
+const router = createRouter({
+  history: createWebHistory('/ailpha/'),
+  routes
+})
+
+export default router
+```
+
+## 主子应用通信
+
+### 1. 数据传递
+主应用向子应用传递数据：
+
+```vue
+<!-- 主应用 -->
+<micro-app
+  :name="appInfo.name"
+  :url="url"
+  :data="globaldata"
+  @mounted="appMounted"
+>
+</micro-app>
+
+<script setup>
+const globaldata = ref({
+  language: 'zh',
+  token: '...',
+  themeMode: 'light',
+  pushState: (path) => router.push(path)
+})
+</script>
+```
+
+### 2. 路由通信
+子应用向主应用发送路由变化：
+
+```javascript
+// 子应用中
+import microApp from '@micro-zoe/micro-app'
+
+// 发送路由变化信息
+const sendRouteChange = (route) => {
+  microApp.dispatch({
+    route: route.path,
+    timestamp: Date.now(),
+    type: 'route-change',
+    source: 'sub-app'
+  })
+}
+
+// 在路由守卫中调用
+router.beforeEach((to, from, next) => {
+  sendRouteChange(to)
+  next()
+})
+```
+
+### 3. 主应用监听
+主应用监听子应用消息：
+
+```javascript
+// 主应用中
+import microApp from '@/micro/microApi'
+
+// 监听子应用数据
+const dataCallback = (data) => {
+  if (data.route) {
+    console.log('子应用路由变化:', data.route)
+    // 处理路由变化逻辑
+  }
+}
+
+// 添加监听器
+microApp.addDataListener(appName, dataCallback)
+
+// 组件卸载时移除监听器
+onUnmounted(() => {
+  microApp.removeDataListener(appName, dataCallback)
+})
+```
+
+## 路由管理
+
+### 1. 路由注册
+主应用自动为每个子应用注册路由：
+
+```typescript
+// src/micro/routerControl.ts
+microStore.apps.forEach((app) => {
+  if (!router.hasRoute(app.name)) {
+    router.addRoute({
+      path: `${app.baseroute}/:page*`,
+      name: app.name,
+      component: () => Promise.resolve(h(SubApp, { appInfo: app })),
+      meta: {
+        title: app.name,
+        public: true,
+        fullScreen: app.meta?.fullScreen || false
+      }
+    });
+  }
+});
+```
+
+### 2. 路由跳转
+在主应用中跳转子应用：
+
+```typescript
+import microApp from '@/micro/microApi'
+
+// 跳转到子应用页面
+microApp.router.push({
+  name: 'ailpha',
+  path: '/ailpha/users'
+})
+
+// 或使用完整路径
+router.push('/ailpha/users')
+```
+
+### 3. 面包屑管理
+子应用路由会自动更新主应用面包屑：
+
+```typescript
+// 路由元数据配置
+const meta = getRouteMeta(to.fullPath, appName, to.hash)
+menusStore.setActiveRoutes([
+  {
+    path: to.fullPath,
+    title: meta?.title || '',
+    component: true
+  }
+])
+```
+
+## 样式隔离
+
+### 1. CSS 隔离
+micro-app 提供自动CSS隔离，子应用样式不会影响主应用。
+
+### 2. 主题一致性
+确保子应用使用与主应用一致的主题：
+
+```javascript
+// 子应用中接收主应用主题
+window.addEventListener('message', (event) => {
+  if (event.data.themeMode) {
+    // 更新子应用主题
+    updateTheme(event.data.themeMode)
+  }
+})
+```
+
+## 部署配置
+
+### 1. 构建产物
+```
+dist/
+├── index.html          # 主应用
+├── assets/            # 主应用资源
+└── subapp/           # 子应用目录
+    ├── vue2/         # Vue2子应用
+    ├── vue3/         # Vue3子应用
+    └── react/        # React子应用
+```
+
+### 2. 服务器配置
+需要配置子应用的静态资源访问：
+
+```nginx
+# Nginx 配置示例
+location /subapp/ {
+    try_files $uri $uri/ /subapp/index.html;
+    add_header Access-Control-Allow-Origin *;
+}
+```
+
+## 开发调试
+
+### 1. 本地开发
+启动所有应用进行联调：
+
+```bash
+# 启动主应用
+npm run dev
+
+# 启动所有子应用
+npm run start:micro
+```
+
+### 2. 独立开发
+子应用可独立开发和测试：
+
+```bash
+# 进入子应用目录
+cd src/micro/example/vue3
+
+# 独立启动
+npm run dev
+```
+
+### 3. 调试工具
+- 使用浏览器开发者工具查看micro-app状态
+- 利用Vue DevTools调试各应用状态
+- 通过控制台查看应用间通信日志
+
+## 性能优化
+
+### 1. 预加载
+为常用子应用启用预加载：
+
+```typescript
+// src/micro/index.ts
+apps.forEach((app) => {
+  microApp.preFetch([{ 
+    name: app.name, 
+    url: app.url 
+  }]);
+});
+```
+
+### 2. 按需加载
+根据路由按需加载子应用，避免首屏加载过慢。
+
+### 3. 资源共享
+共享通用依赖（如Vue、React）减少重复加载。
+
+## 最佳实践
+
+### 1. 应用职责分离
+- 主应用: 负责布局、导航、权限控制
+- 子应用: 专注业务功能实现
+
+### 2. 通信机制
+- 使用统一的数据格式进行应用间通信
+- 避免频繁的数据传递影响性能
+
+### 3. 错误处理
+- 子应用错误不应影响主应用运行
+- 实现子应用降级方案
+
+### 4. 版本管理
+- 主应用和子应用版本独立发布
+- 保持接口兼容性
+
+## 常见问题
+
+### Q: 子应用样式丢失？
+A: 检查CSS路径是否正确，确保相对路径配置正确。
+
+### Q: 路由跳转不生效？
+A: 确认子应用路由模式与配置一致，检查baseroute配置。
+
+### Q: 应用间通信失败？
+A: 确认监听器正确注册，检查数据格式是否符合约定。
+
+### Q: 构建部署问题？
+A: 检查publicPath配置，确保静态资源路径正确。
+
+## 参考资料
+
+- [micro-app 官方文档](https://micro-zoe.github.io/micro-app/)
+- [项目示例代码](mdc:src/micro/)
+- [子应用示例](mdc:src/micro/example/)
+description:
+globs:
+alwaysApply: false
+---

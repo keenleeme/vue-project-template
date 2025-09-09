@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, watchEffect } from 'vue';
+  import { watchEffect } from 'vue';
   import { useRoute } from 'vue-router';
   import { storeToRefs } from 'pinia';
   import { routeCenter } from '@/micro';
@@ -86,80 +86,111 @@
     ],
     menuData: [
       {
-        id: 'example',
-        name: I18N.layout.gongZuoTaiZiDingYi,
-        icon: 'zq-icon zq-icon-jiancerenwuzhongxin',
-        url: '/custom-workbench',
-        hideChildren: true,
-        children: []
-      },
-      {
-        id: 'dasvScreen',
-        name: I18N.layout.daPingZiDingYi,
-        icon: 'zq-icon zq-icon-shebeiguanli',
-        url: '/dasvScreen',
-        hideChildren: true,
-        children: []
-      },
-      {
-        id: 'example1',
-        name: I18N.layout.baoBiaoZiDingYi,
-        icon: 'zq-icon zq-icon-jiankangzhishucesuan',
-        url: '/custom-report',
-        hideChildren: true,
-        children: []
-      },
-      // {
-      //   id: 5,
-      //   name: I18N.layout.tuKeShiHuaChengXian,
-      //   icon: 'zq-icon zq-icon-image',
-      //   url: '/example',
-      //   hideChildren: true,
-      //   children: []
-      // },
-      // {
-      //   id: 6,
-      //   name: I18N.layout.tuBianJiQi,
-      //   icon: 'zq-icon zq-icon-chart',
-      //   url: '/example',
-      //   hideChildren: true,
-      //   children: []
-      // },
-      // {
-      //   id: 7,
-      //   name: I18N.layout.liuChengBianPai,
-      //   icon: 'zq-icon zq-icon-share',
-      //   url: '/example',
-      //   hideChildren: true,
-      //   children: []
-      // },
-      {
-        id: 8,
-        name: I18N.layout.xiTongSheZhi,
-        icon: 'zq-icon zq-icon-setting',
-        url: '/themeConfig',
+        id: 1,
+        name: I18N.layout.genericTypicalPage,
+        icon: 'zq-icon zq-icon-zhihuitiaodu',
+        url: '/workBench',
         children: [
           {
-            id: 'themeConfig',
-            name: I18N.layout.zhuTiPeiZhiYe,
-            icon: 'zq-icon zq-icon-setting',
-            url: '/themeConfig'
+            id: 'workBench',
+            name: I18N.layout.gongZuoTai,
+            hideChildren: true,
+            icon: 'zq-icon zq-icon-zhihuitiaodu',
+            url: '/workBench',
+            children: []
           },
           {
-            id: 'loginConfig',
-            name: I18N.layout.dengLuPeiZhiYe,
-            url: '/loginConfig'
+            id: 'dashboard',
+            name: I18N.layout.yiBiaoPan,
+            hideChildren: true,
+            icon: 'zq-icon zq-icon-zhihuitiaodu',
+            url: '/dashboard',
+            children: []
           },
           {
-            id: 'dasUpgrade',
-            name: I18N.layout.zaiXianShengJi,
-            url: '/dasUpgrade'
+            id: 'workList',
+            name: I18N.layout.lieBiaoYe,
+            hideChildren: true,
+            url: '/work-list',
+            children: []
+          },
+          {
+            id: 'baseForm',
+            name: I18N.layout.biaoDanYe,
+            hideChildren: true,
+            url: '/base-form',
+            children: []
+          },
+          {
+            id: 'baseDetail',
+            name: I18N.layout.xiangQingYe,
+            hideChildren: true,
+            url: '/base-detail',
+            children: []
+          },
+          {
+            id: 'baseConfig',
+            name: I18N.layout.peiZhiYe,
+            hideChildren: true,
+            url: '/base-config',
+            children: []
           }
-          // {
-          //   id: 'vueTour',
-          //   name: I18N.layout.yongHuYinDao,
-          //   url: '/vueTour'
-          // }
+        ]
+      },
+      {
+        id: 'aiNengLi',
+        name: I18N.layout.aiNengLi,
+        icon: 'zq-icon zq-icon-jiancerenwuzhongxin',
+        url: '',
+        children: [
+          {
+            id: 'dasReaddy',
+            name: I18N.layout.dasReaddy,
+            icon: 'zq-icon zq-icon-jiancerenwuzhongxin',
+            url: '/das-readdy',
+            hideChildren: true,
+            children: []
+          },
+          {
+            id: 'chatV',
+            name: I18N.layout.chatV,
+            icon: 'zq-icon zq-icon-jiancerenwuzhongxin',
+            url: '/chat-v',
+            hideChildren: true,
+            children: []
+          },
+          {
+            id: 'chatBI',
+            name: I18N.layout.chatBI,
+            icon: 'zq-icon zq-icon-jiancerenwuzhongxin',
+            url: '/chat-bi',
+            hideChildren: true,
+            children: []
+          }
+        ]
+      },
+      {
+        id: 'jiJian',
+        name: I18N.layout.jiJian,
+        icon: 'zq-icon zq-icon-shebeiguanli',
+        url: '',
+        children: [
+          {
+            id: 'dasComponent',
+            name: I18N.layout.dasComponent,
+            icon: 'zq-icon zq-icon-shebeiguanli',
+            url: '/das-component',
+            hideChildren: true,
+            children: []
+          },
+          {
+            id: 'dasComponentsX',
+            name: I18N.layout.dasComponentsX,
+            icon: 'zq-icon zq-icon-shebeiguanli',
+            url: '/das-component-x',
+            hideChildren: true,
+            children: []
+          }
         ]
       },
       {
@@ -245,64 +276,28 @@
         ]
       },
       {
-        id: 1,
-        name: I18N.layout.genericTypicalPage,
-        icon: 'zq-icon zq-icon-zhihuitiaodu',
-        url: '/workBench',
+        id: 8,
+        name: I18N.layout.xiTongSheZhi,
+        icon: 'zq-icon zq-icon-setting',
+        url: '/themeConfig',
         children: [
           {
-            id: 'workBench',
-            name: I18N.layout.gongZuoTai,
-            hideChildren: true,
-            icon: 'zq-icon zq-icon-zhihuitiaodu',
-            url: '/workBench',
-            children: []
+            id: 'themeConfig',
+            name: I18N.layout.zhuTiPeiZhiYe,
+            icon: 'zq-icon zq-icon-setting',
+            url: '/themeConfig'
           },
           {
-            id: 'dashboard',
-            name: I18N.layout.yiBiaoPan,
-            hideChildren: true,
-            icon: 'zq-icon zq-icon-zhihuitiaodu',
-            url: '/dashboard',
-            children: []
+            id: 'loginConfig',
+            name: I18N.layout.dengLuPeiZhiYe,
+            url: '/loginConfig'
           },
           {
-            id: 'workList',
-            name: I18N.layout.lieBiaoYe,
-            hideChildren: true,
-            url: '/work-list',
-            children: []
-          },
-          {
-            id: 'baseForm',
-            name: I18N.layout.biaoDanYe,
-            hideChildren: true,
-            url: '/base-form',
-            children: []
-          },
-          {
-            id: 'baseDetail',
-            name: I18N.layout.xiangQingYe,
-            hideChildren: true,
-            url: '/base-detail',
-            children: []
-          },
-          {
-            id: 'baseConfig',
-            name: I18N.layout.peiZhiYe,
-            hideChildren: true,
-            url: '/base-config',
-            children: []
+            id: 'dasUpgrade',
+            name: I18N.layout.zaiXianShengJi,
+            url: '/dasUpgrade'
           }
         ]
-      },
-      {
-        id: 'dasReaddy',
-        name: I18N.layout.dasReaddy,
-        icon: 'zq-icon zq-icon-jiancerenwuzhongxin',
-        url: '/das-readdy',
-        hideChildren: true,
-        children: []
       }
     ]
   });

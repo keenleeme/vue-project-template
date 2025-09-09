@@ -3,6 +3,12 @@ import { useUserStore } from '@/store';
 
 const routes: RouteRecordRaw[] = [
   {
+    name: 'home',
+    path: '/',
+    redirect: '/workBench'
+  },
+
+  {
     name: 'base::das-readdy',
     path: '/das-readdy',
     beforeEnter() {
@@ -13,6 +19,62 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/uedTypical/iframe/index.vue'),
     meta: {
       title: 'I18N.layout.dasReaddy',
+      permissionId: 'base::workBench:index',
+      fullScreen: true
+    }
+  },
+  {
+    name: 'base::chat-v',
+    path: '/chat-v',
+    beforeEnter() {
+      window.open('https://chatv.das-security.cn/chat', '_blank');
+      return false; // 阻止原页面跳转
+    },
+    component: () => import('@/views/uedTypical/iframe/index.vue'),
+    meta: {
+      title: 'I18N.layout.chatV',
+      permissionId: 'base::workBench:index',
+      fullScreen: true
+    }
+  },
+  {
+    name: 'base::chat-bi',
+    path: '/chat-bi',
+    beforeEnter() {
+      window.open('http://10.20.114.19:8383/', '_blank');
+      return false; // 阻止原页面跳转
+    },
+    component: () => import('@/views/uedTypical/iframe/index.vue'),
+    meta: {
+      title: 'I18N.layout.chatBI',
+      permissionId: 'base::workBench:index',
+      fullScreen: true
+    }
+  },
+  {
+    name: 'base::das-component',
+    path: '/das-component',
+    beforeEnter() {
+      window.open('http://10.20.114.19:2081/', '_blank');
+      return false; // 阻止原页面跳转
+    },
+    component: () => import('@/views/uedTypical/iframe/index.vue'),
+    meta: {
+      title: 'I18N.layout.dasComponent',
+      permissionId: 'base::workBench:index',
+      fullScreen: true
+    }
+  },
+  {
+    name: 'base::das-component-x',
+    path: '/das-component-x',
+    beforeEnter() {
+      window.open('http://10.20.114.19:8091/', '_blank');
+      return false; // 阻止原页面跳转
+    },
+    component: () => import('@/views/uedTypical/iframe/index.vue'),
+    meta: {
+      title: 'I18N.layout.dasComponentsX',
       permissionId: 'base::workBench:index',
       fullScreen: true
     }
@@ -107,33 +169,6 @@ const routes: RouteRecordRaw[] = [
     meta: {
       title: 'I18N.layout.zaiXianShengJi',
       permissionId: 'base::theme:index'
-    }
-  },
-  {
-    name: 'base::dasvScreen',
-    path: '/dasvScreen',
-    component: () => import('@/views/uedTypical/iframe/index.vue'),
-    meta: {
-      title: 'I18N.layout.daPingZiDingYi',
-      permissionId: 'base::workBench:index'
-    }
-  },
-  {
-    name: 'custom-workbench',
-    path: '/custom-workbench',
-    component: () => import('@/views/uedTypical/iframe/index.vue'),
-    meta: {
-      title: 'I18N.layout.gongZuoTaiZiDingYi',
-      permissionId: 'base::workBench:index'
-    }
-  },
-  {
-    name: 'custom-report',
-    path: '/custom-report',
-    component: () => import('@/views/uedTypical/iframe/index.vue'),
-    meta: {
-      title: 'I18N.layout.baoBiaoZiDingYi',
-      permissionId: 'base::workBench:index'
     }
   },
   {

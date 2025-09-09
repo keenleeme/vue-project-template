@@ -7,24 +7,6 @@ import type { MenuType } from '@/store/uedModule/menus/types';
 export async function getMenus(): Promise<MenuType[]> {
   return [
     {
-      id: 'example',
-      title: I18N.layout.gongZuoTaiZiDingYi,
-      icon: 'zq-icon zq-icon-jiancerenwuzhongxin',
-      path: '/custom-workbench'
-    },
-    {
-      id: 'dasReaddy',
-      title: I18N.common.example,
-      icon: 'AppstoreOutlined',
-      path: '/das-readdy'
-    },
-    {
-      id: 'example',
-      title: I18N.layout.baoBiaoZiDingYi,
-      icon: 'AppstoreOutlined',
-      path: '/custom-report'
-    },
-    {
       id: 'workBench',
       title: I18N.layout.genericTypicalPage,
       icon: 'AppstoreOutlined',
@@ -69,16 +51,131 @@ export async function getMenus(): Promise<MenuType[]> {
       ]
     },
     {
-      id: 'dasvScreen',
-      title: I18N.layout.daPingZiDingYi,
+      id: 'aiNengLi',
+      title: I18N.layout.aiNengLi,
       icon: 'AppstoreOutlined',
-      path: '/dasvScreen'
+      path: '',
+      children: [
+        {
+          id: 'dasReaddy',
+          title: I18N.layout.dasReaddy,
+          icon: 'AppstoreOutlined',
+          path: '/das-readdy'
+        },
+        {
+          id: 'chatV',
+          title: I18N.layout.chatV,
+          icon: 'AppstoreOutlined',
+          path: '/chat-v'
+        },
+        {
+          id: 'chatBI',
+          title: I18N.layout.chatBI,
+          icon: 'AppstoreOutlined',
+          path: '/chat-bi'
+        }
+      ]
+    },
+    {
+      id: 'jiJian',
+      title: I18N.layout.jiJian,
+      icon: 'AppstoreOutlined',
+      path: '',
+      children: [
+        {
+          id: 'dasComponent',
+          title: I18N.layout.dasComponent,
+          icon: 'AppstoreOutlined',
+          path: '/das-component'
+        },
+        {
+          id: 'dasComponentsX',
+          title: I18N.layout.dasComponentsX,
+          icon: 'AppstoreOutlined',
+          path: '/das-component-x'
+        }
+      ]
+    },
+    {
+      id: 'micro',
+      title: I18N.layout.MicroApp,
+      icon: 'AppstoreOutlined',
+      path: '',
+      children: [
+        {
+          id: 'vue2',
+          title: `vue2${I18N.layout.App}`,
+          path: '',
+          children: [
+            {
+              id: 'vue-home',
+              title: `home${I18N.layout.Page}`,
+              path: '/vue2/#/home',
+              module: 'vue2'
+            },
+            {
+              id: 'vue-about',
+              title: `about${I18N.layout.Page}`,
+              path: '/vue2/#/about',
+              module: 'vue2'
+            }
+          ]
+        },
+        {
+          id: 'vue3',
+          title: `vue3${I18N.layout.App}`,
+          path: '',
+          children: [
+            {
+              id: 'vue3-home',
+              title: `home${I18N.layout.Page}`,
+              path: '/vue3/home',
+              module: 'vue3'
+            },
+            {
+              id: 'vue3-about',
+              title: `about${I18N.layout.Page}`,
+              path: '/vue3/about',
+              module: 'vue3'
+            }
+          ]
+        },
+        {
+          id: 'react',
+          title: `react${I18N.layout.App}`,
+          path: '',
+          children: [
+            {
+              id: 'react-home',
+              title: `home${I18N.layout.Page}`,
+              path: '/react/home',
+              module: 'react'
+            },
+            {
+              id: 'react-about',
+              title: `about${I18N.layout.Page}`,
+              path: '/react/about',
+              module: 'react'
+            }
+          ]
+        },
+        {
+          id: 'angular',
+          title: `angular${I18N.layout.App}`,
+          path: '/angular/home'
+        },
+        {
+          id: 'multiple',
+          title: `multiple${I18N.layout.App}`,
+          path: '/multiple'
+        }
+      ]
     },
     {
       id: 'themeConfig1',
       title: I18N.layout.xiTongSheZhi,
       icon: 'AppstoreOutlined',
-      path: '/themeConfig',
+      path: '',
       children: [
         {
           id: 'themeConfig',

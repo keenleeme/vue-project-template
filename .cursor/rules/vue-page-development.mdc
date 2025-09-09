@@ -1,0 +1,63 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Vue页面开发规范
+
+## 页面创建规范
+基于 [template.vue](mdc:src/views/template.vue) 创建新页面：
+
+### 1. 目录结构
+- 所有新页面必须在 `src/views` 下创建独立文件夹
+- 文件夹命名使用kebab-case（如：archive-management）
+- 主页面文件必须命名为 `index.vue`
+- 子组件放在 `components` 子目录下
+
+### 2. 页面模板结构
+```vue
+<template>
+  <div class="{page-name}-container">
+    <a-card style="height: 100%">
+      <!-- 页面具体内容 -->
+    </a-card>
+  </div>
+</template>
+
+<script setup lang="ts">
+// TypeScript逻辑代码
+</script>
+
+<style lang="less" scoped>
+.{page-name}-container {
+  padding: 20px;
+  height: 100%;
+}
+</style>
+```
+
+### 3. 命名规则
+- 容器类名：`{page-name}-container`（不能使用page-container）
+- 删除模板中的所有注释
+- a-card必须包含 `style="height: 100%"`
+
+### 4. a-card组件使用注意事项
+- a-card组件默认已有内边距，不需要额外设置padding
+- 直接在a-card内放置内容即可获得合适的间距
+- 避免给a-card的直接子元素添加额外的padding
+- 如需调整间距，使用margin而不是padding
+
+## 开发规范引用
+
+### 组件库使用
+> 🔗 **详细规范**: [组件库使用标准](mdc:.cursor/rules/component-library-standards.mdc)
+- DAS组件优先 > Ant Design Vue > 自定义组件
+
+### API请求规范  
+> 🔗 **详细规范**: [API请求标准](mdc:.cursor/rules/api-request-standards.mdc)
+- 统一使用 `Http` 客户端，禁止直接使用axios
+
+## 开发调试
+对于前端调试页面，需要配置白名单：
+1. 在 [routes.ts](mdc:src/router/routes.ts) 的 `wihitetRoutes` 数组添加路由
+2. 在 [guard.ts](mdc:src/router/guard.ts) 的 `WHITE_LIST` 数组添加路径

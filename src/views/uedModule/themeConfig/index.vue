@@ -1,7 +1,14 @@
 <template>
   <div class="setting-wrapper">
     <div class="page-content">
-      <BlockArea :title="$t('I18N.layout.duoYuYanSheZhi')" class="block-area" id="language">
+      <BlockCard
+        :title="$t('I18N.layout.duoYuYanSheZhi')"
+        class="block-area"
+        id="language"
+        :two-columns="true"
+        :title-border="true"
+        :content-padding="24"
+      >
         <!-- <div class="page-item-title">{{ $t('I18N.layout.duoYuYanSheZhi') }}</div> -->
         <div>
           <div class="page-item-title">{{ $t('I18N.layout.yuYan') }}</div>
@@ -11,9 +18,16 @@
             <a-select-option value="en">English</a-select-option>
           </a-select>
         </div>
-      </BlockArea>
+      </BlockCard>
       <!-- <h1>主题配置页themeConfig</h1> -->
-      <BlockArea :title="$t('I18N.layout.zhuTiFengGe')" class="block-area" id="theme">
+      <BlockCard
+        :title="$t('I18N.layout.zhuTiFengGe')"
+        class="block-area"
+        id="theme"
+        :two-columns="true"
+        :title-border="true"
+        :content-padding="24"
+      >
         <ThemePanelItem
           type="mode"
           :title="$t('I18N.layout.moRenZhuTi')"
@@ -33,9 +47,16 @@
           @reset-primary-color="resetPrimaryColor"
         />
         <!-- @update:primary-color="changePrimaryColor" -->
-      </BlockArea>
+      </BlockCard>
 
-      <BlockArea :title="$t('I18N.layout.daoHangSheZhi')" class="block-area" id="nav">
+      <BlockCard
+        :title="$t('I18N.layout.daoHangSheZhi')"
+        class="block-area"
+        id="nav"
+        :two-columns="true"
+        :title-border="true"
+        :content-padding="24"
+      >
         <ThemePanelItem
           type="layout"
           :title="$t('I18N.layout.daoHangBuJu')"
@@ -69,7 +90,7 @@
           @update:language-switch="(value: boolean) => changeConfig('languageSwitch', value)"
           @update:help-center="(value: boolean) => changeConfig('helpCenter', value)"
         />
-      </BlockArea>
+      </BlockCard>
     </div>
     <div class="page-footer">
       <a-button @click="resetTheme">{{ $t('I18N.layout.huiFuChuChangSheZhi') }}</a-button>
@@ -80,8 +101,8 @@
     <a-modal
       v-model:open="dialogVisiable"
       :title="$t('I18N.layout.shengChengYeMianQianTaoCanShu')"
-      centered="true"
-      :closable="false"
+      @ok="copyParams"
+      @cancel="dialogVisiable = false"
     >
       <div>
         <p>{{ $t('I18N.layout.shengChengYeMianQianTaoCanShuTanChuangWenAn') }}</p>
@@ -92,10 +113,6 @@
           </span>
         </div>
       </div>
-      <template #footer>
-        <a-button key="back" @click="dialogVisiable = false">{{ $t('I18N.common.cancel') }}</a-button>
-        <a-button key="submit" type="primary" @click="copyParams">{{ $t('I18N.layout.fuZhiCanShu') }}</a-button>
-      </template>
     </a-modal>
   </div>
 </template>
@@ -106,8 +123,8 @@
   import { ThemePanelItem } from '@ued-material/menu';
   import { Modal, message } from 'ant-design-vue';
   import { storeToRefs } from 'pinia';
+  import BlockCard from '@/components/uedModule/blockCard/index.vue';
   import { useLoginStore, useThemeStore } from '@/store';
-  import BlockArea from '../../../components/uedModule/blockArea/index.vue';
 
   const themeStore = useThemeStore();
   const loginStore = useLoginStore();
@@ -237,6 +254,7 @@
             text-align: right;
           }
         }
+        margin-bottom: 16px;
       }
     }
 

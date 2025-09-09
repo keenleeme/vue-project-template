@@ -8,7 +8,13 @@
       </a-tabs>
     </div>
     <div class="base-config-content">
-      <BlockArea :title="$t('I18N.layout.miMaAnQuanSheZhi')" class="block-area">
+      <BlockCard
+        :title="$t('I18N.layout.miMaAnQuanSheZhi')"
+        class="block-area"
+        :two-columns="true"
+        :title-border="true"
+        :content-padding="24"
+      >
         <template #description>
           <span class="head-description">（{{ $t('I18N.layout.peiZhiMiMaAnQuanYaoQiu') }}）</span>
         </template>
@@ -36,9 +42,15 @@
             </a-popover>
           </div>
         </div>
-      </BlockArea>
+      </BlockCard>
 
-      <BlockArea :title="$t('I18N.layout.dengLuAnQuanSheZhi')" class="block-area">
+      <BlockCard
+        :title="$t('I18N.layout.dengLuAnQuanSheZhi')"
+        class="block-area"
+        :two-columns="true"
+        :title-border="true"
+        :content-padding="24"
+      >
         <template #description>
           <span class="head-description">（{{ $t('I18N.layout.xianZhiYongHuDengLuFangShi') }}）</span>
         </template>
@@ -54,10 +66,16 @@
             </a-radio-group>
           </div>
         </div>
-      </BlockArea>
+      </BlockCard>
 
       <div class="area-head">{{ $t('I18N.layout.suoDingZhangHu') }}/IP</div>
-      <BlockArea :title="$t('I18N.layout.chaoShiSheZhi')" class="block-area">
+      <BlockCard
+        :title="$t('I18N.layout.chaoShiSheZhi')"
+        class="block-area"
+        :two-columns="true"
+        :title-border="true"
+        :content-padding="24"
+      >
         <template #description>
           <span class="head-description">（{{ $t('I18N.layout.baoHuYongHuShuJuAnQuan') }}）</span>
         </template>
@@ -73,9 +91,15 @@
             </a-popover>
           </div>
         </div>
-      </BlockArea>
+      </BlockCard>
 
-      <BlockArea :title="$t('I18N.layout.ciPanChuCunSheZhi')" class="block-area">
+      <BlockCard
+        :title="$t('I18N.layout.ciPanChuCunSheZhi')"
+        class="block-area"
+        :two-columns="true"
+        :title-border="true"
+        :content-padding="24"
+      >
         <template #description>
           <span class="head-description">（{{ $t('I18N.layout.ziDongQingLiCiPan') }}）</span>
         </template>
@@ -86,7 +110,7 @@
             <span>%，{{ $t('I18N.layout.shuJuJiangZiDongXunHuanFuGai') }}</span>
           </div>
         </div>
-      </BlockArea>
+      </BlockCard>
     </div>
     <div class="page-footer">
       <a-button @click="cancel">{{ $t('I18N.common.cancel') }}</a-button>
@@ -98,7 +122,7 @@
 <script setup lang="ts">
   import { ref } from 'vue';
   import { InfoCircleOutlined } from '@ant-design/icons-vue';
-  import BlockArea from '@/components/uedModule/blockArea/index.vue';
+  import BlockCard from '@/components/uedModule/blockCard/index.vue';
 
   const showTabs = ref(true);
   const activeKey = ref('1');
@@ -112,7 +136,7 @@
   });
   watch(
     () => state.checkedList,
-    (val) => {
+    () => {
       console.log(state.checkedList);
       // state.indeterminate = !!val.length && val.length < plainOptions.length;
       // state.checkAll = val.length === plainOptions.length;
@@ -197,6 +221,10 @@
             font-size: 12px !important;
           }
         }
+      }
+
+      .block-area {
+        margin-bottom: 16px;
       }
 
       .area-head {

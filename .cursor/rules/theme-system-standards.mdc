@@ -1,0 +1,613 @@
+# 主题系统开发规范
+
+## 概述
+
+本项目实现了完整的主题系统，支持明暗主题切换、主题色自定义、组件主题配置等功能。基于CSS变量、Pinia状态管理和Ant Design主题系统构建。
+
+## 主题架构
+
+### 1. 技术栈
+- **状态管理**: Pinia (useThemeStore)
+- **样式系统**: CSS变量 + Less
+- **UI主题**: Ant Design Vue主题系统
+- **颜色算法**: @ant-design/colors
+
+### 2. 主题类型
+- **明暗主题**: light / dark
+- **主题色**: 可自定义的品牌色
+- **布局主题**: 顶部、侧边栏样式主题
+
+## 主题配置
+
+### 1. 主题配置接口
+```typescript
+// src/store/uedModule/theme/types.ts
+export interface ThemeConfigType {
+  title: string;           // 配置标题
+  dark: boolean;           // 暗黑模式开关
+  mode: string;            // 模式 'light'/'dark'
+  lang: string;            // 语言 'zh'/'en'
+  lightDarkSwitch: boolean; // 明暗切换按钮显示
+  primaryColor: string;     // 主题色
+  layout: string;          // 布局方式 'top'/'side'/'mix'
+  topStyle: string;        // 顶部样式 'dark'/'light'
+  sideStyle: string;       // 侧边栏样式 'dark'/'light'
+  header: boolean;         // 显示顶栏
+  breadcrumb: boolean;     // 显示面包屑
+  mapMenu: boolean;        // 地图菜单
+  accordion: boolean;      // 侧边导航手风琴模式
+  languageSwitch: boolean; // 语言切换
+  helpCenter: boolean;     // 帮助中心
+  loginMode?: Theme;       // 登录页主题
+}
+```
+
+### 2. 默认配置
+```typescript
+// src/store/uedModule/theme/defaultConfig.ts
+export const themeDefaultConfig: ThemeConfigType = {
+  title: '',
+  dark: false,
+  mode: 'light',
+  lang: localStorage.getItem('das-intl-locale') === 'zh' ? 'zh' : 'en',
+  primaryColor: '#134BEA',
+  lightDarkSwitch: true,
+  languageSwitch: true,
+  helpCenter: true,
+  layout: 'mix',
+  topStyle: 'dark',
+  sideStyle: 'light',
+  header: true,
+  breadcrumb: true,
+  mapMenu: true,
+  accordion: true,
+  loginMode: 'light'
+};
+```
+
+## 主题 Store 使用
+
+### 1. Store 定义
+```typescript
+// src/store/uedModule/theme/index.ts
+import { defineStore } from 'pinia';
+
+export default defineStore('theme', () => {
+  // 主题配置
+  const themeConfig = ref<ThemeConfigType>({ 
+    ...themeDefaultConfig, 
+    ...localThemeConfig 
+  });
+
+  // 设置主题配置
+  const setThemeConfig = (config: ThemeConfigType) => {
+    themeConfig.value = { ...themeDefaultConfig, ...config };
+  };
+
+  // 重置主题色
+  const resetThemePrimaryColor = () => {
+    themeConfig.value.primaryColor = themeDefaultConfig.primaryColor;
+  };
+
+  // 重置所有配置
+  const reset = () => {
+    themeConfig.value = { ...themeDefaultConfig };
+  };
+
+  // 计算主题
+  const theme = computed(() => {
+    const token = themeTokens[themeConfig.value.mode];
+    const { primaryColors, darkPrimaryColors } = getPrimaryColors();
+    
+    return {
+      token: {
+        ...token,
+        colorPrimary: themeConfig.value.mode === 'dark' 
+          ? primaryColors[4] 
+          : primaryColors[5]
+      },
+      algorithm: themeConfig.value.mode === 'dark' 
+        ? darkAlgorithm 
+        : defaultAlgorithm
+    };
+  });
+
+  return {
+    themeConfig,
+    setThemeConfig,
+    resetThemePrimaryColor,
+    reset,
+    theme
+  };
+});
+```
+
+### 2. Store 使用
+```vue
+<template>
+  <a-config-provider :theme="theme">
+    <!-- 应用内容 -->
+  </a-config-provider>
+</template>
+
+<script setup lang="ts">
+import { storeToRefs } from 'pinia';
+import { useThemeStore } from '@/store';
+
+const themeStore = useThemeStore();
+const { theme, themeConfig } = storeToRefs(themeStore);
+
+// 切换主题模式
+const toggleTheme = () => {
+  themeStore.setThemeConfig({
+    ...themeConfig.value,
+    mode: themeConfig.value.mode === 'light' ? 'dark' : 'light'
+  });
+};
+
+// 更改主题色
+const changePrimaryColor = (color: string) => {
+  themeStore.setThemeConfig({
+    ...themeConfig.value,
+    primaryColor: color
+  });
+};
+</script>
+```
+
+## CSS 变量系统
+
+### 1. 明亮主题变量
+```css
+/* src/theme/theme.css */
+:root, .theme-light {
+  /*************字号规则**************/
+  --font-size-base: 12px;
+  --font-size-small: 12px;
+  --font-size-large: 14px;
+  --font-size-xl: 16px;
+
+  /*************色彩规则**************/
+  /* 背景色 */
+  --color-bg-page: #F6F7FB;
+  --color-bg-container: #FFFFFF;
+  --color-bg-secondarycontainer: #F6F7FB;
+  --color-bg-component: #FFFFFF;
+  
+  /* 边框色 */
+  --color-component-stroke: #E9EAF0;
+  --color-component-border: #CBD0DB;
+  
+  /* 文字色 */
+  --color-text-primarys: #1E2435;
+  --color-text-secondary: #7E8494;
+  --color-text-placeholder: #ADB1BC;
+}
+```
+
+### 2. 暗黑主题变量
+```css
+.theme-dark {
+  /* 背景色 */
+  --color-bg-page: #141821;
+  --color-bg-container: #1c222e;
+  --color-bg-secondarycontainer: #272e3d;
+  --color-bg-component: #141821;
+  
+  /* 边框色 */
+  --color-component-stroke: #394052;
+  --color-component-border: #444C5D;
+  
+  /* 文字色 */
+  --color-text-primarys: #FFFFFF;
+  --color-text-secondary: #B0B8C8;
+  --color-text-placeholder: #878EA0;
+}
+```
+
+### 3. 使用CSS变量
+```less
+// 组件样式中使用
+.my-component {
+  background-color: var(--color-bg-container);
+  border: 1px solid var(--color-component-border);
+  color: var(--color-text-primarys);
+  
+  &:hover {
+    background-color: var(--color-bg-component-hover);
+  }
+}
+```
+
+## 主题色算法
+
+### 1. 颜色生成
+```typescript
+// src/store/uedModule/theme/index.ts
+import { generate } from '@ant-design/colors';
+import Color from 'color';
+
+function getPrimaryColors() {
+  const color = Color(themeConfig.value.primaryColor);
+  
+  // 暗色主题的主色调整
+  const darkOriginColor = color
+    .saturate(15 / 85)
+    .lighten(0.3)
+    .hex();
+    
+  const primaryColors = generate(themeConfig.value.primaryColor);
+  const darkPrimaryColors = generate(darkOriginColor, { 
+    theme: 'dark', 
+    backgroundColor: '#1c222e' 
+  });
+  
+  return { primaryColors, darkPrimaryColors };
+}
+```
+
+### 2. 动态主题色应用
+```typescript
+// src/theme/themeAlgorithm.ts
+const applyThemeColors = () => {
+  const { primaryColors, darkPrimaryColors } = getPrimaryColors();
+  const bodyEl = document.body;
+  
+  // 设置CSS变量
+  bodyEl.style.setProperty('--um-primary-color-normal', primaryColors[5]);
+  bodyEl.style.setProperty('--um-primary-color-hover', primaryColors[4]);
+  bodyEl.style.setProperty('--um-dark-primary-color-normal', darkPrimaryColors[5]);
+  bodyEl.style.setProperty('--um-dark-primary-color-hover', darkPrimaryColors[4]);
+};
+```
+
+## Ant Design 主题集成
+
+### 1. 基础主题配置
+```typescript
+// src/theme/theme.ts
+const theme = {
+  token: {
+    colorPrimary: '#134bea',
+    colorPrimaryHover: '#3B71EE',
+    colorPrimaryActive: '#0639C3',
+    colorError: '#F53C3C',
+    colorSuccess: '#1DB969',
+    colorWarning: '#FF7F29',
+    borderRadius: 3
+  },
+  components: {
+    Button: {
+      colorBorder: '#CBD0DB',
+      colorLink: '#134BEA',
+      colorBgTextHover: '#F6F7FB'
+    },
+    Table: {
+      colorTextHeading: 'var(--color-text-primarys)',
+      colorBgContainer: 'var(--color-bg-container)'
+    }
+  }
+};
+```
+
+### 2. 动态主题算法
+```typescript
+// 在Store中计算动态主题
+const theme = computed(() => {
+  const token = themeTokens[themeConfig.value.mode];
+  const { primaryColors, darkPrimaryColors } = getPrimaryColors();
+  const isDark = themeConfig.value.mode === 'dark';
+  
+  return {
+    token: {
+      ...token,
+      colorPrimary: isDark ? primaryColors[4] : primaryColors[5],
+      colorPrimaryHover: isDark ? darkPrimaryColors[4] : primaryColors[4]
+    },
+    algorithm: isDark ? darkAlgorithm : defaultAlgorithm,
+    components: {
+      Button: {
+        colorLink: isDark ? darkPrimaryColors[5] : primaryColors[5]
+      },
+      Select: {
+        controlItemBgActive: isDark ? darkPrimaryColors[0] : primaryColors[0]
+      }
+    }
+  };
+});
+```
+
+## 主题组件开发
+
+### 1. 主题切换组件
+```vue
+<!-- ThemeSwitcher.vue -->
+<template>
+  <a-button @click="toggleTheme">
+    <template #icon>
+      <sun-outlined v-if="themeConfig.mode === 'dark'" />
+      <moon-outlined v-else />
+    </template>
+    {{ themeConfig.mode === 'dark' ? '明亮' : '暗黑' }}
+  </a-button>
+</template>
+
+<script setup lang="ts">
+import { SunOutlined, MoonOutlined } from '@ant-design/icons-vue';
+import { storeToRefs } from 'pinia';
+import { useThemeStore } from '@/store';
+
+const themeStore = useThemeStore();
+const { themeConfig } = storeToRefs(themeStore);
+
+const toggleTheme = () => {
+  themeStore.setThemeConfig({
+    ...themeConfig.value,
+    mode: themeConfig.value.mode === 'light' ? 'dark' : 'light'
+  });
+};
+</script>
+```
+
+### 2. 主题色选择器
+```vue
+<!-- ColorPicker.vue -->
+<template>
+  <div class="color-picker">
+    <div 
+      v-for="color in presetColors" 
+      :key="color"
+      class="color-item"
+      :class="{ active: color === themeConfig.primaryColor }"
+      :style="{ backgroundColor: color }"
+      @click="changePrimaryColor(color)"
+    />
+    <a-color-picker 
+      v-model:value="customColor"
+      @change="changePrimaryColor"
+    />
+  </div>
+</template>
+
+<script setup lang="ts">
+const presetColors = [
+  '#134BEA', '#1890ff', '#722ed1', 
+  '#13c2c2', '#52c41a', '#fa8c16'
+];
+
+const changePrimaryColor = (color: string) => {
+  themeStore.setThemeConfig({
+    ...themeConfig.value,
+    primaryColor: color
+  });
+};
+</script>
+```
+
+## 主题响应式设计
+
+### 1. 监听主题变化
+```typescript
+// 组件中监听主题变化
+import { watch } from 'vue';
+import { storeToRefs } from 'pinia';
+
+const { themeConfig } = storeToRefs(useThemeStore());
+
+watch(
+  () => themeConfig.value.mode,
+  (newMode) => {
+    // 主题切换后的逻辑
+    document.body.className = newMode === 'dark' ? 'theme-dark' : 'theme-light';
+    
+    // 更新图表主题
+    updateChartTheme(newMode);
+  },
+  { immediate: true }
+);
+```
+
+### 2. 图表主题适配
+```typescript
+// 图表主题切换
+const updateChartTheme = (mode: string) => {
+  const chartTheme = mode === 'dark' ? {
+    backgroundColor: '#1c222e',
+    textStyle: { color: '#fff' },
+    grid: { borderColor: '#394052' }
+  } : {
+    backgroundColor: '#fff',
+    textStyle: { color: '#1E2435' },
+    grid: { borderColor: '#E9EAF0' }
+  };
+  
+  // 应用到ECharts实例
+  chartInstance.setOption(chartTheme);
+};
+```
+
+## 主题持久化
+
+### 1. 本地存储
+```typescript
+// Store中自动持久化
+watch(themeConfig, (newValue) => {
+  localStorage.setItem('ZQTHEMECONFIG', JSON.stringify(newValue));
+}, { deep: true });
+
+// 初始化时读取
+const localThemeConfig = JSON.parse(
+  localStorage.getItem('ZQTHEMECONFIG') || '{}'
+);
+```
+
+### 2. 用户偏好同步
+```typescript
+// 登录后同步用户主题偏好
+const syncUserTheme = async () => {
+  try {
+    const userConfig = await Http.get('/api/user/theme-config');
+    themeStore.setThemeConfig(userConfig);
+  } catch (error) {
+    console.warn('获取用户主题配置失败:', error);
+  }
+};
+
+// 保存用户主题偏好
+const saveUserTheme = async (config: ThemeConfigType) => {
+  try {
+    await Http.post('/api/user/theme-config', config);
+  } catch (error) {
+    console.warn('保存用户主题配置失败:', error);
+  }
+};
+```
+
+## 系统适配
+
+### 1. 系统主题检测
+```typescript
+// 检测系统主题偏好
+const detectSystemTheme = () => {
+  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+  return mediaQuery.matches ? 'dark' : 'light';
+};
+
+// 监听系统主题变化
+const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+mediaQuery.addEventListener('change', (e) => {
+  if (themeConfig.value.followSystem) {
+    themeStore.setThemeConfig({
+      ...themeConfig.value,
+      mode: e.matches ? 'dark' : 'light'
+    });
+  }
+});
+```
+
+### 2. 多端适配
+```less
+// 移动端主题适配
+@media (max-width: 768px) {
+  .theme-light {
+    --font-size-base: 14px;
+  }
+  
+  .theme-dark {
+    --color-bg-component: #1c222e;
+  }
+}
+```
+
+## 主题测试
+
+### 1. 主题切换测试
+```typescript
+// 测试主题切换功能
+describe('主题系统', () => {
+  it('应该正确切换明暗主题', () => {
+    const themeStore = useThemeStore();
+    
+    // 切换到暗黑主题
+    themeStore.setThemeConfig({ mode: 'dark' });
+    expect(themeStore.themeConfig.mode).toBe('dark');
+    
+    // 切换到明亮主题
+    themeStore.setThemeConfig({ mode: 'light' });
+    expect(themeStore.themeConfig.mode).toBe('light');
+  });
+  
+  it('应该正确更新主题色', () => {
+    const themeStore = useThemeStore();
+    const newColor = '#ff6b6b';
+    
+    themeStore.setThemeConfig({ primaryColor: newColor });
+    expect(themeStore.themeConfig.primaryColor).toBe(newColor);
+  });
+});
+```
+
+### 2. 样式回归测试
+```typescript
+// 使用Playwright进行视觉回归测试
+test('主题切换视觉测试', async ({ page }) => {
+  await page.goto('/theme-test');
+  
+  // 明亮主题截图
+  await page.screenshot({ path: 'theme-light.png' });
+  
+  // 切换到暗黑主题
+  await page.click('[data-testid="theme-toggle"]');
+  await page.waitForTimeout(500);
+  
+  // 暗黑主题截图
+  await page.screenshot({ path: 'theme-dark.png' });
+});
+```
+
+## 最佳实践
+
+### 1. 开发建议
+- **统一变量**: 使用CSS变量确保主题一致性
+- **语义化命名**: 变量名应体现语义而非具体颜色
+- **渐进增强**: 确保基础功能在主题加载失败时仍可用
+- **性能优化**: 避免频繁的主题切换计算
+
+### 2. 组件开发
+```vue
+<template>
+  <div class="theme-aware-component">
+    <!-- 内容 -->
+  </div>
+</template>
+
+<style lang="less" scoped>
+.theme-aware-component {
+  // ✅ 使用CSS变量
+  background-color: var(--color-bg-container);
+  color: var(--color-text-primarys);
+  
+  // ❌ 避免硬编码颜色
+  // background-color: #ffffff;
+  // color: #000000;
+}
+</style>
+```
+
+### 3. 主题变量命名规范
+```css
+/* ✅ 语义化命名 */
+--color-bg-container      /* 容器背景色 */
+--color-text-primary     /* 主要文字色 */
+--color-border-default   /* 默认边框色 */
+
+/* ❌ 避免具体颜色命名 */
+--color-white
+--color-black
+--color-gray-100
+```
+
+## 常见问题
+
+### Q: 主题切换后某些组件样式不更新？
+A: 检查组件是否使用了CSS变量，确保样式响应主题变化。
+
+### Q: 自定义主题色不生效？
+A: 确认颜色生成算法是否正确执行，检查CSS变量是否正确设置。
+
+### Q: 页面刷新后主题丢失？
+A: 检查本地存储逻辑，确保主题配置正确持久化和恢复。
+
+### Q: 移动端主题适配问题？
+A: 使用媒体查询为不同屏幕尺寸定制主题变量。
+
+## 参考资料
+
+- [主题配置页面](mdc:src/views/uedModule/themeConfig/index.vue)
+- [主题Store实现](mdc:src/store/uedModule/theme/index.ts)
+- [CSS变量定义](mdc:src/theme/theme.css)
+- [Ant Design主题系统](https://ant.design/docs/react/customize-theme-cn)
+description:
+globs:
+alwaysApply: false
+---

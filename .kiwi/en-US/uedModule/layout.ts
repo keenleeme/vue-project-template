@@ -284,5 +284,11 @@ export default {
   qiYongZhuangTai: 'Open Status',
   chuangJianShiJian: 'Create time',
   gengXingeShiJian: 'Update time',
-  dasReaddy: 'Das-Readdy',
+  dasReaddy: 'DasReaddy',
+  aiNengLi: 'AI Capabilities',
+  chatV: 'ChatV',
+  chatBI: 'ChatBI',
+  jiJian: 'Infrastructure',
+  dasComponent: 'Das-Component',
+  dasComponentsX: 'Das-Component-X'
 };

@@ -1,0 +1,523 @@
+# 典型页面开发规范
+
+> 📁 **适用范围**: `src/views/uedTypical/` 目录下的所有典型页面  
+> 🎯 **用途**: 为项目提供标准化的页面模板和开发规范  
+> 📅 **最后更新**: 2024-12-19
+
+## 🚨 开发前必读
+
+### 强制性检查清单
+- [ ] 确认页面类型（列表页、表单页、详情页、仪表盘等）
+- [ ] 选择对应的典型页面模板
+- [ ] 严格遵循 DAS 组件库使用规范
+- [ ] 确保国际化支持
+- [ ] 验证响应式布局
+
+### 🚫 禁止行为
+1. **直接使用 Ant Design Vue 组件替代 DAS 组件**
+2. **跳过典型页面模板直接开发**
+3. **忽略国际化配置**
+4. **使用非标准的页面结构**
+
+---
+
+## 📋 典型页面分类与模板
+
+### 1. 列表页面 (baseList)
+> 📁 **模板路径**: `src/views/uedTypical/baseList/`
+
+**适用场景**: 数据展示、搜索筛选、批量操作
+
+**标准结构**:
+```
+baseList/
+├── index.vue              # 主页面（包含 tabs 和主组件）
+├── components/
+│   ├── list.vue          # 列表组件（搜索栏 + 表格）
+│   └── Add.vue           # 新增/编辑弹窗
+└── types.ts              # 类型定义（可选）
+```
+
+**核心组件使用**:
+- `das-search-bar`: 搜索筛选区域
+- `das-table`: 数据表格展示
+- `a-tabs`: 页面标签切换（可选）
+
+**代码模板**:
+```vue
+<template>
+  <div class="table-wrap">
+    <!-- 可选的标签页 -->
+    <div v-if="showTabs" class="tabs">
+      <a-tabs v-model:active-key="activeKey">
+        <a-tab-pane key="1" tab="Tab 1">{{ $t('I18N.layout.moRenXuanXiang') }}</a-tab-pane>
+      </a-tabs>
+    </div>
+
+    <!-- 主列表组件 -->
+    <ListComponent></ListComponent>
+  </div>
+</template>
+
+<script setup lang="ts">
+  import { ref } from 'vue';
+  import ListComponent from './components/list.vue';
+
+  const showTabs = ref(false);
+  const activeKey = ref('1');
+</script>
+```
+
+---
+
+### 2. 表单页面 (baseForm)
+> 📁 **模板路径**: `src/views/uedTypical/baseForm/`
+
+**适用场景**: 数据录入、信息编辑、配置设置
+
+**标准结构**:
+```
+baseForm/
+├── index.vue              # 主表单页面
+└── types.ts              # 表单类型定义
+```
+
+**核心组件使用**:
+- `das-form`: 表单容器
+- `a-form-item`: 表单项
+- 各种输入组件（a-input、a-select、a-upload 等）
+
+**代码模板**:
+```vue
+<template>
+  <div class="base-form-box">
+    <div class="base-form-wrapper">
+      <div class="base-form-header">{{ $t('I18N.base_form.baseInfo') }}</div>
+      <div class="base-form-content">
+        <das-form
+          :model="formState"
+          :colon="false"
+          name="basic"
+          :label-col="{ style: { width: '120px' } }"
+          autocomplete="off"
+          layout="horizontal"
+          class="base-form"
+        >
+          <!-- 表单项 -->
+          <a-form-item
+            :label="$t('I18N.base_form.name')"
+            name="name"
+            :rules="[{ required: true, message: `${$t('I18N.base_form.pleaseEnter')}${$t('I18N.base_form.name')}` }]"
+          >
+            <a-input
+              v-model:value="formState.name"
+              :placeholder="`${$t('I18N.base_form.pleaseEnter')}${$t('I18N.base_form.name')}`"
+            />
+          </a-form-item>
+        </das-form>
+
+        <!-- 操作按钮 -->
+        <div class="base-form-footer">
+          <a-button class="submit-btn" type="primary">{{ $t('I18N.base_form.save') }}</a-button>
+          <a-button>{{ $t('I18N.base_form.resetDefault') }}</a-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+  import { reactive } from 'vue';
+
+  interface FormState {
+    name: string;
+    desc: string;
+    level: string;
+    scene: string;
+    action: boolean;
+    address: string;
+    ip: string;
+    attachment: string;
+  }
+
+  const formState = reactive<FormState>({
+    name: '',
+    desc: '',
+    level: '',
+    scene: '',
+    action: false,
+    address: '',
+    ip: '',
+    attachment: ''
+  });
+</script>
+```
+
+---
+
+### 3. 详情页面 (baseDetail)
+> 📁 **模板路径**: `src/views/uedTypical/baseDetail/`
+
+**适用场景**: 信息展示、状态查看、详情查看
+
+**标准结构**:
+```
+baseDetail/
+├── index.vue              # 详情页面
+├── images/               # 页面图片资源
+│   └── ainta.png
+└── types.ts              # 类型定义（可选）
+```
+
+**核心组件使用**:
+- `das-form`: 信息展示表单
+- `a-row` + `a-col`: 栅格布局
+- `a-tag`: 状态标签
+
+**代码模板**:
+```vue
+<template>
+  <div class="base-detail-box">
+    <!-- 头部信息 -->
+    <div class="base-detail-header">
+      <img class="header-info-avator" src="./images/ainta.png" />
+      <div class="header-info">
+        <div class="header-info-text">
+          <span class="mr-8">{{ $t('I18N.layout.jinZhiChiEXCELGeShiWenJian') }}</span>
+          <a-tag color="geekblue">{{ $t('I18N.layout.moRenBiaoQian') }}</a-tag>
+        </div>
+        <div class="header-info-status">
+          <span class="circle-status" />
+          {{ $t('I18N.layout.zaiXian') }}
+        </div>
+      </div>
+      <a-button size="small" style="float: right">{{ $t('I18N.layout.miaoBianAnNiu') }}</a-button>
+    </div>
+
+    <!-- 基本信息 -->
+    <div class="header-form">
+      <das-form class="pd-16" name="basic" autocomplete="off" label-align="left" layout="horizontal">
+        <a-row>
+          <a-col :span="8">
+            <a-form-item :label="$t('I18N.layout.zuJianLeiXing')">
+              <span>{{ $t('I18N.layout.liuLiangTanZhen') }}</span>
+            </a-form-item>
+          </a-col>
+          <!-- 更多信息项 -->
+        </a-row>
+      </das-form>
+    </div>
+
+    <!-- 更多信息 -->
+    <div class="more-info">
+      <div class="base-detail-title">{{ $t('I18N.layout.gengDuoXinXi') }}</div>
+      <!-- 更多信息内容 -->
+    </div>
+  </div>
+</template>
+```
+
+---
+
+### 4. 仪表盘页面 (workBench)
+> 📁 **模板路径**: `src/views/uedTypical/workBench/`
+
+**适用场景**: 数据概览、统计展示、工作台
+
+**标准结构**:
+```
+workBench/
+├── index.vue              # 仪表盘主页面
+├── components/
+│   ├── charts.vue        # 图表组件
+│   └── list.vue          # 列表组件
+└── images/               # 图标资源
+    ├── one.png
+    ├── two.png
+    ├── three.png
+    └── four.png
+```
+
+**核心组件使用**:
+- `das-metric-card`: 指标卡片
+- `DasCountTo`: 数字动画组件
+- 图表组件（ECharts 等）
+
+**代码模板**:
+```vue
+<template>
+  <div class="workbench-wrap">
+    <!-- 指标卡片区域 -->
+    <div class="card-wrap">
+      <das-metric-card
+        v-for="item in cardData"
+        :key="item.title"
+        :title="item.title"
+        layout="vertical"
+        :bordered="false"
+        :wrapper-style="{ 
+          flex: 1, 
+          backgroundColor: 'var(--color-bg-container)',
+          borderRadius: '6px',
+          padding: '16px'
+        }"
+      >
+        <template #image>
+          <img :src="item.icon" alt="icon" style="width: 40px; height: 40px;" />
+        </template>
+        <template #default>
+          <div v-if="item.type === 'time'" class="time-value">
+            <div v-for="child in item.timeValue" :key="child.label">
+              {{ child.value }}<span>{{ child.label }}</span>
+            </div>
+          </div>
+          <div v-else class="count-value">
+            <DasCountTo 
+              :end="item.value" 
+              :size="32" 
+              :weight="600" 
+              :suffix="` ${item.unit}`" 
+              :unit-size="12" 
+            />
+          </div>
+        </template>
+      </das-metric-card>
+    </div>
+
+    <!-- 图表和列表组件 -->
+    <ChartsComponent></ChartsComponent>
+    <ListComponent></ListComponent>
+  </div>
+</template>
+
+<script setup lang="ts">
+  import { ref } from 'vue';
+  import ChartsComponent from './components/charts.vue';
+  import ListComponent from './components/list.vue';
+
+  const cardData = ref([
+    {
+      title: I18N.layout.woCanYuDeShiJianZongShu,
+      unit: I18N.layout.jian,
+      icon: oneSvg,
+      value: 1315
+    }
+    // 更多卡片数据
+  ]);
+</script>
+```
+
+---
+
+### 5. 管理页面 (dashboardManage)
+> 📁 **模板路径**: `src/views/uedTypical/dashboardManage/`
+
+**适用场景**: 分类管理、分组展示、管理界面
+
+**标准结构**:
+```
+dashboardManage/
+├── index.vue              # 管理主页面
+└── components/
+    ├── group.vue          # 分组组件
+    └── list.vue           # 列表组件
+```
+
+**核心组件使用**:
+- 分组组件：左侧分类导航
+- 列表组件：右侧内容展示
+- 响应式布局
+
+**代码模板**:
+```vue
+<template>
+  <div class="dashboard-wrap">
+    <div class="group">
+      <GroupComponent :dataSource="groupData"></GroupComponent>
+    </div>
+    <div class="table">
+      <ListComponent></ListComponent>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+  import GroupComponent from './components/group.vue';
+  import ListComponent from './components/list.vue';
+
+  const groupData: any[] = [
+    {
+      key: '1',
+      name: '全部',
+      count: 20
+    }
+    // 更多分组数据
+  ];
+</script>
+
+<style lang="less" scoped>
+  .dashboard-wrap {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 24px 0 16px 16px;
+    background: var(--color-bg-container);
+    .group {
+      width: 208px;
+      height: calc(100vh - 176px);
+      overflow-x: hidden;
+      overflow-y: auto;
+      border: 1px solid var(--color-component-stroke);
+    }
+    .table {
+      flex: 1;
+    }
+  }
+</style>
+```
+
+---
+
+## 🎨 通用设计规范
+
+### 布局原则
+1. **响应式设计**: 使用 CSS Grid 和 Flexbox
+2. **间距统一**: 使用项目定义的间距变量
+3. **组件对齐**: 保持视觉一致性
+
+### 样式规范
+```less
+// 标准页面容器
+.page-container {
+  padding: 24px;
+  background: var(--color-bg-container);
+  min-height: calc(100vh - 64px);
+}
+
+// 卡片容器
+.card-container {
+  background: var(--color-bg-container);
+  border-radius: 6px;
+  padding: 16px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+}
+
+// 表单容器
+.form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px;
+}
+```
+
+### 组件使用优先级
+1. **DAS 组件库** (das-table, das-form, das-search-bar 等)
+2. **Ant Design Vue** (a-button, a-input, a-select 等)
+3. **自定义组件** (仅在必要时)
+
+---
+
+## 🔧 开发最佳实践
+
+### 1. 组件拆分原则
+- **主页面组件**: 负责页面整体布局和状态管理
+- **功能组件**: 负责具体功能实现
+- **通用组件**: 可复用的 UI 组件
+
+### 2. 状态管理
+```typescript
+// 使用 reactive 管理页面状态
+const pageState = reactive({
+  loading: false,
+  data: [],
+  pagination: {
+    current: 1,
+    pageSize: 10,
+    total: 0
+  }
+});
+
+// 使用 ref 管理简单状态
+const searchKeyword = ref('');
+const selectedItems = ref<string[]>([]);
+```
+
+### 3. 国际化支持
+```vue
+<!-- 所有文本必须使用国际化 -->
+<template>
+  <a-button>{{ $t('I18N.common.save') }}</a-button>
+  <span>{{ $t('I18N.layout.total') }}: {{ total }}</span>
+</template>
+```
+
+### 4. 类型安全
+```typescript
+// 定义接口类型
+interface TableItem {
+  id: string;
+  name: string;
+  status: 'active' | 'inactive';
+  createTime: string;
+}
+
+// 使用类型注解
+const tableData = ref<TableItem[]>([]);
+```
+
+---
+
+## 📊 性能优化建议
+
+### 1. 组件懒加载
+```typescript
+// 使用动态导入
+const LazyComponent = defineAsyncComponent(() => import('./components/HeavyComponent.vue'));
+```
+
+### 2. 数据分页
+```typescript
+// 实现虚拟滚动或分页加载
+const loadData = async (page: number) => {
+  const response = await api.getData({ page, pageSize: 20 });
+  tableData.value = response.data;
+};
+```
+
+### 3. 防抖搜索
+```typescript
+import { debounce } from 'lodash-es';
+
+const debouncedSearch = debounce((keyword: string) => {
+  handleSearch(keyword);
+}, 300);
+```
+
+---
+
+## 🔗 相关规范文件
+
+- **[组件库标准](mdc:component-library-standards.mdc)** - DAS 组件使用规范
+- **[页面布局标准](mdc:page-layout-standards.mdc)** - 页面布局设计规范
+- **[表单验证标准](mdc:form-validation-standards.mdc)** - 表单开发规范
+- **[国际化标准](mdc:internationalization-standards.mdc)** - 多语言支持规范
+
+---
+
+## 📝 更新日志
+
+| 日期 | 版本 | 更新内容 | 更新人 |
+|------|------|---------|--------|
+| 2024-12-19 | v1.0 | 初始版本，基于 uedTypical 页面分析 | AI Assistant |
+
+---
+
+*📌 **使用提示**: 
+1. 开发新页面时，优先参考对应的典型页面模板
+2. 严格遵循 DAS 组件库使用规范
+3. 确保所有文本都支持国际化
+4. 定期更新此规范文档*
+description:
+globs:
+alwaysApply: false
+---

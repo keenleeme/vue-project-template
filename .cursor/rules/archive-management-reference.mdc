@@ -1,0 +1,165 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# 档案管理系统开发参考
+
+## 项目概述
+档案管理系统是一个基于Vue3 + TypeScript的前端页面，展示了如何将HTML静态页面转换为现代化的Vue组件。
+
+## 核心文件结构
+
+### 主页面
+- [index.vue](mdc:src/views/archive-management/index.vue) - 主页面组件
+- [ArchiveDetailModal.vue](mdc:src/views/archive-management/components/ArchiveDetailModal.vue) - 详情弹窗组件
+- [README.md](mdc:src/views/archive-management/README.md) - 使用说明文档
+
+### 路由配置
+- [routes.ts](mdc:src/router/routes.ts) - 路由配置文件
+- [guard.ts](mdc:src/router/guard.ts) - 路由守卫配置
+
+## 技术特性
+
+### 1. 搜索功能
+实现了9个搜索条件的筛选：
+- 区域选择（级联选择器）
+- 组织架构选择  
+- 单位名称输入
+- 所属行业选择
+- 单位简称输入
+- 独立平台选择
+- 联系人输入
+- 备案号输入
+- 数据处理者标签选择
+
+### 2. 视图模式切换
+- 表格视图：使用 a-table 组件展示列表数据
+- 卡片视图：使用 a-card 组件展示卡片布局
+
+### 3. CRUD 操作
+- 新增：打开表单弹窗进行数据录入
+- 编辑：基于现有数据进行修改
+- 查看：详情弹窗展示完整信息
+- 删除：确认后删除数据项
+
+### 4. 详情展示
+使用 ArchiveDetailModal 组件展示：
+- 单位基本信息
+- 负责人信息表格
+- 自查报告列表
+- 信息统计概览（使用das-metric-card）
+- 关联信息（通报、风险、事件、备案）
+
+#### 弹框配置标准
+```vue
+<a-modal
+  :open="visible"
+  title="档案详情"
+  width="70%"           <!-- 标准宽度：70% -->
+  :footer="null"
+  centered              <!-- 确保居中显示 -->
+  wrapClassName="archive-detail-modal"
+  :body-style="{ maxHeight: '70vh', overflowY: 'auto' }"
+  @cancel="handleClose"
+>
+```
+
+**宽度设置规范**：
+- 详情弹框：70% - 适合内容较多的详情展示
+- 表单弹框：50% - 适合一般表单录入
+- 简单确认弹框：400px - 固定宽度适合简单操作
+
+## 组件库使用示例
+
+### DAS 组件
+```vue
+<!-- 指标卡片 -->
+<das-metric-card 
+  title="统计指标"
+  :value="statisticsData.totalCount"
+  suffix="个"
+/>
+```
+
+### Ant Design Vue 组件
+```vue
+<!-- 表格组件 -->
+<a-table
+  :columns="columns"
+  :data-source="tableData"
+  :loading="loading"
+  :pagination="pagination"
+  @change="handleTableChange"
+/>
+
+<!-- 搜索表单 -->
+<a-form
+  :model="searchForm"
+  layout="inline"
+  @finish="handleSearch"
+>
+  <a-form-item label="单位名称">
+    <a-input v-model:value="searchForm.name" placeholder="请输入单位名称" />
+  </a-form-item>
+</a-form>
+```
+
+## API 集成规范
+
+> 🔗 **详细规范**: [API请求标准](mdc:.cursor/rules/api-request-standards.mdc)
+
+档案管理系统中使用统一的Http客户端进行API调用，具体实现可参考主页面中的数据获取和CRUD操作方法。
+
+## 数据格式定义
+
+### 档案信息接口
+```typescript
+interface ArchiveInfo {
+  id: string
+  name: string // 单位名称
+  shortName: string // 单位简称
+  industry: string // 所属行业
+  region: string // 所属区域
+  organization: string // 组织架构
+  platform: string // 独立平台
+  contact: string // 联系人
+  recordNumber: string // 备案号
+  processingTag: string // 数据处理者标签
+  status: string // 状态
+  createTime: string // 创建时间
+}
+```
+
+### 统计数据接口
+```typescript
+interface StatisticsData {
+  totalCount: number // 总数
+  activeCount: number // 活跃数
+  pendingCount: number // 待处理数
+  completedCount: number // 已完成数
+}
+```
+
+## 开发调试配置
+
+### 白名单设置
+为了进行前端调试，档案管理页面已配置为白名单路由：
+
+1. 路由配置在 `wihitetRoutes` 数组中
+2. 路径 `/archiveManagement` 在 `WHITE_LIST` 中
+3. 跳过权限验证，可直接访问
+
+### 访问方式
+- 开发环境：`http://localhost:3000/#/archiveManagement`
+- 路由名称：`archive-management`
+
+## 最佳实践总结
+
+1. **页面结构标准化**：基于 template.vue 创建页面
+2. **组件库优先级**：das-components > ant-design-vue
+3. **API 调用统一化**：使用 Http 服务客户端
+4. **类型安全**：完整的 TypeScript 类型定义
+5. **响应式设计**：支持不同屏幕尺寸适配
+6. **错误处理**：统一的错误处理和用户提示
+7. **白名单机制**：前端调试页面的配置方式

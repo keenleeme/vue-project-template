@@ -18,98 +18,99 @@
       <a-button size="small" style="float: right">{{ $t('I18N.layout.miaoBianAnNiu') }}</a-button>
     </div>
     <div class="header-form">
-      <a-form class="pd-16" name="basic" autocomplete="off" label-align="left">
+      <das-form class="pd-16" name="basic" autocomplete="off" label-align="left" layout="horizontal">
         <a-row>
           <a-col :span="8">
-            <a-form-item :label="$t('I18N.layout.zuJianLeiXing')">
+            <das-form-item :label="$t('I18N.layout.zuJianLeiXing')">
               <span>{{ $t('I18N.layout.liuLiangTanZhen') }}</span>
-            </a-form-item>
+            </das-form-item>
           </a-col>
           <a-col :span="8">
-            <a-form-item :label="$t('I18N.layout.zhuCeShiJian')">
+            <das-form-item :label="$t('I18N.layout.zhuCeShiJian')">
               <span>2022-04-21 20:15:08</span>
-            </a-form-item>
+            </das-form-item>
           </a-col>
           <a-col :span="8">
-            <a-form-item :label="$t('I18N.layout.benRiShangSongTiaoShu')">
+            <das-form-item :label="$t('I18N.layout.benRiShangSongTiaoShu')">
               <span>0{{ $t('I18N.layout.tiao') }}</span>
-            </a-form-item>
+            </das-form-item>
           </a-col>
           <a-col :span="8">
-            <a-form-item :label="$t('I18N.layout.weiYiBiaoShi')">
+            <das-form-item :label="$t('I18N.layout.weiYiBiaoShi')">
               <span>apt-192.168.33.126-2773879f</span>
-            </a-form-item>
+            </das-form-item>
           </a-col>
           <a-col :span="8">
-            <a-form-item :label="$t('I18N.layout.ruanJianBanBen')">
+            <das-form-item :label="$t('I18N.layout.ruanJianBanBen')">
               <span>asen2.0.69.47825.220421_s</span>
-            </a-form-item>
+            </das-form-item>
           </a-col>
           <a-col :span="8">
-            <a-form-item :label="$t('I18N.layout.xuKeZheng')">
+            <das-form-item :label="$t('I18N.layout.xuKeZheng')">
               <span>{{ $t('I18N.layout.zhengShi') }}(2030-01-28{{ $t('I18N.layout.daoQi') }})</span>
-            </a-form-item>
+            </das-form-item>
           </a-col>
           <a-col :span="8">
-            <a-form-item :label="$t('I18N.layout.sheBei')">
+            <das-form-item :label="$t('I18N.layout.sheBei')">
               <span><a style="color: var(--color-brand-normal)">192.168.33.188</a></span>
-            </a-form-item>
+            </das-form-item>
           </a-col>
           <a-col :span="8">
-            <a-form-item :label="$t('I18N.layout.guiZeBanBen')">
+            <das-form-item :label="$t('I18N.layout.guiZeBanBen')">
               <span>2.0.25727.220121.1</span>
-            </a-form-item>
+            </das-form-item>
           </a-col>
           <a-col :span="8">
-            <a-form-item :label="$t('I18N.layout.danWei')">
+            <das-form-item :label="$t('I18N.layout.danWei')">
               <span>TZ9533</span>
-            </a-form-item>
+            </das-form-item>
           </a-col>
         </a-row>
-      </a-form>
+      </das-form>
     </div>
     <!--更多信息-->
     <div class="more-info">
       <div class="base-detail-title">{{ $t('I18N.layout.gengDuoXinXi') }}</div>
-
-      <a-form class="pd-16" name="basic" autocomplete="off" label-align="left">
-        <a-row>
-          <a-col :span="8">
-            <a-form-item :label="$t('I18N.layout.ziChanBianHao')">
-              <span>213892894</span>
-            </a-form-item>
-          </a-col>
-          <a-col :span="8">
-            <a-form-item :label="$t('I18N.layout.shiYongZhuangTai')">
-              <span>{{ $t('I18N.layout.shiYongZhong') }}</span>
-            </a-form-item>
-          </a-col>
-          <a-col :span="8">
-            <a-form-item :label="$t('I18N.layout.shiYongRen')">
-              <span>小龙人</span>
-            </a-form-item>
-          </a-col>
-          <a-col :span="16">
-            <a-form-item :label="$t('I18N.layout.miaoShuXinXi')" class="mr-8">
-              <span>
-                资产描述‘process_open’函数存在安全漏洞，该漏洞源于程序在只读模式下没有正确的阻止写入操作。支持对所有的持对所有的持对…
-              </span>
-            </a-form-item>
-          </a-col>
-          <a-col :span="8">
-            <a-form-item :label="$t('I18N.layout.guoChanHua')">
-              <span>{{ $t('I18N.layout.puTong') }}</span>
-            </a-form-item>
-          </a-col>
-          <a-col :span="16">
-            <a-form-item :label="$t('I18N.layout.gengDuoXinXi')" class="mr-8">
-              <span>
-                这是服务于浙江省的涉疫系统的重要组成部分，服务于杭州市的数字化这是服务于浙江省的涉疫系统的重要组成部分，这是服务于浙江省的涉疫系统的重要组成部分。
-              </span>
-            </a-form-item>
-          </a-col>
-        </a-row>
-      </a-form>
+      <div class="header-form">
+        <das-form class="pd-16" name="basic" autocomplete="off" label-align="left" layout="horizontal">
+          <a-row>
+            <a-col :span="8">
+              <a-form-item :label="$t('I18N.layout.ziChanBianHao')">
+                <span>213892894</span>
+              </a-form-item>
+            </a-col>
+            <a-col :span="8">
+              <a-form-item :label="$t('I18N.layout.shiYongZhuangTai')">
+                <span>{{ $t('I18N.layout.shiYongZhong') }}</span>
+              </a-form-item>
+            </a-col>
+            <a-col :span="8">
+              <a-form-item :label="$t('I18N.layout.shiYongRen')">
+                <span>小龙人</span>
+              </a-form-item>
+            </a-col>
+            <a-col :span="16">
+              <a-form-item :label="$t('I18N.layout.miaoShuXinXi')" class="mr-8">
+                <span>
+                  资产描述‘process_open’函数存在安全漏洞，该漏洞源于程序在只读模式下没有正确的阻止写入操作。支持对所有的持对所有的持对…
+                </span>
+              </a-form-item>
+            </a-col>
+            <a-col :span="8">
+              <a-form-item :label="$t('I18N.layout.guoChanHua')">
+                <span>{{ $t('I18N.layout.puTong') }}</span>
+              </a-form-item>
+            </a-col>
+            <a-col :span="16">
+              <a-form-item :label="$t('I18N.layout.gengDuoXinXi')" class="mr-8">
+                <span>
+                  这是服务于浙江省的涉疫系统的重要组成部分，服务于杭州市的数字化这是服务于浙江省的涉疫系统的重要组成部分，这是服务于浙江省的涉疫系统的重要组成部分。
+                </span>
+              </a-form-item>
+            </a-col>
+          </a-row>
+        </das-form>
+      </div>
     </div>
     <!--任务记录-->
     <div class="task-list">
@@ -172,7 +173,7 @@
       }
     }
     .header-form {
-      padding: 16px 0;
+      padding: 16px;
       background: var(--color-bg-container);
     }
     .more-info {

@@ -3,14 +3,16 @@
     <div class="base-form-wrapper">
       <div class="base-form-header">{{ $t('I18N.base_form.baseInfo') }}</div>
       <div class="base-form-content">
-        <a-form
+        <das-form
           :model="formState"
           :colon="false"
           name="basic"
           :label-col="{ style: { width: '120px' } }"
           autocomplete="off"
+          layout="horizontal"
+          class="base-form"
         >
-          <a-form-item
+          <das-form-item
             :label="$t('I18N.base_form.name')"
             name="name"
             :rules="[{ required: true, message: `${$t('I18N.base_form.pleaseEnter')}${$t('I18N.base_form.name')}` }]"
@@ -19,8 +21,8 @@
               v-model:value="formState.name"
               :placeholder="`${$t('I18N.base_form.pleaseEnter')}${$t('I18N.base_form.name')}`"
             />
-          </a-form-item>
-          <a-form-item
+          </das-form-item>
+          <das-form-item
             :label="$t('I18N.base_form.desc')"
             name="desc"
             :rules="[{ required: true, message: `${$t('I18N.base_form.pleaseEnter')}${$t('I18N.base_form.desc')}` }]"
@@ -30,45 +32,49 @@
               :rows="2"
               :placeholder="`${$t('I18N.base_form.pleaseEnter')}${$t('I18N.base_form.desc')}`"
             />
-          </a-form-item>
-          <a-form-item :label="$t('I18N.base_form.level')" name="level">
+          </das-form-item>
+          <das-form-item :label="$t('I18N.base_form.level')" name="level">
             <a-radio-group v-model:value="formState.level" :options="levelOptions" />
-          </a-form-item>
-          <a-form-item :label="$t('I18N.base_form.scene')" name="scene">
+          </das-form-item>
+          <das-form-item :label="$t('I18N.base_form.scene')" name="scene">
             <a-select
               v-model:value="formState.scene"
               :options="[]"
               :placeholder="`${$t('I18N.base_form.pleaseEnter')}${$t('I18N.base_form.scene')}`"
               ><template #suffixIcon><i class="zq-icon zq-icon-chevron-down ant-select-suffix-new"></i></template>
             </a-select>
-          </a-form-item>
-          <a-form-item :label="$t('I18N.base_form.action')" name="action">
+          </das-form-item>
+          <das-form-item :label="$t('I18N.base_form.action')" name="action">
             <a-radio-group v-model:value="formState.action" :options="actionOptions" />
-          </a-form-item>
-          <a-form-item :label="$t('I18N.base_form.address')" name="address">
-            <div class="form-item-address">
-              <a-select
-                v-model:value="formState.address"
-                class="address-select"
-                :options="[{ label: $t('I18N.layout.diZhi'), value: 'location' }]"
-              >
-                <template #suffixIcon><i class="zq-icon zq-icon-chevron-down"></i></template>
-              </a-select>
-              <a-input v-model:value="formState.ip" :placeholder="$t('I18N.base_form.pleaseEnterContent')" />
-            </div>
-          </a-form-item>
-          <a-form-item :label="$t('I18N.base_form.attachment')" name="attachment">
+          </das-form-item>
+          <das-form-item :label="$t('I18N.base_form.address')" name="address">
+            <a-select
+              v-model:value="formState.address"
+              class="address-select"
+              :options="[{ label: $t('I18N.layout.diZhi'), value: 'location' }]"
+            >
+              <template #suffixIcon><i class="zq-icon zq-icon-chevron-down"></i></template>
+            </a-select>
+          </das-form-item>
+          <das-form-item :label="$t('I18N.base_form.ip')" name="ip">
+            <a-input v-model:value="formState.ip" :placeholder="$t('I18N.base_form.pleaseEnterContent')" />
+          </das-form-item>
+          <das-form-item :label="$t('I18N.base_form.attachment')" name="attachment">
             <a-upload v-model="formState.attachment" name="file" action="">
               <a-button>
                 <template #icon>
                   <i class="zq-icon zq-icon-upload up-form-icon"></i>
                 </template>
-                {{ $t('I18N.base_form.uplaodFile') }}
+                {{ $t('I18N.base_form.uploadFile') }}
               </a-button>
             </a-upload>
-            <span class="upload-tip">{{ $t('I18N.base_form.uploadLimit') }}</span>
-          </a-form-item>
-        </a-form>
+          </das-form-item>
+          <a-form-item-rest>
+            <div class="upload-tip-wrapper">
+              <span class="upload-tip">{{ $t('I18N.base_form.uploadLimit') }}</span>
+            </div>
+          </a-form-item-rest>
+        </das-form>
 
         <div class="base-form-footer">
           <a-button class="submit-btn" type="primary">{{ $t('I18N.base_form.save') }}</a-button>
@@ -134,7 +140,17 @@
     }
     .base-form-content {
       width: 50%;
-      padding: 24px 0;
+      padding: 24px 32px;
+      .base-form {
+        .ant-form-item {
+          margin-bottom: 24px;
+
+          .ant-form-item-control {
+            padding-left: 8px;
+          }
+        }
+      }
+
       .form-item-address {
         display: flex;
         .address-select {
@@ -142,6 +158,11 @@
           margin-right: 8px;
         }
       }
+      .upload-tip-wrapper {
+        padding-left: 120px;
+        // margin-top: 8px;
+      }
+
       .upload-tip {
         font-size: var(--font-size-base);
         color: #9096a5;

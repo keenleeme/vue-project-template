@@ -1,0 +1,869 @@
+# 组件库使用规范
+
+## 1. 组件优先级规范
+
+### 1.1 使用优先级
+
+```
+1. DAS Components (第一优先级)
+2. Ant Design Vue (第二优先级，备选方案)
+3. 自定义组件 (第三优先级，仅在前两者无法满足时)
+```
+
+### 1.2 决策流程
+
+```mermaid
+flowchart TD
+    A[需要使用组件] --> B[检查 das-component-vue.json]
+    B --> C{DAS组件库是否有合适组件?}
+    C -->|是| D[使用 DAS 组件]
+    C -->|否| E[检查 Ant Design Vue]
+    E --> F{Antd 是否有合适组件?}
+    F -->|是| G[使用 Antd 组件<br/>并说明原因]
+    F -->|否| H[开发自定义组件]
+    D --> I[查阅组件文档]
+    G --> J[正常使用]
+    H --> K[遵循设计规范]
+```
+
+## 2. DAS 组件库使用规范
+
+### 2.1 文档学习要求
+
+**使用任何 DAS 组件前必须：**
+
+1. **查阅组件清单**：`das-components-folder/das-component-vue.json`
+2. **学习组件文档**：`das-components-folder/docs/[component-name].md`
+3. **了解组件API**：属性、事件、插槽等
+4. **查看使用示例**：确保正确使用
+
+```typescript
+// ❌ 错误：直接使用组件不查文档
+<das-table :data="data" />
+
+// ✅ 正确：先查阅文档了解完整API
+<das-table 
+  :columns="columns" 
+  :data-source="dataList"
+  :pagination="paginationConfig"
+  :loading="loading"
+  @change="handleTableChange"
+/>
+```
+
+### 2.2 DAS 组件分类和使用
+
+#### 2.2.1 表单相关组件
+
+```vue
+<!-- DAS 搜索栏 - 列表页面搜索 -->
+<das-search-bar
+  :model="searchForm"
+  :columns="4"
+  :label-col="{ span: 8 }"
+  :expandable="true"
+  @search="handleSearch"
+  @reset="handleReset"
+>
+  <a-form-item label="关键词" name="keyword">
+    <a-input v-model:value="searchForm.keyword" placeholder="请输入关键词" allow-clear />
+  </a-form-item>
+  
+  <a-form-item label="状态" name="status">
+    <das-select
+      v-model:value="searchForm.status"
+      :options="statusOptions"
+      placeholder="请选择状态"
+      allow-clear
+    />
+  </a-form-item>
+</das-search-bar>
+
+<!-- DAS 表单 - 新增/编辑表单 -->
+<das-form
+  ref="formRef"
+  :model="formData"
+  :rules="rules"
+  :label-col="{ span: 6 }"
+  :wrapper-col="{ span: 18 }"
+  layout="horizontal"
+>
+  <a-form-item label="名称" name="name" :rules="rules.name">
+    <a-input v-model:value="formData.name" placeholder="请输入名称" />
+  </a-form-item>
+  
+  <a-form-item label="类型" name="type" :rules="rules.type">
+    <das-select
+      v-model:value="formData.type"
+      :options="typeOptions"
+      placeholder="请选择类型"
+    />
+  </a-form-item>
+  
+  <a-form-item label="标签" name="tags">
+    <das-select
+      v-model:value="formData.tags"
+      :options="tagOptions"
+      placeholder="请选择标签"
+      mode="multiple"
+    />
+  </a-form-item>
+</das-form>
+```
+
+#### 2.2.2 数据展示组件
+
+```vue
+<!-- DAS 表格 - 列表数据展示 -->
+<das-table
+  :columns="tableColumns"
+  :data-source="dataList"
+  :pagination="paginationConfig"
+  :loading="loading"
+  row-key="id"
+  @change="handleTableChange"
+>
+  <template #bodyCell="{ column, record }">
+    <template v-if="column.dataIndex === 'status'">
+      <a-tag :color="getStatusColor(record.status)">
+        {{ record.statusName || record.status }}
+      </a-tag>
+    </template>
+    
+    <template v-else-if="column.dataIndex === 'action'">
+      <a-space>
+        <a-button type="link" size="small" @click="handleView(record)">
+          详情
+        </a-button>
+        <a-button type="link" size="small" @click="handleEdit(record)">
+          编辑
+        </a-button>
+      </a-space>
+    </template>
+  </template>
+</das-table>
+
+<!-- DAS 详情展示 -->
+<das-detail
+  :detail-data="detailData"
+  :items="detailItems"
+  :column="3"
+  layout="horizontal"
+  :label-width="120"
+/>
+```
+
+#### 2.2.3 反馈组件
+
+```vue
+<!-- DAS 空状态 -->
+<das-empty 
+  v-if="dataList.length === 0 && !loading"
+  description="暂无数据"
+  image-style="height: 120px"
+>
+  <a-button type="primary" @click="handleAdd">
+    新增数据
+  </a-button>
+</das-empty>
+
+<!-- DAS 警告提示 -->
+<das-alert
+  message="注意事项"
+  description="请确保数据格式正确后再提交"
+  type="warning"
+  show-icon
+  closable
+/>
+
+<!-- DAS 工具提示 -->
+<das-tool-tip title="这是详细说明信息">
+  <a-button>悬停查看提示</a-button>
+</das-tool-tip>
+
+<!-- DAS 通知提醒框 -->
+<das-notification
+  v-model:visible="notificationVisible"
+  title="系统通知"
+  message="您有新的消息需要查看"
+  type="info"
+  :duration="5"
+/>
+
+<!-- DAS 站内通知 -->
+<das-notification-details
+  v-model:visible="notificationDetailsVisible"
+  :notifications="notificationList"
+  @mark-read="handleMarkRead"
+/>
+
+<!-- DAS 混合加载 -->
+<das-mixed-loading
+  :loading="loading"
+  :loading-type="'skeleton'"
+  :skeleton-rows="3"
+>
+  <div>加载完成后的内容</div>
+</das-mixed-loading>
+```
+
+#### 2.2.4 导航组件
+
+```vue
+<!-- DAS 标签页 -->
+<das-tabs v-model:activeKey="activeTab" @change="handleTabChange">
+  <a-tab-pane key="basic" tab="基础信息">
+    <BasicInfoForm />
+  </a-tab-pane>
+  <a-tab-pane key="advanced" tab="高级设置">
+    <AdvancedSettings />
+  </a-tab-pane>
+</das-tabs>
+
+<!-- DAS 抽屉 -->
+<das-drawer
+  v-model:visible="drawerVisible"
+  title="详细信息"
+  width="600px"
+  placement="right"
+>
+  <DetailContent />
+</das-drawer>
+
+<!-- DAS 通知提醒框 -->
+<script setup>
+import { notification } from 'ant-design-vue';
+
+const showNotification = () => {
+  notification.success({
+    message: '操作成功',
+    description: '数据已成功保存到系统中',
+    duration: 3
+  });
+};
+</script>
+```
+
+#### 2.2.5 数据录入组件
+
+```vue
+<!-- DAS 按钮组 -->
+<das-button-group>
+  <a-button type="primary" @click="handleAdd">新增</a-button>
+  <a-button @click="handleImport">导入</a-button>
+  <a-button @click="handleExport">导出</a-button>
+</das-button-group>
+
+<!-- DAS 异步按钮 -->
+<das-async-button
+  :loading="loading"
+  :success="success"
+  :error="error"
+  @click="handleAsyncAction"
+>
+  提交数据
+</das-async-button>
+```
+
+#### 2.2.6 显示组件
+
+```vue
+<!-- DAS 标签 -->
+<das-tag color="blue" size="small">标签内容</das-tag>
+
+<!-- DAS 自动标签更多 -->
+<das-auto-tag-more :tags="tagList" :max-count="3" />
+
+<!-- DAS 帮助文本 -->
+<das-helper-text type="info">
+  这是帮助说明信息，用于指导用户操作
+</das-helper-text>
+
+<!-- DAS 高亮文本 -->
+<das-highlight :text="content" :keyword="searchKeyword" />
+
+<!-- DAS 数字滚动 -->
+<das-count-to :value="totalCount" :duration="2000" />
+```
+
+#### 2.2.7 布局组件
+
+```vue
+<!-- DAS 折叠容器 -->
+<das-folding-box title="高级筛选" :default-expanded="false">
+  <AdvancedFilters />
+</das-folding-box>
+
+<!-- DAS 列设置 -->
+<das-columns-setting 
+  v-model:columns="tableColumns"
+  storage-key="user-table-columns"
+/>
+```
+
+#### 2.2.8 数据可视化组件
+
+```vue
+<!-- DAS 简单图表 -->
+<das-simple-chart
+  :option="chartOption"
+  height="300px"
+  @chart-ready="handleChartReady"
+/>
+
+<!-- DAS 趋势线条 -->
+<das-trend-line
+  :data="trendData"
+  :width="400"
+  :height="200"
+  show-tooltip
+/>
+
+<!-- DAS 数据导出 -->
+<das-data-export
+  :data="exportData"
+  :columns="exportColumns"
+  filename="数据导出"
+  @export="handleExport"
+/>
+```
+
+#### 2.2.9 高级交互组件
+
+```vue
+<!-- DAS 穿梭框 -->
+<das-transfer
+  :data-source="transferData"
+  :target-keys="targetKeys"
+  :render="item => item.title"
+  @change="handleTransferChange"
+/>
+
+<!-- DAS 气泡提示 -->
+<das-popover
+  title="操作确认"
+  content="确定要执行此操作吗？"
+  trigger="click"
+>
+  <a-button danger>删除</a-button>
+</das-popover>
+
+<!-- DAS 虚拟列表 -->
+<das-virtual-scroll
+  :data="largeDataList"
+  :item-height="50"
+  :container-height="400"
+>
+  <template #item="{ item, index }">
+    <div class="list-item">{{ item.name }}</div>
+  </template>
+</das-virtual-scroll>
+```
+
+#### 2.2.10 特殊用途组件
+
+```vue
+<!-- DAS SQL查询构建器 -->
+<das-sql-tip-tree
+  :conditions="sqlConditions"
+  :fields="availableFields"
+  @change="handleSqlChange"
+/>
+
+<!-- DAS 表格输入 -->
+<das-table-input
+  :data="tableData"
+  :columns="inputColumns"
+  @change="handleTableInputChange"
+/>
+
+<!-- DAS 文字滚动 -->
+<das-carousel
+  :items="carouselItems"
+  :speed="2000"
+  direction="vertical"
+/>
+
+<!-- DAS 国际化提供者 -->
+<das-locale-provider :locale="currentLocale">
+  <App />
+</das-locale-provider>
+```
+
+### 2.3 DAS 组件配置规范
+
+#### 2.3.1 搜索栏配置
+
+```typescript
+// DAS 搜索栏标准配置
+const searchBarConfig = {
+  model: searchForm,           // 表单数据模型
+  columns: 4,                  // 每行显示列数
+  labelCol: { span: 8 },      // 标签列宽度
+  expandable: true,           // 是否可展开
+  defaultExpanded: false,     // 默认是否展开
+  showResetButton: true,      // 显示重置按钮
+  showSearchButton: true,     // 显示搜索按钮
+};
+```
+
+#### 2.3.2 表格配置
+
+```typescript
+// DAS 表格标准配置
+const tableConfig = {
+  columns: tableColumns,       // 表格列定义
+  dataSource: dataList,       // 数据源
+  pagination: paginationConfig, // 分页配置
+  loading: loading,           // 加载状态
+  rowKey: 'id',              // 行键
+  size: 'default',           // 表格大小
+  bordered: false,           // 是否显示边框
+  showSorterTooltip: false,  // 排序提示
+};
+
+// 分页配置
+const paginationConfig = ref({
+  current: 1,                // 当前页
+  pageSize: 10,              // 每页条数
+  total: 0,                  // 总条数
+  showSizeChanger: true,     // 显示页面大小选择器
+  showQuickJumper: true,     // 显示快速跳转
+  showTotal: (total: number) => `共 ${total} 条数据`,
+});
+```
+
+## 3. Ant Design Vue 使用规范
+
+### 3.1 使用原则
+
+**仅在以下情况使用 Ant Design Vue**：
+
+1. DAS 组件库中没有对应组件
+2. DAS 组件无法满足特定需求
+3. 使用时必须说明选择 Antd 的原因
+
+### 3.2 常用 Antd 组件
+
+#### 3.2.1 基础组件
+
+```vue
+<!-- 输入框 -->
+<a-input 
+  v-model:value="formData.name"
+  placeholder="请输入名称"
+  allow-clear
+  :maxlength="50"
+/>
+
+<!-- 数字输入框 -->
+<a-input-number
+  v-model:value="formData.count"
+  :min="0"
+  :max="999999"
+  placeholder="请输入数量"
+/>
+
+<!-- 文本域 -->
+<a-textarea
+  v-model:value="formData.description"
+  placeholder="请输入描述"
+  :rows="4"
+  :maxlength="500"
+  show-count
+/>
+
+<!-- 选择器 -->
+<a-select
+  v-model:value="formData.type"
+  placeholder="请选择类型"
+  allow-clear
+>
+  <a-select-option 
+    v-for="item in typeOptions" 
+    :key="item.value" 
+    :value="item.value"
+  >
+    {{ item.label }}
+  </a-select-option>
+</a-select>
+
+<!-- 日期选择器 -->
+<a-date-picker
+  v-model:value="formData.date"
+  placeholder="请选择日期"
+  format="YYYY-MM-DD"
+/>
+
+<!-- 时间范围选择器 -->
+<a-range-picker
+  v-model:value="formData.dateRange"
+  format="YYYY-MM-DD"
+  placeholder="['开始日期', '结束日期']"
+/>
+```
+
+#### 3.2.2 反馈组件
+
+```vue
+<!-- 消息提示 -->
+<template>
+  <a-button @click="showMessage">显示消息</a-button>
+</template>
+
+<script setup>
+import { message } from 'ant-design-vue';
+
+const showMessage = () => {
+  message.success('操作成功');
+  message.error('操作失败');
+  message.warning('警告信息');
+  message.info('提示信息');
+};
+</script>
+
+<!-- 确认框 -->
+<a-popconfirm
+  title="确定要删除这条记录吗？"
+  ok-text="确定"
+  cancel-text="取消"
+  @confirm="handleDelete"
+>
+  <a-button danger>删除</a-button>
+</a-popconfirm>
+
+<!-- 通知提醒 -->
+<script setup>
+import { notification } from 'ant-design-vue';
+
+const showNotification = () => {
+  notification.success({
+    message: '操作成功',
+    description: '数据已成功保存到系统中',
+    duration: 3
+  });
+};
+</script>
+```
+
+#### 3.2.3 布局组件
+
+```vue
+<!-- 卡片容器 -->
+<a-card title="用户信息" style="height: 100%">
+  <template #extra>
+    <a-button type="link">更多</a-button>
+  </template>
+  <UserInfo />
+</a-card>
+
+<!-- 栅格布局 -->
+<a-row :gutter="[16, 16]">
+  <a-col :span="8">
+    <StatCard title="总数" :value="totalCount" />
+  </a-col>
+  <a-col :span="8">
+    <StatCard title="已完成" :value="completedCount" />
+  </a-col>
+  <a-col :span="8">
+    <StatCard title="进行中" :value="processingCount" />
+  </a-col>
+</a-row>
+
+<!-- 分割线 -->
+<a-divider>基础信息</a-divider>
+
+<!-- 空状态 -->
+<a-empty v-if="dataList.length === 0" description="暂无数据">
+  <a-button type="primary" @click="handleAdd">新增数据</a-button>
+</a-empty>
+```
+
+### 3.3 图标使用规范
+
+#### 3.3.1 优先使用 Ant Design 图标
+
+```vue
+<template>
+  <!-- 操作图标 -->
+  <a-button type="text" @click="handleView">
+    <template #icon><EyeOutlined /></template>
+    查看
+  </a-button>
+  
+  <a-button type="text" @click="handleEdit">
+    <template #icon><EditOutlined /></template>
+    编辑
+  </a-button>
+  
+  <a-button type="text" danger @click="handleDelete">
+    <template #icon><DeleteOutlined /></template>
+    删除
+  </a-button>
+  
+  <!-- 功能图标 -->
+  <a-button type="primary" @click="handleAdd">
+    <template #icon><PlusOutlined /></template>
+    新增
+  </a-button>
+  
+  <a-button @click="handleImport">
+    <template #icon><UploadOutlined /></template>
+    导入
+  </a-button>
+  
+  <a-button @click="handleExport">
+    <template #icon><DownloadOutlined /></template>
+    导出
+  </a-button>
+  
+  <!-- 视图切换图标 -->
+  <a-button-group>
+    <a-button :type="viewMode === 'card' ? 'primary' : 'default'" @click="viewMode = 'card'">
+      <template #icon><AppstoreOutlined /></template>
+      卡片视图
+    </a-button>
+    <a-button :type="viewMode === 'list' ? 'primary' : 'default'" @click="viewMode = 'list'">
+      <template #icon><UnorderedListOutlined /></template>
+      列表视图
+    </a-button>
+  </a-button-group>
+</template>
+
+<script setup lang="ts">
+import {
+  EyeOutlined,
+  EditOutlined,
+  DeleteOutlined,
+  PlusOutlined,
+  UploadOutlined,
+  DownloadOutlined,
+  AppstoreOutlined,
+  UnorderedListOutlined
+} from '@ant-design/icons-vue';
+</script>
+```
+
+#### 3.3.2 常用图标清单
+
+```typescript
+// 操作相关图标
+import {
+  EyeOutlined,           // 查看
+  EditOutlined,          // 编辑
+  DeleteOutlined,        // 删除
+  PlusOutlined,          // 新增
+  CopyOutlined,          // 复制
+  DownloadOutlined,      // 下载/导出
+  UploadOutlined,        // 上传/导入
+  SearchOutlined,        // 搜索
+  ReloadOutlined,        // 刷新
+  SettingOutlined,       // 设置
+} from '@ant-design/icons-vue';
+
+// 状态相关图标
+import {
+  CheckCircleOutlined,   // 成功
+  CloseCircleOutlined,   // 失败
+  ExclamationCircleOutlined, // 警告
+  InfoCircleOutlined,    // 信息
+  QuestionCircleOutlined, // 疑问
+} from '@ant-design/icons-vue';
+
+// 布局相关图标
+import {
+  AppstoreOutlined,      // 卡片视图
+  UnorderedListOutlined, // 列表视图
+  TableOutlined,         // 表格视图
+  MenuOutlined,          // 菜单
+  MoreOutlined,          // 更多
+} from '@ant-design/icons-vue';
+```
+
+## 4. 图表组件使用规范
+
+### 4.1 使用 CommonEChart 组件
+
+```vue
+<template>
+  <!-- 饼图 -->
+  <CommonEChart :option="pieChartOption" height="300px" />
+  
+  <!-- 柱状图 -->
+  <CommonEChart :option="barChartOption" height="400px" />
+  
+  <!-- 折线图 -->
+  <CommonEChart :option="lineChartOption" height="350px" />
+</template>
+
+<script setup lang="ts">
+import { ref, computed } from 'vue';
+
+// 饼图配置（处理超长文本）
+const pieChartOption = computed(() => ({
+  tooltip: {
+    trigger: 'item',
+    formatter: (params: any) => {
+      // 显示完整文本
+      const originalName = params.data.originalName || params.name;
+      return `${params.seriesName}<br/>${originalName}: ${params.value} (${params.percent}%)`;
+    }
+  },
+  legend: {
+    orient: 'horizontal',
+    bottom: 0,
+    left: 'center',
+    itemWidth: 12,
+    itemHeight: 8,
+    textStyle: {
+      fontSize: 12,
+      overflow: 'truncate',
+      ellipsis: '...',
+      width: 100
+    }
+  },
+  series: [{
+    name: '统计数据',
+    type: 'pie',
+    radius: ['45%', '75%'],
+    center: ['50%', '45%'],
+    data: chartData.value.map(item => ({
+      name: item.name.length > 8 ? item.name.substring(0, 8) + '...' : item.name,
+      value: item.value,
+      originalName: item.name // 保存原始名称
+    }))
+  }]
+}));
+
+// 柱状图配置（处理X轴标签）
+const barChartOption = computed(() => ({
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: { type: 'shadow' }
+  },
+  xAxis: {
+    type: 'category',
+    data: chartData.value.map(item => item.name),
+    axisLabel: {
+      interval: 0,
+      rotate: 45, // 旋转标签
+      formatter: (value: string) => {
+        return value.length > 6 ? value.substring(0, 6) + '...' : value;
+      }
+    }
+  },
+  yAxis: { type: 'value' },
+  series: [{
+    type: 'bar',
+    data: chartData.value.map(item => item.value),
+    itemStyle: {
+      borderRadius: [4, 4, 0, 0]
+    }
+  }]
+}));
+</script>
+```
+
+### 4.2 图表数据处理
+
+```typescript
+// 处理超长文本的数据
+const processChartData = (data: any[]) => {
+  return data.map(item => ({
+    ...item,
+    name: item.name.length > 8 ? item.name.substring(0, 8) + '...' : item.name,
+    originalName: item.name
+  }));
+};
+
+// 图表颜色配置
+const chartColors = [
+  '#134BEA', '#52c41a', '#faad14', '#f5222d', 
+  '#722ed1', '#13c2c2', '#eb2f96', '#fa541c'
+];
+```
+
+## 5. 组件封装规范
+
+### 5.1 自定义组件封装
+
+```vue
+<!-- CustomTable.vue -->
+<template>
+  <das-table
+    :columns="processedColumns"
+    :data-source="dataSource"
+    v-bind="$attrs"
+    v-on="$listeners"
+  >
+    <template v-for="slot in Object.keys($slots)" #[slot]="scope">
+      <slot :name="slot" v-bind="scope" />
+    </template>
+  </das-table>
+</template>
+
+<script setup lang="ts">
+import { computed } from 'vue';
+
+interface Props {
+  columns: any[];
+  dataSource: any[];
+  showIndex?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  showIndex: false
+});
+
+const processedColumns = computed(() => {
+  const columns = [...props.columns];
+  
+  if (props.showIndex) {
+    columns.unshift({
+      title: '序号',
+      dataIndex: 'index',
+      width: 60,
+      customRender: ({ index }: any) => index + 1
+    });
+  }
+  
+  return columns;
+});
+</script>
+```
+
+### 5.2 组件复用原则
+
+1. **优先复用现有组件**
+2. **封装通用业务逻辑**
+3. **保持组件单一职责**
+4. **提供清晰的 API 接口**
+
+## 6. 最佳实践总结
+
+### 6.1 选择决策
+
+1. **先查 DAS 组件清单** - `das-component-vue.json`
+2. **阅读组件文档** - 了解完整 API
+3. **查看使用示例** - 确保正确使用
+4. **考虑 Antd 备选** - 仅在必要时使用
+5. **说明选择原因** - 便于团队理解
+
+### 6.2 使用规范
+
+1. **统一导入方式** - 按需导入组件
+2. **规范命名** - 使用官方推荐的组件名
+3. **完整配置** - 提供必要的属性和事件
+4. **错误处理** - 处理组件异常情况
+5. **性能优化** - 合理使用懒加载
+
+### 6.3 维护原则
+
+1. **版本兼容** - 关注组件库版本更新
+2. **文档同步** - 及时更新使用文档
+3. **问题反馈** - 向组件库团队反馈问题
+4. **最佳实践分享** - 团队内部分享经验
+description:
+globs:
+alwaysApply: false
+---

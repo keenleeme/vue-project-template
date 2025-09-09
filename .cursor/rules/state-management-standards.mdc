@@ -1,0 +1,660 @@
+# Pinia 状态管理规范
+
+## 1. 基础配置规范
+
+### 1.1 Pinia 实例配置
+
+```typescript
+// src/store/index.ts
+import { createPinia } from 'pinia';
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
+
+// 导入所有 store
+import useAppStore from './uedModule/app';
+import useLoginStore from './uedModule/login';
+import useMenusStore from './uedModule/menus';
+import useThemeStore from './uedModule/theme';
+import useUserStore from './uedModule/user';
+
+const pinia = createPinia();
+
+// 使用持久化插件
+pinia.use(piniaPluginPersistedstate);
+
+// 统一导出所有 store
+export { 
+  useAppStore, 
+  useLoginStore, 
+  useUserStore, 
+  useMenusStore, 
+  useThemeStore 
+};
+
+export default pinia;
+```
+
+### 1.2 Store 命名规范
+
+```typescript
+// ✅ 正确的命名规范
+useUserStore      // 用户相关状态
+useAppStore       // 应用全局状态
+useThemeStore     // 主题相关状态
+useMenusStore     // 菜单导航状态
+useLoginStore     // 登录配置状态
+
+// ❌ 错误的命名
+userStore         // 缺少 use 前缀
+useUser           // 缺少 Store 后缀
+useUserData       // 不够清晰
+```
+
+## 2. Store 定义规范
+
+### 2.1 Composition API 风格（推荐）
+
+```typescript
+// src/store/modules/user/index.ts
+import { ref, computed } from 'vue';
+import { defineStore } from 'pinia';
+
+export interface UserInfo {
+  id: string;
+  name: string;
+  avatar?: string;
+  roles: string[];
+}
+
+export const useUserStore = defineStore('user', () => {
+  // 状态定义
+  const userInfo = ref<UserInfo | null>(null);
+  const permissions = ref<string[]>([]);
+  const isLoggedIn = ref<boolean>(false);
+
+  // 计算属性
+  const hasPermission = computed(() => {
+    return (permission: string) => permissions.value.includes(permission);
+  });
+
+  const isAdmin = computed(() => {
+    return userInfo.value?.roles.includes('admin') || false;
+  });
+
+  // 动作方法
+  const setUserInfo = (info: UserInfo) => {
+    userInfo.value = info;
+    isLoggedIn.value = true;
+  };
+
+  const setPermissions = (perms: string[]) => {
+    permissions.value = perms;
+  };
+
+  const logout = () => {
+    userInfo.value = null;
+    permissions.value = [];
+    isLoggedIn.value = false;
+  };
+
+  const reset = () => {
+    userInfo.value = null;
+    permissions.value = [];
+    isLoggedIn.value = false;
+  };
+
+  return {
+    // 状态
+    userInfo,
+    permissions,
+    isLoggedIn,
+    
+    // 计算属性
+    hasPermission,
+    isAdmin,
+    
+    // 动作
+    setUserInfo,
+    setPermissions,
+    logout,
+    reset
+  };
+}, {
+  // 持久化配置
+  persist: {
+    key: 'user-store',
+    storage: localStorage,
+    paths: ['userInfo', 'permissions', 'isLoggedIn']
+  }
+});
+```
+
+### 2.2 Option API 风格（备选）
+
+```typescript
+// 仅在特殊情况下使用 Option API 风格
+export const useAppStore = defineStore('app', {
+  state: () => ({
+    loading: false,
+    sidebar: {
+      opened: true,
+      withoutAnimation: false
+    },
+    device: 'desktop' as 'desktop' | 'mobile'
+  }),
+
+  getters: {
+    isMobile: (state) => state.device === 'mobile',
+    sidebarOpened: (state) => state.sidebar.opened
+  },
+
+  actions: {
+    toggleSidebar() {
+      this.sidebar.opened = !this.sidebar.opened;
+    },
+
+    closeSidebar(withoutAnimation: boolean = false) {
+      this.sidebar.opened = false;
+      this.sidebar.withoutAnimation = withoutAnimation;
+    },
+
+    setDevice(device: 'desktop' | 'mobile') {
+      this.device = device;
+    }
+  }
+});
+```
+
+## 3. 状态持久化规范
+
+### 3.1 持久化配置
+
+```typescript
+// 基础持久化配置
+export const useBasicStore = defineStore('basic', () => {
+  // store 定义...
+}, {
+  persist: true  // 简单配置，使用默认设置
+});
+
+// 高级持久化配置
+export const useAdvancedStore = defineStore('advanced', () => {
+  // store 定义...
+}, {
+  persist: {
+    key: 'advanced-store',           // 存储键名
+    storage: localStorage,           // 存储方式
+    paths: ['userInfo', 'settings'], // 指定持久化字段
+    serializer: {                    // 序列化配置
+      serialize: JSON.stringify,
+      deserialize: JSON.parse
+    }
+  }
+});
+
+// 多存储配置
+export const useMultiStore = defineStore('multi', () => {
+  // store 定义...
+}, {
+  persist: [
+    {
+      key: 'user-info',
+      storage: localStorage,
+      paths: ['userInfo']
+    },
+    {
+      key: 'user-settings',
+      storage: sessionStorage,
+      paths: ['settings']
+    }
+  ]
+});
+```
+
+### 3.2 敏感数据处理
+
+```typescript
+// 敏感数据不应持久化
+export const useSecurityStore = defineStore('security', () => {
+  const token = ref<string>('');        // 不持久化
+  const refreshToken = ref<string>(''); // 不持久化
+  const userPreferences = ref({});      // 可以持久化
+
+  return {
+    token,
+    refreshToken,
+    userPreferences
+  };
+}, {
+  persist: {
+    key: 'security-store',
+    storage: localStorage,
+    paths: ['userPreferences'] // 只持久化非敏感数据
+  }
+});
+```
+
+## 4. Store 使用规范
+
+### 4.1 在组件中使用
+
+```vue
+<template>
+  <div class="user-profile">
+    <div v-if="userStore.isLoggedIn">
+      欢迎，{{ userStore.userInfo?.name }}
+      <a-button 
+        v-if="userStore.hasPermission('user:edit')" 
+        @click="handleEdit"
+      >
+        编辑
+      </a-button>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { useUserStore } from '@/store';
+
+// 使用 store
+const userStore = useUserStore();
+
+// 解构状态（需要使用 storeToRefs）
+import { storeToRefs } from 'pinia';
+const { userInfo, isLoggedIn } = storeToRefs(userStore);
+
+// 直接解构方法（不需要 storeToRefs）
+const { setUserInfo, logout } = userStore;
+
+const handleEdit = () => {
+  // 使用 store 方法
+  console.log('编辑用户');
+};
+</script>
+```
+
+### 4.2 在 Composition API 中使用
+
+```typescript
+// composables/useAuth.ts
+import { computed } from 'vue';
+import { useUserStore } from '@/store';
+
+export function useAuth() {
+  const userStore = useUserStore();
+
+  const isAuthenticated = computed(() => userStore.isLoggedIn);
+  
+  const login = async (credentials: LoginCredentials) => {
+    try {
+      const response = await authApi.login(credentials);
+      userStore.setUserInfo(response.userInfo);
+      userStore.setPermissions(response.permissions);
+      return response;
+    } catch (error) {
+      console.error('登录失败:', error);
+      throw error;
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await authApi.logout();
+    } finally {
+      userStore.logout();
+    }
+  };
+
+  return {
+    isAuthenticated,
+    login,
+    logout
+  };
+}
+```
+
+## 5. 异步操作规范
+
+### 5.1 异步 Action 处理
+
+```typescript
+export const useDataStore = defineStore('data', () => {
+  const data = ref<any[]>([]);
+  const loading = ref(false);
+  const error = ref<string | null>(null);
+
+  // 异步获取数据
+  const fetchData = async (params?: any) => {
+    loading.value = true;
+    error.value = null;
+    
+    try {
+      const response = await api.getData(params);
+      if (response.code === 0) {
+        data.value = response.data || [];
+      } else {
+        throw new Error(response.message || '获取数据失败');
+      }
+    } catch (err) {
+      error.value = err instanceof Error ? err.message : '未知错误';
+      console.error('获取数据失败:', err);
+    } finally {
+      loading.value = false;
+    }
+  };
+
+  // 异步创建数据
+  const createData = async (payload: any) => {
+    try {
+      const response = await api.createData(payload);
+      if (response.code === 0) {
+        // 更新本地状态
+        data.value.unshift(response.data);
+        return response.data;
+      } else {
+        throw new Error(response.message || '创建失败');
+      }
+    } catch (error) {
+      console.error('创建数据失败:', error);
+      throw error;
+    }
+  };
+
+  return {
+    data,
+    loading,
+    error,
+    fetchData,
+    createData
+  };
+});
+```
+
+### 5.2 错误处理规范
+
+```typescript
+export const useErrorStore = defineStore('error', () => {
+  const errors = ref<Map<string, string>>(new Map());
+
+  const setError = (key: string, message: string) => {
+    errors.value.set(key, message);
+  };
+
+  const clearError = (key: string) => {
+    errors.value.delete(key);
+  };
+
+  const clearAllErrors = () => {
+    errors.value.clear();
+  };
+
+  const hasError = (key: string) => {
+    return errors.value.has(key);
+  };
+
+  const getError = (key: string) => {
+    return errors.value.get(key);
+  };
+
+  return {
+    errors,
+    setError,
+    clearError,
+    clearAllErrors,
+    hasError,
+    getError
+  };
+});
+```
+
+## 6. Store 之间的通信
+
+### 6.1 Store 间依赖
+
+```typescript
+// src/store/modules/cart/index.ts
+export const useCartStore = defineStore('cart', () => {
+  const userStore = useUserStore(); // 依赖用户 store
+  
+  const items = ref<CartItem[]>([]);
+
+  const addItem = (item: CartItem) => {
+    if (!userStore.isLoggedIn) {
+      throw new Error('请先登录');
+    }
+    items.value.push(item);
+  };
+
+  const clearCart = () => {
+    items.value = [];
+  };
+
+  // 监听用户登出，清空购物车
+  watch(() => userStore.isLoggedIn, (isLoggedIn) => {
+    if (!isLoggedIn) {
+      clearCart();
+    }
+  });
+
+  return {
+    items,
+    addItem,
+    clearCart
+  };
+});
+```
+
+### 6.2 跨 Store 数据同步
+
+```typescript
+// src/store/modules/sync/index.ts
+export const useSyncStore = defineStore('sync', () => {
+  const userStore = useUserStore();
+  const appStore = useAppStore();
+
+  // 同步用户主题偏好到应用设置
+  const syncUserTheme = () => {
+    if (userStore.userInfo?.themePreference) {
+      appStore.setTheme(userStore.userInfo.themePreference);
+    }
+  };
+
+  // 初始化同步
+  const initSync = () => {
+    syncUserTheme();
+  };
+
+  return {
+    syncUserTheme,
+    initSync
+  };
+});
+```
+
+## 7. 类型定义规范
+
+### 7.1 State 类型定义
+
+```typescript
+// src/store/types/user.ts
+export interface UserState {
+  userInfo: UserInfo | null;
+  permissions: string[];
+  isLoggedIn: boolean;
+}
+
+export interface UserInfo {
+  id: string;
+  name: string;
+  email: string;
+  avatar?: string;
+  roles: string[];
+  department?: string;
+  phone?: string;
+}
+
+// src/store/types/app.ts
+export interface AppState {
+  loading: boolean;
+  sidebar: SidebarState;
+  device: DeviceType;
+  language: string;
+  theme: ThemeType;
+}
+
+export interface SidebarState {
+  opened: boolean;
+  withoutAnimation: boolean;
+}
+
+export type DeviceType = 'desktop' | 'mobile';
+export type ThemeType = 'light' | 'dark';
+```
+
+### 7.2 Action 类型定义
+
+```typescript
+// src/store/types/actions.ts
+export interface UserActions {
+  setUserInfo: (info: UserInfo) => void;
+  setPermissions: (permissions: string[]) => void;
+  logout: () => void;
+  reset: () => void;
+}
+
+export interface DataActions {
+  fetchData: (params?: QueryParams) => Promise<void>;
+  createData: (payload: CreatePayload) => Promise<any>;
+  updateData: (id: string, payload: UpdatePayload) => Promise<void>;
+  deleteData: (id: string) => Promise<void>;
+}
+```
+
+## 8. 测试规范
+
+### 8.1 Store 单元测试
+
+```typescript
+// tests/store/user.test.ts
+import { setActivePinia, createPinia } from 'pinia';
+import { useUserStore } from '@/store/modules/user';
+
+describe('User Store', () => {
+  beforeEach(() => {
+    setActivePinia(createPinia());
+  });
+
+  it('should set user info correctly', () => {
+    const userStore = useUserStore();
+    const mockUser = {
+      id: '1',
+      name: 'Test User',
+      roles: ['user']
+    };
+
+    userStore.setUserInfo(mockUser);
+
+    expect(userStore.userInfo).toEqual(mockUser);
+    expect(userStore.isLoggedIn).toBe(true);
+  });
+
+  it('should check permissions correctly', () => {
+    const userStore = useUserStore();
+    userStore.setPermissions(['read', 'write']);
+
+    expect(userStore.hasPermission('read')).toBe(true);
+    expect(userStore.hasPermission('delete')).toBe(false);
+  });
+
+  it('should logout correctly', () => {
+    const userStore = useUserStore();
+    userStore.setUserInfo({ id: '1', name: 'Test', roles: [] });
+    
+    userStore.logout();
+
+    expect(userStore.userInfo).toBeNull();
+    expect(userStore.isLoggedIn).toBe(false);
+    expect(userStore.permissions).toEqual([]);
+  });
+});
+```
+
+## 9. 性能优化建议
+
+### 9.1 合理拆分 Store
+
+```typescript
+// ❌ 不推荐：过于庞大的 store
+export const useMegaStore = defineStore('mega', () => {
+  const users = ref([]);
+  const products = ref([]);
+  const orders = ref([]);
+  const settings = ref({});
+  // ... 太多状态
+});
+
+// ✅ 推荐：按功能拆分
+export const useUserStore = defineStore('user', () => {
+  const users = ref([]);
+  // 用户相关状态和方法
+});
+
+export const useProductStore = defineStore('product', () => {
+  const products = ref([]);
+  // 产品相关状态和方法
+});
+```
+
+### 9.2 避免不必要的响应式
+
+```typescript
+export const useOptimizedStore = defineStore('optimized', () => {
+  // 使用 shallowRef 用于大型数据结构
+  const largeDataSet = shallowRef<any[]>([]);
+  
+  // 使用 markRaw 用于不需要响应式的数据
+  const staticConfig = markRaw({
+    apiEndpoints: { /* ... */ },
+    constants: { /* ... */ }
+  });
+
+  return {
+    largeDataSet,
+    staticConfig
+  };
+});
+```
+
+## 10. 最佳实践总结
+
+### 10.1 设计原则
+
+1. **单一职责**：每个 store 只管理特定领域的状态
+2. **最小化状态**：只存储必要的状态，计算属性用于派生状态
+3. **不可变性**：避免直接修改状态，使用 action 进行更新
+4. **类型安全**：充分利用 TypeScript 的类型系统
+5. **可测试性**：编写单元测试确保 store 逻辑正确
+
+### 10.2 命名规范
+
+1. **Store 名称**：使用 `useXxxStore` 格式
+2. **状态名称**：使用清晰的名词描述
+3. **方法名称**：使用动词开头，如 `setXxx`、`updateXxx`、`fetchXxx`
+4. **计算属性**：使用形容词或 `isXxx`、`hasXxx` 格式
+
+### 10.3 错误处理
+
+1. **异步操作必须处理错误**
+2. **提供用户友好的错误信息**
+3. **记录详细的错误日志**
+4. **实现错误恢复机制**
+
+### 10.4 性能考虑
+
+1. **合理使用持久化**：避免持久化大量数据
+2. **按需拆分 store**：避免单个 store 过于庞大
+3. **避免过度响应式**：对于静态数据使用 `markRaw`
+4. **合理使用计算属性**：避免重复计算
+description:
+globs:
+alwaysApply: false
+---
