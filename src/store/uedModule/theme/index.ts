@@ -1,5 +1,5 @@
 // import { defaultConfig } from './../app/defaultConfig';
-import { ref, watch, computed } from 'vue';
+import { ref, watch, computed, nextTick } from 'vue';
 import { generate } from '@ant-design/colors';
 import { theme as theme1 } from 'ant-design-vue';
 import Color from 'color';
@@ -9,14 +9,35 @@ import { themeDefaultConfig } from './defaultConfig';
 import { ThemeConfigType } from './types';
 
 const { darkAlgorithm, defaultAlgorithm } = theme1;
+
+// 动态更新字号CSS变量的函数
+function updateFontSizeCSS(fontSize: string) {
+  const root = document.documentElement;
+  root.style.setProperty('--font-size-base', fontSize);
+}
+
 export default defineStore('theme', () => {
   // 主题配置项-布局，面包屑，明暗切换，地图导航，多语言，帮助中心，顶栏
   const localThemeConfig = JSON.parse(localStorage.getItem('ZQTHEMECONFIG') || '{}');
   const themeConfig = ref<ThemeConfigType>({ ...themeDefaultConfig, ...localThemeConfig });
 
-  watch(themeConfig, (newValue) => {
-    localStorage.setItem('ZQTHEMECONFIG', JSON.stringify(newValue));
+  // 立即设置默认字号
+  updateFontSizeCSS(themeConfig.value.fontSize);
+
+  // 初始化时设置字号 - 使用nextTick确保DOM已准备好
+  nextTick(() => {
+    updateFontSizeCSS(themeConfig.value.fontSize);
   });
+
+  watch(
+    themeConfig,
+    (newValue) => {
+      localStorage.setItem('ZQTHEMECONFIG', JSON.stringify(newValue));
+      // 动态更新字号CSS变量
+      updateFontSizeCSS(newValue.fontSize);
+    },
+    { deep: true }
+  );
   const setThemeConfig = (config: ThemeConfigType) => {
     const value = { ...themeDefaultConfig, ...config };
     themeConfig.value = value;
@@ -66,8 +87,11 @@ export default defineStore('theme', () => {
       colorPrimaryHover: isDark ? darkPrimaryColors[4] : primaryColors[4],
       fontFamily:
         'PingFangSC-Regular, PingFangSC-Semibold,-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji',
-      fontSize: parseInt(window.getComputedStyle(document.documentElement).getPropertyValue('--font-size-base'), 10)
-    };
+      fontSize: parseInt(themeConfig.value.fontSize, 10),
+      fontSizeSM: parseInt(themeConfig.value.fontSize, 10) - 2,
+      fontSizeLG: parseInt(themeConfig.value.fontSize, 10) + 2,
+      fontSizeXL: parseInt(themeConfig.value.fontSize, 10) + 4
+    } as any;
     return {
       token,
       // algorithm: themeType.value === ThemeTypes.Dark ? darkAlgorithm : defaultAlgorithm

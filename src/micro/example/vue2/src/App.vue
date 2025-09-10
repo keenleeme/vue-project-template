@@ -63,7 +63,7 @@ export default {
 }
 .vue-app-child button {
   margin: 0 8px;
-  font-size: 14px;
+  font-size: var(--font-size-large);
   height: 32px;
   padding: 4px 15px;
   border-radius: 3px;

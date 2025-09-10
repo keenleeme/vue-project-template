@@ -460,7 +460,7 @@
       color: #1e2128;
       font-family: PingFang SC;
       font-weight: medium;
-      font-size: 14px;
+      font-size: var(--font-size-large);
       line-height: 24px;
       letter-spacing: 0px;
       text-align: center;
@@ -503,7 +503,7 @@
     .component-group {
       color: #000000;
       font-weight: 700;
-      font-size: 16px;
+      font-size: var(--font-size-xl);
       line-height: 0.952vw;
       letter-spacing: 0px;
       text-align: left;
@@ -537,7 +537,7 @@
       margin-top: 48px;
       .y-axis {
         color: #5d79ca;
-        font-size: 16px;
+        font-size: var(--font-size-xl);
         position: absolute;
         height: 100%;
         top: 0;
@@ -573,7 +573,7 @@
         }
       }
       .x-axis {
-        font-size: 16px;
+        font-size: var(--font-size-xl);
         gap: 16px;
         color: #5d79ca;
         display: flex;
@@ -680,14 +680,14 @@
       color: #ffffff;
       .info {
         font-weight: 600;
-        font-size: 16px;
+        font-size: var(--font-size-xl);
         line-height: 16px;
         letter-spacing: 0px;
         text-align: center;
       }
       .copy {
         font-weight: 400;
-        font-size: 12px;
+        font-size: var(--font-size-small);
         line-height: 12px;
         letter-spacing: 0px;
         text-align: center;

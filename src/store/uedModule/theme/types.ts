@@ -18,6 +18,7 @@ export interface ThemeConfigType {
   accordion: boolean; // 侧边导航手风琴模式
   languageSwitch: boolean; // 语言切换
   helpCenter: boolean; // 帮助中心
+  fontSize: string; // 字号设置 '12px'/'14px'
 
   loginMode?: Theme;
 }

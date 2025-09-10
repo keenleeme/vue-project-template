@@ -63,9 +63,18 @@
       <a-dropdown class="side-menu-footer-item" placement="bottom" v-if="config.languageSwitch">
         <i class="icon-button menuicon menu-icon-multilingual"></i>
         <template #overlay>
-          <a-menu @click="handleLocaleChangeA">
+          <a-menu @click="handleLocaleChangeA" :selected-keys="[themeConfig.lang]">
             <a-menu-item key="zh">简体中文</a-menu-item>
             <a-menu-item key="en">English</a-menu-item>
+          </a-menu>
+        </template>
+      </a-dropdown>
+      <a-dropdown class="side-menu-footer-item" placement="bottom">
+        <i class="icon-button zq-icon zq-icon-wenben"></i>
+        <template #overlay>
+          <a-menu @click="handleFontSizeChange" :selected-keys="[themeConfig.fontSize]">
+            <a-menu-item key="12px">12px</a-menu-item>
+            <a-menu-item key="14px">14px</a-menu-item>
           </a-menu>
         </template>
       </a-dropdown>
@@ -385,6 +394,14 @@
       mode
     });
     microApp.setGlobalData({ themeMode: mode });
+  };
+
+  // 字号切换
+  const handleFontSizeChange = ({ key }) => {
+    themeStore.setThemeConfig({
+      ...themeConfig.value,
+      fontSize: key
+    });
   };
 
   // 打开主题设置面板

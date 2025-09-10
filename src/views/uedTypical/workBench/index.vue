@@ -102,7 +102,7 @@
   .time-value {
     display: flex;
     align-items: flex-end;
-    font-size: 24px;
+    font-size: var(--font-size-xl);
     color: var(--color-text-primarys);
     line-height: 32px;
     font-weight: 600;

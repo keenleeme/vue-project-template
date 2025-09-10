@@ -29,6 +29,7 @@
       :current="1"
       :total="data.length"
       @change="onChange"
+      :bordered="false"
     >
       <!-- 操作栏插槽 -->
       <template #operate>

@@ -2124,7 +2124,7 @@ ansi-styles@^6.1.0:
   resolved "https://ci.das-security.cn/repository/ah_npm/ansi-styles/-/ansi-styles-6.2.1.tgz"
   integrity sha512-bN798gFfQX+viw3R7yrGWRqnrN2oRkEkUjjl4JNn4E8GxxbjtG3FbrEIIY3l8/hrwUwIeCZvi4QuOTP4MErVug==
 
-ant-design-vue@^4.2.3:
+ant-design-vue@^4.0.0, ant-design-vue@^4.2.3:
   version "4.2.6"
   resolved "https://ci.das-security.cn/repository/ah_npm/ant-design-vue/-/ant-design-vue-4.2.6.tgz"
   integrity sha512-t7eX13Yj3i9+i5g9lqFyYneoIb3OzTvQjq9Tts1i+eiOd3Eva/6GagxBSXM1fOCjqemIu0FYVE1ByZ/38epR3Q==
@@ -2743,7 +2743,7 @@ clone@^1.0.2:
   resolved "https://ci.das-security.cn/repository/ah_npm/clone/-/clone-1.0.4.tgz"
   integrity sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==
 
-codemirror@^5.57.0:
+codemirror@^5.0.0, codemirror@^5.57.0:
   version "5.65.18"
   resolved "https://ci.das-security.cn/repository/ah_npm/codemirror/-/codemirror-5.65.18.tgz"
   integrity sha512-Gaz4gHnkbHMGgahNt3CA5HBk5lLQBqmD/pBgeB4kQU6OedZmqMBjlRF0LSrp2tJ4wlLNPm2FfaUd1pDy0mdlpA==
@@ -3146,10 +3146,10 @@ dargs@^7.0.0:
   resolved "https://ci.das-security.cn/repository/ah_npm/dargs/-/dargs-7.0.0.tgz"
   integrity sha512-2iy1EkLdlBzQGvbweYRFxmFath8+K7+AKB0TlhHWkNuH+TmovaMH/Wp7V7R4u7f4SnX3OgLsU9t1NI9ioDnUpg==
 
-das-component-vue@^1.0.3:
-  version "1.1.6"
-  resolved "https://ci.das-security.cn/repository/ah_npm/das-component-vue/-/das-component-vue-1.1.6.tgz"
-  integrity sha512-SjhgP0RQJD4zWI2e0zSqAuuhaSVcen3mBCm6dGKExAnsTfNpfVIJO7YJWdtJBHJ33xhHduupzToftNYkL3fr9g==
+das-component-vue@^1.2.8:
+  version "1.2.8"
+  resolved "https://ci.das-security.cn/repository/ah_npm/das-component-vue/-/das-component-vue-1.2.8.tgz"
+  integrity sha512-WqGnv0rFJKc082cV9L5t6VYnZ3TfRub8gN2BHtl4PMe1dLk2PW0ZtnNQXKBCY5VgHm81IYkTR8NVEyoaZo9L7A==
 
 dashdash@^1.12.0:
   version "1.14.1"
@@ -6890,7 +6890,7 @@ pinkie@^2.0.0:
   resolved "https://ci.das-security.cn/repository/ah_npm/pinkie/-/pinkie-2.0.4.tgz"
   integrity sha512-MnUuEycAemtSaeFSjXKW/aroV7akBbY+Sv+RkyqFjgAe73F+MR0TBWKBRDkmfWq/HiFmdavfZ1G7h4SPZXaCSg==
 
-pinyin-engine@^1.2.2:
+pinyin-engine@^1.0.0, pinyin-engine@^1.2.2:
   version "1.2.2"
   resolved "https://ci.das-security.cn/repository/ah_npm/pinyin-engine/-/pinyin-engine-1.2.2.tgz"
   integrity sha512-fm9uDeqAEaVMY1sII7BdLPM8exf8uD4SGe8n5dP8qEOQfJwbtz35zT2RjBHK8AehE5JSr/zBuX91bCSEYkmtrA==
@@ -8977,8 +8977,6 @@ vue-demi@^0.13.11:
 
 vue-demi@latest:
   version "0.14.10"
-  resolved "https://ci.das-security.cn/repository/ah_npm/vue-demi/-/vue-demi-0.14.10.tgz"
-  integrity sha512-nMZBOwuzabUO0nLgIcc6rycZEebF6eeUfaiQx9+WSk8e29IbLvPU9feI6tqW4kTo3hvoYAJkMh8n8D0fuISphg==
 
 vue-echarts@^7.0.3:
   version "7.0.3"

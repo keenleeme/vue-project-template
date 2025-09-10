@@ -17,5 +17,6 @@ export const themeDefaultConfig: ThemeConfigType = {
   breadcrumb: true,
   mapMenu: true,
   accordion: true,
+  fontSize: '12px',
   loginMode: 'light'
 };

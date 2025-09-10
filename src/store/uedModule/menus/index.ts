@@ -6,9 +6,9 @@ import type { MenuType, RouteItemType } from './types';
 
 function renderIcon(name?: string): VNode {
   // @ts-ignore
-  if (!Icons[name]) return () => h(Icons.AppstoreOutlined, { style: { 'font-size': '16px' } });
+  if (!Icons[name]) return () => h(Icons.AppstoreOutlined, { style: { 'font-size': 'var(--font-size-xl)' } });
   // @ts-ignore
-  return () => h(Icons[name], { style: { 'font-size': '16px' } });
+  return () => h(Icons[name], { style: { 'font-size': 'var(--font-size-xl)' } });
 }
 
 function dataToMenuItems(data: MenuType[], type: 'header' | 'all' = 'all'): MenuProps['items'] {

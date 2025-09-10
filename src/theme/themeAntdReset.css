@@ -95,7 +95,7 @@
 }
 .ant-pagination:not(.ant-pagination-disabled) .ant-pagination-prev .anticon,
 .ant-pagination:not(.ant-pagination-disabled) .ant-pagination-next .anticon {
-  font-size: 10px;
+  font-size: var(--font-size-small);
   color: #adb1bc;
 }
 .ant-pagination:not(.ant-pagination-disabled) .ant-pagination-item {
@@ -349,7 +349,7 @@
 }
 /*****选择器 *****/
 .ant-select .ant-select-suffix-new{
-  font-size: 20px;
+  font-size: var(--font-size-xl);
 }
 .ant-select-focused.ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer) .ant-select-selector{
   box-shadow:none;
@@ -571,10 +571,10 @@
   border-radius: 50%;
 }
 .ant-transfer .ant-transfer-operation .ant-btn:not(:disabled) span svg {
-  font-size: 10px;
+  font-size: var(--font-size-small);
 }
 .ant-transfer .ant-transfer-operation .ant-btn:is(:disabled) span svg {
-  font-size: 10px;
+  font-size: var(--font-size-small);
 }
 .ant-transfer .ant-transfer-list {
   width: 200px;
@@ -661,7 +661,7 @@
 }
 /***** 评分 *****/
 .ant-rate {
-  font-size: 24px;
+  font-size: var(--font-size-xl);
 }
 .ant-rate .ant-rate-star-zero .anticon {
   color: var(--color-risk-no-light);
@@ -688,7 +688,7 @@
   height: 104px !important;
 }
 .ant-progress-circle.ant-progress-default .ant-progress-inner .ant-progress-text {
-  font-size: 20px;
+  font-size: var(--font-size-xl);
 }
 .ant-progress-circle-trail {
   stroke-dasharray: none !important;
@@ -716,7 +716,7 @@
   height: 56px;
 }
 .ant-list .ant-list-item-meta-title a {
-  font-size: 16px !important;
+  font-size: var(--font-size-xl) !important;
   font-weight: 600;
 }
 .ant-list-sm .ant-list-header,

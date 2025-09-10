@@ -1,16 +1,92 @@
 @font-face {
   font-family: "zq-icon"; /* Project id 4482924 */
-  src: url('iconfont.woff2?t=1731307654236') format('woff2'),
-       url('iconfont.woff?t=1731307654236') format('woff'),
-       url('iconfont.ttf?t=1731307654236') format('truetype');
+  src: url('iconfont.woff2?t=1757406322290') format('woff2'),
+       url('iconfont.woff?t=1757406322290') format('woff'),
+       url('iconfont.ttf?t=1757406322290') format('truetype');
 }
 
 .zq-icon {
   font-family: "zq-icon" !important;
-  font-size: 16px;
+  font-size: var(--font-size-xl);
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.zq-icon-order-ascending:before {
+  content: "\e80d";
+}
+
+.zq-icon-order-descending:before {
+  content: "\e80e";
+}
+
+.zq-icon-view-grid-card:before {
+  content: "\e80f";
+}
+
+.zq-icon-swap:before {
+  content: "\e810";
+}
+
+.zq-icon-fengjin:before {
+  content: "\e785";
+}
+
+.zq-icon-jiefeng:before {
+  content: "\e80b";
+}
+
+.zq-icon-IP03:before {
+  content: "\e80c";
+}
+
+.zq-icon-dili:before {
+  content: "\e808";
+}
+
+.zq-icon-wenben:before {
+  content: "\e809";
+}
+
+.zq-icon-shuzhi:before {
+  content: "\e80a";
+}
+
+.zq-icon-zhexian:before {
+  content: "\e805";
+}
+
+.zq-icon-pinghua:before {
+  content: "\e806";
+}
+
+.zq-icon-jieti:before {
+  content: "\e807";
+}
+
+.zq-icon-zifu:before {
+  content: "\e804";
+}
+
+.zq-icon-ID:before {
+  content: "\e802";
+}
+
+.zq-icon-neirongbaodaochu:before {
+  content: "\e803";
+}
+
+.zq-icon-a-lineheight:before {
+  content: "\e801";
+}
+
+.zq-icon-icon-biaogelieshezhi:before {
+  content: "\e7ff";
+}
+
+.zq-icon-icon-tianjiachaxuntiaojian:before {
+  content: "\e800";
 }
 
 .zq-icon-a-chevron-left-lightdouble:before {
@@ -499,10 +575,6 @@
 
 .zq-icon-view-column:before {
   content: "\e784";
-}
-
-.zq-icon-order-descending:before {
-  content: "\e785";
 }
 
 .zq-icon-view-list:before {
@@ -1093,10 +1165,6 @@
   content: "\e705";
 }
 
-.zq-icon-swap:before {
-  content: "\e6e7";
-}
-
 .zq-icon-caret-right:before {
   content: "\e6e8";
 }
@@ -1247,10 +1315,6 @@
 
 .zq-icon-queue:before {
   content: "\e6d4";
-}
-
-.zq-icon-order-ascending:before {
-  content: "\e6d5";
 }
 
 .zq-icon-format-vertical-align-left:before {

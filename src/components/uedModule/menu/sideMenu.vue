@@ -46,9 +46,25 @@
             </span>
           </div>
           <template #overlay>
-            <a-menu @click="handleLocaleChangeA">
+            <a-menu @click="handleLocaleChangeA" :selected-keys="[themeConfig.lang]">
               <a-menu-item key="zh">简体中文</a-menu-item>
               <a-menu-item key="en">English</a-menu-item>
+            </a-menu>
+          </template>
+        </a-dropdown>
+      </div>
+      <div class="side-menu-footer-item">
+        <a-dropdown class="side-menu-footer-item" :placement="fold ? 'bottomRight' : 'top'">
+          <div>
+            <i class="menuicon zq-icon-wenben"></i>
+            <span class="ant-dropdown-link" @click.prevent>
+              {{ config.lang === 'zh' ? '字号' : 'Font Size' }}
+            </span>
+          </div>
+          <template #overlay>
+            <a-menu @click="handleFontSizeChange" :selected-keys="[themeConfig.fontSize]">
+              <a-menu-item key="12px">12px</a-menu-item>
+              <a-menu-item key="14px">14px</a-menu-item>
             </a-menu>
           </template>
         </a-dropdown>
@@ -211,6 +227,14 @@
     themeStore.setThemeConfig({
       ...themeConfig.value,
       mode: config.value.mode === 'light' ? 'dark' : 'light'
+    });
+  };
+
+  // 字号切换
+  const handleFontSizeChange: MenuProps['onClick'] = ({ key }) => {
+    themeStore.setThemeConfig({
+      ...themeConfig.value,
+      fontSize: key as string
     });
   };
 

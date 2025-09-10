@@ -130,7 +130,7 @@
 <style lang="less" scoped>
   .logo,
   .title {
-    font-size: 20px;
+    font-size: var(--font-size-xl);
     line-height: 120px;
     margin: 50px;
   }

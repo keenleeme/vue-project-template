@@ -10,13 +10,39 @@
         :content-padding="24"
       >
         <!-- <div class="page-item-title">{{ $t('I18N.layout.duoYuYanSheZhi') }}</div> -->
-        <div>
-          <div class="page-item-title">{{ $t('I18N.layout.yuYan') }}</div>
-          <a-select v-model:value="config.lang" @change="handleLocaleChangeA">
-            <template #suffixIcon><i class="zq-icon zq-icon-chevron-down ant-select-suffix-new"></i></template>
-            <a-select-option value="zh">简体中文</a-select-option>
-            <a-select-option value="en">English</a-select-option>
-          </a-select>
+        <div style="display: flex; gap: 16px; width: 100%">
+          <div style="flex: 1">
+            <div class="page-item-title">{{ $t('I18N.layout.yuYan') }}</div>
+            <a-select v-model:value="config.lang" @change="handleLocaleChangeA">
+              <template #suffixIcon><i class="zq-icon zq-icon-chevron-down ant-select-suffix-new"></i></template>
+              <a-select-option value="zh">简体中文</a-select-option>
+              <a-select-option value="en">English</a-select-option>
+            </a-select>
+          </div>
+
+          <div style="flex: 1">
+            <div class="page-item-title">字号设置</div>
+            <a-select v-model:value="config.fontSize" @change="handleFontSizeChange">
+              <template #suffixIcon><i class="zq-icon zq-icon-chevron-down ant-select-suffix-new"></i></template>
+              <a-select-option value="12px">12px</a-select-option>
+              <a-select-option value="14px">14px</a-select-option>
+            </a-select>
+            <!-- <div style="margin-top: 8px; font-size: var(--font-size-base); color: var(--color-text-secondary);">
+              当前字号: {{ config.fontSize }}
+            </div>
+            <div style="margin-top: 16px;">
+              <div style="margin-bottom: 8px; font-size: var(--font-size-base);">Ant Design 组件测试：</div>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <a-button type="primary">主要按钮</a-button>
+                <a-button>默认按钮</a-button>
+                <a-input placeholder="输入框测试" style="width: 120px;" />
+                <a-select placeholder="选择器" style="width: 100px;">
+                  <a-select-option value="1">选项1</a-select-option>
+                  <a-select-option value="2">选项2</a-select-option>
+                </a-select>
+              </div>
+            </div> -->
+          </div>
         </div>
       </BlockCard>
       <!-- <h1>主题配置页themeConfig</h1> -->
@@ -135,16 +161,11 @@
   });
 
   watchEffect(() => {
-    console.log('themeConfig changed', themeConfig.value);
     config.value = { ...themeConfig.value };
   });
 
   const changeConfig = (key: string, newConfig: any) => {
-    // config.value = { ...newConfig };
-    console.log('changeConfig', key, newConfig);
     // 配置页修改，不影响全局，应用后同步到全局
-    // Todo config.mode 值变成 dark后，配置页的样式也发生了变化
-    // config.value = { ...config.value, [key]: newConfig };
     themeConfig.value = { ...themeConfig.value, [key]: newConfig };
   };
 
@@ -206,11 +227,19 @@
     dialogVisiable.value = false;
   };
 
-  const handleLocaleChangeA = (key: string) => {
-    changeConfig('lang', key);
-    changeLocale(key);
-    loginStore.set({ language: key });
-    window.location.reload();
+  const handleLocaleChangeA = (key: any) => {
+    if (typeof key === 'string') {
+      changeConfig('lang', key);
+      changeLocale(key);
+      loginStore.set({ language: key });
+      window.location.reload();
+    }
+  };
+
+  const handleFontSizeChange = (fontSize: any) => {
+    if (typeof fontSize === 'string') {
+      changeConfig('fontSize', fontSize);
+    }
   };
 </script>
 

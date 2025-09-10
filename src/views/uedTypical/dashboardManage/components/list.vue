@@ -10,6 +10,7 @@
       :total="data.length"
       :row-selection="{ selectedRowKeys: selectedRows.map((row) => row.key), onChange: onSelectionChange }"
       @change="onChange"
+      :bordered="false"
     >
       <template #operate="{ rowSelection }">
         <a-button type="primary" @click="add" class="mr-8">
@@ -76,6 +77,7 @@
       :total="data.length"
       :row-selection="{ selectedRowKeys: selectedRows.map((row) => row.key), onChange: onSelectionChange }"
       @change="onChange"
+      :bordered="false"
     >
       <template #operate="{ rowSelection }">
         <a-button type="primary" @click="add" class="mr-8">
@@ -419,7 +421,7 @@
   }
   .modal-wrap {
     .anticon {
-      font-size: 24px !important;
+      font-size: var(--font-size-xl) !important;
       margin: 16px 0 0;
     }
     :deep(.ant-upload-wrapper) {
@@ -427,14 +429,14 @@
       margin-top: 16px;
     }
     .explain-text {
-      font-size: 12px;
+      font-size: var(--font-size-small);
     }
     .click-btn {
       color: var(--color-brand-normal);
     }
   }
   .explain {
-    font-size: 12px;
+    font-size: var(--font-size-small);
     color: var(--color-text-placeholder);
     line-height: 20px;
     margin-top: 16px;

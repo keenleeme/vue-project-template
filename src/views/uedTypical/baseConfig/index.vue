@@ -218,7 +218,7 @@
           }
           .ant-radio-wrapper,
           :deep(.ant-checkbox-wrapper) {
-            font-size: 12px !important;
+            font-size: var(--font-size-small) !important;
           }
         }
       }

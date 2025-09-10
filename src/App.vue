@@ -1,8 +1,10 @@
 <template>
   <a-config-provider :locale="zhCN" :theme="theme">
-    <Layout class="layout-overflow-x">
-      <RouterView></RouterView>
-    </Layout>
+    <das-theme-provider :locale="zhCN" :theme="theme">
+      <Layout class="layout-overflow-x">
+        <RouterView></RouterView>
+      </Layout>
+    </das-theme-provider>
   </a-config-provider>
 </template>
 

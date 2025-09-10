@@ -1,6 +1,7 @@
 :root,.theme-light{
   /*************ZQ字号规则**************/
-  --font-size-base: 12px;                              /* 12规范基准 ｜｜  14规范基准   正文，【加粗】小标题*/
+  /* --font-size-base: 12px;                              12规范基准 ｜｜  14规范基准   正文，【加粗】小标题 */
+  /* --font-size-base 由JavaScript动态设置，不在此处硬编码 */
   --font-size-small: calc(var(--font-size-base) - 0px);/* 12        ｜｜ 12          说明文字*/ 
   --font-size-large: calc(var(--font-size-base) + 2px);/* 14        ｜｜ 16         【加粗】中标题*/
   --font-size-xl: calc(var(--font-size-base) + 4px);   /* 16        ｜｜ 20         【加粗】大标题*/
