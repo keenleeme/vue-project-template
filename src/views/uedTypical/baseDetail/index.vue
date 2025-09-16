@@ -130,8 +130,6 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
-
 <style lang="less" scoped>
   .base-detail-box {
     padding: 24px 16px;
@@ -147,7 +145,7 @@
         height: 64px;
         padding: 8px;
         border-radius: 4px;
-        background-color: #6e9efd;
+        background-color: var(--color-brand-normal);
       }
       .header-info {
         flex: 1;
@@ -166,7 +164,7 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: #1db969;
+            background: var(--color-success-normal);
             margin-right: 4px;
           }
         }

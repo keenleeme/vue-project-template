@@ -165,11 +165,10 @@
 
       .upload-tip {
         font-size: var(--font-size-base);
-        color: #9096a5;
+        color: var(--color-text-placeholder);
         letter-spacing: 0;
         line-height: 20px;
         font-weight: 400;
-        font-size: var(--font-size-base);
       }
       .up-form-icon {
         margin-right: 8px;

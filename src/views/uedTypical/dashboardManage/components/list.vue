@@ -1,76 +1,8 @@
 <template>
   <div class="table-wrap">
     <das-table
-      v-if="sortStatus"
       class="table-box"
-      :columns="[...sortColumns, ...columns]"
-      :data-source="data"
-      :row-key="'id'"
-      :current="1"
-      :total="data.length"
-      :row-selection="{ selectedRowKeys: selectedRows.map((row) => row.key), onChange: onSelectionChange }"
-      @change="onChange"
-      :bordered="false"
-    >
-      <template #operate="{ rowSelection }">
-        <a-button type="primary" @click="add" class="mr-8">
-          <template #icon>
-            <PlusOutlined />
-          </template>
-          {{ $t('I18N.layout.xinZengYiBiaoPan') }}
-        </a-button>
-        <a-button class="mr-8" :disabled="selectedRows.length === 0" @click="moveTo">{{
-          $t('I18N.layout.yiDongDao')
-        }}</a-button>
-        <a-button class="mr-8"> {{ $t('I18N.layout.daoChu') }} </a-button>
-        <a-button :disabled="rowSelection.length === 0"> {{ $t('I18N.layout.shanChu') }} </a-button>
-      </template>
-      <template #shortcut>
-        <a-input-search
-          class="mr-8 input"
-          v-model:value="searchKey"
-          :placeholder="$t('I18N.layout.qingShuRuYeMianDiZhi')"
-          @search="onSearch"
-        />
-        <a-button class="mr-8">
-          <template #icon>
-            <ImportOutlined />
-          </template>
-        </a-button>
-        <a-button class="mr-8">
-          <template #icon>
-            <SettingOutlined />
-          </template>
-        </a-button>
-        <a-button :class="{ 'sort-btn': true, 'active-btn': sortStatus }" @click="setSortStatus(!sortStatus)">
-          <template #icon>
-            <MoreOutlined />
-            <MoreOutlined />
-          </template>
-        </a-button>
-      </template>
-      <template #bodyCell="{ column, record }">
-        <template v-if="column.key === 'name'">
-          <a>
-            {{ record.name }}
-          </a>
-        </template>
-        <template v-else-if="column.key === 'status'">
-          <a-switch v-model:checked="record.status" :disabled="record.disabled" />
-        </template>
-        <template v-else-if="column.key === 'operation'">
-          <a-button class="link" :disabled="record.disabled" type="link">{{ $t('I18N.layout.xiangQing') }}</a-button>
-          <a-button class="link" :disabled="record.disabled" type="link">{{ $t('I18N.common.delete') }}</a-button>
-          <a-button class="link" :disabled="record.disabled" type="link" @click="moveTo">{{
-            $t('I18N.layout.yiDongDao')
-          }}</a-button>
-        </template>
-      </template>
-    </das-table>
-    <das-table
-      v-else
-      class="table-box"
-      :columns="columns"
+      :columns="sortStatus ? [...sortColumns, ...columns] : columns"
       :data-source="data"
       :row-key="'id'"
       :current="1"
@@ -314,7 +246,7 @@
     console.log(value);
   };
 
-  const onSelectionChange = (selectedRowKeys: string[], selectedRowsData: TableDataType[]) => {
+  const onSelectionChange = (_selectedRowKeys: string[], selectedRowsData: TableDataType[]) => {
     selectedRows.value = selectedRowsData;
     console.log('选中的行:', selectedRowsData);
   };
@@ -407,11 +339,11 @@
         }
       }
       .active-btn {
-        color: #6e9efd !important;
-        background-color: #c0d9ff !important;
-        border-color: #0639c3 !important;
+        color: var(--color-brand-normal) !important;
+        background-color: var(--color-brand-light) !important;
+        border-color: var(--color-brand-active) !important;
         .anticon {
-          color: #0639c3 !important;
+          color: var(--color-brand-active) !important;
         }
       }
     }

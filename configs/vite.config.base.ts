@@ -75,7 +75,7 @@ export default defineConfig({
         replacement: 'vue/dist/vue.esm-bundler.js' // compile template
       }
     ],
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.js', '.vue']
   },
   define: {
     'process.env': JSON.stringify(env)

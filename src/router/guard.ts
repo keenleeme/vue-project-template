@@ -32,12 +32,12 @@ export function setupPermissionGuard(router: Router) {
     } else if (userStore.token) {
       // 判断是否登录
       // 判断是否获取菜单权限
-      if (!menusStore.menusData.length) {
+      if (!menusStore.menusData || !menusStore.menusData.length) {
         const menusData = await getMenus();
         menusStore.setMenus(menusData);
       }
       // 判断是否获取权限 ids;
-      if (!userStore.permissionIds.length) {
+      if (!userStore.permissionIds || !userStore.permissionIds.length) {
         const permissionIds = await getPermissions();
         userStore.setPermissionIds(permissionIds);
       }

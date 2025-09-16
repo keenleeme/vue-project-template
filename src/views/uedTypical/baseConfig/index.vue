@@ -120,7 +120,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { ref, reactive, watch } from 'vue';
   import { InfoCircleOutlined } from '@ant-design/icons-vue';
   import BlockCard from '@/components/uedModule/blockCard/index.vue';
 
@@ -130,16 +130,12 @@
   const maxPasswordLen = ref<number>(20);
   const plainOptions = [I18N.layout.shuZi, I18N.layout.ziMuDaXiaoXie, I18N.layout.teShuZiFu];
   const state = reactive({
-    indeterminate: true,
-    checkAll: false,
     checkedList: [I18N.layout.shuZi, I18N.layout.ziMuDaXiaoXie, I18N.layout.teShuZiFu]
   });
   watch(
     () => state.checkedList,
     () => {
       console.log(state.checkedList);
-      // state.indeterminate = !!val.length && val.length < plainOptions.length;
-      // state.checkAll = val.length === plainOptions.length;
     }
   );
 
@@ -186,7 +182,6 @@
     .base-config-content {
       padding: 16px;
       flex-grow: 1;
-      padding: 16px;
       height: 0;
       overflow-x: hidden;
 
@@ -229,7 +224,7 @@
 
       .area-head {
         font-size: var(--font-size-base);
-        // color: #FFFFFF;
+        // color: var(--color-text-anti);
         color: var(--color-text-primarys);
         letter-spacing: 0;
         line-height: 20px;
