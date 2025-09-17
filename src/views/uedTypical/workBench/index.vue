@@ -12,7 +12,8 @@
           flex: 1,
           backgroundColor: 'var(--color-bg-container)',
           borderRadius: '6px',
-          padding: '16px'
+          padding: '16px',
+          height: '96px'
         }"
       >
         <template #image>
@@ -106,6 +107,7 @@
     color: var(--color-text-primarys);
     line-height: 32px;
     font-weight: 600;
+    height: 32px; /* 统一内容区域高度 */
 
     span {
       font-size: var(--font-size-base);
@@ -117,5 +119,6 @@
   .count-value {
     display: flex;
     align-items: flex-end;
+    height: 32px; /* 统一内容区域高度 */
   }
 </style>

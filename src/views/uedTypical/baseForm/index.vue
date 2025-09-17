@@ -63,7 +63,7 @@
             <a-upload v-model="formState.attachment" name="file" action="">
               <a-button>
                 <template #icon>
-                  <i class="zq-icon zq-icon-upload up-form-icon"></i>
+                  <i class="zq-icon zq-icon-export up-form-icon"></i>
                 </template>
                 {{ $t('I18N.base_form.uploadFile') }}
               </a-button>

@@ -2,31 +2,30 @@
   <div class="table-wrap">
     <das-table
       :columns="columns"
-      :data-source="data"
-      :row-key="'key'"
+      :dataSource="data"
+      :rowKey="'key'"
       :selection="true"
-      :refresh-intervals="[5, 10, 20]"
+      :refreshIntervals="[5, 10, 20]"
       :total="data.length"
       :current="1"
       @change="onChange"
       @select="onSelect"
-      @column-change="columnChange"
+      @columnChange="columnChange"
       :bordered="false"
     >
       <!-- 操作栏插槽 -->
       <template #operate="{ rowSelection }">
-        <a-button type="primary" class="mr-8">
+        <a-button type="primary">
           <template #icon>
             <PlusOutlined />
           </template>
           {{ $t('I18N.layout.xinJian') }}
         </a-button>
-        <a-button class="mr-8" :disabled="rowSelection.length === 0"> {{ $t('I18N.layout.daoChu') }} </a-button>
-        <a-button class="mr-8" :disabled="rowSelection.length === 0">
+        <a-button :disabled="rowSelection.length === 0"> {{ $t('I18N.layout.daoChu') }} </a-button>
+        <a-button :disabled="rowSelection.length === 0">
           {{ $t('I18N.layout.zhongDianGuanZhu') }}
         </a-button>
         <a-button :disabled="rowSelection.length === 0"> {{ $t('I18N.layout.quXiaoGuanZhu') }} </a-button>
-        <span v-if="rowSelection.length > 0" class="selection-info"> 已选择 {{ rowSelection.length }} 项 </span>
       </template>
 
       <!-- 快捷查询插槽 -->
@@ -37,7 +36,7 @@
       <!-- 自定义单元格内容 -->
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'name'">
-          <a @click="handleViewDetail(record)">
+          <a @click="handleViewDetail(record)" class="brand-link">
             {{ record.name }}
           </a>
         </template>
@@ -196,20 +195,42 @@
 
     .link {
       padding: 0;
-      margin-right: 28px;
+      margin-right: 20px;
+      color: var(--color-brand-normal) !important;
+      text-decoration: none;
+      &:hover {
+        color: var(--color-brand-active) !important;
+        text-decoration: none;
+      }
       &:last-child {
         margin-right: 0;
       }
     }
 
-    .mr-8 {
-      margin-right: 8px;
+    .brand-link {
+      color: var(--color-brand-normal) !important;
+      text-decoration: none;
+      cursor: pointer;
+      &:hover {
+        color: var(--color-brand-active) !important;
+        text-decoration: none;
+      }
     }
-
-    .selection-info {
-      margin-left: 16px;
-      color: var(--color-text-secondary);
-      font-size: 14px;
-    }
+  }
+  /* 统一去除 a-button link 模式的下划线并应用品牌色 */
+  :deep(.ant-btn-link) {
+    color: var(--color-brand-normal) !important;
+    text-decoration: none !important;
+  }
+  :deep(.ant-btn-link:hover),
+  :deep(.ant-btn-link:focus) {
+    color: var(--color-brand-active) !important;
+    text-decoration: none !important;
+  }
+  /* 兼容某些主题对 a 标签的覆盖，确保内部元素不带下划线 */
+  :deep(.ant-btn-link a),
+  :deep(.ant-btn-link span),
+  :deep(.ant-btn-link *) {
+    text-decoration: none !important;
   }
 </style>

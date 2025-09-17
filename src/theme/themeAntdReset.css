@@ -640,7 +640,7 @@
 .ant-modal .ant-modal-content {
   min-width: 480px;
   max-width: 960px;
-  padding: 28px 24px 24px;
+  padding: 18px 22px 24px;
 }
 .ant-modal-confirm .ant-modal-confirm-body{
   margin-block-start:16px;
@@ -750,7 +750,8 @@
 }
 /***** 上传 *****/
 .ant-upload-select-text .ant-btn {
-  border: 0 !important;
+  /* border: 0 !important; */
+  padding: 2px 20px;
 }
 .side-menu-wrapper .side-menu-footer .side-menu-footer-item:hover, .side-menu-wrapper .side-menu-footer .side-menu-footer-item.active{
   color: var(--color-text-brand) !important;
