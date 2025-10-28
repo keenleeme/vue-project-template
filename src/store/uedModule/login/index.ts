@@ -1,5 +1,5 @@
 import { ref } from 'vue';
-import { setI18n, setTheme } from '@ued-material/ued-wbc';
+import { setI18n, setTheme } from '@ued-material/ued-wbc-vue3';
 import { defineStore } from 'pinia';
 import { LoginConfigDTO } from '@/views/uedModule/login/types';
 import { defaultLoginConfig } from './defaultConfig';
@@ -29,7 +29,7 @@ export default defineStore<'login', LoginConfigStore>(
     const set = (config: Partial<LoginConfigDTO>) => {
       loginConfig.value = new LoginConfigDTO({ ...loginConfig.value, ...config });
       setLoginConfig();
-      console.log(123, loginConfig.value.language, loginConfig.value.mode);
+      console.log(123, loginConfig.value.language, loginConfig.value.mode, setI18n);
       setTheme(loginConfig.value.mode);
       setI18n(loginConfig.value.language);
     };

@@ -59,16 +59,16 @@ export default defineConfig({
         dasComponentResolver()
       ]
     })
-    // extra.copy(
-    //   resolve(__dirname, '../node_modules/@ued-material/ued-wbc/dist/assets/ued-wbc'),
-    //   resolve(__dirname, '../public/assets/ued-wbc'),
-    // )
   ],
   resolve: {
     alias: [
       {
         find: '@',
         replacement: resolve(__dirname, '../src')
+      },
+      {
+        find: 'vue/server-renderer',
+        replacement: '@vue/server-renderer'
       },
       {
         find: 'vue',
