@@ -91,7 +91,7 @@
             type: 'string',
             min: 6,
             validator: (_, value: any, cab: any) => {
-              if (value.length < 6) {
+              if (value?.length < 6) {
                 cab(new Error(I18N.layout.miMaBuDeXiaoYu));
               }
               cab();
@@ -208,7 +208,7 @@
               required: true,
               validator: (rule: any, value: any, cab: any) => {
                 resiterPassword.value = value;
-                if (value.length < 6) {
+                if (value?.length < 6) {
                   cab(new Error('密码不能小于6位'));
                 }
                 cab();
