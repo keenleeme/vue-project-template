@@ -332,9 +332,9 @@
         loginLayout.value.refresh('verifyCode');
         message.error(res.message || '登录失败');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('登录失败:', error);
-      const errorMessage = error instanceof Error ? error.message : '登录失败，请重试';
+      const errorMessage = error.response?.data?.message || '登录失败，请重试';
       message.error(errorMessage);
       loginLayout.value.refresh('verifyCode');
     }
@@ -354,9 +354,9 @@
       } else {
         message.error(res.message || '注册失败');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('注册失败:', error);
-      const errorMessage = error instanceof Error ? error.message : '注册失败，请重试';
+      const errorMessage = error.response?.data?.message || '注册失败，请重试';
       message.error(errorMessage);
     }
   };
