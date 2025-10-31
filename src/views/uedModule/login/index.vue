@@ -256,8 +256,8 @@
           api: () => {
             return new Promise(async (resolve, reject) => {
               try {
-                await handleLoginRedirect();
-                resolve(true);
+                const url = await handleLoginRedirect();
+                resolve(url);
               } catch (error) {
                 console.error('钉钉登录跳转失败:', error);
                 reject(error);
