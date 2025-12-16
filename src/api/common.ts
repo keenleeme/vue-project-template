@@ -353,3 +353,7 @@ export async function getLoginRedirectUrl(params: { state: string; redirectUri: 
 export async function fetchDingTalkUserInfo(code: string): Promise<any> {
   return createService.get(`/api/user/v1/dingtalk/callback?code=${encodeURIComponent(code)}`);
 }
+
+export async function getUserInfo(): Promise<any> {
+  return createService.get(`/api/user/v1/user`);
+}

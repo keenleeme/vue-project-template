@@ -1,5 +1,5 @@
 import { Router } from 'vue-router';
-import { getMenus, getPermissions, fetchDingTalkUserInfo } from '@/api/common';
+import { getMenus, getPermissions, fetchDingTalkUserInfo, getUserInfo } from '@/api/common';
 import { useAppStore, useMenusStore, useUserStore } from '@/store';
 
 export const WHITE_LIST: string[] = ['/404', '/login', '/ai-agent'];
@@ -11,11 +11,14 @@ export function setupPermissionGuard(router: Router) {
       const { code, state } = to.query;
       if (code && state === 'relogin') {
         const res = await fetchDingTalkUserInfo(code as string);
-        if (res.code === 200) {
+        const userInfo = await getUserInfo();
+        if (res.data && res.data.accessToken) {
           const { data } = res;
-          const { accessToken, user } = data;
+          const { accessToken } = data;
           userStore.setToken(accessToken);
-          userStore.setUserInfo(user);
+        }
+        if (userInfo.data) {
+          userStore.setUserInfo(userInfo.data.user);
         }
       }
     }
