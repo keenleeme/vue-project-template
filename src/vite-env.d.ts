@@ -14,3 +14,9 @@ declare module '*.jpeg';
 declare module '*.gif';
 declare module '*.bmp';
 declare module '*.tiff';
+
+declare global {
+  interface Window {
+    _routeCenter: any;
+  }
+}

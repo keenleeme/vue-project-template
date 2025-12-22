@@ -13,7 +13,7 @@
         <div style="display: flex; gap: 16px; width: 100%">
           <div style="flex: 1">
             <div class="page-item-title">{{ $t('I18N.layout.yuYan') }}</div>
-            <a-select v-model:value="config.lang" @change="handleLocaleChangeA">
+            <a-select v-model:value="config.lang" @change="handleLocaleChange">
               <template #suffixIcon><i class="zq-icon zq-icon-chevron-down ant-select-suffix-new"></i></template>
               <a-select-option value="zh">简体中文</a-select-option>
               <a-select-option value="en">English</a-select-option>
@@ -145,11 +145,11 @@
 
 <script lang="ts" setup>
   import { ref, watchEffect } from 'vue';
-  import { changeLocale } from '@international/vue3-i18n';
   import { ThemePanelItem } from '@ued-material/menu';
   import { Modal, message } from 'ant-design-vue';
   import { storeToRefs } from 'pinia';
   import BlockCard from '@/components/uedModule/blockCard/index.vue';
+  import { useI18n } from '@/libs/hooks/useI18n';
   import { useLoginStore, useThemeStore } from '@/store';
 
   const themeStore = useThemeStore();
@@ -159,6 +159,9 @@
   const config = ref({
     ...themeConfig.value
   });
+
+  // 国际化
+  const { handleLocaleChange } = useI18n();
 
   watchEffect(() => {
     config.value = { ...themeConfig.value };
@@ -225,15 +228,6 @@
     }
     message.success(I18N.layout.fuZhiChengGongWenAn);
     dialogVisiable.value = false;
-  };
-
-  const handleLocaleChangeA = (key: any) => {
-    if (typeof key === 'string') {
-      changeConfig('lang', key);
-      changeLocale(key);
-      loginStore.set({ language: key });
-      window.location.reload();
-    }
   };
 
   const handleFontSizeChange = (fontSize: any) => {

@@ -3,12 +3,6 @@ import { useUserStore } from '@/store';
 
 const routes: RouteRecordRaw[] = [
   {
-    name: 'home',
-    path: '/',
-    redirect: '/workBench'
-  },
-
-  {
     name: 'base::das-readdy',
     path: '/das-readdy',
     beforeEnter() {

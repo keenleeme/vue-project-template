@@ -4,6 +4,12 @@ import type { RouterGuard, prefetchParamList } from '@micro-app/types';
 import microApp from '@micro-zoe/micro-app';
 import type { unmountAppParams, microData } from './types';
 
+declare global {
+  interface Window {
+    microApp: typeof microApp;
+  }
+}
+window.microApp = microApp;
 /**
  * @description 获取正在运行的子应用，不包含已卸载和预加载的应用
  * @param excludeHiddenApp 是否过滤处于隐藏状态的keep-alive应用，默认false

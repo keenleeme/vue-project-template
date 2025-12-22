@@ -192,11 +192,11 @@
 
   const levelOptions = ref([
     {
-      label: I18N.common.yiJiCaiDan,
+      label: I18N.api.common.yiJiCaiDan,
       value: 1
     },
     {
-      label: I18N.common.erJiCaiDan,
+      label: I18N.api.common.erJiCaiDan,
       value: 2
     }
   ]);

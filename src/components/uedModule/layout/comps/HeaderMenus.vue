@@ -60,15 +60,7 @@
           </a-menu>
         </template>
       </a-dropdown>
-      <a-dropdown class="side-menu-footer-item" placement="bottom" v-if="config.languageSwitch">
-        <i class="icon-button menuicon menu-icon-multilingual"></i>
-        <template #overlay>
-          <a-menu @click="handleLocaleChangeA" :selected-keys="[themeConfig.lang]">
-            <a-menu-item key="zh">简体中文</a-menu-item>
-            <a-menu-item key="en">English</a-menu-item>
-          </a-menu>
-        </template>
-      </a-dropdown>
+      <LanguageSwitcher />
       <a-dropdown class="side-menu-footer-item" placement="bottom">
         <i class="icon-button zq-icon zq-icon-wenben"></i>
         <template #overlay>
@@ -155,14 +147,13 @@
 
 <script setup lang="ts">
   import { ref, watchEffect } from 'vue';
-  import { changeLocale } from '@international/vue3-i18n';
   import { UedMapMenu, findNodeInTree } from '@ued-material/menu';
   import docsViewer from 'docs-viewer';
   import 'docs-viewer/dist/lib.css';
   import { storeToRefs } from 'pinia';
+  import LanguageSwitcher from '@/components/uedModule/common/LanguageSwitcher.vue';
   import TopMenu from '@/components/uedModule/menu/topMenu.vue';
   import UserMenu from '@/components/uedModule/menu/userMenu.vue';
-  import microApp from '@/micro/microApi';
   import { microMenuNavigation } from '@/micro/microApi/helper';
   import { useLoginStore, useAppStore, useThemeStore } from '@/store';
   import { LoginConfigDTO } from '@/views/uedModule/login/types';
@@ -246,11 +237,11 @@
 
   const levelOptions = ref([
     {
-      label: I18N.common.yiJiCaiDan,
+      label: I18N.api.common.yiJiCaiDan,
       value: 1
     },
     {
-      label: I18N.common.erJiCaiDan,
+      label: I18N.api.common.erJiCaiDan,
       value: 2
     }
   ]);
@@ -380,20 +371,15 @@
     window.open(`${window.location.origin}/componentsGuide`, '_blank');
   };
 
-  // 国际化切换
-  const handleLocaleChangeA = ({ key }) => {
-    themeConfig.value = { ...themeConfig.value, lang: key };
-    loginStore.set({ language: key });
-    changeLocale(key);
-    window.location.reload();
-  };
   const handleChangeMode = () => {
     const mode = config.value.mode === 'light' ? 'dark' : 'light';
     themeStore.setThemeConfig({
       ...themeConfig.value,
       mode
     });
-    microApp.setGlobalData({ themeMode: mode });
+    if (window.microApp) {
+      window.microApp.setGlobalData({ themeMode: mode });
+    }
   };
 
   // 字号切换

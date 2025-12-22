@@ -31,7 +31,7 @@
       v-model="language"
       :clearable="false"
       :options="options"
-      @u-change="handleLocaleChangeA"
+      @u-change="handleLocaleChangeFromCustomEvent"
     ></ued-select>
     <div slot="copyright">
       <template v-for="(item, idx) in loginConfig.copyright" :key="idx">
@@ -45,10 +45,10 @@
 <script setup lang="ts">
   import { ref, watch } from 'vue';
   import { useRouter } from 'vue-router';
-  import { changeLocale } from '@international/vue3-i18n';
   import { message } from 'ant-design-vue';
   import { storeToRefs } from 'pinia';
   import { onLogin, onRegister, getCaptcha, getLoginRedirectUrl } from '@/api/common';
+  import { useI18n } from '@/libs/hooks/useI18n';
   import { useLoginStore, useThemeStore, useUserStore } from '@/store';
   import { LoginConfigDTO, LogoModeEnums } from './types';
 
@@ -56,6 +56,9 @@
   const userStore = useUserStore();
   const router = useRouter();
   const { themeConfig } = storeToRefs(useThemeStore());
+
+  // 国际化
+  const { handleLocaleChangeFromCustomEvent } = useI18n();
 
   const loginConfig = ref<LoginConfigDTO>(new LoginConfigDTO(loginStore.loginConfig));
   const language = ref();
@@ -359,14 +362,6 @@
       const errorMessage = error.response?.data?.message || '注册失败，请重试';
       message.error(errorMessage);
     }
-  };
-
-  const handleLocaleChangeA = (e: CustomEvent<{ data: string }>) => {
-    const locale = e.detail.data === 'en' ? 'en' : 'zh';
-    themeConfig.value = { ...themeConfig.value, lang: locale };
-    changeLocale(locale);
-    loginStore.set({ language: locale });
-    window.location.reload();
   };
 
   const handleLoginRedirect = async () => {

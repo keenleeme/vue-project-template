@@ -198,7 +198,7 @@
             </div>
             <div class="group-content">
               <div v-for="(item, idx) in loginConfig.copyright" :key="idx" class="copyright-item">
-                <a-form-item :label="$t('I18N.layout.wenZi')" :name="['copyright', idx, 'text']">
+                <a-form-item :label="$t('I18N.layout.wenzi')" :name="['copyright', idx, 'text']">
                   <a-input v-model:value="item.text" :placeholder="$t('I18N.base_form.pleaseEnterContent')"></a-input>
                 </a-form-item>
                 <a-form-item :label="$t('I18N.layout.lianJieDiZhi')" :name="['copyright', idx, 'link']">

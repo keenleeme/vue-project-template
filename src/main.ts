@@ -8,7 +8,6 @@ import '@/theme/themeAntdReset.css';
 import App from './App.vue';
 import './assets/font/iconfont.css';
 import i18n from './locale/index';
-// micro按需生成
 import { startMicro } from './micro';
 import router from './router';
 import pinia from './store';
@@ -29,7 +28,6 @@ i18n(app);
 app.use(UedWBCInstall);
 
 (async () => {
-  // micro按需生成
   await startMicro(router);
   app.use(router);
   app.mount('#app');

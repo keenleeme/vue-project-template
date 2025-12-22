@@ -37,22 +37,7 @@
         <i class="menuicon menu-icon-help" />
         <span>{{ config.lang === 'zh' ? '帮助文档' : 'Document' }}</span>
       </div>
-      <div v-if="config.languageSwitch" class="side-menu-footer-item">
-        <a-dropdown class="side-menu-footer-item" :placement="fold ? 'bottomRight' : 'top'">
-          <div>
-            <i class="menuicon menu-icon-multilingual"></i>
-            <span class="ant-dropdown-link" @click.prevent>
-              {{ config.lang === 'zh' ? '多语言' : 'Multilingual' }}
-            </span>
-          </div>
-          <template #overlay>
-            <a-menu @click="handleLocaleChangeA" :selected-keys="[themeConfig.lang]">
-              <a-menu-item key="zh">简体中文</a-menu-item>
-              <a-menu-item key="en">English</a-menu-item>
-            </a-menu>
-          </template>
-        </a-dropdown>
-      </div>
+      <LanguageSwitcher type="side" :placement="fold ? 'bottomRight' : 'top'" />
       <div class="side-menu-footer-item">
         <a-dropdown class="side-menu-footer-item" :placement="fold ? 'bottomRight' : 'top'">
           <div>
@@ -99,10 +84,10 @@
 
 <script lang="ts" setup>
   import { ref, watchEffect } from 'vue';
-  import { changeLocale } from '@international/vue3-i18n';
   import { UedSideMenu } from '@ued-material/menu';
   import type { MenuProps } from 'ant-design-vue';
   import { storeToRefs } from 'pinia';
+  import LanguageSwitcher from '@/components/uedModule/common/LanguageSwitcher.vue';
   import MapMenu from '@/components/uedModule/menu/mapMenu.vue';
   import UserMenu from '@/components/uedModule/menu/userMenu.vue';
   import { microMenuNavigation } from '@/micro/microApi/helper';
@@ -167,6 +152,7 @@
   });
   const menusStore = useMenusStore();
   const menuActiveId = ref('');
+
   // 监听主题配置
   watchEffect(() => {
     console.log('themeConfig changed11', themeConfig.value);
@@ -214,13 +200,6 @@
       router.push('/themeConfig');
     }
     appStore.setThemePanelVisible(!themePanelVisible.value);
-  };
-
-  // 中英文切换
-  const handleLocaleChangeA: MenuProps['onClick'] = ({ key }) => {
-    changeConfig('lang', key);
-    changeLocale(key);
-    window.location.reload();
   };
 
   const handleChangeMode = () => {

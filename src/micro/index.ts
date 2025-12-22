@@ -14,6 +14,7 @@ async function registerRouterCenter(router: Router, apps: SubApp[]) {
   // 获取定制的app的router.json文件
   // const customApps = getCustomApps(apps);
   routeCenter = new RouterCenter(router);
+  (window as any)._routeCenter = routeCenter;
   const res = await Promise.allSettled([
     ...apps.map((app: SubApp) => {
       if (app.custom) {
