@@ -7,26 +7,26 @@
   --font-size-xl: calc(var(--font-size-base) + 4px);   /* 16        ｜｜ 20         【加粗】大标题*/
   /*************ZQ色彩规则**************/
   /* 中性色彩——浅色模式默认全局中性色彩配置 */
-  --color-bg-page: #F6F7FB;/*默认页面底层背景*/
-  --color-bg-container: #FFFFFF;/*主要容器（例如卡片）的背景颜色，次要层级页面（例如内容区）背景颜色*/
-  --color-bg-secondarycontainer: #F6F7FB;/*次要容器（例如二级卡片）背景*/
-  --color-bg-component: #FFFFFF;/*组件（例如输入框）背景，主要容器之上组件背景*/
-  --color-bg-component2:#FFFFFF;/*组件（例如输入框）背景，主要容器之上组件背景*/
-  --color-component-stroke: #E9EAF0;/*默认组件分割线*/
-  --color-component-border:  #CBD0DB;/*默认边框*/
+  --color-bg-page: var(--gray-10);/*默认页面底层背景*/
+  --color-bg-container: var(--gray-0);/*主要容器（例如卡片）的背景颜色，次要层级页面（例如内容区）背景颜色*/
+  --color-bg-secondarycontainer: var(--gray-10);/*次要容器（例如二级卡片）背景*/
+  --color-bg-component: var(--gray-0);/*组件（例如输入框）背景，主要容器之上组件背景*/
+  --color-bg-component2:var(--gray-0);/*二级组件（例如下拉、气泡）背景，主要容器之上组件背景*/
+  --color-component-stroke: var(--gray-30);/*默认组件分割线*/
+  --color-component-border:  var(--gray-40);/*默认边框*/
   /* 中性色彩交互 */
-  --color-bg-secondarycontainer-hover: #F1F2F5;/*次要容器（例如二级卡片）背景hover*/
-  --color-bg-secondarycontainer-active: #CBD0DB;/*次要容器（例如二级卡片）背景Active*/
-  --color-bg-component-hover: #F6F7FB;/*组件（例如输入框）背景hover，主要容器之上组件背景hover*/
-  --color-bg-component-active: #E9EAF0;/*组件（例如输入框）背景active，主要容器之上组件背景active*/
-  --color-bg-component-disabled: #F1F2F5;/*组件（例如输入框）背景disabled，主要容器之上组件背景disabled*/
+  --color-bg-secondarycontainer-hover: var(--gray-20);/*次要容器（例如二级卡片）背景hover*/
+  --color-bg-secondarycontainer-active: var(--gray-40);/*次要容器（例如二级卡片）背景Active*/
+  --color-bg-component-hover: var(--gray-10);/*组件（例如输入框）背景hover，主要容器之上组件背景hover*/
+  --color-bg-component-active: var(--gray-30);/*组件（例如输入框）背景active，主要容器之上组件背景active*/
+  --color-bg-component-disabled: var(--gray-20);/*组件（例如输入框）背景disabled，主要容器之上组件背景disabled*/
 
   /* 文字&图标色彩——默认浅色模式文字和图标色彩配置 */
-  --color-text-primarys: #1E2435;/*主要文字色彩，主要图标色彩*/
-  --color-text-secondary: #353C51;/*次要文字色彩*/
-  --color-text-placeholder: #7E8494;/*占位符文字色彩，次要图标色彩*/
-  --color-text-disabled: #ADB1BC;/*禁用文字色彩，禁用图标色彩*/
-  --color-text-anti: #FFFFFF;/*文字反色色彩*/
+  --color-text-primarys: var(--gray-70);/*主要文字色彩，主要图标色彩*/
+  --color-text-secondary: var(--gray-80);/*次要文字色彩*/
+  --color-text-placeholder: var(--gray-60);/*占位符文字色彩，次要图标色彩*/
+  --color-text-disabled: var(--gray-50);/*禁用文字色彩，禁用图标色彩*/
+  --color-text-anti: var(--gray-0);/*文字反色色彩*/
   --color-text-brand:  var(--um-primary-color-normal);/*主题色文字色彩*/
   --color-text-link: var(--um-primary-color-normal);/*链接文字*/
 
@@ -37,93 +37,320 @@
   --color-brand-disabled: var(--c-color-primary-2);/*品牌色disabled*/
   --color-brand-light: var(--um-primary-color-light);/*品牌色浅色背景（例如下拉菜单选中交互背景、告警背景、标签背景等）*/
 
-  --color-error-normal: #F53C3C;/*错误色*/
-  --color-error-hover: #FF6560;/*错误色hover*/
-  --color-error-active: #C41424;/*错误色active*/
-  --color-error-disabled: #FFADA4;/*错误色disabled*/
-  --color-error-light: #FFE8E8;/*错误色浅色背景（例如告警背景、标签背景等）*/
+  --color-error-normal: var(--error-60);/*错误色*/
+  --color-error-hover: var(--error-50);/*错误色hover*/
+  --color-error-active: var(--error-70);/*错误色active*/
+  --color-error-disabled: var(--error-30);/*错误色disabled*/
+  --color-error-light: var(--error-10);/*错误色浅色背景（例如告警背景、标签背景等）*/
 
-  --color-warning-normal: #FF7F29;/*警示色*/
-  --color-warning-hover: #FF9B4F;/*警示色hover*/
-  --color-warning-active: #D25D18;/*警示色active*/
-  --color-warning-disabled: #FFCD9C;/*警示色disabled*/
-  --color-warning-light: #FFF5E8;/*警示色浅色背景（例如告警背景、标签背景等）*/
+  --color-warning-normal: var(--warning-60);/*警示色*/
+  --color-warning-hover: var(--warning-50);/*警示色hover*/
+  --color-warning-active: var(--warning-70);/*警示色active*/
+  --color-warning-disabled: var(--warning-30);/*警示色disabled*/
+  --color-warning-light: var(--warning-10);/*警示色浅色背景（例如告警背景、标签背景等）*/
 
-  --color-success-normal: #1DB969;/*成功色*/
-  --color-success-hover: #3DC77B;/*成功色hover*/
-  --color-success-active: #139E5B;/*成功色active*/
-  --color-success-disabled: #8AE3AC;/*成功色disabled*/
-  --color-success-light: #E8FFEF;/*成功色浅色背景（例如告警背景、标签背景等）*/
+  --color-success-normal: var(--success-60);/*成功色*/
+  --color-success-hover: var(--success-50);/*成功色hover*/
+  --color-success-active: var(--success-70);/*成功色active*/
+  --color-success-disabled: var(--success-30);/*成功色disabled*/
+  --color-success-light: var(--success-10);/*成功色浅色背景（例如告警背景、标签背景等）*/
 
-  --color-risk-fall-normal: #A74748;/*失陷色*/
-  --color-risk-fall-hover: #B26161;/*失陷色hover*/
-  --color-risk-fall-active: #902E33;/*失陷色active*/
-  --color-risk-fall-disabled: #DCA39D;/*失陷色disabled*/
-  --color-risk-fall-light: #F6E3E0;/*失陷色浅色背景（例如标签背景等）*/
+  --color-risk-fall-normal: var(--fall-60);/*失陷色*/
+  --color-risk-fall-hover: var(--fall-50);/*失陷色hover*/
+  --color-risk-fall-active: var(--fall-70);/*失陷色active*/
+  --color-risk-fall-disabled: var(--fall-30);/*失陷色disabled*/
+  --color-risk-fall-light: var(--fall-10);/*失陷色浅色背景（例如标签背景等）*/
 
-  --color-risk-high-normal: #F53C3C;/*高危色*/
-  --color-risk-high-hover: #FF6560;/*高危色hover*/
-  --color-risk-high-active: #C41424;/*高危色active*/
-  --color-risk-high-disabled: #FFADA4;/*高危色disabled*/
-  --color-risk-high-light: #FFE8E8;/*高危色浅色背景（例如标签背景等）*/
+  --color-risk-high-normal: var(--error-60);/*高危色*/
+  --color-risk-high-hover: var(--error-50);/*高危色hover*/
+  --color-risk-high-active: var(--error-70);/*高危色active*/
+  --color-risk-high-disabled: var(--error-30);/*高危色disabled*/
+  --color-risk-high-light: var(--error-10);/*高危色浅色背景（例如标签背景等）*/
 
-  --color-risk-medium-normal: #FF7F29;/*中危色*/
-  --color-risk-medium-hover: #FF9B4F;/*中危色hover*/
-  --color-risk-medium-active: #D25D18;/*中危色active*/
-  --color-risk-medium-disabled: #FFCD9C;/*中危色disabled*/
-  --color-risk-medium-light: #FFF5E8;/*中危色浅色背景（例如标签背景等）*/
+  --color-risk-medium-normal: var(--warningm-60);/*中危色*/
+  --color-risk-medium-hover: var(--warningm-50);/*中危色hover*/
+  --color-risk-medium-active: var(--warningm-70);/*中危色active*/
+  --color-risk-medium-disabled: var(--warningm-30);/*中危色disabled*/
+  --color-risk-medium-light: var(--warningm-10);/*中危色浅色背景（例如标签背景等）*/
 
-  --color-risk-low-normal: #FFB005;/*低危色*/
-  --color-risk-low-hover: #FFC532;/*低危色hover*/
-  --color-risk-low-active: #D28A01;/*低危色active*/
-  --color-risk-low-disabled: #FFE68D;/*低危色disabled*/
-  --color-risk-low-light: #FFFBE0;/*低危色浅色背景（例如标签背景等）*/
+  --color-risk-low-normal: var(--warning-60);/*低危色*/
+  --color-risk-low-hover: var(--warning-50);/*低危色hover*/
+  --color-risk-low-active: var(--warning-80);/*低危色active*/
+  --color-risk-low-disabled: var(--warning-20);/*低危色disabled*/
+  --color-risk-low-light: var(--warning-10);/*低危色浅色背景（例如标签背景等）*/
 
-  --color-risk-no-normal: #7E8494;/*无风险色*/
-  --color-risk-no-hover: #ADB1BC;/*无风险色hover*/
-  --color-risk-no-active: #353C51;/*无风险色active*/
-  --color-risk-no-disabled: #E9EAF0;/*无风险色disabled*/
-  --color-risk-no-light: #F6F7FB;/*无风险色浅色背景（例如标签背景等）*/
+  --color-risk-no-normal: var(--gray-60);/*无风险色*/
+  --color-risk-no-hover: var(--gray-50);/*无风险色hover*/
+  --color-risk-no-active: var(--gray-80);/*无风险色active*/
+  --color-risk-no-disabled: var(--gray-30);/*无风险色disabled*/
+  --color-risk-no-light: var(--gray-10);/*无风险色浅色背景（例如标签背景等）*/
 
   /* 覆盖导航色值 */
   --um-dark-color-font-placeholder: var(--color-text-placeholder);
   --um-dark-color-disabled: var(--color-text-disabled);
   --um-dark-color-divide: var(--color-component-stroke);
   --um-dark-color-border: var(--color-component-border);
-  --um-dark-color-bg-0: #2E3545;
-  --um-dark-color-bg-1: #141821;
-  --um-dark-color-bg-2: #1c222e;
-  --um-dark-color-bg-3: #272e3d;
+  --um-dark-color-bg-0: var(--gray-65);
+  --um-dark-color-bg-1: var(--gray-90);
+  --um-dark-color-bg-2: var(--gray-80);
+  --um-dark-color-bg-3: var(--gray-70);
+
+
+  /*************2026-01补充场景变量**************/
+  /* Border Radius */
+  --radius-full: var(--size-full);     /* 全圆模式: 9999px, 半圆模式: 9999px, 常规模式: 9999px (用于完全圆形效果) */
+  --radius-5xl: var(--size-64);        /* 全圆模式: 80px, 半圆模式: 64px, 常规模式: 未定义 */
+  --radius-4xl: var(--size-48);        /* 全圆模式: 64px, 半圆模式: 48px, 常规模式: 未定义 */
+  --radius-3xl: var(--size-32);        /* 全圆模式: 40px, 半圆模式: 32px, 常规模式: 12px */
+  --radius-2xl: var(--size-24);        /* 全圆模式: 32px, 半圆模式: 24px, 常规模式: 9px */
+  --radius-xl: var(--size-20);         /* 全圆模式: 24px, 半圆模式: 20px, 常规模式: 未定义 */
+  --radius-lg: var(--size-16);         /* 全圆模式: 20px, 半圆模式: 16px, 常规模式: 6px */
+  --radius-md: var(--size-12);         /* 全圆模式: 16px, 半圆模式: 12px, 常规模式: 未定义 */
+  --radius-sm: var(--size-10);         /* 全圆模式: 12px, 半圆模式: 10px, 常规模式: 未定义 */
+  --radius-xs: var(--size-8);          /* 全圆模式: 10px, 半圆模式: 8px, 常规模式: 3px */
+  --radius-2xs: var(--size-6);         /* 全圆模式: 8px, 半圆模式: 6px, 常规模式: 未定义 */
+  --radius-3xs: var(--size-4);         /* 全圆模式: 6px, 半圆模式: 4px, 常规模式: 未定义 */
+  --radius-4xs: var(--size-2);         /* 全圆模式: 4px, 半圆模式: 2px, 常规模式: 未定义 */
+  --radius-5xs: var(--size-1);         /* 全圆模式: 2px, 半圆模式: 1px, 常规模式: 未定义 */
+  --radius-none: var(--size-none);        /* 全圆模式: 0px, 半圆模式: 0px, 常规模式: 0px */
+  
+  /* Button Radius Variables - 根据differences-between-full-and-semi-circle.txt: 全圆模式使用9999px实现完全圆形，半圆模式使用具体值 */
+  --button-radius-xl: var(--size-20);     /* 全圆模式: 9999px, 半圆模式: 20px, 常规模式: 未定义 */
+  --button-radius-lg: var(--size-16);     /* 全圆模式: 9999px, 半圆模式: 16px, 常规模式: 6px */
+  --button-radius-md: var(--size-12);     /* 全圆模式: 9999px, 半圆模式: 12px, 常规模式: 未定义 */
+  --button-radius-sm: var(--size-10);     /* 全圆模式: 9999px, 半圆模式: 10px, 常规模式: 未定义 */
+  --button-radius-xs: var(--size-8);      /* 全圆模式: 9999px, 半圆模式: 8px, 常规模式:  3px*/
+  --button-radius-2xs: var(--size-6);     /* 全圆模式: 9999px, 半圆模式: 6px, 常规模式: 未定义 */
+
+  /* Spacing Variables */
+  --spacing-6xl: var(--size-80);
+  --spacing-5xl: var(--size-64);
+  --spacing-4xl: var(--size-48);
+  --spacing-3xl: var(--size-40);
+  --spacing-2xl: var(--size-32);
+  --spacing-xl: var(--size-24);
+  --spacing-lg: var(--size-20);
+  --spacing-md: var(--size-16);
+  --spacing-sm: var(--size-12);
+  --spacing-xs: var(--size-10);
+  --spacing-2xs: var(--size-8);
+  --spacing-3xs: var(--size-6);
+  --spacing-4xs: var(--size-4);
+  --spacing-5xs: var(--size-2);
+
+  /* Icon Size Variables */
+  --size-icon-lg: var(--size-32);
+  --size-icon-md: var(--size-24);
+  --size-icon-sm: var(--size-20);
+  --size-icon-xs: var(--size-16);
+  --size-icon-2xs: var(--size-12);
+
+  /*************Base Token Variables 基础变量**************/
+
+  /* Size Variables */
+  --size-full: 9999px;
+  --size-80: 80px;
+  --size-64: 64px;
+  --size-48: 48px;
+  --size-40: 40px;
+  --size-32: 32px;
+  --size-24: 24px;
+  --size-20: 20px;
+  --size-16: 16px;
+  --size-12: 12px;
+  --size-10: 10px;
+  --size-8: 8px;
+  --size-6: 6px;
+  --size-4: 4px;
+  --size-2: 2px;
+  --size-1: 1px;
+  --size-none: 0px;
+
+  /* Gray Colors */
+  --gray-0: #FFFFFF;
+  --gray-10: #F6F7FB;
+  --gray-20: #F1F2F5;
+  --gray-30: #E9EAF0;
+  --gray-40: #CBD0DB;
+  --gray-50: #ADB1BC;
+  --gray-60: #7E8494;
+  --gray-65: #50586E;
+  --gray-70: #2D3348;
+  --gray-80: #1E243B;
+  --gray-90: #0F152A;
+  --gray-100: #000000;
+
+  /* Brand Colors */
+  --brand-0: #EEF5FF;
+  --brand-10: #E8F2FF;
+  --brand-20: #C0D9FF;
+  --brand-30: #98BEFF;
+  --brand-40: #6E9EFD;
+  --brand-50: #3B71EE;
+  --brand-60: #134BEA;
+  --brand-70: #0639C3;
+  --brand-80: #2038B0;
+  --brand-90: #2E4681;
+
+  /* Error Colors */
+  --error-0: #FFF1F1;
+  --error-10: #FFE8E8;
+  --error-20: #FFCEC6;
+  --error-30: #FFADA4;
+  --error-40: #FF8A82;
+  --error-50: #FF6560;
+  --error-60: #F53C3C;
+  --error-70: #C41424;
+  --error-80: #A6141D;
+  --error-90: #7A2D2D;
+
+  /* WarningM Colors */
+  --warningm-0: #FFF7ED;
+  --warningm-10: #FFE7C8;
+  --warningm-20: #FFD19D;
+  --warningm-30: #F7BA7F;
+  --warningm-40: #F49F53;
+  --warningm-50: #F98832;
+  --warningm-60: #F5731C;
+  --warningm-70: #C65614;
+  --warningm-80: #A04111;
+  --warningm-90: #5E3220;
+
+  /* Warning Colors */
+  --warning-0: #FFFBE0;
+  --warning-10: #FFF2BA;
+  --warning-20: #FFE68D;
+  --warning-30: #FFDE89;
+  --warning-40: #FFCF55;
+  --warning-50: #FFBF1C;
+  --warning-60: #F3A700;
+  --warning-70: #D28A01;
+  --warning-80: #A66702;
+  --warning-90: #694D1C;
+
+  /* Fall Colors */
+  --fall-0: #FFF3F1;
+  --fall-10: #F6E3E0;
+  --fall-20: #F0D3CF;
+  --fall-30: #E7BFBA;
+  --fall-40: #CA817D;
+  --fall-50: #B26161;
+  --fall-60: #A74748;
+  --fall-70: #902E33;
+  --fall-80: #7A1A22;
+
+  /* Success Colors */
+  --success-0: #F0FDF4;
+  --success-10: #DCFCE7;
+  --success-20: #BBF7D0;
+  --success-30: #86EFAC;
+  --success-40: #4ADE80;
+  --success-50: #22C55E;
+  --success-60: #16A34A;
+  --success-70: #15803D;
+  --success-80: #166534;
+  --success-90: #134D2A;
+
+  /* Indigo Colors */
+  --indigo-0: #EEF2FF;
+  --indigo-10: #E0E7FF;
+  --indigo-20: #C7D2FE;
+  --indigo-30: #A5B4FC;
+  --indigo-40: #818CF8;
+  --indigo-50: #6366F1;
+  --indigo-60: #4F46E5;
+  --indigo-70: #4338CA;
+  --indigo-80: #3730A3;
+  --indigo-90: #32306E;
+
+  /* Skyblue Colors */
+  --skyblue-0: #E3F5FA;
+  --skyblue-10: #C4EFFF;
+  --skyblue-20: #9FE3FF;
+  --skyblue-30: #7DD3FF;
+  --skyblue-40: #57C2FF;
+  --skyblue-50: #32A5F2;
+  --skyblue-60: #1F85D2;
+  --skyblue-70: #1060A6;
+  --skyblue-80: #054079;
+  --skyblue-90: #25476C;
+
+  /* Cyan Colors */
+  --cyan-0: #E3F5FA;
+  --cyan-10: #B6F3EB;
+  --cyan-20: #88E7DD;
+  --cyan-30: #5BDBD3;
+  --cyan-40: #36CFC9;
+  --cyan-50: #15B5B5;
+  --cyan-60: #0A979C;
+  --cyan-70: #016D74;
+  --cyan-80: #005056;
+  --cyan-90: #194A53;
+
+  /* Lime Colors */
+  --lime-0: #FDFFE8;
+  --lime-10: #EAF5B8;
+  --lime-20: #D6EB8C;
+  --lime-30: #C1E062;
+  --lime-40: #ABD63C;
+  --lime-50: #94CC19;
+  --lime-60: #75AC11;
+  --lime-70: #5A8C08;
+  --lime-80: #416C02;
+  --lime-90: #385219;
+
+  /* Purple Colors */
+  --purple-0: #F7E7FF;
+  --purple-10: #EAC9FD;
+  --purple-20: #DBAAFB;
+  --purple-30: #C98CF8;
+  --purple-40: #B76DF5;
+  --purple-50: #A250F4;
+  --purple-60: #7932CA;
+  --purple-70: #551BA0;
+  --purple-80: #3F0E89;
+  --purple-90: #392261;
+
+  /* Magenta Colors */
+  --magenta-0: #FFE8F1;
+  --magenta-10: #F6C0D6;
+  --magenta-20: #ED9ABF;
+  --magenta-30: #E476AB;
+  --magenta-40: #DB559A;
+  --magenta-50: #D2368B;
+  --magenta-60: #B12275;
+  --magenta-70: #8F125F;
+  --magenta-80: #6E094A;
+  --magenta-90: #571D44;
 
   /*************业务需要色彩配置**************/
-
 }
 
 .theme-dark {
   /*************ZQ色彩规则**************/
   /* 中性色彩——浅色模式默认全局中性色彩配置 */
-  --color-bg-page: #141821;/*默认页面底层背景*/
-  --color-bg-container: #1c222e;/*主要容器（例如卡片）的背景颜色，次要层级页面（例如内容区）背景颜色*/
-  --color-bg-secondarycontainer: #272e3d;/*次要容器（例如二级卡片）背景*/
-  --color-bg-secondarycontainer-hover: #2E3545;/*次要容器（例如二级卡片）背景hover*/
-  --color-bg-component: #141821;/*组件（例如输入框）背景，主要容器之上组件背景*/
-  --color-bg-component-disabled: #272e3d;/*组件（例如输入框）背景disabled，主要容器之上组件背景disabled*/
-  --color-bg-component2:  #2E3545;/*二级组件（例如下拉、气泡）背景，主要容器之上组件背景*****新增*/
-  --color-bg-component2-hover: #394052;/*二级组件（例如下拉、气泡）背景hover，主要容器之上组件背景hover*****新增*/
-  --color-bg-component2-active: #272e3d;/*二级组件（例如下拉、气泡）背景active，主要容器之上组件背景active*****新增*/
-  --color-component-stroke: #394052;/*默认组件分割线*/
-  --color-component-border:  #444C5D;/*默认边框*/
+  --color-bg-page: var(--gray-90);/*默认页面底层背景*/
+  --color-bg-container: var(--gray-80);/*主要容器（例如卡片）的背景颜色，次要层级页面（例如内容区）背景颜色*/
+  --color-bg-secondarycontainer: var(--gray-70);/*次要容器（例如二级卡片）背景*/
+  --color-bg-secondarycontainer-hover: var(--gray-65);/*次要容器（例如二级卡片）背景hover*/
+  --color-bg-component: var(--gray-90);/*组件（例如输入框）背景，主要容器之上组件背景*/
+  --color-bg-component-disabled: var(--gray-70);/*组件（例如输入框）背景disabled，主要容器之上组件背景disabled*/
+  --color-bg-component2:  var(--gray-65);/*二级组件（例如下拉、气泡）背景，主要容器之上组件背景*****新增*/
+  --color-bg-component2-hover: var(--gray-60);/*二级组件（例如下拉、气泡）背景hover，主要容器之上组件背景hover*****新增*/
+  --color-bg-component2-active: var(--gray-70);/*二级组件（例如下拉、气泡）背景active，主要容器之上组件背景active*****新增*/
+  --color-component-stroke: var(--gray-60);/*默认组件分割线*/
+  --color-component-border:  var(--gray-50);/*默认边框*/
   /* 中性色彩交互 暗色规范中没提供这三个变量*/
   /*--color-bg-secondarycontainer-active: #CBD0DB;次要容器（例如二级卡片）背景Active*/
   /*--color-bg-component-hover: #F6F7FB;/*组件（例如输入框）背景hover，主要容器之上组件背景hover*/
   /*--color-bg-component-active: #E9EAF0;/*组件（例如输入框）背景active，主要容器之上组件背景active*/
 
   /* 文字&图标色彩——默认浅色模式文字和图标色彩配置 */
-  --color-text-primarys: #FFFFFF;/*主要文字色彩，主要图标色彩*/
-  --color-text-secondary: #B0B8C8;/*次要文字色彩BCC3D1*/
-  --color-text-placeholder: #878EA0;/*占位符文字色彩，次要图标色彩9096A5*/
-  --color-text-disabled: #60687B;/*禁用文字色彩，禁用图标色彩6A7285*/
-  --color-text-anti: #FFFFFF;/*文字反色色彩*/
+  --color-text-primarys: var(--gray-0);/*主要文字色彩，主要图标色彩*/
+  --color-text-secondary: var(--gray-40);/*次要文字色彩BCC3D1*/
+  --color-text-placeholder: var(--gray-30);/*占位符文字色彩，次要图标色彩9096A5*/
+  --color-text-disabled: var(--gray-60);/*禁用文字色彩，禁用图标色彩6A7285*/
+  --color-text-anti: var(--gray-0);/*文字反色色彩*/
   --color-text-brand:  var(--um-dark-primary-color-normal);/*主题色文字色彩*/
   --color-text-link:  var(--um-dark-primary-color-normal);/*链接文字*/
 
@@ -134,64 +361,63 @@
   --color-brand-disabled: var(--d-color-primary-2);/*品牌色disabled****#274488;*/
   --color-brand-light: var(--um-dark-primary-color-light);/*品牌色浅色背景（例如下拉菜单选中交互背景、告警背景、标签背景等）*/
 
-  --color-error-normal: #F53C3C;/*错误色0*/
-  --color-error-hover: #A73239;/*错误色hover*/
-  --color-error-active: #F87C79;/*错误色active*/
-  --color-error-disabled: #5A2836;/*错误色disabled****#7B2D38;*/
-  --color-error-light: #452232;/*错误色浅色背景（例如告警背景、标签背景等）*/
+  --color-error-normal: var(--error-60);/*错误色0*/
+  --color-error-hover: var(--error-80);/*错误色hover*/
+  --color-error-active: var(--error-40);/*错误色active*/
+  --color-error-disabled: var(--error-80);/*错误色disabled****#7B2D38;*/
+  --color-error-light: var(--error-90);/*错误色浅色背景（例如告警背景、标签背景等）*/
 
-  --color-warning-normal: #FF7F29;/*警示色0*/
-  --color-warning-hover: #AE5E2D;/*警示色hover*/
-  --color-warning-active: #FEA562;/*警示色active*/
-  --color-warning-disabled: #5D3D31;/*警示色disabled*****#7F4B2F;*/
-  --color-warning-light: #48302d;/*警示色浅色背景（例如告警背景、标签背景等）*/
+  --color-warning-normal: var(--warning-60);/*警示色0*/
+  --color-warning-hover: var(--warning-80);/*警示色hover*/
+  --color-warning-active: var(--warning-40);/*警示色active*/
+  --color-warning-disabled: var(--warning-80);/*警示色disabled*****#7F4B2F;*/
+  --color-warning-light: var(--warning-90);/*警示色浅色背景（例如告警背景、标签背景等）*/
 
-  --color-success-normal: #1DB969;/*成功色0*/
-  --color-success-hover: #1B8356;/*成功色hover*/
-  --color-success-active: #4CD284;/*成功色active*/
-  --color-success-disabled: #194E44;/*成功色disabled*****#1A654C;*/
-  --color-success-light: #153d3c;/*成功色浅色背景（例如告警背景、标签背景等）*/
+  --color-success-normal: var(--success-60);/*成功色0*/
+  --color-success-hover: var(--success-80);/*成功色hover*/
+  --color-success-active: var(--success-40);/*成功色active*/
+  --color-success-disabled: var(--success-80);/*成功色disabled*****#1A654C;*/
+  --color-success-light: var(--success-90);/*成功色浅色背景（例如告警背景、标签背景等）*/
 
-  --color-risk-fall-normal: #B63154;/*失陷色*/
-  --color-risk-fall-hover: #7D273E;/*失陷色hover*/
-  --color-risk-fall-active: #B14D64;/*失陷色active*/
-  --color-risk-fall-disabled: #451D27;/*失陷色disabled****#5D2131;*/
-  --color-risk-fall-light: #33171f;/*失陷色浅色背景（例如标签背景等）*/
+  --color-risk-fall-normal: var(--fall-60);/*失陷色*/
+  --color-risk-fall-hover: var(--fall-80);/*失陷色hover*/
+  --color-risk-fall-active: var(--fall-50);/*失陷色active*/
+  --color-risk-fall-disabled: var(--fall-80);/*失陷色disabled****#5D2131;*/
+  --color-risk-fall-light: var(--fall-90);/*失陷色浅色背景（例如标签背景等）*/
 
-  --color-risk-high-normal: #F53C3C;/*高危色0*/
-  --color-risk-high-hover: #A73239;/*高危色hover*/
-  --color-risk-high-active: #F87C79;/*高危色active*/
-  --color-risk-high-disabled: #5A2836;/*高危色disabled*****#7B2D38;*/
-  --color-risk-high-light: #452232;/*高危色浅色背景（例如标签背景等）*/
+  --color-risk-high-normal: var(--error-60);/*高危色0*/
+  --color-risk-high-hover: var(--error-80);/*高危色hover*/
+  --color-risk-high-active: var(--error-40);/*高危色active*/
+  --color-risk-high-disabled: var(--error-80);/*高危色disabled*****#7B2D38;*/
+  --color-risk-high-light: var(--error-90);/*高危色浅色背景（例如标签背景等）*/
 
-  --color-risk-medium-normal: #FF7F29;/*中危色0*/
-  --color-risk-medium-hover: #AE5E2D;/*中危色hover*/
-  --color-risk-medium-active: #FEA562;/*中危色active*/
-  --color-risk-medium-disabled: #5D3D31;/*中危色disabled****#7F4B2F;*/
-  --color-risk-medium-light: #48302d;/*中危色浅色背景（例如标签背景等）*/
+  --color-risk-medium-normal: var(--warningm-60);/*中危色0*/
+  --color-risk-medium-hover: var(--warningm-80);/*中危色hover*/
+  --color-risk-medium-active: var(--warningm-40);/*中危色active*/
+  --color-risk-medium-disabled: var(--warningm-80);/*中危色disabled****#7F4B2F;*/
+  --color-risk-medium-light: var(--warningm-90);/*中危色浅色背景（例如标签背景等）*/
 
-  --color-risk-low-normal: #FFB005;/*低危色0*/
-  --color-risk-low-hover: #AE7E15;/*低危色hover*/
-  --color-risk-low-active: #FFC532;/*低危色active*/
-  --color-risk-low-disabled: #5D4B26;/*低危色disabled***** #7F611F;*/
-  --color-risk-low-light: #483b27;/*低危色浅色背景（例如标签背景等）*/
+  --color-risk-low-normal: var(--warning-60);/*低危色0*/
+  --color-risk-low-hover: var(--warning-80);/*低危色hover*/
+  --color-risk-low-active: var(--warning-50);/*低危色active*/
+  --color-risk-low-disabled: var(--warning-80);/*低危色disabled***** #7F611F;*/
+  --color-risk-low-light: var(--warning-90);/*低危色浅色背景（例如标签背景等）*/
 
-  --color-risk-no-normal: #60687B;/*无风险色*/
-  --color-risk-no-hover: #444C5D;/*无风险色hover*/
-  --color-risk-no-active: #878EA0;/*无风险色active*/
-  --color-risk-no-disabled: #272e3d;/*无风险色disabled****#2D374E;*/
-  --color-risk-no-light: #394052;/*无风险色浅色背景（例如标签背景等）*/
+  --color-risk-no-normal: var(--gray-50);/*无风险色*/
+  --color-risk-no-hover: var(--gray-40);/*无风险色hover*/
+  --color-risk-no-active: var(--gray-30);/*无风险色active*/
+  --color-risk-no-disabled: var(--gray-70);/*无风险色disabled*/
+  --color-risk-no-light: var(--gray-65);/*无风险色浅色背景（例如标签背景等）*/
 
     /* 覆盖导航色值 */
     --um-dark-color-font-placeholder: var(--color-text-placeholder);
     --um-dark-color-disabled: var(--color-text-disabled);
     --um-dark-color-divide: var(--color-component-stroke);
     --um-dark-color-border: var(--color-component-border);
-    --um-dark-color-bg-0: #2E3545;
-    --um-dark-color-bg-1: #141821;
-    --um-dark-color-bg-2: #1c222e;
-    --um-dark-color-bg-3: #272e3d;
+    --um-dark-color-bg-0: var(--gray-65);
+    --um-dark-color-bg-1: var(--gray-90);
+    --um-dark-color-bg-2: var(--gray-80);
+    --um-dark-color-bg-3: var(--gray-70);
   
   /*************业务需要色彩配置**************/
-
 }
