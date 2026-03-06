@@ -1,11 +1,21 @@
 :root,.theme-light{
   /*************ZQ字号规则**************/
-  /* --font-size-base: 12px;                              12规范基准 ｜｜  14规范基准   正文，【加粗】小标题 */
-  /* --font-size-base 由JavaScript动态设置，不在此处硬编码 */
-  --font-size-small: calc(var(--font-size-base) - 0px);/* 12        ｜｜ 12          说明文字*/ 
-  --font-size-large: calc(var(--font-size-base) + 2px);/* 14        ｜｜ 16         【加粗】中标题*/
-  --font-size-xl: calc(var(--font-size-base) + 4px);   /* 16        ｜｜ 20         【加粗】大标题*/
-  /*************ZQ色彩规则**************/
+  /* --font-size-base: 12px 或 14px，由 JavaScript 动态设置 */
+  /* 
+   * Ant Design Vue 字号算法（以 text-md 为基准的指数函数）：
+   * 公式: size = base * e^(index/5)，index 相对于 text-md（text-md=0）
+   * 取整规则：向最近偶数取整
+   * 
+   * 变量顺序: text-xs, text-sm, text-md, text-lg, text-xl, text-2xl, heading-xs, heading-sm, heading-md, heading-lg, heading-xl, heading-2xl, display-xs, display-sm
+   * 
+   * 14px 基准计算结果：10, 12, 14, 16, 20, 26, 26, 32, 38, 46, 56, 70, 32, 84
+   * 12px 基准计算结果：8, 10, 12, 14, 18, 22, 22, 26, 32, 40, 48, 60, 26, 72
+   * 
+   * 注：字号变量由 JS 动态设置，见 src/store/uedModule/theme/index.ts
+   * 默认字号配置：src/store/uedModule/theme/defaultConfig.ts (fontSize: '12px')
+   */
+  
+  /*************ZQ 色彩规则**************/
   /* 中性色彩——浅色模式默认全局中性色彩配置 */
   --color-bg-page: var(--gray-10);/*默认页面底层背景*/
   --color-bg-container: var(--gray-0);/*主要容器（例如卡片）的背景颜色，次要层级页面（例如内容区）背景颜色*/
@@ -144,19 +154,25 @@
   --size-icon-sm: var(--size-20);
   --size-icon-xs: var(--size-16);
   --size-icon-2xs: var(--size-12);
-
+  
   /*************Base Token Variables 基础变量**************/
 
   /* Size Variables */
   --size-full: 9999px;
+  --size-180: 180px;
+  --size-128: 128px;
+  --size-96: 96px;
   --size-80: 80px;
+  --size-72: 72px;
   --size-64: 64px;
   --size-48: 48px;
   --size-40: 40px;
   --size-32: 32px;
+  --size-28: 28px;
   --size-24: 24px;
   --size-20: 20px;
   --size-16: 16px;
+  --size-14: 14px;
   --size-12: 12px;
   --size-10: 10px;
   --size-8: 8px;
@@ -238,6 +254,7 @@
   --fall-60: #A74748;
   --fall-70: #902E33;
   --fall-80: #7A1A22;
+  --fall-90: #5A2B2C;
 
   /* Success Colors */
   --success-0: #F0FDF4;
