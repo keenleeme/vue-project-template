@@ -12,31 +12,35 @@ const { darkAlgorithm, defaultAlgorithm } = theme1;
 
 // Ant Design Vue 字号系数表（以 text-md 为基准，指数算法）
 // 公式: base × e^(index/5)，index 相对于 text-md（text-md=0）
-// 格式: 系数 -> 12px基准=取整值, 14px基准=取整值
-const FONT_SIZE_RATIOS: Record<string, number> = {
-  'text-xs': 0.6703, // 12px=8, 14px=10, JSON=10 (index=-2, 缩小)
-  'text-sm': 0.8187, // 12px=10, 14px=12, JSON=12 (index=-1, 缩小)，对应原有--font-size-small
-  'text-md': 1.0, // 12px=12, 14px=14, JSON=14 (index=0, 基准) ，对应原有--font-size-base
-  'text-lg': 1.2214, // 12px=14, 14px=16, JSON=16 (index=1, 放大) ，对应原有--font-size-large
-  'text-xl': 1.4918, // 12px=18, 14px=20, JSON=20 (index=2, 放大) ，对应原有--font-size-xl
-  'text-2xl': 1.8221, // 12px=22, 14px=26, JSON=24 (index=3, 放大)
-  'heading-xs': 1.8221, // 12px=22, 14px=26, JSON=24 (index=3)
-  'heading-sm': 2.2255, // 12px=26, 14px=32, JSON=28 (index=4)
-  'heading-md': 2.7183, // 12px=32, 14px=38, JSON=40 (index=5)
-  'heading-lg': 3.3201, // 12px=40, 14px=46, JSON=48 (index=6)
-  'heading-xl': 4.0552, // 12px=48, 14px=56, JSON=64 (index=7)
-  'heading-2xl': 4.953, // 12px=60, 14px=70, JSON=72 (index=8)
-  'display-xs': 2.2255, // 12px=26, 14px=32, JSON=32 (index=4)
-  'display-sm': 6.0496 // 12px=72, 14px=84, JSON=96 (index=9)
+// 格式: [系数, index] -> 12px=取整值, 14px=取整值, JSON=原始值
+const FONT_SIZE_RATIOS: Record<string, [number, number]> = {
+  'text-xs': [0.6703, -2], // 12px=10, 14px=10, JSON=10
+  'text-sm': [0.8187, -1], // 12px=10, 14px=12, JSON=12，对应原有--font-size-small
+  'text-md': [1.0, 0], // 12px=12, 14px=14, JSON=14 (基准) ，对应原有--font-size-base
+  'text-lg': [1.2214, 1], // 12px=14, 14px=16, JSON=16，对应原有--font-size-large
+  'text-xl': [1.4918, 2], // 12px=16, 14px=20, JSON=20，对应原有--font-size-xl
+  'text-2xl': [1.8221, 3], // 12px=20, 14px=24, JSON=24
+  'heading-xs': [1.8221, 3], // 12px=20, 14px=24, JSON=24
+  'heading-sm': [2.2255, 4], // 12px=26, 14px=30, JSON=28
+  'heading-md': [2.7183, 5], // 12px=32, 14px=38, JSON=40
+  'heading-lg': [3.3201, 6], // 12px=38, 14px=46, JSON=48
+  'heading-xl': [4.0552, 7], // 12px=48, 14px=56, JSON=64
+  'heading-2xl': [4.953, 8], // 12px=58, 14px=68, JSON=72
+  'display-xs': [2.2255, 4], // 12px=26, 14px=30, JSON=32
+  'display-sm': [6.0496, 9] // 12px=72, 14px=84, JSON=96
 };
 
-// 取整策略：向最近偶数取整
-function roundToNearestEven(val: number): number {
-  const rounded = Math.round(val);
-  // 如果已经是偶数，直接返回
-  if (rounded % 2 === 0) return rounded;
-  // 奇数时，根据小数部分决定向上或向下取偶
-  return val - Math.floor(val) >= 0.5 ? rounded + 1 : rounded - 1;
+// Ant Design Vue 取整策略：
+// - index ≤ 0 (xs, sm): Math.ceil 向上取整（避免过小）
+// - index ≥ 1 (lg, xl...): Math.floor 向下取整（避免过大）
+// - 最后强制取偶数，且最小不小于 10px
+function roundFontSize(val: number, index: number): number {
+  // Step 1: 取整
+  const intSize = index <= 0 ? Math.ceil(val) : Math.floor(val);
+  // Step 2: 偶数化（向下取偶）
+  const evenSize = Math.floor(intSize / 2) * 2;
+  // Step 3: 最小限制 10px
+  return Math.max(evenSize, 10);
 }
 
 // 动态更新字号CSS变量的函数
@@ -48,9 +52,9 @@ function updateFontSizeCSS(fontSize: string) {
   root.style.setProperty('--font-size-base', `${base}px`);
 
   // 计算并设置所有字号（覆盖CSS calc结果）
-  for (const [key, ratio] of Object.entries(FONT_SIZE_RATIOS)) {
+  for (const [key, [ratio, index]] of Object.entries(FONT_SIZE_RATIOS)) {
     const rawSize = base * ratio;
-    const finalSize = key === 'text-md' ? base : roundToNearestEven(rawSize);
+    const finalSize = key === 'text-md' ? base : roundFontSize(rawSize, index);
     root.style.setProperty(`--font-size-${key}`, `${finalSize}px`);
   }
 }
@@ -126,10 +130,10 @@ export default defineStore('theme', () => {
       colorPrimaryHover: isDark ? darkPrimaryColors[4] : primaryColors[4],
       fontFamily:
         'PingFangSC-Regular, PingFangSC-Semibold,-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji',
-      fontSize: parseInt(themeConfig.value.fontSize, 10),
-      fontSizeSM: parseInt(themeConfig.value.fontSize, 10) - 2,
-      fontSizeLG: parseInt(themeConfig.value.fontSize, 10) + 2,
-      fontSizeXL: parseInt(themeConfig.value.fontSize, 10) + 4
+      fontSize: parseInt(themeConfig.value.fontSize, 10)
+      // fontSizeSM: parseInt(themeConfig.value.fontSize, 10) - 2,
+      // fontSizeLG: parseInt(themeConfig.value.fontSize, 10) + 2,
+      // fontSizeXL: parseInt(themeConfig.value.fontSize, 10) + 4
     } as any;
     return {
       token,
