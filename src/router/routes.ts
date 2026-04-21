@@ -3,6 +3,10 @@ import { useUserStore } from '@/store';
 
 const routes: RouteRecordRaw[] = [
   {
+    path: '/',
+    redirect: '/workBench' // 默认重定向到工作台，实际跳转由路由守卫控制
+  },
+  {
     name: 'base::das-readdy',
     path: '/das-readdy',
     beforeEnter() {

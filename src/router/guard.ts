@@ -37,7 +37,7 @@ export function setupPermissionGuard(router: Router) {
       // 判断是否获取菜单权限
       if (!menusStore.menusData || !menusStore.menusData.length) {
         const menusData = await getMenus();
-        menusStore.setMenus(menusData);
+        await menusStore.setMenus(menusData); // 等待菜单设置完成
       }
       // 判断是否获取权限 ids;
       if (!userStore.permissionIds || !userStore.permissionIds.length) {

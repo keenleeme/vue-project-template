@@ -74,7 +74,7 @@
   //   return customMeta?.fullScreen || false;
   // });
 
-  const menuConfig = ref({
+  const menuConfig = computed(() => ({
     // 不传按默认配置字段，如要修改请补充对应字段的key/value
     dataProps: {
       label: 'title', // 使用 menuMock.ts 中的 title 字段
@@ -86,6 +86,6 @@
         name: I18N.layout.tuiChuDengLu
       }
     ],
-    menuData: getMenuMock() // 使用统一的菜单数据源
-  });
+    menuData: menusStore.menusData // 使用 store 中的原始菜单数据，支持动态过滤
+  }));
 </script>

@@ -50,9 +50,37 @@ export default defineStore('menus', () => {
   // 菜单处理
   const menusData = ref<MenuType[]>([]);
   const menusMap = new Map<string, MenuType[]>();
-  const setMenus = (menus: MenuType[]) => {
-    menusData.value = menus;
-    dataToMenuMap(menus, menusMap);
+  const setMenus = async (menus: MenuType[]) => {
+    // 检查是否有可用的子应用
+    // 通过 window._routeCenter 判断是否有子应用路由加载成功
+    const hasMicroApps = () => {
+      const routeCenter = (window as any)._routeCenter;
+      if (!routeCenter) {
+        console.log('[Menu] routeCenter 未初始化');
+        return false;
+      }
+
+      const routes = routeCenter.getRoutes();
+      const hasRoutes = routes && routes.size > 0;
+      console.log('[Menu] 子应用路由检查:', {
+        hasRouteCenter: !!routeCenter,
+        routesCount: routes?.size || 0,
+        hasRoutes
+      });
+      return hasRoutes;
+    };
+
+    // 如果没有子应用加载成功，过滤掉微应用菜单
+    let filteredMenus = menus;
+    if (!hasMicroApps()) {
+      filteredMenus = menus.filter((menu) => menu.id !== 'micro');
+      console.log('[Menu] 没有可用的子应用，隐藏"微应用技术方案展示"菜单');
+    } else {
+      console.log('[Menu] 检测到子应用，显示"微应用技术方案展示"菜单');
+    }
+
+    menusData.value = filteredMenus;
+    dataToMenuMap(filteredMenus, menusMap);
   };
   const findFistSiderMenu = (id?: string): MenuType | undefined => {
     // 深度搜索算法 查找菜单下第一个可用子菜单，注意 reverse() 使用

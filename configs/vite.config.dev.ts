@@ -1,6 +1,6 @@
 import { mergeConfig } from 'vite';
 // import eslint from 'vite-plugin-eslint';
-import devEnv from '../dev.env.js';
+import { proxy } from '../dev.env.js';
 import baseConfig from './vite.config.base';
 
 export default mergeConfig(
@@ -12,7 +12,10 @@ export default mergeConfig(
       },
       host: '0.0.0.0',
       port: 3000,
-      proxy: devEnv.proxy
+      proxy
+    },
+    optimizeDeps: {
+      force: true // 每次启动都强制重新预构建，避免缓存不一致导致的404错误
     },
     plugins: [
       // eslint({
