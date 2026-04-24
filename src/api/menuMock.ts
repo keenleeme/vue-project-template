@@ -57,6 +57,38 @@ export default function getMenuMock() {
           path: '/base-config',
           url: '/base-config',
           children: []
+        },
+        {
+          id: 'traceTask',
+          title: I18N.layout.suYuanRenWu,
+          hideChildren: true,
+          path: '/trace-task',
+          url: '/trace-task',
+          children: []
+        },
+        {
+          id: 'traceTaskSensitiveFlow',
+          title: I18N.layout.minGanShuJuLiuZhuanLianLu,
+          hideChildren: true,
+          path: '/trace-task/sensitive-data-flow',
+          url: '/trace-task/sensitive-data-flow',
+          children: []
+        },
+        {
+          id: 'announcementWarning',
+          title: '公告预警',
+          hideChildren: true,
+          path: '/announcement-warning',
+          url: '/announcement-warning',
+          children: []
+        },
+        {
+          id: 'announcementTodo',
+          title: '我的公告待办',
+          hideChildren: true,
+          path: '/announcement-warning/todo',
+          url: '/announcement-warning/todo',
+          children: []
         }
       ]
     },

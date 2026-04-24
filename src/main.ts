@@ -27,8 +27,27 @@ i18n(app);
 
 app.use(UedWBCInstall);
 
+const removeSplashLoader = () => {
+  const loader = document.getElementById('loader');
+  loader?.parentNode?.removeChild(loader);
+};
+
 (async () => {
-  await startMicro(router);
-  app.use(router);
-  app.mount('#app');
+  try {
+    await startMicro(router);
+    app.use(router);
+    app.mount('#app');
+  } catch (error) {
+    console.error('[bootstrap] 应用启动失败', error);
+    removeSplashLoader();
+    const root = document.getElementById('app');
+    if (root) {
+      root.innerHTML =
+        '<div style="padding:24px;line-height:1.6;color:#cf1322;font-family:sans-serif">' +
+        '应用启动失败，请打开开发者工具 (F12) 查看控制台错误。<br/>' +
+        '若与 Vite 预构建有关，可尝试：结束本机所有 node 进程后删除临时目录 ' +
+        '<code style="word-break:break-all">%TEMP%\\\\cjtest-vue-project-template-vite</code> 再执行 npm run dev。' +
+        '</div>';
+    }
+  }
 })();

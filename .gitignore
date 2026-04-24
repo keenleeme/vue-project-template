@@ -21,3 +21,6 @@ yarn-error.log*
 *.sln
 *.sw?
 components.d.ts
+
+# Vite dev dependency pre-bundle cache (local only)
+.vite-dev-cache/

@@ -12,7 +12,6 @@ import {
   getCustomParentRoute
 } from './microApi/helper';
 import { useMicroStore } from './store';
-import SubApp from './sub-app.vue';
 
 let customPath;
 
@@ -24,7 +23,10 @@ export function setupAddMicroRouter(router: Router) {
       router.addRoute({
         path: `${app.baseroute}/:page*`,
         name: app.name,
-        component: () => Promise.resolve(h(SubApp, { appInfo: app })),
+        // 必须动态加载：static import 会立刻执行 sub-app 里的 `import 'zone.js'`，
+        // Zone 会全局打补丁，易与主应用 Vue 3 + antdv 冲突（如打开 Drawer 报 'type' in null）
+        component: () =>
+          import('./sub-app.vue').then((m) => h(m.default, { appInfo: app })),
         meta: {
           title: app.name,
           public: true,

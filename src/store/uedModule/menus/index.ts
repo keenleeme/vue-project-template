@@ -114,7 +114,9 @@ export default defineStore('menus', () => {
   // 激活路由的层级关系
   const activeRoutes = ref<RouteItemType[]>([]);
   const setActiveRoutes = (routes: RouteItemType[] = []) => {
-    activeRoutes.value = routes.filter((route) => route.component);
+    activeRoutes.value = (routes || []).filter(
+      (route): route is RouteItemType => route != null && Boolean(route.component)
+    );
   };
   // 依据最高层的路由路径反向查找激活菜单
   const activeMenus = computed(() => {
@@ -137,7 +139,10 @@ export default defineStore('menus', () => {
   });
   // 路由层级+菜单层级 = 面包屑
   const activeBreadcrumb = computed(() => {
-    return [...[...activeMenus.value].reverse(), ...activeRoutes.value.slice(0, activeRoutes.value.length - 1)];
+    const merged = [...[...activeMenus.value].reverse(), ...activeRoutes.value.slice(0, activeRoutes.value.length - 1)];
+    return merged.filter(
+      (item): item is RouteItemType | MenuType => item != null && typeof item === 'object' && 'title' in item
+    );
   });
 
   const activeId = computed(() => {

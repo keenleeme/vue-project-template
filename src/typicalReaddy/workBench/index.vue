@@ -54,7 +54,7 @@
       <div class="right">
         <div class="chart-block">
           <div class="chart-header">
-            <div class="chart-title">我负责事件数量趋势</div>
+            <div class="chart-title">趋势情况</div>
           </div>
           <div class="chart-content">
             <div ref="lineChart" class="chart-container"></div>
@@ -605,8 +605,8 @@
   };
 
   // 列配置变化事件
-  const columnChange = (columns: TableColumnType<TableDataType>[]) => {
-    console.log('列设置:', columns);
+  const columnChange = (nextColumns: TableColumnType<TableDataType>[]) => {
+    console.log('列设置:', nextColumns);
   };
 
   // 搜索处理

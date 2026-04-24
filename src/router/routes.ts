@@ -1,5 +1,7 @@
 import type { RouteRecordRaw } from 'vue-router';
 import { useUserStore } from '@/store';
+import TraceTaskDetail from '@/views/uedTypical/trace-task/detail.vue';
+import TraceTaskIndex from '@/views/uedTypical/trace-task/index.vue';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -158,6 +160,69 @@ const routes: RouteRecordRaw[] = [
     meta: {
       title: 'I18N.layout.jiChuPeiZhi',
       permissionId: 'base::theme:index'
+    }
+  },
+  {
+    name: 'base::trace-task',
+    path: '/trace-task',
+    component: TraceTaskIndex,
+    meta: {
+      title: 'I18N.layout.suYuanRenWu',
+      permissionId: 'base::workBench:index'
+    }
+  },
+  {
+    name: 'base::trace-task-detail',
+    path: '/trace-task/detail/:id',
+    component: TraceTaskDetail,
+    meta: {
+      title: 'I18N.layout.suYuanRenWuXiangQing',
+      permissionId: 'base::workBench:index'
+    }
+  },
+  {
+    name: 'base::trace-task-sensitive-flow',
+    path: '/trace-task/sensitive-data-flow',
+    component: () => import('@/views/uedTypical/trace-task/sensitive-data-flow/index.vue'),
+    meta: {
+      title: 'I18N.layout.minGanShuJuLiuZhuanLianLu',
+      permissionId: 'base::workBench:index'
+    }
+  },
+  {
+    name: 'base::announcement-warning',
+    path: '/announcement-warning',
+    component: () => import('@/views/uedTypical/announcement-warning/index.vue'),
+    meta: {
+      title: '公告预警',
+      permissionId: 'base::workBench:index'
+    }
+  },
+  {
+    name: 'base::announcement-warning-editor',
+    path: '/announcement-warning/editor',
+    component: () => import('@/views/uedTypical/announcement-warning/editor.vue'),
+    meta: {
+      title: '公告编辑',
+      permissionId: 'base::workBench:index'
+    }
+  },
+  {
+    name: 'base::announcement-warning-todo',
+    path: '/announcement-warning/todo',
+    component: () => import('@/views/uedTypical/announcement-warning/todo.vue'),
+    meta: {
+      title: '公告待办',
+      permissionId: 'base::workBench:index'
+    }
+  },
+  {
+    name: 'base::announcement-warning-confirm',
+    path: '/announcement-warning/confirm/:id',
+    component: () => import('@/views/uedTypical/announcement-warning/confirm.vue'),
+    meta: {
+      title: '公告确认',
+      permissionId: 'base::workBench:index'
     }
   },
   {

@@ -22,7 +22,7 @@
 <script setup lang="ts">
   import { computed } from 'vue';
   import { useRouter } from 'vue-router';
-  import 'zone.js';
+  /** 勿在基座引入 zone.js：会全局打补丁，与 Vue 3 调度/antdv 弹层冲突；子应用（如 Angular）在 iframe 内自带 zone */
   import microApp from '@/micro/microApi';
   import { useThemeStore } from '@/store';
   import { getAppRealUrl } from './microApi/helper';
