@@ -75,6 +75,70 @@ export default function getMenuMock() {
           children: []
         },
         {
+          id: 'securityDashboard',
+          title: '安全态势大屏',
+          hideChildren: true,
+          path: '/security-dashboard',
+          url: '/security-dashboard',
+          children: []
+        },
+        {
+          id: 'overviewDashboard',
+          title: '总览',
+          hideChildren: true,
+          path: '/overview-dashboard',
+          url: '/overview-dashboard',
+          children: []
+        },
+        {
+          id: 'applicationAccessRelation',
+          title: '应用访问关系',
+          hideChildren: true,
+          path: '/application-access-relation',
+          url: '/application-access-relation',
+          children: []
+        },
+        {
+          id: 'apiManagement',
+          title: 'API管理',
+          hideChildren: true,
+          path: '/api-management',
+          url: '/api-management',
+          children: []
+        },
+        {
+          id: 'apiDefectList',
+          title: 'API缺陷',
+          hideChildren: true,
+          path: '/api-defect-list',
+          url: '/api-defect-list',
+          children: []
+        },
+        {
+          id: 'riskBehavior',
+          title: '风险行为',
+          hideChildren: true,
+          path: '/risk-behavior',
+          url: '/risk-behavior',
+          children: []
+        },
+        {
+          id: 'tagManagement',
+          title: '标签管理',
+          hideChildren: true,
+          path: '/tag-management',
+          url: '/tag-management',
+          children: []
+        },
+        {
+          id: 'policyManagement',
+          title: '策略管理',
+          hideChildren: true,
+          path: '/policy-management',
+          url: '/policy-management',
+          children: []
+        },
+        {
           id: 'announcementWarning',
           title: '公告预警',
           hideChildren: true,
@@ -88,6 +152,14 @@ export default function getMenuMock() {
           hideChildren: true,
           path: '/announcement-warning/todo',
           url: '/announcement-warning/todo',
+          children: []
+        },
+        {
+          id: 'reportManagement',
+          title: I18N.layout.baoGaoGuanLi,
+          hideChildren: true,
+          path: '/report-management',
+          url: '/report-management',
           children: []
         }
       ]

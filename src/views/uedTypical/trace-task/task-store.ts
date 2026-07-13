@@ -3,6 +3,28 @@ import dayjs from 'dayjs';
 export type TraceType = 'sensitive' | 'sourceIp' | 'account';
 export type TaskStatus = 'pending' | 'running' | 'success' | 'failed';
 export type LogicType = 'AND' | 'OR';
+export type SensitiveClueDimension =
+  | 'timeRange'
+  | 'urlPath'
+  | 'apiSensitiveLevel'
+  | 'appDomain'
+  | 'accountName'
+  | 'sourceIp'
+  | 'destIp'
+  | 'destPort'
+  | 'requestDataTag'
+  | 'responseDataTag'
+  | 'fileName'
+  | 'fileFormat'
+  | 'fileAction';
+
+export interface SensitiveTraceClue {
+  id: string;
+  dimension: SensitiveClueDimension | undefined;
+  value?: string;
+  values?: string[];
+  timeRange?: [string, string];
+}
 
 export interface AppOption {
   id: string;
@@ -11,6 +33,7 @@ export interface AppOption {
 }
 
 export interface SensitiveTraceConditions {
+  clues?: SensitiveTraceClue[];
   loginAccount: string;
   clientIp: string;
   serverIp: string;
@@ -22,7 +45,7 @@ export interface SensitiveTraceConditions {
   responseDataTags: string[];
   responseTagLogic: LogicType;
   dataClue: string;
-  timeRange: [string, string];
+  timeRange?: [string, string];
 }
 
 export interface SourceIpTraceConditions {
@@ -70,6 +93,26 @@ export const STATUS_OPTIONS = [
 
 export const DATA_TAG_OPTIONS = ['身份证号', '手机号', '银行卡号', '邮箱地址', '设备标识', '地理位置', '联系人信息'];
 
+export const API_SENSITIVE_LEVEL_OPTIONS = ['低敏', '中敏', '高敏', '核心敏感'];
+export const FILE_FORMAT_OPTIONS = ['xlsx', 'csv', 'pdf', 'docx', 'txt', 'zip'];
+export const FILE_ACTION_OPTIONS = ['上传', '下载', '预览', '分享', '删除', '外发'];
+
+export const SENSITIVE_CLUE_DIMENSION_OPTIONS: { label: string; value: SensitiveClueDimension }[] = [
+  { label: '时间范围', value: 'timeRange' },
+  { label: 'URL路径字符串', value: 'urlPath' },
+  { label: 'API敏感等级', value: 'apiSensitiveLevel' },
+  { label: '应用域名', value: 'appDomain' },
+  { label: '账号名称', value: 'accountName' },
+  { label: '请求源IP', value: 'sourceIp' },
+  { label: '目的IP', value: 'destIp' },
+  { label: '目的端口', value: 'destPort' },
+  { label: '请求数据标签', value: 'requestDataTag' },
+  { label: '响应数据标签', value: 'responseDataTag' },
+  { label: '文件名称', value: 'fileName' },
+  { label: '文件格式', value: 'fileFormat' },
+  { label: '文件操作行为条件', value: 'fileAction' }
+];
+
 export const APP_OPTIONS: AppOption[] = [
   {
     id: 'app-oa',
@@ -106,6 +149,23 @@ const buildDefaultTasks = (): TraceTask[] => [
     traceType: 'sensitive',
     status: 'running',
     conditions: {
+      clues: [
+        {
+          id: 'clue-default-001',
+          dimension: 'timeRange',
+          timeRange: ['2026-04-21 09:00:00', '2026-04-22 09:00:00']
+        },
+        {
+          id: 'clue-default-002',
+          dimension: 'fileName',
+          value: '客户名单.xlsx'
+        },
+        {
+          id: 'clue-default-003',
+          dimension: 'requestDataTag',
+          values: ['身份证号', '手机号']
+        }
+      ],
       loginAccount: 'zhangsan',
       clientIp: '10.10.10.8',
       serverIp: '172.16.8.18',
@@ -163,6 +223,23 @@ const buildDefaultTasks = (): TraceTask[] => [
     traceType: 'sensitive',
     status: 'failed',
     conditions: {
+      clues: [
+        {
+          id: 'clue-default-004',
+          dimension: 'timeRange',
+          timeRange: ['2026-04-19 08:00:00', '2026-04-19 18:00:00']
+        },
+        {
+          id: 'clue-default-005',
+          dimension: 'urlPath',
+          value: '/customer/profile'
+        },
+        {
+          id: 'clue-default-006',
+          dimension: 'responseDataTag',
+          values: ['手机号', '身份证号']
+        }
+      ],
       loginAccount: '',
       clientIp: '10.10.9.7',
       serverIp: '',
@@ -227,27 +304,47 @@ export const getAccountsByAppId = (appId?: string) => {
   return APP_OPTIONS.find((item) => item.id === appId)?.accounts || [];
 };
 
+export const getSensitiveClueDimensionLabel = (dimension?: SensitiveClueDimension) =>
+  SENSITIVE_CLUE_DIMENSION_OPTIONS.find((item) => item.value === dimension)?.label || dimension || '';
+
+export const formatSensitiveClueValue = (clue: SensitiveTraceClue) => {
+  if (clue.dimension === 'timeRange') {
+    return clue.timeRange?.length === 2 ? `${clue.timeRange[0]} ~ ${clue.timeRange[1]}` : '';
+  }
+  if (Array.isArray(clue.values)) return clue.values.join('、');
+  return clue.value || '';
+};
+
 export const buildConditionTags = (task: Pick<TraceTask, 'traceType' | 'conditions'>) => {
   const tags: string[] = [];
 
   if (task.traceType === 'sensitive') {
     const conditions = task.conditions as SensitiveTraceConditions;
-    if (conditions.loginAccount) tags.push(`登录账号:${conditions.loginAccount}`);
-    if (conditions.clientIp) tags.push(`客户端IP:${conditions.clientIp}`);
-    if (conditions.serverIp) tags.push(`服务端IP:${conditions.serverIp}`);
-    if (conditions.appIds.length) {
-      tags.push(`应用:${conditions.appIds.map(getAppName).join('、')}`);
+    const hasClues = !!conditions.clues?.length;
+    if (hasClues) {
+      conditions.clues.forEach((clue, index) => {
+        const label = getSensitiveClueDimensionLabel(clue.dimension);
+        const value = formatSensitiveClueValue(clue);
+        if (label && value) tags.push(`线索${index + 1}:${label}=${value}`);
+      });
+    } else {
+      if (conditions.loginAccount) tags.push(`登录账号:${conditions.loginAccount}`);
+      if (conditions.clientIp) tags.push(`客户端IP:${conditions.clientIp}`);
+      if (conditions.serverIp) tags.push(`服务端IP:${conditions.serverIp}`);
+      if (conditions.appIds.length) {
+        tags.push(`应用:${conditions.appIds.map(getAppName).join('、')}`);
+      }
+      if (conditions.apiPath) tags.push(`API路径:${conditions.apiPath}`);
+      if (conditions.fileName) tags.push(`文件:${conditions.fileName}`);
+      if (conditions.requestDataTags.length) {
+        tags.push(`请求标签(${conditions.requestTagLogic}):${conditions.requestDataTags.join('、')}`);
+      }
+      if (conditions.responseDataTags.length) {
+        tags.push(`返回标签(${conditions.responseTagLogic}):${conditions.responseDataTags.join('、')}`);
+      }
+      if (conditions.dataClue) tags.push(`数据线索:${conditions.dataClue}`);
+      if (conditions.timeRange) tags.push(`发生时间:${conditions.timeRange[0]} ~ ${conditions.timeRange[1]}`);
     }
-    if (conditions.apiPath) tags.push(`API路径:${conditions.apiPath}`);
-    if (conditions.fileName) tags.push(`文件:${conditions.fileName}`);
-    if (conditions.requestDataTags.length) {
-      tags.push(`请求标签(${conditions.requestTagLogic}):${conditions.requestDataTags.join('、')}`);
-    }
-    if (conditions.responseDataTags.length) {
-      tags.push(`返回标签(${conditions.responseTagLogic}):${conditions.responseDataTags.join('、')}`);
-    }
-    if (conditions.dataClue) tags.push(`数据线索:${conditions.dataClue}`);
-    tags.push(`发生时间:${conditions.timeRange[0]} ~ ${conditions.timeRange[1]}`);
   }
 
   if (task.traceType === 'sourceIp') {

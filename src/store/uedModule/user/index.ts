@@ -1,5 +1,6 @@
-import { ref, Ref, onMounted, reactive } from 'vue';
-import { defineStore } from 'pinia';
+  import { ref, Ref, onMounted, reactive } from 'vue';
+  import { defineStore } from 'pinia';
+  import { clearLoginPassword } from '@/utils/loginCredential';
 
 interface UserStore {
   token: Ref<string | undefined>;
@@ -31,6 +32,7 @@ export default defineStore<'user', UserStore>(
       token.value = undefined;
       permissionIds.value = [];
       Object.assign(userInfo, {});
+      clearLoginPassword();
     };
 
     const restore = () => {

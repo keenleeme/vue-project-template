@@ -38,7 +38,7 @@
   </div>
   <a-layout>
     <!-- <div class="setting-content"> -->
-    <div class="p2 pl-16 page-top">
+    <div v-if="!route.meta.hidePageTop" class="p2 pl-16 page-top">
       <a-breadcrumb v-if="themeConfig.breadcrumb" class="breadcrumb">
         <a-breadcrumb-item v-for="item in activeBreadcrumb" :key="item.title">
           <template v-if="!item.path">

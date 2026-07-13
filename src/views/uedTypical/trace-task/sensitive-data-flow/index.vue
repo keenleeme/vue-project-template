@@ -15,7 +15,7 @@
                 v-model:value="refreshIntervalSec"
                 size="small"
                 class="interval-select"
-                :disabled="!realtimeEnabled || refreshPaused"
+                :disabled="refreshPaused"
                 :options="intervalOptions"
                 aria-label="自动刷新间隔"
               />
@@ -68,7 +68,7 @@
                 <a-button size="small" @click="clearFilters">清除条件</a-button>
                 <a-button type="primary" size="small" ghost @click="resetFilters">重置</a-button>
                 <a-button size="small" :loading="manualRefreshing" @click="manualRefresh"> 手动刷新 </a-button>
-                <a-button size="small" :disabled="!realtimeEnabled" @click="refreshPaused = !refreshPaused">
+                <a-button size="small" @click="refreshPaused = !refreshPaused">
                   {{ refreshPaused ? '继续自动更新' : '暂停自动更新' }}
                 </a-button>
               </a-space>
@@ -82,15 +82,6 @@
 
         <div class="toolbar-actions">
           <a-space>
-            <span class="live-label">
-              实时监控
-              <a-switch
-                v-model:checked="realtimeEnabled"
-                size="small"
-                aria-label="实时监控开关"
-                @change="onRealtimeChange"
-              />
-            </span>
             <a-button size="small" @click="exportReport">导出报告</a-button>
             <a-button size="small" @click="chartFullscreen = !chartFullscreen">
               {{ chartFullscreen ? '退出全屏' : '图表全屏' }}
@@ -99,26 +90,6 @@
         </div>
       </div>
 
-      <div class="risk-legend" role="group" aria-label="风险等级图例">
-        <span class="legend-title">风险图例</span>
-        <span class="legend-item legend-normal">
-          <span class="legend-shape legend-shape-line solid" aria-hidden="true" />
-          <span>正常</span>
-        </span>
-        <span class="legend-item legend-warn">
-          <span class="legend-shape legend-shape-line dash warn" aria-hidden="true" />
-          <span>警告</span>
-        </span>
-        <span class="legend-item legend-high">
-          <span class="legend-shape legend-shape-line dash high" aria-hidden="true" />
-          <span>高风险 / 异常路径</span>
-        </span>
-        <span class="legend-item legend-node">
-          <span class="legend-shape circle" aria-hidden="true" />数据源
-          <span class="legend-shape diamond" aria-hidden="true" />处理
-          <span class="legend-shape rect" aria-hidden="true" />API
-        </span>
-      </div>
     </header>
 
     <div class="flow-body">
@@ -133,7 +104,7 @@
         aria-label="详情面板"
       >
         <div class="panel-header">
-          <span>详情</span>
+          <span>{{ selection?.title || '审计详情' }}</span>
           <a-button type="link" size="small" @click="detailCollapsed = !detailCollapsed">
             {{ detailCollapsed ? '展开' : '折叠' }}
           </a-button>
@@ -159,12 +130,23 @@
             <div v-if="selection.badges?.length" class="panel-badges">
               <a-tag v-for="b in selection.badges" :key="b" color="red">{{ b }}</a-tag>
             </div>
+            <section v-if="selection.requestPayload || selection.responsePayload" class="payload-section">
+              <div class="section-title">报文详情</div>
+              <a-tabs v-model:active-key="payloadActiveKey" size="small" class="payload-tabs">
+                <a-tab-pane key="request" tab="请求报文">
+                  <pre class="payload-code">{{ selection.requestPayload }}</pre>
+                </a-tab-pane>
+                <a-tab-pane key="response" tab="响应报文">
+                  <pre class="payload-code">{{ selection.responsePayload }}</pre>
+                </a-tab-pane>
+              </a-tabs>
+            </section>
             <div class="panel-footer-actions">
               <a-button type="primary" block ghost size="small" @click="addToWatchlist"> 加入监控 </a-button>
               <a-button block size="small" class="mt-8" @click="generateNodeReport"> 生成报告 </a-button>
             </div>
           </template>
-          <a-empty v-else description="点击节点或连接线查看详情" />
+          <a-empty v-else description="点击任意节点查看请求与响应报文" />
         </div>
       </aside>
     </div>
@@ -207,16 +189,32 @@
   import { computed, nextTick, onMounted, onUnmounted, reactive, ref, watch } from 'vue';
 
   type RiskLevel = 'normal' | 'warning' | 'high';
-  type NodeKind = 'source' | 'process' | 'api';
+  type NodeKind = 'tag' | 'app' | 'api' | 'ip';
+
+  type AuditLog = {
+    id: string;
+    time: string;
+    operator: string;
+    action: string;
+    result: string;
+    detail: string;
+    color: string;
+  };
 
   type FlowNode = {
     id: string;
     name: string;
+    subtitle: string;
     kind: NodeKind;
     traffic: number;
     x: number;
     y: number;
     risk: RiskLevel;
+    summary: { label: string; value: string }[];
+    extra: { label: string; value: string }[];
+    auditLogs: AuditLog[];
+    requestPayload: string;
+    responsePayload: string;
     zombie?: boolean;
     hasNew?: boolean;
     abnormal?: boolean;
@@ -241,7 +239,7 @@
   const filterDrawerOpen = ref(false);
   const detailCollapsed = ref(false);
   const detailActiveKeys = ref(['summary', 'more']);
-  const realtimeEnabled = ref(true);
+  const payloadActiveKey = ref('request');
   const refreshPaused = ref(false);
   const refreshIntervalSec = ref(30);
   const lastUpdated = ref(dayjs());
@@ -284,61 +282,264 @@
 
   const baseNodes: FlowNode[] = [
     {
-      id: 'db1',
-      name: '客户主库',
-      kind: 'source',
-      traffic: 120,
+      id: 'node1-tag',
+      name: '节点1：数据标签',
+      subtitle: '身份证号 / 手机号 / 银行卡号',
+      kind: 'tag',
+      traffic: 128,
       x: 80,
-      y: 120,
-      risk: 'normal'
+      y: 160,
+      risk: 'normal',
+      summary: [
+        { label: '节点类型', value: '数据标签' },
+        { label: '敏感级别', value: 'L3 高敏感' },
+        { label: '命中字段', value: 'idNo、mobile、bankCardNo' }
+      ],
+      extra: [
+        { label: '数据域', value: '客户信息域' },
+        { label: '标签来源', value: 'DLP 自动识别 + 资产目录同步' },
+        { label: '近 1h 访问量', value: '128 req/min' }
+      ],
+      auditLogs: [
+        {
+          id: 'tag-log-1',
+          time: '2026-05-08 10:21:18',
+          operator: 'system-dlp',
+          action: '命中敏感数据标签',
+          result: '已标记',
+          detail: '请求参数命中身份证号、手机号与银行卡号组合标签。',
+          color: 'blue'
+        },
+        {
+          id: 'tag-log-2',
+          time: '2026-05-08 10:21:19',
+          operator: 'audit-engine',
+          action: '生成访问审计事件',
+          result: '成功',
+          detail: '事件编号 EVT-DF-20260508-102119，已进入链路分析。',
+          color: 'green'
+        }
+      ],
+      requestPayload: JSON.stringify(
+        {
+          traceId: 'TRC-20260508-102118',
+          fields: ['idNo', 'mobile', 'bankCardNo'],
+          dataTags: ['PII_ID_CARD', 'PII_PHONE', 'FIN_BANK_CARD'],
+          sensitivityLevel: 'L3'
+        },
+        null,
+        2
+      ),
+      responsePayload: JSON.stringify(
+        {
+          matched: true,
+          labels: ['身份证号', '手机号', '银行卡号'],
+          policy: '客户敏感信息访问审计',
+          nextNode: '访问应用'
+        },
+        null,
+        2
+      )
     },
     {
-      id: 'kafka1',
-      name: '脱敏 Kafka',
-      kind: 'process',
-      traffic: 90,
-      x: 280,
-      y: 80,
+      id: 'node2-app',
+      name: '节点2：访问应用',
+      subtitle: '统一营销平台',
+      kind: 'app',
+      traffic: 96,
+      x: 300,
+      y: 160,
       risk: 'warning',
-      abnormal: true
+      abnormal: true,
+      summary: [
+        { label: '节点类型', value: '访问应用' },
+        { label: '应用名称', value: '统一营销平台' },
+        { label: '访问账号', value: 'mkt_exporter' }
+      ],
+      extra: [
+        { label: '应用负责人', value: '营销中台 / 王某' },
+        { label: '鉴权方式', value: 'OAuth2 Client Credential' },
+        { label: '异常提示', value: '非例行导出窗口访问高敏字段' }
+      ],
+      auditLogs: [
+        {
+          id: 'app-log-1',
+          time: '2026-05-08 10:22:03',
+          operator: 'mkt_exporter',
+          action: '发起客户明细查询',
+          result: '鉴权通过',
+          detail: '应用以服务账号访问客户画像与联系方式字段。',
+          color: 'orange'
+        },
+        {
+          id: 'app-log-2',
+          time: '2026-05-08 10:22:05',
+          operator: 'risk-policy',
+          action: '触发访问策略校验',
+          result: '需审计',
+          detail: '命中“营销应用批量访问高敏标签”审计规则。',
+          color: 'red'
+        }
+      ],
+      requestPayload: JSON.stringify(
+        {
+          traceId: 'TRC-20260508-102203',
+          appId: 'app-marketing-portal',
+          account: 'mkt_exporter',
+          scopes: ['customer:profile:read', 'customer:contact:read']
+        },
+        null,
+        2
+      ),
+      responsePayload: JSON.stringify(
+        {
+          authResult: 'PASS',
+          auditRequired: true,
+          policyHit: '营销应用批量访问高敏标签',
+          nextNode: '访问 API'
+        },
+        null,
+        2
+      )
     },
     {
-      id: 'svc1',
-      name: '画像聚合',
-      kind: 'process',
-      traffic: 70,
-      x: 280,
-      y: 200,
-      risk: 'normal'
-    },
-    {
-      id: 'api1',
-      name: '/api/v1/customer/export',
+      id: 'node3-api',
+      name: '节点3：访问 API',
+      subtitle: '/api/v1/customer/export',
       kind: 'api',
-      traffic: 100,
-      x: 520,
-      y: 100,
+      traffic: 112,
+      x: 540,
+      y: 160,
       risk: 'high',
-      hasNew: true
+      hasNew: true,
+      summary: [
+        { label: '节点类型', value: '访问 API' },
+        { label: 'API 路径', value: '/api/v1/customer/export' },
+        { label: '请求方法', value: 'POST' }
+      ],
+      extra: [
+        { label: '接口归属', value: '客户中心 / customer-service' },
+        { label: '返回字段', value: '姓名、证件号、手机号、银行卡尾号' },
+        { label: '调用统计', value: '近 1h 6,720 次，P99 820ms' }
+      ],
+      auditLogs: [
+        {
+          id: 'api-log-1',
+          time: '2026-05-08 10:22:06',
+          operator: 'api-gateway',
+          action: '转发 API 请求',
+          result: '200 OK',
+          detail: '网关已记录请求头、请求参数、响应字段和脱敏状态。',
+          color: 'green'
+        },
+        {
+          id: 'api-log-2',
+          time: '2026-05-08 10:22:07',
+          operator: 'data-risk-engine',
+          action: '识别批量导出行为',
+          result: '高风险',
+          detail: '单次导出 5000 条客户记录，包含 3 类敏感标签。',
+          color: 'red'
+        }
+      ],
+      requestPayload: JSON.stringify(
+        {
+          method: 'POST',
+          path: '/api/v1/customer/export',
+          headers: {
+            'x-trace-id': 'TRC-20260508-102206',
+            'x-app-id': 'app-marketing-portal'
+          },
+          body: {
+            fields: ['name', 'idNo', 'mobile', 'bankCardNo'],
+            exportFormat: 'xlsx',
+            limit: 5000
+          }
+        },
+        null,
+        2
+      ),
+      responsePayload: JSON.stringify(
+        {
+          code: 0,
+          message: 'success',
+          data: {
+            exportId: 'EXP-20260508-102206',
+            rowCount: 5000,
+            masked: false
+          }
+        },
+        null,
+        2
+      )
     },
     {
-      id: 'api2',
-      name: '/internal/legacy/query',
-      kind: 'api',
-      traffic: 40,
-      x: 520,
-      y: 220,
-      risk: 'warning',
-      zombie: true
+      id: 'node4-ip',
+      name: '节点4：访问 IP',
+      subtitle: '10.11.42.53',
+      kind: 'ip',
+      traffic: 84,
+      x: 780,
+      y: 160,
+      risk: 'high',
+      zombie: true,
+      summary: [
+        { label: '节点类型', value: '访问 IP' },
+        { label: '来源 IP', value: '10.11.42.53' },
+        { label: '地理位置', value: '办公网出口 / 华东一区' }
+      ],
+      extra: [
+        { label: '设备指纹', value: 'Windows-Edge-9F31' },
+        { label: '访问次数', value: '近 1h 84 req/min' },
+        { label: '风险原因', value: '出口 IP 非该应用常用访问段' }
+      ],
+      auditLogs: [
+        {
+          id: 'ip-log-1',
+          time: '2026-05-08 10:22:08',
+          operator: 'network-probe',
+          action: '记录源 IP',
+          result: '成功',
+          detail: '检测到来源 IP 10.11.42.53，设备指纹 Windows-Edge-9F31。',
+          color: 'blue'
+        },
+        {
+          id: 'ip-log-2',
+          time: '2026-05-08 10:22:10',
+          operator: 'risk-policy',
+          action: '访问段校验',
+          result: '异常',
+          detail: '来源 IP 与应用白名单网段不一致，建议复核访问主体。',
+          color: 'red'
+        }
+      ],
+      requestPayload: JSON.stringify(
+        {
+          sourceIp: '10.11.42.53',
+          userAgent: 'Mozilla/5.0 Edge/122.0',
+          requestId: 'REQ-20260508-102208',
+          forwardedFor: ['10.11.42.53', '172.16.8.12']
+        },
+        null,
+        2
+      ),
+      responsePayload: JSON.stringify(
+        {
+          disposition: 'ALLOW_WITH_AUDIT',
+          riskScore: 86,
+          reason: 'IP_NOT_IN_APP_BASELINE',
+          suggestedAction: '复核应用账号与访问终端'
+        },
+        null,
+        2
+      )
     }
   ];
 
   const baseLinks: FlowLink[] = [
-    { source: 'db1', target: 'kafka1', risk: 'normal' },
-    { source: 'db1', target: 'svc1', risk: 'normal' },
-    { source: 'kafka1', target: 'api1', risk: 'warning', newFlag: true },
-    { source: 'svc1', target: 'api1', risk: 'normal' },
-    { source: 'kafka1', target: 'api2', risk: 'high', bulk: true, nonCompliant: true }
+    { source: 'node1-tag', target: 'node2-app', risk: 'normal' },
+    { source: 'node2-app', target: 'node3-api', risk: 'warning', newFlag: true },
+    { source: 'node3-api', target: 'node4-ip', risk: 'high', bulk: true, nonCompliant: true }
   ];
 
   const graphNodes = ref<FlowNode[]>(JSON.parse(JSON.stringify(baseNodes)));
@@ -349,29 +550,34 @@
     title: string;
     summary: { label: string; value: string }[];
     extra: { label: string; value: string }[];
+    auditLogs?: AuditLog[];
+    requestPayload?: string;
+    responsePayload?: string;
     badges?: string[];
   };
 
   const selection = ref<DetailSelection | null>(null);
 
   function symbolForKind(kind: NodeKind): string {
-    if (kind === 'source') return 'circle';
-    if (kind === 'process') return 'diamond';
+    if (kind === 'tag') return 'roundRect';
+    if (kind === 'app') return 'diamond';
+    if (kind === 'ip') return 'circle';
     return 'rect';
   }
 
   function nodeColor(kind: NodeKind, risk: RiskLevel): string {
     if (risk === 'high') return '#f5222d';
     if (risk === 'warning') return '#fa8c16';
-    if (kind === 'source') return '#36cfc9';
-    if (kind === 'process') return '#597ef7';
+    if (kind === 'tag') return '#36cfc9';
+    if (kind === 'app') return '#597ef7';
+    if (kind === 'ip') return '#9254de';
     return '#73d13d';
   }
 
   function buildChartOption(): echarts.EChartsOption {
     const nData = graphNodes.value.map((n) => {
       const size = 28 + Math.min(n.traffic / 4, 36);
-      const labelText = (n.hasNew ? 'NEW ' : '') + n.name + (n.abnormal ? ' ⚠' : '') + (n.zombie ? ' [僵尸]' : '');
+      const labelText = `${n.hasNew ? 'NEW ' : ''}${n.name}\n${n.subtitle}`;
       return {
         id: n.id,
         name: n.name,
@@ -383,7 +589,7 @@
         draggable: true,
         itemStyle: {
           color: nodeColor(n.kind, n.risk),
-          borderColor: n.zombie ? '#faad14' : '#303030',
+          borderColor: n.zombie ? '#faad14' : '#ffffff',
           borderWidth: n.zombie ? 2 : 1,
           borderType: n.zombie ? 'dashed' : 'solid',
           shadowBlur: n.abnormal ? (blinkPhase.value ? 22 : 6) : 0,
@@ -392,8 +598,9 @@
         label: {
           show: true,
           formatter: labelText,
-          color: '#e6e6e6',
-          fontSize: 11
+          color: '#1f2937',
+          fontSize: 11,
+          lineHeight: 16
         }
       };
     });
@@ -428,7 +635,7 @@
         label: {
           show: !!e.newFlag,
           formatter: 'NEW',
-          color: '#ffccc7',
+          color: '#f5222d',
           fontSize: 10
         }
       };
@@ -438,9 +645,9 @@
       backgroundColor: 'transparent',
       tooltip: {
         trigger: 'item',
-        backgroundColor: 'rgba(20,24,32,0.95)',
-        borderColor: '#434343',
-        textStyle: { color: '#fff' },
+        backgroundColor: 'rgba(255,255,255,0.98)',
+        borderColor: '#d9e2ef',
+        textStyle: { color: '#1f2937' },
         formatter: (p: unknown) => {
           const param = p as {
             dataType?: string;
@@ -448,11 +655,11 @@
           };
           if (param.dataType === 'edge') {
             const { source, target } = param.data || {};
-            return `${source} → ${target}<br/>状态：参见图例颜色与线型`;
+            return `${source} → ${target}<br/>点击节点查看请求与响应报文`;
           }
           const d = param.data;
           if (!d?.name) return '';
-          return `${d.name}<br/>估算流量：${d.value ?? '-'} req/min`;
+          return `${d.name}<br/>估算流量：${d.value ?? '-'} req/min<br/>点击查看报文详情`;
         }
       },
       animationDurationUpdate: 500,
@@ -491,22 +698,19 @@
         const id = (p.data as { id?: string }).id || p.data.name;
         const node = graphNodes.value.find((x) => x.id === id || x.name === id);
         if (!node) return;
+        detailCollapsed.value = false;
+        payloadActiveKey.value = 'request';
         selection.value = {
           type: 'node',
           title: node.name,
-          summary: [
-            { label: '节点类型', value: node.kind },
-            { label: '风险', value: node.risk },
-            { label: '流量', value: `${node.traffic} req/min` }
-          ],
-          extra: [
-            { label: '坐标(示意)', value: `x=${node.x}, y=${node.y}` },
-            { label: '僵尸 API', value: node.zombie ? '是（虚线框标识）' : '否' },
-            { label: '异常闪烁', value: node.abnormal ? '是' : '否' }
-          ],
+          summary: node.summary,
+          extra: node.extra,
+          auditLogs: node.auditLogs,
+          requestPayload: node.requestPayload,
+          responsePayload: node.responsePayload,
           badges: [
             ...(node.hasNew ? ['NEW'] : []),
-            ...(node.zombie ? ['僵尸 API'] : []),
+            ...(node.zombie ? ['异常 IP'] : []),
             ...(node.abnormal ? ['异常行为'] : [])
           ].filter(Boolean)
         };
@@ -563,7 +767,7 @@
 
   function touchRefresh(fromUser = false) {
     lastUpdated.value = dayjs();
-    if (!fromUser && realtimeEnabled.value && !refreshPaused.value) {
+    if (!fromUser && !refreshPaused.value) {
       const hit = Math.random() > 0.85;
       if (hit) {
         notification.warning({
@@ -573,7 +777,7 @@
           duration: 4
         });
         graphLinks.value = graphLinks.value.map((l) =>
-          l.source === 'kafka1' && l.target === 'api1' ? { ...l, newFlag: true, risk: 'high' } : l
+          l.source === 'node2-app' && l.target === 'node3-api' ? { ...l, newFlag: true, risk: 'high' } : l
         );
       }
     }
@@ -592,22 +796,12 @@
     message.success('正在生成专项报告（演示）');
   }
 
-  function onRealtimeChange(checked: boolean | string | number) {
-    const on = checked === true;
-    if (!on) {
-      refreshPaused.value = true;
-    } else {
-      refreshPaused.value = false;
-    }
-    setupRefreshTimer();
-  }
-
   function setupRefreshTimer() {
     if (refreshTimer) {
       clearInterval(refreshTimer);
       refreshTimer = null;
     }
-    if (!realtimeEnabled.value || refreshPaused.value) return;
+    if (refreshPaused.value) return;
     refreshTimer = setInterval(() => {
       touchRefresh(false);
     }, refreshIntervalSec.value * 1000);
@@ -655,7 +849,7 @@
     setupRefreshTimer();
   });
 
-  watch([realtimeEnabled, refreshPaused], () => {
+  watch(refreshPaused, () => {
     setupRefreshTimer();
   });
 
@@ -673,11 +867,11 @@
 
 <style scoped lang="less">
   .sensitive-flow-page {
-    --flow-bg: #0b0f14;
-    --flow-panel: #121820;
-    --flow-border: #2a3441;
-    --flow-text: #e8eaed;
-    --flow-muted: #8b949e;
+    --flow-bg: #f5f7fb;
+    --flow-panel: #ffffff;
+    --flow-border: #d9e2ef;
+    --flow-text: #1f2937;
+    --flow-muted: #667085;
     min-height: calc(100vh - 48px);
     background: var(--flow-bg);
     color: var(--flow-text);
@@ -700,6 +894,7 @@
     background: var(--flow-panel);
     border: 1px solid var(--flow-border);
     border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(19, 75, 234, 0.06);
     padding: 12px 16px;
     margin-bottom: 12px;
   }
@@ -758,7 +953,7 @@
   .dark-form :deep(.ant-select-selector),
   .dark-form :deep(.ant-input),
   .dark-form :deep(.ant-picker) {
-    background: #1a222c !important;
+    background: #ffffff !important;
     border-color: var(--flow-border) !important;
     color: var(--flow-text) !important;
   }
@@ -774,87 +969,6 @@
   .toolbar-actions {
     margin-left: auto;
     flex-shrink: 0;
-  }
-
-  .live-label {
-    color: var(--flow-muted);
-    font-size: 13px;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .risk-legend {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 16px;
-    margin-top: 12px;
-    padding-top: 10px;
-    border-top: 1px solid var(--flow-border);
-    font-size: 12px;
-    color: var(--flow-muted);
-  }
-
-  .legend-title {
-    font-weight: 600;
-    color: var(--flow-text);
-  }
-
-  .legend-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .legend-shape-line {
-    width: 22px;
-    height: 0;
-    border-top-width: 3px;
-    border-top-style: solid;
-    display: inline-block;
-  }
-
-  .legend-shape-line.solid {
-    border-color: #52c41a;
-  }
-
-  .legend-shape-line.dash.warn {
-    border-top-style: dashed;
-    border-color: #fa8c16;
-  }
-
-  .legend-shape-line.dash.high {
-    border-top-style: dashed;
-    border-color: #f5222d;
-  }
-
-  .legend-shape {
-    display: inline-block;
-    vertical-align: middle;
-  }
-
-  .legend-shape.circle {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: #36cfc9;
-    margin-right: 4px;
-  }
-
-  .legend-shape.diamond {
-    width: 10px;
-    height: 10px;
-    background: #597ef7;
-    transform: rotate(45deg);
-    margin: 0 6px 0 8px;
-  }
-
-  .legend-shape.rect {
-    width: 12px;
-    height: 10px;
-    background: #73d13d;
-    margin-left: 4px;
   }
 
   .flow-body {
@@ -875,6 +989,7 @@
     background: var(--flow-panel);
     border: 1px solid var(--flow-border);
     border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
     overflow: hidden;
   }
 
@@ -896,6 +1011,7 @@
     background: var(--flow-panel);
     border: 1px solid var(--flow-border);
     border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
     display: flex;
     flex-direction: column;
     transition: width 0.2s ease;
@@ -933,22 +1049,62 @@
     margin-top: 16px;
   }
 
+  .payload-section {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--flow-border);
+  }
+
+  .section-title {
+    margin-bottom: 12px;
+    color: var(--flow-text);
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .payload-code {
+    max-height: 260px;
+    margin: 0;
+    padding: 12px;
+    overflow: auto;
+    background: #f8fafc;
+    border: 1px solid var(--flow-border);
+    border-radius: 6px;
+    color: #1f2937;
+    font-size: 12px;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
   .mt-8 {
     margin-top: 8px;
   }
 
   :deep(.dark-descriptions .ant-descriptions-item-label) {
-    background: #1a222c !important;
+    background: #f8fafc !important;
     color: var(--flow-muted) !important;
   }
 
   :deep(.dark-descriptions .ant-descriptions-item-content) {
-    background: #141a22 !important;
+    background: #ffffff !important;
     color: var(--flow-text) !important;
   }
 
   :deep(.ant-collapse-header) {
     color: var(--flow-text) !important;
+  }
+
+  :deep(.payload-tabs .ant-tabs-tab) {
+    color: var(--flow-muted);
+  }
+
+  :deep(.payload-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn) {
+    color: var(--color-brand-normal, #134bea);
+  }
+
+  :deep(.payload-tabs .ant-tabs-ink-bar) {
+    background: var(--color-brand-normal, #134bea);
   }
 
   :deep(.ant-empty-description) {
@@ -979,14 +1135,14 @@
   }
 
   .sensitive-flow-page :deep(.ant-btn-default) {
-    background: #1a222c;
+    background: #ffffff;
     border-color: var(--flow-border);
     color: var(--flow-text);
   }
 
   .sensitive-flow-page :deep(.ant-btn-primary.ant-btn-background-ghost) {
-    color: #69c0ff;
-    border-color: #69c0ff;
+    color: var(--color-brand-normal, #134bea);
+    border-color: var(--color-brand-normal, #134bea);
   }
 
   .filter-compact {

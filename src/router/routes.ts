@@ -190,6 +190,89 @@ const routes: RouteRecordRaw[] = [
     }
   },
   {
+    name: 'base::security-dashboard',
+    path: '/security-dashboard',
+    component: () => import('@/views/uedTypical/security-dashboard/index.vue'),
+    meta: {
+      title: '安全态势大屏',
+      permissionId: 'base::workBench:index',
+      fullScreen: true
+    }
+  },
+  {
+    name: 'base::overview-dashboard',
+    path: '/overview-dashboard',
+    component: () => import('@/views/uedTypical/overview-dashboard/index.vue'),
+    meta: {
+      title: '总览',
+      permissionId: 'base::workBench:index'
+    }
+  },
+  {
+    name: 'base::application-access-relation',
+    path: '/application-access-relation',
+    component: () => import('@/views/uedTypical/application-access-relation/index.vue'),
+    meta: {
+      title: '应用访问关系',
+      permissionId: 'base::workBench:index'
+    }
+  },
+  {
+    name: 'base::api-management',
+    path: '/api-management',
+    component: () => import('@/views/uedTypical/api-management/index.vue'),
+    meta: {
+      title: 'API管理',
+      permissionId: 'base::workBench:index'
+    }
+  },
+  {
+    name: 'base::api-defect-list',
+    path: '/api-defect-list',
+    component: () => import('@/views/uedTypical/api-defect-list/index.vue'),
+    meta: {
+      title: '缺陷',
+      permissionId: 'base::workBench:index'
+    }
+  },
+  {
+    name: 'base::risk-behavior',
+    path: '/risk-behavior',
+    component: () => import('@/views/uedTypical/risk-behavior/index.vue'),
+    meta: {
+      title: '风险行为',
+      permissionId: 'base::workBench:index'
+    }
+  },
+  {
+    name: 'base::risk-behavior-web-attack-detail',
+    path: '/risk-behavior/web-attack/:id',
+    component: () => import('@/views/uedTypical/risk-behavior/web-attack-detail.vue'),
+    meta: {
+      title: 'Web攻击详情',
+      permissionId: 'base::workBench:index',
+      hidePageTop: true
+    }
+  },
+  {
+    name: 'base::tag-management',
+    path: '/tag-management',
+    component: () => import('@/views/uedTypical/tag-management/index.vue'),
+    meta: {
+      title: '标签管理',
+      permissionId: 'base::workBench:index'
+    }
+  },
+  {
+    name: 'base::policy-management',
+    path: '/policy-management',
+    component: () => import('@/views/uedTypical/policy-management/index.vue'),
+    meta: {
+      title: '策略管理',
+      permissionId: 'base::workBench:index'
+    }
+  },
+  {
     name: 'base::announcement-warning',
     path: '/announcement-warning',
     component: () => import('@/views/uedTypical/announcement-warning/index.vue'),
@@ -222,6 +305,51 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/uedTypical/announcement-warning/confirm.vue'),
     meta: {
       title: '公告确认',
+      permissionId: 'base::workBench:index'
+    }
+  },
+  {
+    name: 'base::report-management',
+    path: '/report-management',
+    component: () => import('@/views/uedTypical/report-management/index.vue'),
+    meta: {
+      title: '报告管理',
+      permissionId: 'base::workBench:index'
+    }
+  },
+  {
+    name: 'base::report-management-api-security-ops',
+    path: '/report-management/api-security-ops',
+    component: () => import('@/views/uedTypical/report-management/api-security-ops/index.vue'),
+    meta: {
+      title: 'API数据安全运营报表',
+      permissionId: 'base::workBench:index'
+    }
+  },
+  {
+    name: 'base::report-management-api-asset-analysis',
+    path: '/report-management/api-asset-analysis',
+    component: () => import('@/views/uedTypical/report-management/api-asset-analysis/index.vue'),
+    meta: {
+      title: 'API资产综合分析报表',
+      permissionId: 'base::workBench:index'
+    }
+  },
+  {
+    name: 'base::report-management-application-asset-analysis',
+    path: '/report-management/application-asset-analysis',
+    component: () => import('@/views/uedTypical/report-management/application-asset-analysis/index.vue'),
+    meta: {
+      title: '应用资产综合分析报表',
+      permissionId: 'base::workBench:index'
+    }
+  },
+  {
+    name: 'base::report-management-application-asset-detail',
+    path: '/report-management/application-asset-analysis/:appId',
+    component: () => import('@/views/uedTypical/report-management/application-asset-analysis/app-detail.vue'),
+    meta: {
+      title: '单应用综合分析',
       permissionId: 'base::workBench:index'
     }
   },

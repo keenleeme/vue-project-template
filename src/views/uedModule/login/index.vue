@@ -48,6 +48,7 @@
   import { message } from 'ant-design-vue';
   import { storeToRefs } from 'pinia';
   import { onLogin, onRegister, getCaptcha, getLoginRedirectUrl } from '@/api/common';
+  import { saveLoginPassword } from '@/utils/loginCredential';
   import { useI18n } from '@/libs/hooks/useI18n';
   import { useLoginStore, useThemeStore, useUserStore } from '@/store';
   import { LoginConfigDTO, LogoModeEnums } from './types';
@@ -308,6 +309,9 @@
         // 设置用户信息
         userStore.setToken(loginData.accessToken);
         userStore.setUserInfo(loginData.user);
+        if (data.password) {
+          saveLoginPassword(data.password);
+        }
 
         // 验证数据是否设置成功
         console.log('验证token设置:', userStore.token);

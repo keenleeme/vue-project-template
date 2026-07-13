@@ -356,13 +356,164 @@
           </a-tabs>
         </template>
 
+        <template v-else-if="sensitiveAnalysisResult">
+          <div class="fallback-section sensitive-trace-section">
+            <a-alert
+              type="info"
+              show-icon
+              message="敏感数据溯源（线索溯源）"
+              description="基于线索交集匹配的访问日志聚合结果，各维度清单均可查看访问日志条数、首末次命中时间及访问情况说明。"
+            />
+
+            <div class="module-card sensitive-result-card">
+              <div class="module-header">
+                <div class="module-title">溯源分析结果</div>
+                <a-button type="primary" @click="sensitiveResultDetailOpen = true">查看详细信息</a-button>
+              </div>
+
+              <a-row :gutter="[16, 16]">
+                <a-col :xs="24" :md="8">
+                  <div class="sensitive-stat-block">
+                    <div class="sensitive-stat-label">分析时间范围</div>
+                    <div class="sensitive-stat-value">
+                      {{ sensitiveAnalysisResult.timeRange[0] }} ~ {{ sensitiveAnalysisResult.timeRange[1] }}
+                    </div>
+                  </div>
+                </a-col>
+                <a-col :xs="24" :md="8">
+                  <div class="sensitive-stat-block">
+                    <div class="sensitive-stat-label">任务名称</div>
+                    <div class="sensitive-stat-value">{{ sensitiveAnalysisResult.taskName }}</div>
+                  </div>
+                </a-col>
+                <a-col :xs="24" :md="8">
+                  <div class="sensitive-stat-block">
+                    <div class="sensitive-stat-label">匹配的 API 访问日志总数</div>
+                    <div class="sensitive-stat-value sensitive-stat-number">
+                      {{ sensitiveAnalysisResult.matchedAccessLogTotal.toLocaleString() }}
+                    </div>
+                  </div>
+                </a-col>
+              </a-row>
+
+              <div class="sensitive-block">
+                <div class="sensitive-block-title">线索</div>
+                <ul class="sensitive-clue-list">
+                  <li v-for="(line, idx) in sensitiveAnalysisResult.clues" :key="idx">{{ line }}</li>
+                </ul>
+              </div>
+
+              <a-row :gutter="[16, 16]" class="sensitive-entity-row">
+                <a-col :xs="12" :lg="4">
+                  <div class="entity-count-pill">
+                    <span class="entity-count">{{ sensitiveAnalysisResult.apiRows.length }}</span>
+                    <span class="entity-label">涉及 API</span>
+                  </div>
+                </a-col>
+                <a-col :xs="12" :lg="4">
+                  <div class="entity-count-pill">
+                    <span class="entity-count">{{ sensitiveAnalysisResult.appRows.length }}</span>
+                    <span class="entity-label">涉及应用</span>
+                  </div>
+                </a-col>
+                <a-col :xs="12" :lg="4">
+                  <div class="entity-count-pill">
+                    <span class="entity-count">{{ sensitiveAnalysisResult.dataRows.length }}</span>
+                    <span class="entity-label">涉及数据</span>
+                  </div>
+                </a-col>
+                <a-col :xs="12" :lg="4">
+                  <div class="entity-count-pill">
+                    <span class="entity-count">{{ sensitiveAnalysisResult.fileRows.length }}</span>
+                    <span class="entity-label">涉及文件</span>
+                  </div>
+                </a-col>
+                <a-col :xs="12" :lg="4">
+                  <div class="entity-count-pill">
+                    <span class="entity-count">{{ sensitiveAnalysisResult.accountRows.length }}</span>
+                    <span class="entity-label">涉及账号</span>
+                  </div>
+                </a-col>
+                <a-col :xs="12" :lg="4">
+                  <div class="entity-count-pill">
+                    <span class="entity-count">{{ sensitiveAnalysisResult.ipRows.length }}</span>
+                    <span class="entity-label">涉及 IP</span>
+                  </div>
+                </a-col>
+              </a-row>
+
+              <div class="sensitive-block sensitive-entity-tables">
+                <div class="sensitive-block-title">匹配对象清单与访问情况</div>
+                <a-tabs v-model:activeKey="sensitiveEntityTab" size="small" class="sensitive-entity-tabs">
+                  <a-tab-pane key="api" :tab="`API（${sensitiveAnalysisResult.apiRows.length}）`">
+                    <a-table
+                      size="small"
+                      :columns="sensitiveAccessColumns"
+                      :data-source="sensitiveAnalysisResult.apiRows"
+                      :pagination="{ pageSize: 6, size: 'small' }"
+                      :scroll="{ x: 900 }"
+                    />
+                  </a-tab-pane>
+                  <a-tab-pane key="app" :tab="`应用（${sensitiveAnalysisResult.appRows.length}）`">
+                    <a-table
+                      size="small"
+                      :columns="sensitiveAccessColumns"
+                      :data-source="sensitiveAnalysisResult.appRows"
+                      :pagination="{ pageSize: 6, size: 'small' }"
+                      :scroll="{ x: 900 }"
+                    />
+                  </a-tab-pane>
+                  <a-tab-pane key="data" :tab="`数据（${sensitiveAnalysisResult.dataRows.length}）`">
+                    <a-table
+                      size="small"
+                      :columns="sensitiveAccessColumns"
+                      :data-source="sensitiveAnalysisResult.dataRows"
+                      :pagination="{ pageSize: 6, size: 'small' }"
+                      :scroll="{ x: 900 }"
+                    />
+                  </a-tab-pane>
+                  <a-tab-pane key="file" :tab="`文件（${sensitiveAnalysisResult.fileRows.length}）`">
+                    <a-table
+                      size="small"
+                      :columns="sensitiveAccessColumns"
+                      :data-source="sensitiveAnalysisResult.fileRows"
+                      :pagination="{ pageSize: 6, size: 'small' }"
+                      :scroll="{ x: 900 }"
+                    />
+                  </a-tab-pane>
+                  <a-tab-pane key="account" :tab="`账号（${sensitiveAnalysisResult.accountRows.length}）`">
+                    <a-table
+                      size="small"
+                      :columns="sensitiveAccessColumns"
+                      :data-source="sensitiveAnalysisResult.accountRows"
+                      :pagination="{ pageSize: 6, size: 'small' }"
+                      :scroll="{ x: 900 }"
+                    />
+                  </a-tab-pane>
+                  <a-tab-pane key="ip" :tab="`IP（${sensitiveAnalysisResult.ipRows.length}）`">
+                    <a-table
+                      size="small"
+                      :columns="sensitiveAccessColumns"
+                      :data-source="sensitiveAnalysisResult.ipRows"
+                      :pagination="{ pageSize: 6, size: 'small' }"
+                      :scroll="{ x: 900 }"
+                    />
+                  </a-tab-pane>
+                </a-tabs>
+              </div>
+
+              <p class="sensitive-hint">弹窗内提供同结构完整清单，便于复制与对照研判。</p>
+            </div>
+          </div>
+        </template>
+
         <template v-else>
           <div class="fallback-section">
             <a-alert
               type="info"
               show-icon
-              message="当前详情页重点适配“账号溯源”任务。"
-              description="该任务仍可查看基础信息与已选条件，账号溯源任务会展示完整的分析与风险时间线。"
+              message="当前详情页重点适配“账号溯源”与“敏感数据溯源”任务。"
+              description="源 IP 溯源等类型可查看基础信息与已选条件；账号溯源展示完整分析时间线。"
             />
 
             <div class="module-card generic-condition-card">
@@ -381,6 +532,110 @@
 
       <a-empty v-else description="未找到对应任务" />
     </a-card>
+
+    <a-modal
+      v-model:open="sensitiveResultDetailOpen"
+      title="溯源分析结果详情"
+      width="920px"
+      centered
+      :footer="null"
+      :body-style="{ maxHeight: '75vh', overflowY: 'auto' }"
+      @cancel="sensitiveResultDetailOpen = false"
+    >
+      <template v-if="sensitiveAnalysisResult">
+        <a-descriptions bordered :column="1" size="small" class="sensitive-desc">
+          <a-descriptions-item label="分析时间范围">
+            {{ sensitiveAnalysisResult.timeRange[0] }} ~ {{ sensitiveAnalysisResult.timeRange[1] }}
+          </a-descriptions-item>
+          <a-descriptions-item label="任务名称">{{ sensitiveAnalysisResult.taskName }}</a-descriptions-item>
+          <a-descriptions-item label="匹配的 API 访问日志总数">
+            <strong>{{ sensitiveAnalysisResult.matchedAccessLogTotal.toLocaleString() }}</strong> 条
+          </a-descriptions-item>
+        </a-descriptions>
+
+        <div class="sensitive-modal-section">
+          <div class="sensitive-modal-section-title">线索</div>
+          <ul class="sensitive-clue-list modal">
+            <li v-for="(line, idx) in sensitiveAnalysisResult.clues" :key="idx">{{ line }}</li>
+          </ul>
+        </div>
+
+        <div class="sensitive-modal-section">
+          <div class="sensitive-modal-section-title">涉及的 API 与访问情况</div>
+          <a-table
+            size="small"
+            :columns="sensitiveAccessColumns"
+            :data-source="sensitiveAnalysisResult.apiRows"
+            :pagination="{ pageSize: 8, size: 'small' }"
+            :scroll="{ x: 900 }"
+          />
+        </div>
+
+        <div class="sensitive-modal-section">
+          <div class="sensitive-modal-section-title">涉及的应用与访问情况</div>
+          <template v-if="sensitiveAnalysisResult.appRows.length">
+            <a-table
+              size="small"
+              :columns="sensitiveAccessColumns"
+              :data-source="sensitiveAnalysisResult.appRows"
+              :pagination="{ pageSize: 8, size: 'small' }"
+              :scroll="{ x: 900 }"
+            />
+          </template>
+          <span v-else class="entity-empty">暂无匹配应用</span>
+        </div>
+
+        <div class="sensitive-modal-section">
+          <div class="sensitive-modal-section-title">涉及的数据与访问情况</div>
+          <a-table
+            size="small"
+            :columns="sensitiveAccessColumns"
+            :data-source="sensitiveAnalysisResult.dataRows"
+            :pagination="{ pageSize: 8, size: 'small' }"
+            :scroll="{ x: 900 }"
+          />
+        </div>
+
+        <div class="sensitive-modal-section">
+          <div class="sensitive-modal-section-title">涉及的文件与访问情况</div>
+          <a-table
+            size="small"
+            :columns="sensitiveAccessColumns"
+            :data-source="sensitiveAnalysisResult.fileRows"
+            :pagination="{ pageSize: 8, size: 'small' }"
+            :scroll="{ x: 900 }"
+          />
+        </div>
+
+        <div class="sensitive-modal-section">
+          <div class="sensitive-modal-section-title">涉及的账号与访问情况</div>
+          <template v-if="sensitiveAnalysisResult.accountRows.length">
+            <a-table
+              size="small"
+              :columns="sensitiveAccessColumns"
+              :data-source="sensitiveAnalysisResult.accountRows"
+              :pagination="{ pageSize: 8, size: 'small' }"
+              :scroll="{ x: 900 }"
+            />
+          </template>
+          <span v-else class="entity-empty">日志侧未聚合到独立账号维度</span>
+        </div>
+
+        <div class="sensitive-modal-section">
+          <div class="sensitive-modal-section-title">涉及的 IP 与访问情况</div>
+          <template v-if="sensitiveAnalysisResult.ipRows.length">
+            <a-table
+              size="small"
+              :columns="sensitiveAccessColumns"
+              :data-source="sensitiveAnalysisResult.ipRows"
+              :pagination="{ pageSize: 8, size: 'small' }"
+              :scroll="{ x: 900 }"
+            />
+          </template>
+          <span v-else class="entity-empty">暂无匹配 IP</span>
+        </div>
+      </template>
+    </a-modal>
 
     <a-modal
       v-model:open="detailModalOpen"
@@ -426,6 +681,7 @@
 </template>
 
 <script setup lang="ts">
+  import dayjs from 'dayjs';
   import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue';
   import { useRoute, useRouter } from 'vue-router';
   import { ArrowLeftOutlined } from '@ant-design/icons-vue';
@@ -434,12 +690,15 @@
   import {
     MAX_RUNNING_TASKS,
     formatDateTime,
+    formatSensitiveClueValue,
     getAppName,
+    getSensitiveClueDimensionLabel,
     getStatusLabel,
     getStatusTagColor,
     getTraceTaskById,
     getTraceTypeLabel,
     type AccountTraceConditions,
+    type SensitiveTraceConditions,
     type TraceTask
   } from './task-store';
 
@@ -504,6 +763,28 @@
     high: number;
     medium: number;
     low: number;
+  }
+
+  interface SensitiveAccessRow {
+    key: string;
+    name: string;
+    accessCount: number;
+    firstSeen: string;
+    lastSeen: string;
+    situation: string;
+  }
+
+  interface SensitiveTraceAnalysisResult {
+    timeRange: [string, string];
+    taskName: string;
+    clues: string[];
+    matchedAccessLogTotal: number;
+    apiRows: SensitiveAccessRow[];
+    appRows: SensitiveAccessRow[];
+    dataRows: SensitiveAccessRow[];
+    fileRows: SensitiveAccessRow[];
+    accountRows: SensitiveAccessRow[];
+    ipRows: SensitiveAccessRow[];
   }
 
   interface AccountInsight {
@@ -583,6 +864,17 @@
   const task = ref<TraceTask | undefined>();
   const activeTab = ref('analysis');
   const detailModalOpen = ref(false);
+  const sensitiveResultDetailOpen = ref(false);
+  const sensitiveEntityTab = ref('api');
+
+  const sensitiveAccessColumns: any[] = [
+    { title: '对象', dataIndex: 'name', key: 'name', width: 240, ellipsis: true },
+    { title: '访问日志条数', dataIndex: 'accessCount', key: 'accessCount', width: 120, align: 'right' },
+    { title: '首次命中时间', dataIndex: 'firstSeen', key: 'firstSeen', width: 166 },
+    { title: '最近访问时间', dataIndex: 'lastSeen', key: 'lastSeen', width: 166 },
+    { title: '访问情况', dataIndex: 'situation', key: 'situation', ellipsis: true, minWidth: 220 }
+  ];
+
   const currentEventDetail = ref<RiskEvent | null>(null);
   const labelTreemapRef = ref<HTMLDivElement>();
   const ipTop10ChartRef = ref<HTMLDivElement>();
@@ -594,6 +886,205 @@
   let apiTop10ChartInstance: ECharts | null = null;
 
   const joinTags = (tags: string[]) => (tags.length ? tags.join('、') : '-');
+
+  const uniqStrings = (items: string[]) => Array.from(new Set(items.map((s) => s.trim()).filter(Boolean)));
+
+  const parseSensitiveTimeRange = (tr: [string, string]) => {
+    const start = dayjs(tr[0]);
+    const end = dayjs(tr[1]);
+    if (!start.isValid() || !end.isValid()) {
+      return { start: dayjs('2026-04-21 09:00:00'), end: dayjs('2026-04-22 09:00:00') };
+    }
+    return { start, end };
+  };
+
+  const buildSensitiveSituation = (
+    kind: 'api' | 'app' | 'data' | 'file' | 'account' | 'ip',
+    h: number,
+    n: number,
+    name: string
+  ) => {
+    const shortName = name.length > 24 ? `${name.slice(0, 24)}…` : name;
+    switch (kind) {
+      case 'api': {
+        const getPct = 35 + (h % 55);
+        const tagged = 12 + (h % 52);
+        return `GET 约占 ${getPct}%，其余为 POST/PUT；与该 API 链路相关的敏感标签命中约 ${tagged} 条。`;
+      }
+      case 'app':
+        return `该应用下聚合 ${n.toLocaleString()} 条访问日志，涵盖接口探测、数据读取与文件传输等 ${2 + (h % 4)} 类行为。`;
+      case 'data': {
+        const req = Math.max(1, Math.floor(n * (0.28 + (h % 35) / 100)));
+        const res = Math.max(1, n - req);
+        return `请求侧约 ${req} 条、响应侧约 ${res} 条；与「${shortName}」关联的敏感上下文一致。`;
+      }
+      case 'file':
+        return `下载类约 ${Math.max(1, Math.floor(n * 0.52))} 条、预览/在线约 ${Math.max(1, Math.floor(n * 0.3))} 条，其余为元数据或列表拉取。`;
+      case 'account':
+        return `鉴权成功占绝大多数，失败/重试 ${2 + (h % 9)} 次；活跃时段与任务分析窗口基本重合。`;
+      case 'ip':
+        return `以客户端源 IP 为主；关联会话约 ${3 + (h % 7)} 个，流量高峰多集中在窗口中段。`;
+      default:
+        return `共 ${n.toLocaleString()} 条相关访问日志。`;
+    }
+  };
+
+  const buildSensitiveAccessRows = (
+    names: string[],
+    seed: number,
+    timeRange: [string, string],
+    kind: 'api' | 'app' | 'data' | 'file' | 'account' | 'ip'
+  ): SensitiveAccessRow[] => {
+    const { start, end } = parseSensitiveTimeRange(timeRange);
+    const spanMin = Math.max(end.diff(start, 'minute'), 1);
+
+    return names.map((name, i) => {
+      const h = seed + i * 47 + name.length * 3;
+      let accessCount: number;
+      switch (kind) {
+        case 'api':
+          accessCount = 180 + (h % 2400);
+          break;
+        case 'app':
+          accessCount = 320 + (h % 3100);
+          break;
+        case 'data':
+          accessCount = 90 + (h % 1900);
+          break;
+        case 'file':
+          accessCount = 40 + (h % 880);
+          break;
+        case 'account':
+          accessCount = 120 + (h % 1600);
+          break;
+        case 'ip':
+          accessCount = 150 + (h % 2200);
+          break;
+        default:
+          accessCount = 100 + (h % 900);
+      }
+
+      const offset1 = (h % Math.max(1, Math.floor(spanMin * 0.35))) + 2;
+      const offset2 = (h % 220) + 8;
+      let first = start.add(offset1, 'minute');
+      let last = first.add(offset2, 'minute');
+      if (last.isAfter(end)) last = end;
+      if (first.isAfter(last)) first = last.subtract(Math.min(90, spanMin), 'minute');
+      if (first.isBefore(start)) first = start;
+
+      return {
+        key: `${kind}-${i}-${name.slice(0, 32)}`,
+        name,
+        accessCount,
+        firstSeen: first.format('YYYY-MM-DD HH:mm:ss'),
+        lastSeen: last.format('YYYY-MM-DD HH:mm:ss'),
+        situation: buildSensitiveSituation(kind, h, accessCount, name)
+      };
+    });
+  };
+
+  const buildSensitiveTraceAnalysisResult = (currentTask?: TraceTask): SensitiveTraceAnalysisResult | null => {
+    if (!currentTask || currentTask.traceType !== 'sensitive') return null;
+
+    const c = currentTask.conditions as SensitiveTraceConditions;
+    const clues: string[] = [];
+
+    if (c.clues?.length) {
+      c.clues.forEach((clue, index) => {
+        const label = getSensitiveClueDimensionLabel(clue.dimension);
+        const value = formatSensitiveClueValue(clue);
+        if (label && value) clues.push(`线索${index + 1}（${label}）：${value}`);
+      });
+    }
+
+    if (!clues.length && (currentTask.conditionTags?.length ?? 0) > 0) {
+      currentTask.conditionTags!.forEach((tag) => clues.push(tag));
+    }
+
+    if (!clues.length) {
+      clues.push('（未解析到结构化线索，请在任务中补充至少两条线索维度以便精确定位。）');
+    }
+
+    const timeClue = c.clues?.find((clue) => clue.dimension === 'timeRange')?.timeRange;
+    const timeRange: [string, string] =
+      timeClue?.length === 2
+        ? [timeClue[0], timeClue[1]]
+        : c.timeRange?.length === 2
+          ? [c.timeRange[0], c.timeRange[1]]
+          : ['—', '—'];
+
+    const involvedApps = uniqStrings(c.appIds.map(getAppName));
+
+    const apiHints = uniqStrings([
+      ...(c.apiPath ? [`GET ${c.apiPath}`, `POST ${c.apiPath}`] : []),
+      ...(c.apiPath?.includes('/export') ? ['POST /api/v1/file/transfer/log'] : []),
+      'GET /api/v1/audit/access/stream',
+      'GET /api/v1/access/log/search',
+      'POST /api/v1/trace/correlate'
+    ]);
+
+    const involvedData = uniqStrings([
+      ...c.requestDataTags,
+      ...c.responseDataTags,
+      ...(c.dataClue ? [c.dataClue] : []),
+      ...((c.clues || [])
+        .filter((clue) => clue.dimension === 'requestDataTag' || clue.dimension === 'responseDataTag')
+        .flatMap((clue) => (Array.isArray(clue.values) ? clue.values : clue.value ? [clue.value] : [])))
+    ]);
+
+    const involvedFiles = uniqStrings([
+      ...(c.fileName ? [c.fileName] : []),
+      ...((c.clues || [])
+        .filter((clue) => clue.dimension === 'fileName')
+        .map((clue) => clue.value || '')
+        .filter(Boolean))
+    ]);
+
+    const involvedAccounts = uniqStrings([
+      ...(c.loginAccount ? [c.loginAccount] : []),
+      ...((c.clues || [])
+        .filter((clue) => clue.dimension === 'accountName')
+        .map((clue) => clue.value || '')
+        .filter(Boolean))
+    ]);
+
+    const involvedIps = uniqStrings([
+      ...(c.clientIp ? [c.clientIp] : []),
+      ...(c.serverIp ? [c.serverIp] : []),
+      ...((c.clues || [])
+        .filter((clue) => clue.dimension === 'sourceIp' || clue.dimension === 'destIp')
+        .map((clue) => clue.value || '')
+        .filter(Boolean))
+    ]);
+
+    const seed = currentTask.id.split('').reduce((acc, ch) => acc + ch.charCodeAt(0), 0);
+    const statusBoost =
+      currentTask.status === 'success' ? 4200 : currentTask.status === 'running' ? 2100 : 0;
+    const matchedAccessLogTotal = 6800 + (seed % 7200) + statusBoost;
+
+    const dataNames = involvedData.length ? involvedData : ['身份证号（请求侧）', '手机号（返回侧）'];
+    const fileNames = involvedFiles.length ? involvedFiles : ['证据包-archive.zip'];
+
+    const apiRows = buildSensitiveAccessRows(apiHints, seed, timeRange, 'api');
+    const appRows = buildSensitiveAccessRows(involvedApps, seed + 11, timeRange, 'app');
+    const dataRows = buildSensitiveAccessRows(dataNames, seed + 22, timeRange, 'data');
+    const fileRows = buildSensitiveAccessRows(fileNames, seed + 33, timeRange, 'file');
+    const accountRows = buildSensitiveAccessRows(involvedAccounts, seed + 44, timeRange, 'account');
+    const ipRows = buildSensitiveAccessRows(involvedIps, seed + 55, timeRange, 'ip');
+
+    return {
+      timeRange,
+      taskName: currentTask.name,
+      clues,
+      matchedAccessLogTotal,
+      apiRows,
+      appRows,
+      dataRows,
+      fileRows,
+      accountRows,
+      ipRows
+    };
+  };
 
   const createRiskEvent = (prefix: string, index: number, partial: Omit<RiskEvent, 'id'>): RiskEvent => ({
     id: `${prefix}-${index}`,
@@ -937,14 +1428,36 @@
         timeRange: `${conditions.timeRange[0]} ~ ${conditions.timeRange[1]}`
       };
     }
+    if (task.value.traceType === 'sensitive') {
+      const conditions = task.value.conditions as SensitiveTraceConditions;
+      const timeClue = conditions.clues?.find((clue) => clue.dimension === 'timeRange')?.timeRange;
+      const tr =
+        timeClue?.length === 2
+          ? `${timeClue[0]} ~ ${timeClue[1]}`
+          : conditions.timeRange?.length === 2
+            ? `${conditions.timeRange[0]} ~ ${conditions.timeRange[1]}`
+            : '-';
+      return {
+        app: conditions.appIds.length ? conditions.appIds.map(getAppName).join('、') : '-',
+        account: conditions.loginAccount || '-',
+        timeRange: tr
+      };
+    }
+    const conditions = task.value.conditions as { clientIp?: string; timeRange?: [string, string] };
     return {
-      app: '当前任务非账号溯源',
-      account: '当前任务非账号溯源',
-      timeRange: (task.value.conditionTags ?? []).find((item) => item.startsWith('发生时间:')) || '-'
+      app: (task.value.conditionTags ?? []).find((item) => item.startsWith('应用:'))?.replace(/^应用:/, '') || '-',
+      account: conditions.clientIp || '-',
+      timeRange:
+        conditions.timeRange?.length === 2
+          ? `${conditions.timeRange[0]} ~ ${conditions.timeRange[1]}`
+          : (task.value.conditionTags ?? []).find((item) => item.startsWith('发生时间:'))?.replace(/^发生时间:/, '') ||
+            '-'
     };
   });
 
   const accountInsight = computed(() => buildAccountInsight(task.value));
+
+  const sensitiveAnalysisResult = computed(() => buildSensitiveTraceAnalysisResult(task.value));
 
   const selectedWebSlot = computed(
     () =>
@@ -1190,6 +1703,7 @@
     () => route.params.id,
     () => {
       loadTask();
+      sensitiveEntityTab.value = 'api';
     },
     { immediate: true }
   );
@@ -1665,5 +2179,131 @@
 
   .condition-tag {
     margin: 0;
+  }
+
+  .sensitive-trace-section .sensitive-result-card {
+    margin-top: 16px;
+  }
+
+  .sensitive-stat-block {
+    height: 100%;
+    padding: 16px 18px;
+    border-radius: 12px;
+    background: var(--color-bg-page);
+  }
+
+  .sensitive-stat-label {
+    margin-bottom: 8px;
+    color: var(--color-text-secondary);
+    font-size: 12px;
+  }
+
+  .sensitive-stat-value {
+    color: var(--color-text-primarys);
+    font-weight: 600;
+    line-height: 1.5;
+    word-break: break-all;
+  }
+
+  .sensitive-stat-number {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--color-brand-normal);
+  }
+
+  .sensitive-block {
+    margin-top: 20px;
+  }
+
+  .sensitive-block-title {
+    margin-bottom: 10px;
+    color: var(--color-text-primarys);
+    font-weight: 600;
+  }
+
+  .sensitive-clue-list {
+    margin: 0;
+    padding-left: 20px;
+    color: var(--color-text-primarys);
+    line-height: 1.8;
+
+    &.modal {
+      padding-left: 18px;
+    }
+  }
+
+  .sensitive-entity-row {
+    margin-top: 16px;
+  }
+
+  .entity-count-pill {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 8px;
+    border-radius: 12px;
+    background: var(--color-bg-page);
+    text-align: center;
+  }
+
+  .entity-count {
+    color: var(--color-brand-normal);
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .entity-label {
+    margin-top: 6px;
+    color: var(--color-text-secondary);
+    font-size: 12px;
+  }
+
+  .sensitive-hint {
+    margin: 16px 0 0;
+    color: var(--color-text-secondary);
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  .sensitive-desc {
+    margin-bottom: 16px;
+  }
+
+  .sensitive-modal-section {
+    margin-top: 20px;
+  }
+
+  .sensitive-modal-section-title {
+    margin-bottom: 10px;
+    color: var(--color-text-primarys);
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .entity-tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .entity-tag {
+    margin: 0;
+    max-width: 100%;
+    word-break: break-all;
+  }
+
+  .sensitive-entity-tabs {
+    margin-top: 4px;
+
+    :deep(.ant-table) {
+      font-size: 13px;
+    }
+  }
+
+  .entity-empty {
+    color: var(--color-text-secondary);
+    font-size: 13px;
   }
 </style>

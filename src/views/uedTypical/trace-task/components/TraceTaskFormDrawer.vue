@@ -73,99 +73,95 @@
 
         <a-card title="溯源条件" size="small" :bordered="false" class="section-card">
           <template v-if="formState.traceType === 'sensitive'">
-            <a-row :gutter="16">
-              <a-col :span="12">
-                <a-form-item label="登录账号">
-                  <a-input
-                    v-model:value="formState.sensitiveLoginAccount"
-                    placeholder="请输入登录账号，精准查询"
-                    allow-clear
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="12">
-                <a-form-item label="客户端IP" name="sensitiveClientIp" :rules="sensitiveClientIpFieldRules">
-                  <a-input
-                    v-model:value="formState.sensitiveClientIp"
-                    placeholder="请输入客户端IP，精准查询"
-                    allow-clear
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="12">
-                <a-form-item label="服务端IP" name="sensitiveServerIp" :rules="sensitiveServerIpFieldRules">
-                  <a-input
-                    v-model:value="formState.sensitiveServerIp"
-                    placeholder="请输入服务端IP，精准查询"
-                    allow-clear
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="12">
-                <a-form-item label="应用">
-                  <a-space direction="vertical" style="width: 100%">
-                    <a-button block @click="openAppSelector('sensitive')"> 选择应用 </a-button>
-                    <div class="selected-tags">
-                      <a-tag v-for="appId in formState.sensitiveApps" :key="appId" color="processing">
-                        {{ getAppName(appId) }}
-                      </a-tag>
-                      <span v-if="formState.sensitiveApps.length === 0" class="placeholder-text"> 暂未选择应用 </span>
-                    </div>
-                  </a-space>
-                </a-form-item>
-              </a-col>
-              <a-col :span="12">
-                <a-form-item label="API路径">
-                  <a-input v-model:value="formState.apiPath" placeholder="示例：/api/user/detail?id=1" allow-clear />
-                </a-form-item>
-              </a-col>
-              <a-col :span="12">
-                <a-form-item label="文件名称">
-                  <a-input v-model:value="formState.fileName" placeholder="请输入文件名称，精准查询" allow-clear />
-                </a-form-item>
-              </a-col>
-              <a-col :span="24">
-                <a-form-item label="请求数据标签">
-                  <div class="tag-select-row">
-                    <a-radio-group v-model:value="formState.requestTagLogic" option-type="button" button-style="solid">
-                      <a-radio-button value="OR">或</a-radio-button>
-                      <a-radio-button value="AND">且</a-radio-button>
-                    </a-radio-group>
-                    <a-checkbox-group v-model:value="formState.requestDataTags" :options="DATA_TAG_OPTIONS" />
+            <a-alert
+              type="info"
+              show-icon
+              message="敏感数据溯源至少需要输入两条线索，系统会按线索交集查询请求、响应、文件与访问日志。"
+              style="margin-bottom: 12px"
+            />
+            <a-form-item name="sensitiveClues" :rules="sensitiveClueRules">
+              <div class="sensitive-clue-list">
+                <div v-for="(clue, index) in formState.sensitiveClues" :key="clue.id" class="sensitive-clue-card">
+                  <div class="clue-card-header">
+                    <span>线索 {{ index + 1 }}</span>
+                    <a-button
+                      type="link"
+                      danger
+                      size="small"
+                      :disabled="formState.sensitiveClues.length <= 2"
+                      @click="removeSensitiveClue(index)"
+                    >
+                      删除
+                    </a-button>
                   </div>
-                </a-form-item>
-              </a-col>
-              <a-col :span="24">
-                <a-form-item label="返回数据标签">
-                  <div class="tag-select-row">
-                    <a-radio-group v-model:value="formState.responseTagLogic" option-type="button" button-style="solid">
-                      <a-radio-button value="OR">或</a-radio-button>
-                      <a-radio-button value="AND">且</a-radio-button>
-                    </a-radio-group>
-                    <a-checkbox-group v-model:value="formState.responseDataTags" :options="DATA_TAG_OPTIONS" />
-                  </div>
-                </a-form-item>
-              </a-col>
-              <a-col :span="24">
-                <a-form-item label="数据线索">
-                  <a-textarea
-                    v-model:value="formState.dataClue"
-                    :auto-size="{ minRows: 2, maxRows: 4 }"
-                    placeholder="支持输入敏感内容，查询请求体和响应体内容"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="24">
-                <a-form-item label="发生时间" name="sensitiveTimeRange" :rules="sensitiveTimeRules">
-                  <a-range-picker
-                    v-model:value="formState.sensitiveTimeRange"
-                    show-time
-                    value-format="YYYY-MM-DD HH:mm:ss"
-                    style="width: 100%"
-                  />
-                </a-form-item>
-              </a-col>
-            </a-row>
+                  <a-row :gutter="12">
+                    <a-col :span="8">
+                      <a-select
+                        v-model:value="clue.dimension"
+                        :options="SENSITIVE_CLUE_DIMENSION_OPTIONS"
+                        :get-popup-container="getPopupContainer"
+                        :dropdown-style="selectDropdownStyle"
+                        placeholder="请选择线索维度"
+                        @change="handleSensitiveClueDimensionChange(clue)"
+                      />
+                    </a-col>
+                    <a-col :span="16">
+                      <a-range-picker
+                        v-if="clue.dimension === 'timeRange'"
+                        v-model:value="clue.timeRange"
+                        show-time
+                        value-format="YYYY-MM-DD HH:mm:ss"
+                        style="width: 100%"
+                      />
+                      <a-select
+                        v-else-if="clue.dimension === 'apiSensitiveLevel'"
+                        v-model:value="clue.value"
+                        :options="apiSensitiveLevelOptions"
+                        :get-popup-container="getPopupContainer"
+                        :dropdown-style="selectDropdownStyle"
+                        placeholder="请选择API敏感等级"
+                        allow-clear
+                      />
+                      <a-select
+                        v-else-if="clue.dimension === 'requestDataTag' || clue.dimension === 'responseDataTag'"
+                        v-model:value="clue.values"
+                        mode="multiple"
+                        :options="dataTagSelectOptions"
+                        :get-popup-container="getPopupContainer"
+                        :dropdown-style="selectDropdownStyle"
+                        placeholder="请选择数据标签"
+                        allow-clear
+                      />
+                      <a-select
+                        v-else-if="clue.dimension === 'fileFormat'"
+                        v-model:value="clue.value"
+                        :options="fileFormatOptions"
+                        :get-popup-container="getPopupContainer"
+                        :dropdown-style="selectDropdownStyle"
+                        placeholder="请选择文件格式"
+                        allow-clear
+                      />
+                      <a-select
+                        v-else-if="clue.dimension === 'fileAction'"
+                        v-model:value="clue.value"
+                        :options="fileActionOptions"
+                        :get-popup-container="getPopupContainer"
+                        :dropdown-style="selectDropdownStyle"
+                        placeholder="请选择文件操作行为"
+                        allow-clear
+                      />
+                      <a-input
+                        v-else
+                        v-model:value="clue.value"
+                        :placeholder="getSensitiveCluePlaceholder(clue.dimension)"
+                        allow-clear
+                      />
+                    </a-col>
+                  </a-row>
+                </div>
+              </div>
+              <a-button type="dashed" block @click="addSensitiveClue">新增线索</a-button>
+            </a-form-item>
           </template>
 
           <template v-else-if="formState.traceType === 'sourceIp'">
@@ -287,12 +283,19 @@
   import { message } from 'ant-design-vue';
   import type { FormInstance, Rule } from 'ant-design-vue/es/form';
   import {
+    API_SENSITIVE_LEVEL_OPTIONS,
     APP_OPTIONS,
     DATA_TAG_OPTIONS,
+    FILE_ACTION_OPTIONS,
+    FILE_FORMAT_OPTIONS,
+    SENSITIVE_CLUE_DIMENSION_OPTIONS,
     TRACE_TYPE_OPTIONS,
+    formatSensitiveClueValue,
     getAccountsByAppId,
     getAppName,
     type AccountTraceConditions,
+    type SensitiveClueDimension,
+    type SensitiveTraceClue,
     type SensitiveTraceConditions,
     type SourceIpTraceConditions,
     type TraceTask,
@@ -316,6 +319,7 @@
     sensitiveClientIp: string;
     sensitiveServerIp: string;
     sensitiveApps: string[];
+    sensitiveClues: SensitiveTraceClue[];
     apiPath: string;
     fileName: string;
     requestDataTags: string[];
@@ -357,6 +361,18 @@
     (e: 'submit', payload: SubmitPayload): void;
   }>();
 
+  let clueIdSeed = 0;
+  const createSensitiveClue = (dimension?: SensitiveClueDimension): SensitiveTraceClue => {
+    clueIdSeed += 1;
+    return {
+      id: `sensitive-clue-${Date.now()}-${clueIdSeed}`,
+      dimension,
+      value: '',
+      values: [],
+      timeRange: undefined
+    };
+  };
+
   const createDefaultFormState = (): FormState => ({
     taskName: '',
     taskDescription: '',
@@ -365,6 +381,7 @@
     sensitiveClientIp: '',
     sensitiveServerIp: '',
     sensitiveApps: [],
+    sensitiveClues: [createSensitiveClue('timeRange'), createSensitiveClue('urlPath')],
     apiPath: '',
     fileName: '',
     requestDataTags: [],
@@ -405,6 +422,48 @@
     }))
   );
 
+  const dataTagSelectOptions = DATA_TAG_OPTIONS.map((item) => ({ label: item, value: item }));
+  const apiSensitiveLevelOptions = API_SENSITIVE_LEVEL_OPTIONS.map((item) => ({ label: item, value: item }));
+  const fileFormatOptions = FILE_FORMAT_OPTIONS.map((item) => ({ label: item, value: item }));
+  const fileActionOptions = FILE_ACTION_OPTIONS.map((item) => ({ label: item, value: item }));
+
+  const normalizeSensitiveClues = (conditions: SensitiveTraceConditions) => {
+    if (conditions.clues?.length) {
+      return conditions.clues.map((item) => ({
+        ...createSensitiveClue(item.dimension),
+        ...item,
+        id: item.id || createSensitiveClue(item.dimension).id,
+        values: [...(item.values || [])],
+        timeRange: item.timeRange ? ([item.timeRange[0], item.timeRange[1]] as [string, string]) : undefined
+      }));
+    }
+
+    const legacyClues: SensitiveTraceClue[] = [];
+    if (conditions.timeRange) {
+      legacyClues.push({
+        ...createSensitiveClue('timeRange'),
+        timeRange: [conditions.timeRange[0], conditions.timeRange[1]]
+      });
+    }
+    if (conditions.apiPath) legacyClues.push({ ...createSensitiveClue('urlPath'), value: conditions.apiPath });
+    if (conditions.loginAccount) legacyClues.push({ ...createSensitiveClue('accountName'), value: conditions.loginAccount });
+    if (conditions.clientIp) legacyClues.push({ ...createSensitiveClue('sourceIp'), value: conditions.clientIp });
+    if (conditions.serverIp) legacyClues.push({ ...createSensitiveClue('destIp'), value: conditions.serverIp });
+    if (conditions.requestDataTags.length) {
+      legacyClues.push({ ...createSensitiveClue('requestDataTag'), values: [...conditions.requestDataTags] });
+    }
+    if (conditions.responseDataTags.length) {
+      legacyClues.push({ ...createSensitiveClue('responseDataTag'), values: [...conditions.responseDataTags] });
+    }
+    if (conditions.fileName) legacyClues.push({ ...createSensitiveClue('fileName'), value: conditions.fileName });
+    if (conditions.dataClue) legacyClues.push({ ...createSensitiveClue('urlPath'), value: conditions.dataClue });
+
+    while (legacyClues.length < 2) {
+      legacyClues.push(createSensitiveClue(legacyClues.length === 0 ? 'timeRange' : 'urlPath'));
+    }
+    return legacyClues;
+  };
+
   const buildFormState = (task?: TraceTask | null): FormState => {
     const nextState = createDefaultFormState();
     if (!task) return nextState;
@@ -415,6 +474,7 @@
 
     if (task.traceType === 'sensitive') {
       const conditions = task.conditions as SensitiveTraceConditions;
+      nextState.sensitiveClues = normalizeSensitiveClues(conditions);
       nextState.sensitiveLoginAccount = conditions.loginAccount;
       nextState.sensitiveClientIp = conditions.clientIp;
       nextState.sensitiveServerIp = conditions.serverIp;
@@ -426,7 +486,9 @@
       nextState.responseDataTags = [...conditions.responseDataTags];
       nextState.responseTagLogic = conditions.responseTagLogic;
       nextState.dataClue = conditions.dataClue;
-      nextState.sensitiveTimeRange = [conditions.timeRange[0], conditions.timeRange[1]] as StringRange;
+      nextState.sensitiveTimeRange = conditions.timeRange
+        ? ([conditions.timeRange[0], conditions.timeRange[1]] as StringRange)
+        : undefined;
     }
 
     if (task.traceType === 'sourceIp') {
@@ -489,24 +551,86 @@
     tempAppIds.value = [];
   };
 
+  const addSensitiveClue = () => {
+    formState.sensitiveClues.push(createSensitiveClue());
+  };
+
+  const removeSensitiveClue = (index: number) => {
+    if (formState.sensitiveClues.length <= 2) return;
+    formState.sensitiveClues.splice(index, 1);
+  };
+
+  const handleSensitiveClueDimensionChange = (clue: SensitiveTraceClue) => {
+    clue.value = '';
+    clue.values = [];
+    clue.timeRange = undefined;
+  };
+
+  const getSensitiveCluePlaceholder = (dimension?: SensitiveClueDimension) => {
+    const placeholderMap: Partial<Record<SensitiveClueDimension, string>> = {
+      urlPath: '请输入URL路径字符串，如 /api/customer/export',
+      appDomain: '请输入应用域名，如 crm.example.com',
+      accountName: '请输入账号名称',
+      sourceIp: '请输入请求源IP',
+      destIp: '请输入目的IP',
+      destPort: '请输入目的端口，如 443',
+      fileName: '请输入文件名称',
+      fileFormat: '请选择文件格式',
+      fileAction: '请选择文件操作行为'
+    };
+    return placeholderMap[dimension || 'urlPath'] || '请选择线索维度后输入线索值';
+  };
+
   const IP_PATTERN = /^((25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)\.){3}(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)$/;
 
-  const optionalIpRule = (label: string): Rule => ({
-    validator: async (_rule, value: string) => {
-      if (!value || !String(value).trim()) return;
-      if (!IP_PATTERN.test(String(value).trim())) {
-        throw new Error(`${label}格式不正确`);
-      }
-    },
-    trigger: 'blur'
-  });
+  const isSensitiveClueComplete = (clue: SensitiveTraceClue) => {
+    if (!clue.dimension) return false;
+    if (clue.dimension === 'timeRange') {
+      return !!clue.timeRange && clue.timeRange.length === 2 && !!clue.timeRange[0] && !!clue.timeRange[1];
+    }
+    if (clue.dimension === 'requestDataTag' || clue.dimension === 'responseDataTag') {
+      return Array.isArray(clue.values) && clue.values.length > 0;
+    }
+    return !!clue.value?.trim();
+  };
 
-  const sensitiveClientIpFieldRules = computed<Rule[]>(() =>
-    formState.traceType === 'sensitive' ? [optionalIpRule('客户端IP')] : []
-  );
-  const sensitiveServerIpFieldRules = computed<Rule[]>(() =>
-    formState.traceType === 'sensitive' ? [optionalIpRule('服务端IP')] : []
-  );
+  const validateSensitiveClueValue = (clue: SensitiveTraceClue) => {
+    if ((clue.dimension === 'sourceIp' || clue.dimension === 'destIp') && clue.value && !IP_PATTERN.test(clue.value.trim())) {
+      return `${clue.dimension === 'sourceIp' ? '请求源IP' : '目的IP'}格式不正确`;
+    }
+    if (clue.dimension === 'destPort') {
+      const port = Number(clue.value);
+      if (!Number.isInteger(port) || port < 1 || port > 65535) return '目的端口需为1-65535之间的整数';
+    }
+    return '';
+  };
+
+  const getEffectiveSensitiveClues = () =>
+    formState.sensitiveClues
+      .filter(isSensitiveClueComplete)
+      .map((clue) => ({
+        ...clue,
+        value: clue.value?.trim(),
+        values: [...(clue.values || [])],
+        timeRange: clue.timeRange ? ([clue.timeRange[0], clue.timeRange[1]] as [string, string]) : undefined
+      }));
+
+  const sensitiveClueRules = computed<Rule[]>(() => {
+    if (formState.traceType !== 'sensitive') return [];
+    return [
+      {
+        validator: async () => {
+          const completeClues = getEffectiveSensitiveClues();
+          if (completeClues.length < 2) {
+            throw new Error('请至少填写两条完整线索');
+          }
+          const invalidMessage = completeClues.map(validateSensitiveClueValue).find(Boolean);
+          if (invalidMessage) throw new Error(invalidMessage);
+        },
+        trigger: 'change'
+      }
+    ];
+  });
 
   const sourceClientIpRules = computed<Rule[]>(() => {
     if (formState.traceType !== 'sourceIp') return [];
@@ -531,10 +655,6 @@
     }
   });
 
-  const sensitiveTimeRules = computed<Rule[]>(() =>
-    formState.traceType === 'sensitive' ? [timeRangeRequiredRule()] : []
-  );
-
   const sourceTimeRules = computed<Rule[]>(() => (formState.traceType === 'sourceIp' ? [timeRangeRequiredRule()] : []));
 
   const accountAppRules = computed<Rule[]>(() =>
@@ -551,25 +671,31 @@
     if (!formState.traceType) return null;
 
     if (formState.traceType === 'sensitive') {
-      const tr = formState.sensitiveTimeRange;
-      if (!tr || tr.length !== 2) return null;
+      const clues = getEffectiveSensitiveClues();
+      if (clues.length < 2) return null;
+      const timeClue = clues.find((item) => item.dimension === 'timeRange');
+      const getClueValue = (dimension: SensitiveClueDimension) =>
+        clues.find((item) => item.dimension === dimension)?.value?.trim() || '';
+      const getClueValues = (dimension: SensitiveClueDimension) =>
+        clues.find((item) => item.dimension === dimension)?.values || [];
       return {
         name: formState.taskName,
         description: formState.taskDescription,
         traceType: 'sensitive',
         conditions: {
-          loginAccount: formState.sensitiveLoginAccount,
-          clientIp: formState.sensitiveClientIp,
-          serverIp: formState.sensitiveServerIp,
-          appIds: [...formState.sensitiveApps],
-          apiPath: formState.apiPath,
-          fileName: formState.fileName,
-          requestDataTags: [...formState.requestDataTags],
+          clues,
+          loginAccount: getClueValue('accountName'),
+          clientIp: getClueValue('sourceIp'),
+          serverIp: getClueValue('destIp'),
+          appIds: [],
+          apiPath: getClueValue('urlPath'),
+          fileName: getClueValue('fileName'),
+          requestDataTags: getClueValues('requestDataTag'),
           requestTagLogic: formState.requestTagLogic,
-          responseDataTags: [...formState.responseDataTags],
+          responseDataTags: getClueValues('responseDataTag'),
           responseTagLogic: formState.responseTagLogic,
-          dataClue: formState.dataClue,
-          timeRange: [tr[0], tr[1]]
+          dataClue: clues.map((item) => `${item.dimension}:${formatSensitiveClueValue(item)}`).join('; '),
+          timeRange: timeClue?.timeRange ? [timeClue.timeRange[0], timeClue.timeRange[1]] : undefined
         }
       };
     }
