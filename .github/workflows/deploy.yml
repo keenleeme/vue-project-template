@@ -28,17 +28,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: npm
           registry-url: https://registry.npmjs.org
 
       - name: Remove private registry config
         run: rm -f .npmrc
 
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: npm install --legacy-peer-deps --include=dev
 
       - name: Build
-        run: npm run build
+        env:
+          NODE_ENV: production
+        run: npx vite build --config ./configs/vite.config.prod.ts
 
       - name: Create .nojekyll
         run: touch dist/.nojekyll
