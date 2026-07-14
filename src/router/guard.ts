@@ -4,8 +4,24 @@ import { useAppStore, useMenusStore, useUserStore } from '@/store';
 
 export const WHITE_LIST: string[] = ['/404', '/login', '/ai-agent'];
 
+// GitHub Pages 静态部署时自动注入 mock 凭证，跳过登录
+function injectMockAuth() {
+  const userStore = useUserStore();
+  if (!userStore.token) {
+    userStore.setToken('mock-jwt-token-github-pages');
+    userStore.setUserInfo({
+      id: 'mock-user-001',
+      username: 'zhen.li',
+      name: 'zhen.li',
+      email: 'zhen.li@example.com'
+    });
+  }
+}
+
 export function setupPermissionGuard(router: Router) {
   router.beforeEach(async (to, _, next) => {
+    // 自动注入 mock 登录凭证（用于 GitHub Pages 等无后端环境）
+    injectMockAuth();
     const userStore = useUserStore();
     if (to.query) {
       const { code, state } = to.query;
