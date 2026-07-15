@@ -25,12 +25,7 @@
         <div class="search-section">
           <a-form layout="inline" :model="searchForm" class="search-form">
             <a-form-item label="标签名称">
-              <a-input
-                v-model:value="searchForm.name"
-                allow-clear
-                placeholder="请输入标签名称"
-                style="width: 200px"
-              />
+              <a-input v-model:value="searchForm.name" allow-clear placeholder="请输入标签名称" style="width: 200px" />
             </a-form-item>
             <a-form-item label="分类">
               <a-select
@@ -101,7 +96,11 @@
             </a-button>
             <a-button :disabled="!selectedRowKeys.length" @click="handleBatchEnable(true)">启用选中项</a-button>
             <a-button :disabled="!selectedRowKeys.length" @click="handleBatchEnable(false)">禁用选中项</a-button>
-            <a-popconfirm title="确定删除选中的标签吗？" :disabled="!selectedRowKeys.length" @confirm="handleBatchDelete">
+            <a-popconfirm
+              title="确定删除选中的标签吗？"
+              :disabled="!selectedRowKeys.length"
+              @confirm="handleBatchDelete"
+            >
               <a-button danger :disabled="!selectedRowKeys.length">删除</a-button>
             </a-popconfirm>
           </a-space>
@@ -192,6 +191,7 @@
       :record="editingRecord"
       :category-options="currentCategoryOptions"
       :level-options="currentLevelOptions"
+      :initial-filter-values="formFilterPreset"
       @success="handleFormSuccess"
     />
     <FrameworkConfigDrawer v-model:open="frameworkConfigOpen" :record="frameworkConfigRecord" />
@@ -199,6 +199,7 @@
 </template>
 
 <script setup lang="ts">
+  import { computed, reactive, ref, watch } from 'vue';
   import {
     DownOutlined,
     PlusOutlined,
@@ -209,16 +210,10 @@
   } from '@ant-design/icons-vue';
   import { message, Modal } from 'ant-design-vue';
   import type { TableColumnType } from 'ant-design-vue';
-  import { computed, reactive, ref, watch } from 'vue';
-  import FrameworkPanel from './components/FrameworkPanel.vue';
   import FrameworkConfigDrawer from './components/FrameworkConfigDrawer.vue';
+  import FrameworkPanel from './components/FrameworkPanel.vue';
   import TagFormModal from './components/TagFormModal.vue';
-  import {
-    deriveTagSensitive,
-    getFrameworkOptions,
-    getFrameworkTagOptions,
-    getTagRows
-  } from './mock';
+  import { deriveTagSensitive, getFrameworkOptions, getFrameworkTagOptions, getTagRows } from './mock';
   import type { FrameworkRow, TagFilter, TagRow, TagTabKey } from './types';
 
   const activeTab = ref<TagTabKey>('data');
@@ -248,6 +243,13 @@
   });
 
   const appliedFilter = ref<TagFilter & { source?: string; enabled?: string }>({});
+
+  /** 新增时复用当前筛选条件作为表单预填值 */
+  const formFilterPreset = computed(() => ({
+    category: appliedFilter.value.category || searchForm.category,
+    level: appliedFilter.value.level || searchForm.level,
+    sensitive: appliedFilter.value.sensitive || searchForm.sensitive
+  }));
 
   const pagination = reactive({
     current: 1,
@@ -336,8 +338,7 @@
   function handleFrameworkChange(frameworkId: string) {
     if (frameworkId === previousFrameworkId.value) return;
 
-    const frameworkName =
-      frameworkOptions.find((item) => item.value === frameworkId)?.label || '该';
+    const frameworkName = frameworkOptions.find((item) => item.value === frameworkId)?.label || '该';
 
     Modal.confirm({
       title: `确认启用${frameworkName}分类分级框架吗？`,
@@ -420,7 +421,7 @@
     formOpen.value = true;
   }
 
-  function handleFormSuccess(payload: Partial<TagRow> & { name: string }) {
+  function handleFormSuccess(payload: Partial<TagRow> & { name: string; sensitive: string }) {
     if (payload.id) {
       const index = dataRows.value.findIndex((item) => item.id === payload.id);
       if (index >= 0) {
@@ -434,7 +435,7 @@
       enabled: payload.enabled ?? true,
       category: payload.category || '未分级',
       level: payload.level || '未分级',
-      sensitive: payload.sensitive || deriveTagSensitive(payload.level || '未分级'),
+      sensitive: (payload.sensitive || '未知') as TagRow['sensitive'],
       description: payload.description || '-',
       source: '用户添加',
       frameworkId: activeFrameworkId.value
