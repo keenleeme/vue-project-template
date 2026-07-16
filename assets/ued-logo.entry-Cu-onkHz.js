@@ -1,0 +1,6 @@
+import{r as a,h as e,H as i}from"./index-DysLjLH0.js";import{g as n}from"./methods-BIo8v6qz-Cze_hh7Q.js";import{c as d}from"./method-Bn_c1Aft-BPjntwg1.js";/*!
+ * @ued-material/ued-wbc 
+ *  Builder: xing.i 
+ *  Version: 1.0.0 
+ *  Date: 2025/12/30 14:29:51
+ */const r=".sc-ued-logo-h{display:inline-flex;align-items:center}.ued-logo-container.sc-ued-logo{display:flex;align-items:center}img.sc-ued-logo+h1.sc-ued-logo{margin:var(--ued-logo-name-margin);font-size:var(--ued-logo-name-font-size--near-img)}h1.sc-ued-logo{font-size:var(--ued-logo-name-font-size);color:var(--ued-logo-name-color)}",l=class{constructor(o){a(this,o),this.height="48px",this.mode="image"}render(){const{src:o,width:c,height:t,mode:s}=this;return e(i,Object.assign({key:"f1b99636cb3c59ca39e332f891539d7b60527fa6"},n()),e("div",{key:"cde46cf70f2d596ce48220a206a75c67ebf9543b",class:d("ued-logo-container",`ued-logo-container--${s}`)},String(s).includes("image")&&o&&e("img",{key:"231aa7238236908471b527b058cd7eefc1082b3b",class:"ued-logo",src:o,alt:"logo",style:{width:c,height:t}}),String(s).includes("text")&&e("h1",{key:"4bc2523b23d3c14471003efef938db4cf0ebd13c"},e("slot",{key:"d6d1e0c94c5b496ea67b1564101615e0024911dc"}))))}};l.style=r;export{l as ued_logo};

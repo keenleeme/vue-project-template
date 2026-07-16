@@ -1,0 +1,1 @@
+import{d as o,o as l,c as n,a as e,t}from"./vue-C1kZydvV.js";import{_ as p}from"./index-DysLjLH0.js";const r={class:"ai-column-label"},c=o({__name:"AiColumnLabel",props:{label:{}},setup(_){return(s,a)=>(l(),n("span",r,[e("span",null,t(s.label),1),a[0]||(a[0]=e("span",{class:"ai-column-label__badge"},"AI",-1))]))}}),d=p(c,[["__scopeId","data-v-d84504ce"]]);export{d as A};

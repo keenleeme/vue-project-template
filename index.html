@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    智启vue3孵化器系统
+  </title>
+  <style>
+    #loader{
+      background-color: transparent;/*设置背景颜色为透明 */
+      width: 100%;
+      position: fixed;
+      top:0;
+      bottom: 0;
+      left: 0;
+      z-index: 100000;
+      display:-ms-flexbox;
+      display: flex;
+      -ms-flex-pack: center;
+      justify-content: center;
+      -ms-flex-align: center;
+      align-items: center;
+      opacity: 1;
+      text-align:center;
+    }
+    #loader .loaderWarpper{
+      width: 1e0px;
+      height: 100px;
+      display:-ms-inline-flexbox;
+      display: inline-flex;
+      -ms-flex-direction: column;
+      flex-direction:column;
+      -ms-flex-pack: distribute;
+      justify-content:space-around;
+      align-items: center;
+    }
+    #loader .loaderInner{
+      width: 60px;
+      height: 60px;
+      border: 3px solid #ddd;
+      border-radius:50%;
+      display: inline-block;
+      position: relative;
+      box-sizing: border-box;
+      animation:rotation 1s linear infinite;
+    }
+    #loader .loaderInner::after{
+      content:'';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform:translate(-50%,-50%);
+      width: 52px;
+      height: 52px;
+      border-radius:50%;
+      box-sizing: border-box;
+      border: 3px solid transparent;
+      border-bottom-color:#3b71ee;
+    }
+    #loader .loaderText{
+      width: 100px;
+      height: 24px;
+      font-weight: 400;
+      text-align: center;
+      font-size: var(--font-size-base);
+      line-height: 24px;
+      letter-spacing:2px;
+      color:囗rgba(0，0，0，0.65);
+    }
+    @keyframes rotation{
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+  <script type="module" crossorigin src="/vue-project-template/assets/index-DysLjLH0.js"></script>
+  <link rel="modulepreload" crossorigin href="/vue-project-template/assets/vue-C1kZydvV.js">
+  <link rel="modulepreload" crossorigin href="/vue-project-template/assets/__federation_expose_Dayjs-DyP4kpo1.js">
+  <link rel="modulepreload" crossorigin href="/vue-project-template/assets/index-Dy3ZsM_w.js">
+  <link rel="modulepreload" crossorigin href="/vue-project-template/assets/__federation_expose_Axios-B8nYSCZ9.js">
+  <link rel="stylesheet" crossorigin href="/vue-project-template/assets/index-KRGPcaf5.css">
+</head>
+
+<body>
+  <div id="app"></div>
+  <div id="loader">
+    <div class="loaderWarpper">
+      <div class="loaderInner"></div>
+      <div class="loaderText">Loading...</div>
+    </div>
+  </div>
+</body>
+
+</html>
